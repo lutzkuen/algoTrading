@@ -95,7 +95,7 @@ class controller(object):
             return
         pipLoc = self.getPipSize(ins)
         pipVal = 10**(-pipLoc+1)
-		entry = smas[2] # use third ducks sma as entr
+        entry = smas[2] # use third ducks sma as entr
         tp = entry + direction * pipVal * self.settings.get('takeProfit')
         sl = entry - direction * pipVal * self.settings.get('stopLoss')
         units = direction * self.settings.get('units')
