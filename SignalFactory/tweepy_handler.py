@@ -23,7 +23,7 @@ import datetime
 
 class oandaWrapper(object):
  def __init__(self):
-  confname = '../settings_v20.conf'
+  confname = '../../settings_v20.conf'
   config = configparser.ConfigParser()
   config.read(confname)
   self.settings = {}
@@ -111,7 +111,7 @@ class MyListener(object):
         return True
 if __name__ == '__main__': 
  #oanda = oandaWrapper()
- confname = '../tweepy.conf'
+ confname = '../../tweepy.conf'
  config = configparser.ConfigParser()
  config.read(confname)
  consumer_key = config.get('tweepy','consumer_key')
