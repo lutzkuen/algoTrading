@@ -107,20 +107,20 @@ class controller(object):
         bullish = [sma < price for sma in smas] == [True, True, False]
         bearish = [sma > price for sma in smas] == [True, True, False]
         if bullish:
-            print ins + ' is bullish'
+            print(ins + ' is bullish')
             direction = 1
         if bearish:
-            print ins + ' is bearish'
+            print(ins + ' is bearish')
             direction = -1
         if not bullish and not bearish:
-            print ins + ' no cclear signal, dont touch'
+            print(ins + ' no clear signal, dont touch')
             return
 
         # check whether there is an open trade
 
         if len([trade for trade in self.trades if trade.instrument
                == ins and trade.currentUnits * direction > 0]) > 0:
-            print 'Skipping ' + ins
+            print('Skipping ' + ins)
             return
         pipLoc = self.getPipSize(ins)
         pipVal = 10 ** (-pipLoc + 1)
