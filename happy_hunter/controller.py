@@ -127,8 +127,35 @@ class controller(object):
                          'price': sl,
                          'timeInForce': 'GTC'
                          }}}
-        
-        
+        if [lhll, low12, atrcond ] == [True, True, True]:
+            condition_triggered.append('A1')
+			entry = np.float(self.candles[1].get('h')) + pipVal + spread
+            tp = entry + direction * pipVal * self.settings.get('takeProfit')
+            sl = entry - direction * pipVal * self.settings.get('stopLoss')
+            units = self.settings.get('units')
+            # round off for the v20 api to accept the stops
+            fstr = '30.' + str(pipLoc) + 'f'
+            tp = format(tp, fstr).strip()
+            sl = format(sl, fstr).strip()
+            entry = format(entry, fstr).strip()
+		    pipLoc = self.getPipSize(ins)
+            pipVal = 10**(-pipLoc+1)
+            expiry = datetime.datetime.now() + datetime.timedelta(hours = 3)
+            args = {
+                 'order': {
+                     'instrument': ins,
+                     'units': units,
+                     'price': entry,
+                     'type': 'STOP',
+                     'timeInForce': 'GTD',
+                     'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                     'takeProfitOnFill': {
+                         'price': tp,
+                         'timeInForce': 'GTC'},
+                     'stopLossOnFill': {
+                         'price': sl,
+                         'timeInForce': 'GTC'
+                         }}}
         
         ticket = self.oanda.order.create(
                   self.settings.get('account_id'), **args)
