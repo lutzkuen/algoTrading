@@ -16,11 +16,11 @@ Author: Lutz Kuenneke, 12.07.2018
 
 from threeducks.controller import controller
 # just some currencies that have been trending a few times in the past imho
-#allowed_ins = ['EUR_USD', 'GBP_USD', 'USD_CAD', 'AUD_USD', 'USD_JPY', 'EUR_JPY']
+allowed_ins = ['EUR_USD', 'GBP_USD', 'USD_CAD', 'AUD_USD', 'USD_JPY', 'EUR_JPY','NZD_JPY']
 ## add some commodities
-#allowed_ins.append('WHEAT_USD')
-#allowed_ins.append('CORN_USD')
-#allowed_ins.append('SOYBN_USD')
-cont = controller('/home/ubuntu/settings_threeducks.conf')
-allowed_ins = [ins.name for ins in cont.allowed_ins]
+allowed_ins.append('WHEAT_USD')
+allowed_ins.append('CORN_USD')
+allowed_ins.append('SOYBN_USD')
+cont = controller('/home/ubuntu/settings_threeducks_real.conf')
+#allowed_ins = [ins.name for ins in cont.allowed_ins]
 returns = [cont.checkIns(ins) for ins in allowed_ins]
