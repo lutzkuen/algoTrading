@@ -44,6 +44,7 @@ class controller(object):
         self.settings['v20_host'] = config.get('demo', 'hostname')
         self.settings['v20_port'] = config.get('demo', 'port')
         self.settings['stopLoss'] = int(config.get('ducks', 'stopLoss'))
+        self.settings['account_risk'] = int(config.get('ducks', 'account_risk'))
         self.settings['takeProfit'] = int(config.get('ducks',
                 'takeProfit'))
         self.settings['units'] = int(config.get('ducks', 'units'))
@@ -57,6 +58,45 @@ class controller(object):
         self.trades = \
             self.oanda.trade.list_open(self.settings.get('account_id'
                 )).get('trades', '200')
+    def getConversion(self, leadingCurr):
+        # get conversion rate to account currency
+        accountCurr = 'EUR'
+        # trivial case
+        if leadingCurr == accountCurr:
+            return 1
+        # try direct conversion
+        for ins in self.allowed_ins:
+            if leadingCurr in ins.name and accountCurr in ins.name:
+                price = self.getPrice(ins.name)
+                if ins.name.split('_')[0] == accountCurr:
+                    return price
+                else:
+                    return 1.0 / price
+        # try conversion via usd
+        eurusd = self.getPrice('EUR_USD')
+        for ins in self.allowed_ins:
+            if leadingCurr in ins.name and 'USD' in ins.name:
+                price = self.getPrice(ins.name)
+                if ins.name.split('_')[0] == 'USD':
+                    return price / eurusd
+                else:
+                    return 1.0 / (price * eurusd)
+        print('CRITICAL: Could not convert ' + leadingCurr + ' to EUR')
+        return None
+    def getUnits(self, dist, ins):
+        # get the number of units to trade for a given pair
+        if dist == 0:
+            return 0
+        leadingCurr = ins.split('_')[0]
+        price = self.getPrice(ins)
+        # each trade should risk 1% of NAV at SL at most. Usually it will range
+        # around 0.1 % - 1 % depending on expectation value
+        targetExp = self.settings.get('account_risk')*0.01
+        conversion = self.getConversion(leadingCurr)
+        multiplier = min(price / dist, 100) # no single trade can be larger than the account NAV
+        if not conversion:
+            return 0  # do not place a trade if conversion fails
+        return math.floor(multiplier * targetExp * conversion )
 
     def getPipSize(self, ins):
         pipLoc = [_ins.pipLocation for _ins in self.allowed_ins
@@ -125,13 +165,18 @@ class controller(object):
         pipLoc = self.getPipSize(ins)
         pipVal = 10 ** (-pipLoc + 1)
         entry = smas[2]  # use third ducks sma as entr
-        tp = entry + direction * pipVal * self.settings.get('takeProfit'
-                )
-        sl = entry - direction * pipVal * self.settings.get('stopLoss')
+        sl = smas[1] # take scnd duck as stop
+        tp = entry + (entry - sl)/0.618 # some serious FIB stuff
+        if abs(sl-entry)/pipVal < self.settings.get('stopLoss'):
+            tp = entry + direction * pipVal * self.settings.get('takeProfit')
+            sl = entry - direction * pipVal * self.settings.get('stopLoss')
         units = direction * self.settings.get('units')
 
         # round off for the v20 api to accept the stops
 
+        units = self.getUnits(abs(sl-entry),ins) * direction
+        if abs(units) < 1:
+            return
         fstr = '30.' + str(pipLoc) + 'f'
         tp = format(tp, fstr).strip()
         sl = format(sl, fstr).strip()
