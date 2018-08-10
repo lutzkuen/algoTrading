@@ -158,18 +158,16 @@ class controller(object):
 
         # check whether there is an open trade
 
-        if len([trade for trade in self.trades if trade.instrument
-               == ins and trade.currentUnits * direction > 0]) > 0:
-            print('Skipping ' + ins)
-            return
         pipLoc = self.getPipSize(ins)
         pipVal = 10 ** (-pipLoc + 1)
         entry = smas[2]  # use third ducks sma as entr
         sl = smas[1] # take scnd duck as stop
+        sldist = abs(price - sl)
         tp = entry + (entry - sl)/0.618 # some serious FIB stuff
         if abs(sl-entry)/pipVal < self.settings.get('stopLoss'):
             tp = entry + direction * pipVal * self.settings.get('takeProfit')
             sl = entry - direction * pipVal * self.settings.get('stopLoss')
+            sldist = abs(entry - sl)
         units = direction * self.settings.get('units')
 
         # round off for the v20 api to accept the stops
@@ -177,9 +175,17 @@ class controller(object):
         units = self.getUnits(abs(sl-entry),ins) * direction
         if abs(units) < 1:
             return
+        currentUnits = np.sum([float(trade.currentUnits) for trade in self.trades if trade.instrument == ins])
+        if currentUnits * units > 0 and abs(units)< 2*abs(currentUnits):
+            print('Skipping ' + ins)
+            return
+        if units*currentUnits> 0 and currentUnits > 0:
+            units -= currentUnits
+
         fstr = '30.' + str(pipLoc) + 'f'
         tp = format(tp, fstr).strip()
         sl = format(sl, fstr).strip()
+        sldist = format(sldist, fstr).strip()
         entry = format(entry, fstr).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
         args = {'order': {
@@ -190,6 +196,7 @@ class controller(object):
             'timeInForce': 'GTD',
             'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
             'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+            'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'},
             'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
             }}
         ticket = self.oanda.order.create(self.settings.get('account_id'
