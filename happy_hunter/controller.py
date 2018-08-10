@@ -75,11 +75,41 @@ class controller(object):
 	    return np.float(self.candles[0].get('h')) < np.float(self.candles[1].get('h')) and np.float(self.candles[0].get('l')) < np.float(self.candles[1].get('l'))
     def checkHHHL(self):
 	    return np.float(self.candles[0].get('h')) > np.float(self.candles[1].get('h')) and np.float(self.candles[0].get('l')) > np.float(self.candles[1].get('l'))
-    
+    def longEntry(self, hours_to_expiry, pipVal):
+	    entry = np.float(self.candles[1].get('h')) + pipVal + spread
+        tp = entry + direction * pipVal * self.settings.get('takeProfit')
+        sl = entry - direction * pipVal * self.settings.get('stopLoss')
+        units = self.settings.get('units')
+        # round off for the v20 api to accept the stops
+        fstr = '30.' + str(pipLoc) + 'f'
+        tp = format(tp, fstr).strip()
+        sl = format(sl, fstr).strip()
+        entry = format(entry, fstr).strip()
+		pipLoc = self.getPipSize(ins)
+        pipVal = 10**(-pipLoc+1)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours = hours_to_expiry)
+        args = {
+                'order': {
+                    'instrument': ins,
+                    'units': units,
+                    'price': entry,
+                    'type': 'STOP',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'takeProfitOnFill': {
+                        'price': tp,
+                        'timeInForce': 'GTC'},
+                    'stopLossOnFill': {
+                        'price': sl,
+                        'timeInForce': 'GTC'
+                        }}}
+		ticket = self.oanda.order.create(
+                  self.settings.get('account_id'), **args)
+        ticket_json = json.loads(ticket.raw_body)
+        print(ticket_json)
     def checkIns(self, ins):
 	    self.atr = self.getATRH(ins)
         price = self.getPrice(ins)
-        # get the ducks
 
 		#If an LHLL Patterns Forms
 	    lhll = self.checkLHLL():
@@ -93,25 +123,26 @@ class controller(object):
 		monlow2 = ( np.float(self.candles[2].get('l')) > np.float(self.candles[1].get('l')) and np.float(self.candles[1].get('l')) > np.float(self.sbar.get('l'))):
         #And if (Bar2 High > Bar1 High > Sbar High) is TRUE
 		monhigh2 = ( np.float(self.candles[2].get('h')) > np.float(self.candles[1].get('h')) and np.float(self.candles[1].get('h')) > np.float(self.sbar.get('h'))):
-		atrcond = np.float(self.candles[1].get('h')) - np.float(self.sbar.get('l')) > 1.5*self.atr:
+		
 		condition_triggered = []
 		pipLoc = self.getPipSize(ins)
         pipVal = 10**(-pipLoc+1)
 		spread = self.getSpread(ins)
-		if [lhll, low12, atrcond ] == [True, True, False]: # A1
+		if [lhll, low12 ] == [True, True, False]: # A1
 		    condition_triggered.append('A1')
-			entry = np.float(self.candles[1].get('h')) + pipVal + spread
-            tp = entry + direction * pipVal * self.settings.get('takeProfit')
-            sl = entry - direction * pipVal * self.settings.get('stopLoss')
-            units = self.settings.get('units')
-            # round off for the v20 api to accept the stops
-            fstr = '30.' + str(pipLoc) + 'f'
-            tp = format(tp, fstr).strip()
-            sl = format(sl, fstr).strip()
-            entry = format(entry, fstr).strip()
-		    pipLoc = self.getPipSize(ins)
-            pipVal = 10**(-pipLoc+1)
-            expiry = datetime.datetime.now() + datetime.timedelta(hours = 6)
+		    self.longEntry(6)
+		if [lhll, low12 ] == [True, True, True]: # A2
+		    condition_triggered.append('A1')
+		    self.longEntry(3)	
+        if [lhll, low12, low4, monlow2, monhigh2 ] == [True, False, True, True, True ]: # A3
+			if [monlow2, monhigh2 ] == [ True, True ] # A3
+			    condition_triggered.append('A3')
+                expiry = datetime.datetime.now() + datetime.timedelta(hours = 6)
+			if [monlow2, monhigh2 ] == [ False, False ] # A4
+			    condition_triggered.append('A4')
+                expiry = datetime.datetime.now() + datetime.timedelta(hours = 4)
+			if not monlow2 == monhigh2: # no pattern found in this case
+			    return 
             args = {
                  'order': {
                      'instrument': ins,
@@ -127,9 +158,8 @@ class controller(object):
                          'price': sl,
                          'timeInForce': 'GTC'
                          }}}
-        if [lhll, low12, atrcond ] == [True, True, True]:
-            condition_triggered.append('A1')
-			entry = np.float(self.candles[1].get('h')) + pipVal + spread
+		if [ lhll, low12, low4, atrcond ] = [True, False, False, False ]: # A5
+		    entry = np.float(self.candles[1].get('h')) + pipVal + spread
             tp = entry + direction * pipVal * self.settings.get('takeProfit')
             sl = entry - direction * pipVal * self.settings.get('stopLoss')
             units = self.settings.get('units')
@@ -140,7 +170,14 @@ class controller(object):
             entry = format(entry, fstr).strip()
 		    pipLoc = self.getPipSize(ins)
             pipVal = 10**(-pipLoc+1)
-            expiry = datetime.datetime.now() + datetime.timedelta(hours = 3)
+			if [monlow2, monhigh2 ] == [ True, True ] # A3
+			    condition_triggered.append('A3')
+                expiry = datetime.datetime.now() + datetime.timedelta(hours = 6)
+			if [monlow2, monhigh2 ] == [ False, False ] # A4
+			    condition_triggered.append('A4')
+                expiry = datetime.datetime.now() + datetime.timedelta(hours = 4)
+			if not monlow2 == monhigh2: # no pattern found in this case
+			    return 
             args = {
                  'order': {
                      'instrument': ins,
@@ -156,8 +193,5 @@ class controller(object):
                          'price': sl,
                          'timeInForce': 'GTC'
                          }}}
+		
         
-        ticket = self.oanda.order.create(
-                  self.settings.get('account_id'), **args)
-        ticket_json = json.loads(ticket.raw_body)
-        #print(ticket_json)
