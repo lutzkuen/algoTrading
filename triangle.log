@@ -1,0 +1,18 @@
+High line
+0
+2.9427
+29
+2.75957
+-0.00499964285714286
+30
+2.792710714285714
+low line
+13
+2.65008
+29
+2.71477
+0.0032566666666666855
+30
+2.7054433333333336
+{'orderCreateTransaction': {'type': 'STOP_ORDER', 'instrument': 'XCU_USD', 'units': '18', 'price': '2.79769', 'timeInForce': 'GTD', 'gtdTime': '2018-08-13T07:13:17.265419000Z', 'triggerCondition': 'DEFAULT', 'partialFill': 'DEFAULT', 'positionFill': 'DEFAULT', 'takeProfitOnFill': {'price': '2.87635', 'timeInForce': 'GTC'}, 'stopLossOnFill': {'price': '2.74908', 'timeInForce': 'GTC'}, 'reason': 'CLIENT_ORDER', 'id': '2045', 'accountID': '101-004-8229258-008', 'userID': 8229258, 'batchID': '2045', 'requestID': '24448704105244930', 'time': '2018-08-12T07:13:17.285013828Z'}, 'relatedTransactionIDs': ['2045'], 'lastTransactionID': '2045'}
+{'orderCreateTransaction': {'type': 'STOP_ORDER', 'instrument': 'XCU_USD', 'units': '-18', 'price': '2.70046', 'timeInForce': 'GTD', 'gtdTime': '2018-08-13T07:13:17.265419000Z', 'triggerCondition': 'DEFAULT', 'partialFill': 'DEFAULT', 'positionFill': 'DEFAULT', 'takeProfitOnFill': {'price': '2.62180', 'timeInForce': 'GTC'}, 'stopLossOnFill': {'price': '2.74908', 'timeInForce': 'GTC'}, 'reason': 'CLIENT_ORDER', 'id': '2046', 'accountID': '101-004-8229258-008', 'userID': 8229258, 'batchID': '2046', 'requestID': '24448704105244956', 'time': '2018-08-12T07:13:17.314444728Z'}, 'relatedTransactionIDs': ['2046'], 'lastTransactionID': '2046'}

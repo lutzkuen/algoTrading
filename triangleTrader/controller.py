@@ -19,27 +19,27 @@ import v20
 from v20.request import Request
 import requests
 import configparser
+import code
 import math
 import datetime
 import numpy as np
 
 def tdelta_to_float(tdelta):
  secsperday = 24*60*60
- return float(tdelta.days + tdelta.seconds/secsperday)
+ return float(tdelta.days)
 
 class controller(object):
- def __init__(self, confname):
+ def __init__(self, confname,_type):
   config = configparser.ConfigParser()
   config.read(confname)
   self.settings = {}
-  self.settings['domain'] = config.get('demo',
+  self.settings['domain'] = config.get(_type,
           'streaming_hostname')
-  self.settings['access_token'] = config.get('demo', 'token')
-  self.settings['account_id'] = config.get('demo',
+  self.settings['access_token'] = config.get(_type, 'token')
+  self.settings['account_id'] = config.get(_type,
           'active_account')
-  self.settings['v20_host'] = config.get('demo', 'hostname')
-  self.settings['v20_port'] = config.get('demo', 'port')
-  self.settings['risk_factor'] = int(config.get('triangle', 'risk_factor'))
+  self.settings['v20_host'] = config.get(_type, 'hostname')
+  self.settings['v20_port'] = config.get(_type, 'port')
   self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
   self.oanda = v20.Context(self.settings.get('v20_host'),
                            port=self.settings.get('v20_port'),
@@ -97,6 +97,15 @@ class controller(object):
   if not len(pipLoc) == 1:
       return None
   return -pipLoc[0] + 1
+ def getSpread(self, ins):
+  args = {'instruments': ins}
+  nprice = self.oanda.pricing.get(self.settings.get('account_id'
+          ), **args)
+  pobj = json.loads(nprice.raw_body)
+  spread = abs(float(pobj.get('prices')[0].get('bids')[0].get('price'
+           )) - float(pobj.get('prices')[0].get('asks'
+           )[0].get('price')))
+  return spread
 
  def getPrice(self, ins):
   args = {'instruments': ins}
@@ -116,69 +125,89 @@ class controller(object):
   request.set_path_param('count', numCandles)
   request.set_path_param('price', 'MBA')
   request.set_path_param('granularity', granularity)
+  #print(granularity)
   response = self.oanda.request(request)
+  #print(response.raw_body)
   candles = json.loads(response.raw_body).get('candles')
+  if not candles:
+   return None
   upperFractals = []
   lowerFractals = []
   fractRange = 2
-  for i in range(fractRange,len(candles)-fractRange):
-   isupper = True
-   islower = True
-   for k in range(i-fractRange,i+fractRange):
-    if i == k:
-     continue
-    if float(candles[i].get('ask').get('h')) < float(candles[k].get('ask').get('h')):
-     isupper = False
-    if float(candles[i].get('bid').get('l')) > float(candles[k].get('bid').get('l')):
-     islower = False
-   if isupper:
-    upperFractals.append(candles[i])
-   if islower:
-    lowerFractals.append(candles[i])
-   if len(upperFractals) < 2 or len(lowerFractals) < 2:
-    print('Not enough Fractal points in set')
-    return None
-  x = datetime.datetime.now() 
+  highs = [candle.get('ask').get('h') for candle in candles[:-1]]
+  lows = [candle.get('bid').get('l') for candle in candles[:-1]]
+  x = len(candles) #datetime.datetime.strptime(candles[-1].get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
   # get the upper line 
-  x1 = datetime.strptime(upperFractals[-2].get('time'),'%Y-%m-%dT%H:%M:%S.%fZ')
-  y1 = float(upperFractals[-2]).get('ask').get('h')
-  x2 = datetime.strptime(upperFractals[-1].get('time'),'%Y-%m-%dT%H:%M:%S.%fZ')
-  y2 = float(upperFractals[-1]).get('ask').get('h')
-  tdelta = x2 - x1
-  mup = (y2-y1)/tdelta_to_float(tdelta)
-  fupper = y1 + tdelta_to_float(x-x1)*mup
+  y1 = 0.0
+  mbest = -math.inf
+  fupper = None
+  n = 0
+  for candle in candles:
+   if float(candle.get('ask').get('h')) >= y1:
+    x1 = n # datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
+    y1 = float(candle.get('ask').get('h'))
+    mbest = -math.inf
+    fupper = None
+   else:
+    x2 = n # datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
+    y2 = float(candle.get('ask').get('h'))
+    tdelta = x2 - x1
+    mup = (y2-y1)/float(tdelta)
+    if mup > mbest:
+     mbest = mup
+     fupper = y1 + float(x-x1)*mup
+   n += 1
   # get the lower line
-  x1 = datetime.strptime(lowerFractals[-2].get('time'),'%Y-%m-%dT%H:%M:%S.%fZ')
-  y1 = float(lowerFractals[-2]).get('ask').get('h')
-  x2 = datetime.strptime(lowerFractals[-1].get('time'),'%Y-%m-%dT%H:%M:%S.%fZ')
-  y2 = float(lowerFractals[-1]).get('ask').get('h')
-  tdelta = x2 - x1
-  mlow = (y2-y1)/tdelta_to_float(tdelta)
-  flower = y1 + tdelta_to_float(x-x1)*mlow
-  if mup > 0 or mlow < 0:
+  y1 = math.inf
+  mbest = math.inf
+  flower = None
+  n = 0
+  for candle in candles:
+   if float(candle.get('bid').get('l')) <= y1:
+    x1 = n# datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
+    y1 = float(candle.get('bid').get('l'))
+    mbest = math.inf
+    flower = None
+   else:
+    x2 = n#  datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
+    y2 = float(candle.get('bid').get('l'))
+    tdelta = x2 - x1
+    mup = (y2-y1)/float(tdelta)
+    if mup < mbest:
+     mbest = mup
+     flower = y1 + float(x-x1)*mup
+   n += 1
+  #print(ins + ' ' + str(flower) + ' ' + str(fupper))
+  if not fupper or not flower:
    return None # in this case not a triangle formation  
   
   return [flower, fupper]
 
  def checkIns(self, ins):
+  if len([trade for trade in self.trades if trade.instrument == ins]) > 0:
+   print('Skipping ' + ins + ' found open trade')
+   return None
   price = self.getPrice(ins)
+  spread = self.getSpread(ins)
   pipLoc = self.getPipSize(ins)
   pipVal = 10 ** (-pipLoc + 1)
-  moveout = 4
-  granularity = 'D1'
-  numCandles = 50
+  moveout = 2
+  granularity = 'D'
+  numCandles = 30
   triangle = self.getTriangle(ins,granularity,numCandles)
   if not triangle:
    return None # could not get triangle formation
   
-  upperentry = triangle[1]+moveout*pipVal
-  lowerentry = triangle[0]-moveout*pipVal
+  upperentry = triangle[1]+moveout*spread
+  lowerentry = triangle[0]-moveout*spread
   sl = (triangle[1]+triangle[0])/2
   tpupper = upperentry + (upperentry - sl)/0.618 # some serious FIB stuff
   tplower = lowerentry + (lowerentry - sl)/0.618 # some serious FIB stuff
   upperunits = self.getUnits(abs(sl-upperentry),ins)
-  lowerunits = self.getUnits(abs(sl-lowerentry),ins)
-  
+  lowerunits = -self.getUnits(abs(sl-lowerentry),ins)
+  if price > upperentry or price < lowerentry or upperunits == 0 or lowerunits == 0:
+   print('Skipping ' + ins + '. ' + str(price) + ' ' + str(upperentry) + ' ' + str(lowerentry) + ' ' + str(upperunits) + ' ' + str(lowerunits))
+   return None # skip if not inside triangle
 
   fstr = '30.' + str(pipLoc) + 'f'
   tpupper = format(tpupper, fstr).strip()
@@ -196,7 +225,6 @@ class controller(object):
       'timeInForce': 'GTD',
       'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
       'takeProfitOnFill': {'price': tpupper, 'timeInForce': 'GTC'},
-      'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
   ticket = self.oanda.order.create(self.settings.get('account_id'
@@ -211,7 +239,6 @@ class controller(object):
       'timeInForce': 'GTD',
       'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
       'takeProfitOnFill': {'price': tplower, 'timeInForce': 'GTC'},
-      'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
   ticket = self.oanda.order.create(self.settings.get('account_id'

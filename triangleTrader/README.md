@@ -1,9 +1,6 @@
-# Three_Ducks_BP
-Implementation of the three ducks fx strategy as found on babypips
+# Triangle Trader
+WIll look for triangle formations on the 30D Timeframe and place STOP Orders to catch the breakouts
 
 Use at your own risk!
 
-Trendfollowing using three different timeframes. Check out the full description here:
-https://forums.babypips.com/t/the-3-ducks-trading-system/6430
-
-The system is not my work, only the code is produced by me. The system was originally presented by Captain Currency
+There is no attempt to manage the trade after the STOP has been triggered. This has to be done with a different script
