@@ -60,7 +60,7 @@ class controller(object):
          if icandle:
           print(ins + ' ' + time + ' already in dataset')
           continue
-         cobj = { 'ins': ins, 'date': time, 'open': candle.get('mid').get('o'), 'close': candle.get('mid').get('c'), 'high': candle.get('mid').get('h'), 'low': candle.get('mid').get('l') }
+         cobj = { 'ins': ins, 'date': time, 'open': candle.get('mid').get('o'), 'close': candle.get('mid').get('c'), 'high': candle.get('mid').get('h'), 'low': candle.get('mid').get('l'), 'volume': candle.get('volume') }
          print('Inserting ' + str(cobj))
          self.table.insert(cobj)
     def getCandles(
@@ -77,6 +77,6 @@ class controller(object):
         request.set_path_param('price', 'M')
         request.set_path_param('granularity', granularity)
         response = self.oanda.request(request)
-        print(response.raw_body)
+        #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')

@@ -43,5 +43,10 @@ allowed_ins = ['XCU_USD',
                'NATGAS_USD',
                'SOYBN_USD',
                'USD_CNH',
-               'NZD_JPY']
+               'NZD_JPY',
+               'GBP_ZAR',
+               'SUGAR_USD',
+               'ZAR_JPY',
+               'EUR_PLN',
+               'USD_MXN']
 returns = [cont.checkIns(ins) for ins in allowed_ins]
