@@ -51,6 +51,8 @@ class controller(object):
   self.trades = \
       self.oanda.trade.list_open(self.settings.get('account_id'
           )).get('trades', '200')
+  self.minbars = 10
+  self.cpers = {}
  def getConversion(self, leadingCurr):
   # get conversion rate to account currency
   accountCurr = 'EUR'
@@ -116,19 +118,59 @@ class controller(object):
            )) + float(pobj.get('prices')[0].get('asks'
            )[0].get('price'))) / 2.0
   return price
-
- def getTriangle(self,ins,granularity,numCandles):
+ def manageTrades(self):
+  # this method checks all open trades, moves stops and closes were there was no favourable movement
+  for trade in self.trades:
+   rsi = self.getRSI(trade.instrument, 'D', 5)
+   rsishort = self.getRSI(trade.instrument, 'D', 3)
+   if trade.currentUnits < 0 and ( rsi > 0.5 or rsishort < 0.2):
+    print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
+    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+   if trade.currentUnits > 0 and ( rsi < 0.5 or rsishort > 0.8 ):
+    print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
+    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+ def getRSI(self, ins, granularity, numCandles):
   request = Request('GET',
                     '/v3/instruments/{instrument}/candles?count={count}&price={price}&granularity={granularity}'
                     )
   request.set_path_param('instrument', ins)
   request.set_path_param('count', numCandles)
-  request.set_path_param('price', 'MBA')
+  request.set_path_param('price', 'M')
   request.set_path_param('granularity', granularity)
   #print(granularity)
   response = self.oanda.request(request)
   #print(response.raw_body)
-  candles = json.loads(response.raw_body).get('candles')
+  try:
+   candles = json.loads(response.raw_body).get('candles')[-numCandles:]
+  except:
+   print('Failed to get RSI')
+   return None
+  delta = [float(c.get('mid').get('c')) - float(c.get('mid').get('o')) for c in candles]
+  sup = sum([upval for upval in delta if upval > 0])
+  flo = sum([upval for upval in delta if upval < 0])
+  if flo == 0:
+   return 1
+  rsi = 1-1/(1+sup/flo)
+  return rsi
+ def getTriangle(self,ins,granularity,numCandles,spread):
+  if numCandles < self.minbars:
+   return None
+  if ins in self.cpers.keys():
+   candles = [candle for candle in self.cpers[ins].get('candles')[-numCandles:] if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
+  else:
+   
+   request = Request('GET',
+                     '/v3/instruments/{instrument}/candles?count={count}&price={price}&granularity={granularity}'
+                     )
+   request.set_path_param('instrument', ins)
+   request.set_path_param('count', numCandles)
+   request.set_path_param('price', 'MBA')
+   request.set_path_param('granularity', granularity)
+   #print(granularity)
+   response = self.oanda.request(request)
+   #print(response.raw_body)
+   self.cpers[ins] = json.loads(response.raw_body)
+   candles = [candle for candle in json.loads(response.raw_body).get('candles') if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
   if not candles:
    return None
   upperFractals = []
@@ -148,6 +190,7 @@ class controller(object):
     y1 = float(candle.get('ask').get('h'))
     mbest = -math.inf
     fupper = None
+    confirmed = False
    else:
     x2 = n # datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
     y2 = float(candle.get('ask').get('h'))
@@ -156,6 +199,15 @@ class controller(object):
     if mup > mbest:
      mbest = mup
      fupper = y1 + float(x-x1)*mup
+     confirmed = False
+     nc = 0
+     for cc in candles:
+      if nc == x1 or nc == x2:
+       continue
+      festim = y1 + float(nc-x1)*mup
+      if festim - float(cc.get('ask').get('h')) < 5*spread:
+       confirmed = True
+      nc += 1
    n += 1
   # get the lower line
   y1 = math.inf
@@ -168,6 +220,7 @@ class controller(object):
     y1 = float(candle.get('bid').get('l'))
     mbest = math.inf
     flower = None
+    confirmedl = False
    else:
     x2 = n#  datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
     y2 = float(candle.get('bid').get('l'))
@@ -176,10 +229,19 @@ class controller(object):
     if mup < mbest:
      mbest = mup
      flower = y1 + float(x-x1)*mup
+     confirmedl = False
+     nc = 0
+     for cc in candles:
+      if nc == x1 or nc == x2:
+       continue
+      festim = y1 + float(nc-x1)*mup
+      if float(cc.get('bid').get('l')) - festim < 5*spread:
+       confirmedl = True
+      nc += 1
    n += 1
   #print(ins + ' ' + str(flower) + ' ' + str(fupper))
-  if not fupper or not flower:
-   return None # in this case not a triangle formation  
+  if not fupper or not flower or not confirmed or not confirmedl:
+   return self.getTriangle(ins,granularity,numCandles-1,spread)
   
   return [flower, fupper]
 
@@ -193,9 +255,11 @@ class controller(object):
   pipVal = 10 ** (-pipLoc + 1)
   moveout = 2
   granularity = 'D'
-  numCandles = 30
-  triangle = self.getTriangle(ins,granularity,numCandles)
+  numCandles = 40
+  triangle = self.getTriangle(ins,granularity,numCandles,spread)
   if not triangle:
+   #triangle = self.getTriangle(ins,'H4',180,spread)
+   #if not triangle:
    return None # could not get triangle formation
   
   upperentry = triangle[1]+moveout*spread
