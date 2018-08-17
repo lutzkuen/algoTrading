@@ -51,7 +51,7 @@ class controller(object):
   self.trades = \
       self.oanda.trade.list_open(self.settings.get('account_id'
           )).get('trades', '200')
-  self.minbars = 10
+  self.minbars = 5
   self.cpers = {}
  def getConversion(self, leadingCurr):
   # get conversion rate to account currency

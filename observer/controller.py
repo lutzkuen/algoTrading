@@ -45,7 +45,7 @@ class controller(object):
         self.allowed_ins = \
             self.oanda.account.instruments(self.settings.get('account_id'
                 )).get('instruments', '200')
-        self.db = dataset.connect('sqlite:////home/ubuntu/data/barsave.db')
+        self.db = dataset.connect('sqlite:////home/ubuntu/algoTrading/barsave.db')
         self.table = self.db['dailycandles']
     def retrieveData(self, numCandles):
         for ins in self.allowed_ins:
