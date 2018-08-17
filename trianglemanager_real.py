@@ -21,7 +21,7 @@ from triangleTrader.controller import controller
 #allowed_ins.append('WHEAT_USD')
 #allowed_ins.append('CORN_USD')
 #allowed_ins.append('SOYBN_USD')
-cont = controller('/home/ubuntu/settings_triangle_real.conf','live')
+cont = controller('/home/ubuntu/settings_triangle.conf','live')
 #allowed_ins = [ins.name for ins in cont.allowed_ins]
 ##allowed_ins = ['XCU_USD', 'WHEAT_USD', 'CORN_USD','USD_JPY','USD_CAD','EUR_USD','GBP_USD','AUD_USD','AUD_JPY','EUR_JPY','BCO_USD','WTI_USD','GBP_AUD','GBP_ZAR',
 #returns = [cont.checkIns(ins) for ins in allowed_ins]

@@ -156,7 +156,8 @@ class controller(object):
   if numCandles < self.minbars:
    return None
   if ins in self.cpers.keys():
-   candles = [candle for candle in self.cpers[ins].get('candles')[-numCandles:] if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
+   candles = self.cpers[ins].get('candles')[-numCandles:]
+   #candles = [candle for candle in self.cpers[ins].get('candles')[-numCandles:] if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
   else:
    
    request = Request('GET',
@@ -170,7 +171,8 @@ class controller(object):
    response = self.oanda.request(request)
    #print(response.raw_body)
    self.cpers[ins] = json.loads(response.raw_body)
-   candles = [candle for candle in json.loads(response.raw_body).get('candles') if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
+   candles = json.loads(response.raw_body).get('candles')
+   #candles = [candle for candle in json.loads(response.raw_body).get('candles') if bool(candle.get('complete') )]# Der aktuell begonnene Tag soll ignoriert werden
   if not candles:
    return None
   upperFractals = []
