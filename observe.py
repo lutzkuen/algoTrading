@@ -1,3 +1,3 @@
 from observer import controller
 cont = controller.controller('/home/ubuntu/settings_triangle.conf')
-cont.retrieveData(500)
+cont.retrieveData(5)

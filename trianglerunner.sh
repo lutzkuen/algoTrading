@@ -1,3 +1,3 @@
 #!/bin/bash
-/home/ubuntu/anaconda3/bin//python3 /home/ubuntu/algoTrading/trianglerunner_real.py
-/home/ubuntu/anaconda3/bin//python3 /home/ubuntu/algoTrading/trianglerunner.py
+/usr/bin/python3 /home/ubuntu/algoTrading/trianglerunner_real.py
+/usr/bin/python3 /home/ubuntu/algoTrading/trianglerunner.py
