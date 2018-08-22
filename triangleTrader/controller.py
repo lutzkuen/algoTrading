@@ -258,7 +258,7 @@ class controller(object):
   moveout = 2
   granularity = 'D'
   numCandles = 40
-  triangle = self.getTriangle(ins,granularity,numCandles,spread)
+  triangle = self.getTriangle(ins,granularity,numCandles,0.0005*price)
   if not triangle:
    #triangle = self.getTriangle(ins,'H4',180,spread)
    #if not triangle:
