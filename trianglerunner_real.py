@@ -14,13 +14,7 @@ Use at own risk
 Author: Lutz Kuenneke, 12.07.2018
 """
 
-from triangleTrader.controller import controller
-# just some currencies that have been trending a few times in the past imho
-#allowed_ins = ['EUR_USD', 'GBP_USD', 'USD_CAD', 'AUD_USD', 'USD_JPY', 'EUR_JPY']
-## add some commodities
-#allowed_ins.append('WHEAT_USD')
-#allowed_ins.append('CORN_USD')
-#allowed_ins.append('SOYBN_USD')
+from algoTrader.controller import controller
 cont = controller('/home/ubuntu/settings_triangle.conf','live')
 #allowed_ins = [ins.name for ins in cont.allowed_ins]
 allowed_ins = ['XCU_USD',
