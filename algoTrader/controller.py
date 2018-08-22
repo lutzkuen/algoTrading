@@ -54,7 +54,7 @@ class controller(object):
   if _type == 'demo':
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
   else:
-   self.indicators = [ triangle.indicator(self) ]
+   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
  def getConversion(self, leadingCurr):
   # get conversion rate to account currency
   accountCurr = 'EUR'

@@ -29,27 +29,28 @@ class indicator(object):
  def __init__(self, controller):
   self.minbars = 5
   self.controller = controller
- def getRSI(candles):
+ def getRSI(self,candles):
   delta = [float(c.get('mid').get('c')) - float(c.get('mid').get('o')) for c in candles]
   sup = sum([upval for upval in delta if upval > 0])
   flo = sum([upval for upval in delta if upval < 0])
   if flo == 0:
    return 1
   rsi = 1-1/(1+sup/flo)
- def getStoch(values):
+  return rsi
+ def getStoch(self,values):
   if min(values) < max(values):
    return (values[-1]-min(values))/(max(values)-min(values))
   else:
    return 0.5
  def getDivergence(self,ins,granularity,numCandles,window):
-  if window <= numCandles:
+  if window >= numCandles:
    return None
   candles = self.controller.getCandles(ins, granularity, numCandles)
   if not candles:
    return None
   # get the RSI array
-  rsi = [self.getRSI(candles[(i-window):window]) for i in range(window,numCandles)]
-  stoch = [self.getStoch(rsi[(i-window):window]) for i in range(window,numCandles)]
+  rsi = [self.getRSI(candles[(i-window):(i+1)]) for i in range(window,numCandles)]
+  stoch = [self.getStoch(rsi[(i-window):(i+1)]) for i in range(window,numCandles)]
   # periodic boundary conditions
   candles.append(candles[-2])
   candles.append(candles[-4])
@@ -59,7 +60,7 @@ class indicator(object):
   highs = []
   phigh = [c.get('ask').get('h') for c in candles]
   plow = [c.get('bid').get('l') for c in candles]
-  for i in range(3,len(candles)-3):
+  for i in range(3,len(stoch)-3):
    stochhigh = False
    stochlow = False
    pricehigh = False
@@ -79,29 +80,34 @@ class indicator(object):
     stochhigh = True
    if stoch[-i] <= min(stochbefore) and stoch[-i] < min(stochafter):
     stochlow = True
-   if phigh[-i] >= max(phbef) and phigh[-i] > max(phaft):
+   if phigh[-i] >= max(phbef) and phigh[-i] > max(plaft):
     pricehigh = True
-   if plow[-i] <= min(plbef) and plow[-i] < min(plhaft):
+   if plow[-i] <= min(plbef) and plow[-i] < min(plaft):
     pricelow = True
    if pricehigh and stochhigh:
     highs.append({'type': 'HH', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
+    #print(ins + ' has high at ' + str(candles[-i]))
    if pricelow and stochlow:
     lows.append({'type': 'LL', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
+    #print(ins + ' has low at ' + str(candles[-i]))
    if len(lows) >= 2 and len(highs) >= 2:
     break
-  sma10 = np.mean([c.get('mid').get('c') for c in candles[-10:]])
-  sma20 = np.mean([c.get('mid').get('c') for c in candles[-20:]])
+  sma10 = np.mean([float(c.get('mid').get('c')) for c in candles[-10:]])
+  sma20 = np.mean([float(c.get('mid').get('c')) for c in candles[-20:]])
+  #code.interact()
   if len(lows) < 2 or len(highs) < 2:
    return None
   # check for hidden bearish after regular bearish
   if lows[1].get('s') > lows[0].get('s') and lows[1].get('l') > lows[0].get('l') and lows[1].get('h') > lows[0].get('l'):#regular bearish
    if highs[1].get('s') < highs[0].get('s') and highs[1].get('l') > highs[0].get('l') and highs[1].get('h') > highs[0].get('h'):
     # go short
+    print(ins + ' bearish')
     if sma20 > sma10:
      return [sma20, sma10]
   # check for hidden bullish after regular bullish
   if highs[1].get('s') < highs[0].get('s') and highs[1].get('l') < highs[0].get('l') and highs[1].get('h') < highs[0].get('h'):
    if lows[1].get('s') > lows[0].get('s') and lows[1].get('l') < lows[0].get('l') and lows[1].get('h') < lows[0].get('l'):
+    print(ins + ' bullish')
     if sma20 < sma10:
      return [sma20, sma10]
   return None
@@ -123,7 +129,7 @@ class indicator(object):
    #triangle = self.getTriangle(ins,'H4',180,spread)
    #if not triangle:
    return None # could not get triangle formation
-  
+  print(ins +' '+str(diverge))
   sl = diverge[0]
   entry = diverge[1]
   tp = entry + ( entry - sl)/0.618
@@ -159,3 +165,4 @@ class indicator(object):
   ticket = self.controller.oanda.order.create(self.controller.settings.get('account_id'
           ), **args)
   ticket_json = json.loads(ticket.raw_body)
+  print(ticket_json)
