@@ -26,6 +26,11 @@ import numpy as np
 import algoTrader.triangle as triangle
 import algoTrader.divergence as divergence
 import algoTrader.sentiment as sentiment
+import matplotlib
+matplotlib.use('Agg')
+from mpl_finance import candlestick_ohlc
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
 
 
 class controller(object):
@@ -56,10 +61,35 @@ class controller(object):
           )).get('trades', '200')
   self.cpers = {}
   if _type == 'demo':
-   #self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
-   self.indicators = [triangle.indicator(self)]#, sentiment.indicator(self)]
+   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   #self.indicators = [ sentiment.indicator(self)]
   else:
    self.indicators = [ triangle.indicator(self) ]
+ def drawImage(self, ins, candles, lines):
+  fig = plt.figure()
+  ax1 = plt.subplot2grid((1,1), (0,0))
+  ohlc = []
+  n = 0
+  for c in candles:
+   #candle = converter(datetime.datetime.strptime(c.get('time')[:10],'%Y-%m-%d')), float(c.get('mid').get('o')), float(c.get('mid').get('h')), float(c.get('mid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
+   candle = n, float(c.get('mid').get('o')), float(c.get('ask').get('h')), float(c.get('bid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
+   ohlc.append(candle)
+   n+=1
+  candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
+  for line in lines:
+   plt.plot(line.get('xarr'),line.get('yarr'))
+  for label in ax1.xaxis.get_ticklabels():
+   label.set_rotation(45)
+  #ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
+  #ax1.xaxis.set_major_locator(mticker.MaxNLocator(10))
+  ax1.grid(True)
+  plt.xlabel('Date')
+  plt.ylabel('Price')
+  plt.title(ins)
+  #plt.legend()
+  plt.subplots_adjust(left=0.09, bottom=0.20, right=0.94, top=0.90, wspace=0.2, hspace=0)
+  imname = self.settings.get('imdir') + '/' + ins + '.pdf'
+  fig.savefig(imname, bbox_inches='tight')
  def getConversion(self, leadingCurr):
   # get conversion rate to account currency
   accountCurr = 'EUR'
