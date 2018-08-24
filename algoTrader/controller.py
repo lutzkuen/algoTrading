@@ -25,6 +25,7 @@ import datetime
 import numpy as np
 import algoTrader.triangle as triangle
 import algoTrader.divergence as divergence
+import algoTrader.sentiment as sentiment
 
 
 class controller(object):
@@ -40,6 +41,9 @@ class controller(object):
   self.settings['v20_host'] = config.get(_type, 'hostname')
   self.settings['v20_port'] = config.get(_type, 'port')
   self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
+  self.settings['myfxbook_email'] = config.get('myfxbook','email')
+  self.settings['myfxbook_pwd'] = config.get('myfxbook','pwd')
+  self.settings['imdir'] = config.get(_type,'imdir')
   self.oanda = v20.Context(self.settings.get('v20_host'),
                            port=self.settings.get('v20_port'),
                            token=self.settings.get('access_token'
@@ -52,9 +56,10 @@ class controller(object):
           )).get('trades', '200')
   self.cpers = {}
   if _type == 'demo':
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   #self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   self.indicators = [triangle.indicator(self)]#, sentiment.indicator(self)]
   else:
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   self.indicators = [ triangle.indicator(self) ]
  def getConversion(self, leadingCurr):
   # get conversion rate to account currency
   accountCurr = 'EUR'
