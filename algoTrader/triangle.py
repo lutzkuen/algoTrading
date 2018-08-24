@@ -23,11 +23,6 @@ import code
 import math
 import datetime
 import numpy as np
-import matplotlib
-matplotlib.use('Agg')
-from mpl_finance import candlestick_ohlc
-import matplotlib.pyplot as plt
-import matplotlib.dates as mdates
 
 class indicator(object):
  def __init__(self, controller):
@@ -42,24 +37,24 @@ class indicator(object):
   upperFractals = []
   lowerFractals = []
   fractRange = 2
-  highs = [candle.get('ask').get('h') for candle in candles[:-1]]
-  lows = [candle.get('bid').get('l') for candle in candles[:-1]]
-  x = len(candles) #datetime.datetime.strptime(candles[-1].get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
+  highs = [candle.get('mid').get('h') for candle in candles[:-1]]
+  lows = [candle.get('mid').get('l') for candle in candles[:-1]]
+  x = len(candles)-1 #datetime.datetime.strptime(candles[-1].get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
   # get the upper line 
   y1 = 0.0
   mbest = -math.inf
   fupper = None
   n = 0
   for candle in candles:
-   if float(candle.get('ask').get('h')) >= y1:
+   if float(candle.get('mid').get('h')) >= y1:
     x1 = n # datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
-    y1 = float(candle.get('ask').get('h'))
+    y1 = float(candle.get('mid').get('h'))
     mbest = -math.inf
     fupper = None
     confirmed = False
    else:
     x2 = n # datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
-    y2 = float(candle.get('ask').get('h'))
+    y2 = float(candle.get('mid').get('h'))
     tdelta = x2 - x1
     mup = (y2-y1)/float(tdelta)
     if mup > mbest:
@@ -71,7 +66,7 @@ class indicator(object):
       if nc == x1 or nc == x2:
        continue
       festim = y1 + float(nc-x1)*mup
-      if festim - float(cc.get('ask').get('h')) < 5*spread:
+      if festim - float(cc.get('mid').get('h')) < 5*spread:
        confirmed = True
       nc += 1
    n += 1
@@ -89,15 +84,15 @@ class indicator(object):
   flower = None
   n = 0
   for candle in candles:
-   if float(candle.get('bid').get('l')) <= y1:
+   if float(candle.get('mid').get('l')) <= y1:
     x1 = n# datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
-    y1 = float(candle.get('bid').get('l'))
+    y1 = float(candle.get('mid').get('l'))
     mbest = math.inf
     flower = None
     confirmedl = False
    else:
     x2 = n#  datetime.datetime.strptime(candle.get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
-    y2 = float(candle.get('bid').get('l'))
+    y2 = float(candle.get('mid').get('l'))
     tdelta = x2 - x1
     mup = (y2-y1)/float(tdelta)
     if mup < mbest:
@@ -109,7 +104,7 @@ class indicator(object):
       if nc == x1 or nc == x2:
        continue
       festim = y1 + float(nc-x1)*mup
-      if float(cc.get('bid').get('l')) - festim < 5*spread:
+      if float(cc.get('mid').get('l')) - festim < 5*spread:
        confirmedl = True
       nc += 1
    n += 1
@@ -125,35 +120,8 @@ class indicator(object):
   if not fupper or not flower or not confirmed or not confirmedl:
    return self.getTriangle(ins,granularity,numCandles-1,spread)
   lines = [{'xarr':xupper, 'yarr':yupper},{'xarr':xlower,'yarr':ylower}, {'xarr':[n-1,n], 'yarr':[flower, flower]}, {'xarr':[n-1,n],'yarr':[fupper, fupper]}]
-  self.drawImage(ins+'_triangle',candles,lines)
+  self.controller.drawImage(ins+'_triangle',candles,lines)
   return [flower, fupper]
- def drawImage(self, ins, candles, lines):
-  fig = plt.figure()
-  ax1 = plt.subplot2grid((1,1), (0,0))
-  ohlc = []
-  n = 0
-  for c in candles:
-   #candle = converter(datetime.datetime.strptime(c.get('time')[:10],'%Y-%m-%d')), float(c.get('mid').get('o')), float(c.get('mid').get('h')), float(c.get('mid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
-   candle = n, float(c.get('mid').get('o')), float(c.get('ask').get('h')), float(c.get('bid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
-   ohlc.append(candle)
-   n+=1
-  candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
-  for line in lines:
-   plt.plot(line.get('xarr'),line.get('yarr'))
-  for label in ax1.xaxis.get_ticklabels():
-   label.set_rotation(45)
-  #ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-  #ax1.xaxis.set_major_locator(mticker.MaxNLocator(10))
-  ax1.grid(True)
-  
-
-  plt.xlabel('Date')
-  plt.ylabel('Price')
-  plt.title(ins)
-  #plt.legend()
-  plt.subplots_adjust(left=0.09, bottom=0.20, right=0.94, top=0.90, wspace=0.2, hspace=0)
-  imname = self.controller.settings.get('imdir') + '/' + ins + '.pdf'
-  fig.savefig(imname, bbox_inches='tight')
  def checkIns(self, ins):
   if len([trade for trade in self.controller.trades if trade.instrument == ins]) > 0:
    print('Skipping ' + ins + ' found open trade')

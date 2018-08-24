@@ -44,8 +44,8 @@ class indicator(object):
   print(resp.keys())
   if 'errorMessage' in resp.keys():
    return None
-  netlong = np.sum([float(bucket.get('longCountPercent')) for bucket in resp.get('buckets')])
-  netshort = np.sum([float(bucket.get('shortCountPercent')) for bucket in resp.get('buckets')])
+  netlong = np.sum([float(bucket.get('longCountPercent')) for bucket in resp.get('positionBook').get('buckets')])
+  netshort = np.sum([float(bucket.get('shortCountPercent')) for bucket in resp.get('positionBook').get('buckets')])
   return netlong/(netlong + netshort)
  def getmyfx(self,ins):
   if not self.myfxbook:
