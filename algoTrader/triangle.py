@@ -124,7 +124,8 @@ class indicator(object):
   #print(ins + ' ' + str(flower) + ' ' + str(fupper))
   if not fupper or not flower or not confirmed or not confirmedl:
    return self.getTriangle(ins,granularity,numCandles-1,spread)
-  self.drawImage(ins+'_triangle',candles,[{'xarr':xupper, 'yarr':yupper},{'xarr':xlower,'yarr':ylower}])
+  lines = [{'xarr':xupper, 'yarr':yupper},{'xarr':xlower,'yarr':ylower}, {'xarr':[n-1,n], 'yarr':[flower, flower]}, {'xarr':[n-1,n],'yarr':[fupper, fupper]}]
+  self.drawImage(ins+'_triangle',candles,lines)
   return [flower, fupper]
  def drawImage(self, ins, candles, lines):
   fig = plt.figure()
