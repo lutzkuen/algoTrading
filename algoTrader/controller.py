@@ -61,8 +61,8 @@ class controller(object):
           )).get('trades', '200')
   self.cpers = {}
   if _type == 'demo':
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
-   #self.indicators = [ sentiment.indicator(self)]
+   #self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   self.indicators = [ sentiment.indicator(self)]
   else:
    self.indicators = [ triangle.indicator(self) ]
  def drawImage(self, ins, candles, lines):

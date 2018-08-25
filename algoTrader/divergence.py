@@ -59,26 +59,28 @@ class indicator(object):
   stoch.append(stoch[-4])
   lows = []
   highs = []
-  phigh = [float(c.get('mid').get('h')) for c in candles]
-  plow = [float(c.get('mid').get('l')) for c in candles]
+  prices0 = [(float(c.get('mid').get('h'))+float(c.get('mid').get('l'))+float(c.get('mid').get('c'))+float(c.get('mid').get('o')))/4 for c in candles]
+  prices = prices0[:]
+  for i in range(1,len(candles)-1):
+   prices[i] = np.mean(prices0[(i-1):(i+1)])
   xstoch = range(2*window,len(stoch)+2*window)
   xrsi = range(window,numCandles)
   #print(str(len(xstoch)) + ' ' + str(window) + ' ' + str(numCandles))
-  lines = [ {'xarr': xstoch, 'yarr': [min(plow)+(max(phigh)-min(plow))*(s-min(stoch))/(max(stoch)-min(stoch)) for s in stoch]}]
-  lines.append({'xarr': xrsi, 'yarr': [min(plow)+(max(phigh)-min(plow))*(s-min(rsi))/(max(rsi)-min(rsi)) for s in rsi]})
+  lines = [ {'xarr': xstoch, 'yarr': [min(prices)+(max(prices)-min(prices))*(s-min(stoch))/(max(stoch)-min(stoch)) for s in stoch]}]
+  lines.append({'xarr': range(len(prices)), 'yarr': prices})
   for i in range(3,len(stoch)-3):
    stochhigh = False
    stochlow = False
    pricehigh = False
    pricelow = False
    #print(i)
-   stochbefore = stoch[-(i+1):-i]
-   phbef = phigh[-(i+1):-i]
-   plbef = plow[-(i+1):-i]
-   #if i > 3:
-   stochafter = stoch[-(i-1):-(i-2)]
-   phaft = phigh[-(i-1):-(i-2)]
-   plaft = plow[-(i-1):-(i-2)]
+   #stochbefore = stoch[-(i+1):-i]
+   #phbef = phigh[-(i+1):-i]
+   #plbef = plow[-(i+1):-i]
+   ##if i > 3:
+   #stochafter = stoch[-(i-1):-(i-2)]
+   #phaft = phigh[-(i-1):-(i-2)]
+   #plaft = plow[-(i-1):-(i-2)]
    #else:
    # stochafter = stoch[-(i-1):]
    # phaft = phigh[-(i-1):]
@@ -87,11 +89,11 @@ class indicator(object):
     stochhigh = True
    if stoch[-i] <= stoch[-i-1] and stoch[-i] < stoch[-i+1]:
     stochlow = True
-   if phigh[-i] >= phigh[-i-1] and phigh[-i] > phigh[-i+1]:
+   if prices[-i] >= prices[-i-1] and prices[-i] > prices[-i+1]:
     pricehigh = True
-   if plow[-i] <= plow[-i-1] and plow[-i] < plow[-i+1]:
+   if prices[-i] <= prices[-i-1] and prices[-i] < prices[-i+1]:
     pricelow = True
-   if pricehigh and stochhigh:
+   if pricehigh:
     highs.append({'type': 'HH', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
     xarr = [numCandles+1-i, numCandles+1-i,numCandles+3-i,numCandles+3-i,numCandles+1-i]
     hbar = float(candles[-i].get('mid').get('h'))
@@ -99,7 +101,7 @@ class indicator(object):
     yarr = [hbar, lbar, lbar, hbar, hbar]
     lines.append({'xarr': xarr, 'yarr': yarr})
     #print(ins + ' has high at ' + str(candles[-i]))
-   if pricelow and stochlow:
+   if pricelow:
     lows.append({'type': 'LL', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
     xarr = [numCandles+1-i, numCandles+1-i,numCandles+3-i,numCandles+3-i,numCandles+1-i]
     hbar = float(candles[-i].get('mid').get('h'))

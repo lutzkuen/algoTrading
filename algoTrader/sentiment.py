@@ -40,8 +40,8 @@ class indicator(object):
   except:
    print('Failed to get oanda position book ' + ins)
    return None
-  print(resp)
-  print(resp.keys())
+  #print(resp)
+  #print(resp.keys())
   if 'errorMessage' in resp.keys():
    return None
   netlong = np.sum([float(bucket.get('longCountPercent')) for bucket in resp.get('positionBook').get('buckets')])
@@ -73,6 +73,8 @@ class indicator(object):
     longpos = float(sym.get('longPositions'))
     shortpos = float(sym.get('shortPositions'))
     return longpos / ( longpos + shortpos )
+  print('could not get '+ins+' from myfx')
+  return None
  def getSentiment(self,ins):
   myfx = self.getmyfx(ins.replace('_',''))
   if not myfx:
