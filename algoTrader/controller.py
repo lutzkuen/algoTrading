@@ -60,7 +60,7 @@ class controller(object):
       self.oanda.trade.list_open(self.settings.get('account_id'
           )).get('trades', '200')
   self.cpers = {}
-  if _type == 'demo':
+  if _type in ['demo','backtest']:
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self), sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   else:
@@ -125,13 +125,13 @@ class controller(object):
   targetExp = self.settings.get('account_risk')*0.01
   conversion = self.getConversion(leadingCurr)
   if not conversion:
-   trailingCurr = ins.split('_')[0]
+   trailingCurr = ins.split('_')[1]
    conversion = self.getConversion(trailingCurr)
    if conversion:
     conversion = conversion/price
   multiplier = min(price / dist, 100) # no single trade can be larger than the account NAV
   if not conversion:
-      print('CRITICAL: Could not convert ' + leadingCurr + ' to EUR')
+      print('CRITICAL: Could not convert ' + leadingCurr + '_'+trailingCurr+ ' to EUR')
       return 0  # do not place a trade if conversion fails
   return math.floor(multiplier * targetExp * conversion )
 
