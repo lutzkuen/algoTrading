@@ -31,6 +31,7 @@ class indicator(object):
   self.controller = controller
   self.myfxbook = None
   self.oandaOrderbook = None
+  self.name = 'sentiment'
  def getOanda(self, ins):
   request = Request('GET', '/v3/instruments/{instrument}/positionBook')
   request.set_path_param('instrument', ins)
@@ -168,7 +169,6 @@ class indicator(object):
       'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
-   ticket = self.controller.oanda.order.create(self.controller.settings.get('account_id'
-           ), **args)
+   ticket = self.controller.createOrder(args)
    ticket_json = json.loads(ticket.raw_body)
    print(ticket_json)
