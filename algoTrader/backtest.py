@@ -25,6 +25,7 @@ import numpy as np
 import algoTrader.triangle as triangle
 import algoTrader.divergence as divergence
 import algoTrader.sentiment as sentiment
+import algoTrader.controller as superc
 import matplotlib
 matplotlib.use('Agg')
 from mpl_finance import candlestick_ohlc
@@ -32,7 +33,7 @@ import matplotlib.pyplot as plt
 import matplotlib.dates as mdates
 import dataset
 
-class controller(object):
+class controller(superc.controller):
  def __init__(self, confname,_type):
   config = configparser.ConfigParser()
   config.read(confname)
@@ -160,76 +161,6 @@ class controller(object):
   return int(ii)
  def drawImage(self, ins, candles, lines):
   return None # image drawing disabled in BT for now
-  fig = plt.figure()
-  ax1 = plt.subplot2grid((1,1), (0,0))
-  ohlc = []
-  n = 0
-  for c in candles:
-   #candle = converter(datetime.datetime.strptime(c.get('time')[:10],'%Y-%m-%d')), float(c.get('mid').get('o')), float(c.get('mid').get('h')), float(c.get('mid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
-   candle = n, float(c.get('mid').get('o')), float(c.get('ask').get('h')), float(c.get('bid').get('l')), float(c.get('mid').get('c')), int(c.get('volume'))
-   ohlc.append(candle)
-   n+=1
-  candlestick_ohlc(ax1, ohlc, width=0.4, colorup='#77d879', colordown='#db3f3f')
-  for line in lines:
-   plt.plot(line.get('xarr'),line.get('yarr'))
-  for label in ax1.xaxis.get_ticklabels():
-   label.set_rotation(45)
-  #ax1.xaxis.set_major_formatter(mdates.DateFormatter('%Y-%m-%d'))
-  #ax1.xaxis.set_major_locator(mticker.MaxNLocator(10))
-  ax1.grid(True)
-  plt.xlabel('Date')
-  plt.ylabel('Price')
-  plt.title(ins)
-  #plt.legend()
-  plt.subplots_adjust(left=0.09, bottom=0.20, right=0.94, top=0.90, wspace=0.2, hspace=0)
-  imname = self.settings.get('imdir') + '/' + ins + '.pdf'
-  fig.savefig(imname, bbox_inches='tight')
- def getConversion(self, leadingCurr):
-  # get conversion rate to account currency
-  accountCurr = 'EUR'
-  # trivial case
-  if leadingCurr == accountCurr:
-      return 1
-  # try direct conversion
-  for ins in self.allowed_ins:
-      if leadingCurr in ins.name and accountCurr in ins.name:
-          price = self.getPrice(ins.name)
-          if ins.name.split('_')[0] == accountCurr:
-              return price
-          else:
-              return 1.0 / price
-  # try conversion via usd
-  eurusd = self.getPrice('EUR_USD')
-  for ins in self.allowed_ins:
-      if leadingCurr in ins.name and 'USD' in ins.name:
-          price = self.getPrice(ins.name)
-          if ins.name.split('_')[0] == 'USD':
-              return price / eurusd
-          else:
-              return 1.0 / (price * eurusd)
-  print('CRITICAL: Could not convert ' + leadingCurr + ' to EUR')
-  return None
- def getUnits(self, dist, ins):
-  # get the number of units to trade for a given pair
-  if dist == 0:
-      return 0
-  leadingCurr = ins.split('_')[0]
-  price = self.getPrice(ins)
-  # each trade should risk 1% of NAV at SL at most. Usually it will range
-  # around 0.1 % - 1 % depending on expectation value
-  targetExp = self.settings.get('account_risk')*0.01
-  conversion = self.getConversion(leadingCurr)
-  multiplier = min(price / dist, 100) # no single trade can be larger than the account NAV
-  if not conversion:
-      return 0  # do not place a trade if conversion fails
-  return math.floor(multiplier * targetExp * conversion )
-
- def getPipSize(self, ins):
-  pipLoc = [_ins.pipLocation for _ins in self.allowed_ins
-            if _ins.name == ins]
-  if not len(pipLoc) == 1:
-      return None
-  return -pipLoc[0] + 1
  def getSpread(self, ins):
   price = self.getPrice(ins) # assume constant spread. We do not use pip multiple since this can cause overly optimistic estimations
   if price:
@@ -243,15 +174,6 @@ class controller(object):
   except:
    cl = None
   return cl
- def getRSI(self, ins, granularity, numCandles):
-  candles = self.getCandles(ins,granularity,numCandles)
-  delta = [float(c.get('mid').get('c')) - float(c.get('mid').get('o')) for c in candles]
-  sup = sum([upval for upval in delta if upval > 0])
-  flo = sum([upval for upval in delta if upval < 0])
-  if flo == 0:
-   return 1
-  rsi = 1-1/(1+sup/flo)
-  return rsi
  def getCandles(self,ins,granularity,numCandles):
   if granularity != 'D': # only 'D' possible
    return None
