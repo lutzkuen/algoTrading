@@ -28,6 +28,7 @@ class indicator(object):
  def __init__(self, controller):
   self.minbars = 5
   self.controller = controller
+  self.name = 'triangle'
  def getTriangle(self,ins,granularity,numCandles,spread):
   if numCandles < self.minbars:
    return None
@@ -124,9 +125,11 @@ class indicator(object):
   return [flower, fupper]
  def checkIns(self, ins):
   if len([trade for trade in self.controller.trades if trade.instrument == ins]) > 0:
-   print('Skipping ' + ins + ' found open trade')
+   #print('Skipping ' + ins + ' found open trade')
    return None
   price = self.controller.getPrice(ins)
+  if not price:
+   return None
   spread = self.controller.getSpread(ins)
   pipLoc = self.controller.getPipSize(ins)
   pipVal = 10 ** (-pipLoc + 1)
@@ -147,7 +150,7 @@ class indicator(object):
   upperunits = self.controller.getUnits(abs(sl-upperentry),ins)
   lowerunits = -self.controller.getUnits(abs(sl-lowerentry),ins)
   if price > upperentry or price < lowerentry or upperunits == 0 or lowerunits == 0:
-   print('Skipping ' + ins + '. ' + str(price) + ' ' + str(upperentry) + ' ' + str(lowerentry) + ' ' + str(upperunits) + ' ' + str(lowerunits))
+   #print('Skipping ' + ins + '. ' + str(price) + ' ' + str(upperentry) + ' ' + str(lowerentry) + ' ' + str(upperunits) + ' ' + str(lowerunits))
    return None # skip if not inside triangle
 
   fstr = '30.' + str(pipLoc) + 'f'
@@ -168,10 +171,8 @@ class indicator(object):
       'takeProfitOnFill': {'price': tpupper, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
-  ticket = self.controller.oanda.order.create(self.controller.settings.get('account_id'
-          ), **args)
-  ticket_json = json.loads(ticket.raw_body)
-  print(ticket_json)
+  ticket = self.controller.createOrder(args)
+  #print(ticket)
   args = {'order': {
       'instrument': ins,
       'units': lowerunits,
@@ -182,7 +183,5 @@ class indicator(object):
       'takeProfitOnFill': {'price': tplower, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
-  ticket = self.controller.oanda.order.create(self.controller.settings.get('account_id'
-          ), **args)
-  ticket_json = json.loads(ticket.raw_body)
-  print(ticket_json)
+  ticket = self.controller.createOrder(args)
+  #print(ticket)

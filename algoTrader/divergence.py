@@ -29,6 +29,7 @@ class indicator(object):
  def __init__(self, controller):
   self.minbars = 5
   self.controller = controller
+  self.name = 'divergence'
  def getRSI(self,candles):
   delta = [float(c.get('mid').get('c')) - float(c.get('mid').get('o')) for c in candles]
   sup = sum([upval for upval in delta if upval > 0])
@@ -120,14 +121,14 @@ class indicator(object):
   if highs[0].get('index') < lows[0].get('index') and lows[0].get('index') < highs[1].get('index') and highs[1].get('index') < lows[1].get('index'):
    if  ( highs[1].get('s') < highs[0].get('s') and highs[1].get('l') > highs[0].get('l') and highs[1].get('h') > highs[0].get('h') ) or ( highs[1].get('s') > highs[0].get('s') and highs[1].get('l') < highs[0].get('l') and highs[1].get('h') < highs[0].get('h') ):
     # go short
-    print(ins + ' bearish')
+    #print(ins + ' bearish')
     if sma20 > sma10:
      self.controller.drawImage(ins+'_diverge',candles,lines)
      return [sma20, sma10]
   # check for hidden bullish after regular bullish
   if lows[0].get('index') < highs[0].get('index') and highs[0].get('index') < lows[1].get('index') and lows[1].get('index') < highs[1].get('index'):
    if ( lows[1].get('s') > lows[0].get('s') and lows[1].get('l') < lows[0].get('l') and lows[1].get('h') < lows[0].get('l') ) or ( lows[1].get('s') < lows[0].get('s') and lows[1].get('l') > lows[0].get('l') and lows[1].get('h') > lows[0].get('l') ):
-    print(ins + ' bullish')
+    #print(ins + ' bullish')
     if sma20 < sma10:
      self.controller.drawImage(ins+'_diverge',candles,lines)
      return [sma20, sma10]
@@ -135,9 +136,11 @@ class indicator(object):
   
  def checkIns(self, ins):
   if len([trade for trade in self.controller.trades if trade.instrument == ins]) > 0:
-   print('Skipping ' + ins + ' found open trade')
+   #print('Skipping ' + ins + ' found open trade')
    return None
   price = self.controller.getPrice(ins)
+  if not price:
+   return None
   spread = self.controller.getSpread(ins)
   pipLoc = self.controller.getPipSize(ins)
   pipVal = 10 ** (-pipLoc + 1)
@@ -150,7 +153,7 @@ class indicator(object):
    #triangle = self.getTriangle(ins,'H4',180,spread)
    #if not triangle:
    return None # could not get triangle formation
-  print(ins +' '+str(diverge))
+  #print(ins +' '+str(diverge))
   sl = diverge[0]
   entry = diverge[1]
   tp = entry + ( entry - sl)/0.618
@@ -183,7 +186,5 @@ class indicator(object):
       'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
       'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
       }}
-  ticket = self.controller.oanda.order.create(self.controller.settings.get('account_id'
-          ), **args)
-  ticket_json = json.loads(ticket.raw_body)
-  print(ticket_json)
+  ticket = self.controller.createOrder(args)
+  #print(ticket)
