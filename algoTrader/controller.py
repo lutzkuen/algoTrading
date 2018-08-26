@@ -61,10 +61,10 @@ class controller(object):
           )).get('trades', '200')
   self.cpers = {}
   if _type == 'demo':
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+   self.indicators = [ divergence.indicator(self) , triangle.indicator(self), sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   else:
-   self.indicators = [ triangle.indicator(self) ]
+   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
  def drawImage(self, ins, candles, lines):
   fig = plt.figure()
   ax1 = plt.subplot2grid((1,1), (0,0))
@@ -113,7 +113,6 @@ class controller(object):
               return price / eurusd
           else:
               return 1.0 / (price * eurusd)
-  print('CRITICAL: Could not convert ' + leadingCurr + ' to EUR')
   return None
  def getUnits(self, dist, ins):
   # get the number of units to trade for a given pair
@@ -125,8 +124,14 @@ class controller(object):
   # around 0.1 % - 1 % depending on expectation value
   targetExp = self.settings.get('account_risk')*0.01
   conversion = self.getConversion(leadingCurr)
+  if not conversion:
+   trailingCurr = ins.split('_')[0]
+   conversion = self.getConversion(trailingCurr)
+   if conversion:
+    conversion = conversion/price
   multiplier = min(price / dist, 100) # no single trade can be larger than the account NAV
   if not conversion:
+      print('CRITICAL: Could not convert ' + leadingCurr + ' to EUR')
       return 0  # do not place a trade if conversion fails
   return math.floor(multiplier * targetExp * conversion )
 
@@ -199,5 +204,5 @@ class controller(object):
   for indicator in self.indicators:
    indicator.checkIns(ins)
  def createOrder(self, args):
-  ticket = self.oanda.order.create(self.controller.settings.get('account_id'), **args)
+  ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
   return json.loads(ticket.raw_body)

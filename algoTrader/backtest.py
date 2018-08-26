@@ -68,7 +68,6 @@ class controller(object):
   self.lastday = self.training_days[-1]
   print('Starting Backtest on ' + self.date2str(self.now))
   self.trades = []
-  self.orders = []
   self.cpers = {}
   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ] # sentiment is not backtest ready # sentiment is not backtest ready
  def runBacktest(self):
@@ -144,7 +143,6 @@ class controller(object):
   self.results.upsert(plstatement,['date','ins','system'])
  def step(self):
   for ins in self.allowed_ins:
-   self.orders = []
    self.checkIns(ins.name)
   self.nowid += 1
   self.now = self.training_days[self.nowid]
@@ -270,9 +268,10 @@ class controller(object):
 
  def checkIns(self, ins):
   for indicator in self.indicators:
+   self.orders =[]
    indicator.checkIns(ins)
    pl = self.evalOrder(ins)
-   if pl:
+   if pl or pl == 0:
     self.pl2db(ins,indicator.name,pl)
  def createOrder(self, args):
   self.orders.append(args)
