@@ -69,7 +69,7 @@ class indicator(object):
   #print(str(len(xstoch)) + ' ' + str(window) + ' ' + str(numCandles))
   lines = [ {'xarr': xstoch, 'yarr': [min(prices)+(max(prices)-min(prices))*(s-min(stoch))/(max(stoch)-min(stoch)) for s in stoch]}]
   lines.append({'xarr': range(len(prices)), 'yarr': prices})
-  for i in range(3,len(stoch)-3):
+  for i in range(2,len(stoch)-2):
    stochhigh = False
    stochlow = False
    pricehigh = False
@@ -95,7 +95,7 @@ class indicator(object):
    if prices[-i] <= prices[-i-1] and prices[-i] < prices[-i+1]:
     pricelow = True
    if pricehigh:
-    highs.append({'type': 'HH', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
+    highs.append({'type': 'HH', 'index': i, 'l': float(candles[-i].get('mid').get('l')), 'h': float(candles[-i].get('mid').get('h')), 's': stoch[-i]})
     xarr = [numCandles+1-i, numCandles+1-i,numCandles+3-i,numCandles+3-i,numCandles+1-i]
     hbar = float(candles[-i].get('mid').get('h'))
     lbar = float(candles[-i].get('mid').get('l'))
@@ -103,7 +103,7 @@ class indicator(object):
     lines.append({'xarr': xarr, 'yarr': yarr})
     #print(ins + ' has high at ' + str(candles[-i]))
    if pricelow:
-    lows.append({'type': 'LL', 'index': i, 'l': candles[-i].get('mid').get('l'), 'h': candles[-i].get('mid').get('h'), 's': stoch[-i]})
+    lows.append({'type': 'LL', 'index': i, 'l': float(candles[-i].get('mid').get('l')), 'h': float(candles[-i].get('mid').get('h')), 's': stoch[-i]})
     xarr = [numCandles+1-i, numCandles+1-i,numCandles+3-i,numCandles+3-i,numCandles+1-i]
     hbar = float(candles[-i].get('mid').get('h'))
     lbar = float(candles[-i].get('mid').get('l'))
@@ -112,8 +112,8 @@ class indicator(object):
     #print(ins + ' has low at ' + str(candles[-i]))
    if len(lows) >= 2 and len(highs) >= 2:
     break
-  sma10 = np.mean([float(c.get('mid').get('c')) for c in candles[-10:]])
-  sma20 = np.mean([float(c.get('mid').get('c')) for c in candles[-20:]])
+  sma10 = np.mean([float(c.get('mid').get('c')) for c in candles[-12:-2]])
+  sma20 = np.mean([float(c.get('mid').get('c')) for c in candles[-22:-2]])
   #code.interact()
   if len(lows) < 2 or len(highs) < 2:
    return None
@@ -122,16 +122,20 @@ class indicator(object):
    if  ( highs[1].get('s') < highs[0].get('s') and highs[1].get('l') > highs[0].get('l') and highs[1].get('h') > highs[0].get('h') ) or ( highs[1].get('s') > highs[0].get('s') and highs[1].get('l') < highs[0].get('l') and highs[1].get('h') < highs[0].get('h') ):
     # go short
     #print(ins + ' bearish')
+    entry = (float(lows[0].get('l'))+float(highs[0].get('h')))/2
+    exit = float(highs[0].get('h'))
     if sma20 > sma10:
      self.controller.drawImage(ins+'_diverge',candles,lines)
-     return [sma20, sma10]
+     return [exit, entry]
   # check for hidden bullish after regular bullish
   if lows[0].get('index') < highs[0].get('index') and highs[0].get('index') < lows[1].get('index') and lows[1].get('index') < highs[1].get('index'):
    if ( lows[1].get('s') > lows[0].get('s') and lows[1].get('l') < lows[0].get('l') and lows[1].get('h') < lows[0].get('l') ) or ( lows[1].get('s') < lows[0].get('s') and lows[1].get('l') > lows[0].get('l') and lows[1].get('h') > lows[0].get('l') ):
     #print(ins + ' bullish')
-    if sma20 < sma10:
+    entry = (lows[0].get('l')+highs[0].get('h'))/2
+    exit = lows[0].get('l')
+    if sma20 < sma10:#trend confirmation
      self.controller.drawImage(ins+'_diverge',candles,lines)
-     return [sma20, sma10]
+     return [exit, entry]
   return None
   
  def checkIns(self, ins):
