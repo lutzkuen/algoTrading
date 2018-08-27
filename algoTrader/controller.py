@@ -61,7 +61,7 @@ class controller(object):
           )).get('trades', '200')
   self.cpers = {}
   if _type in ['demo','backtest']:
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self), sentiment.indicator(self) ]
+   self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   else:
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
