@@ -120,9 +120,13 @@ class indicator(object):
   #print(ins + ' ' + str(flower) + ' ' + str(fupper))
   if not fupper or not flower or not confirmed or not confirmedl:
    return self.getTriangle(ins,granularity,numCandles-1,spread)
-  lines = [{'xarr':xupper, 'yarr':yupper},{'xarr':xlower,'yarr':ylower}, {'xarr':[n-1,n], 'yarr':[flower, flower]}, {'xarr':[n-1,n],'yarr':[fupper, fupper]}]
-  self.controller.drawImage(ins+'_triangle',candles,lines)
-  return [flower, fupper]
+  nt = self.getTriangle(ins,granularity,numCandles-1,spread)
+  if nt:
+   return nt
+  else:
+   lines = [{'xarr':xupper, 'yarr':yupper},{'xarr':xlower,'yarr':ylower}, {'xarr':[n-1,n], 'yarr':[flower, flower]}, {'xarr':[n-1,n],'yarr':[fupper, fupper]}]
+   self.controller.drawImage(ins+'_triangle',candles,lines)
+   return [flower, fupper]
  def checkIns(self, ins):
   if len([trade for trade in self.controller.trades if trade.instrument == ins]) > 0:
    #print('Skipping ' + ins + ' found open trade')
