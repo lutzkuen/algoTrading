@@ -74,7 +74,7 @@ class controller(superc.controller):
  def runBacktest(self):
   while self.step():
    print('Backtest ' + self.date2str(self.now))
-   time.sleep(60*60) # do one day per hour. This is meant to keep the CPU Credit usage on AWS down
+   time.sleep(10*60) # do one day per hour. This is meant to keep the CPU Credit usage on AWS down
  def evalOrder(self, ins):
   spread = self.getSpread(ins)
   if len(self.orders) == 0:
