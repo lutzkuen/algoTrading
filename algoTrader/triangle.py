@@ -26,7 +26,7 @@ import numpy as np
 
 class indicator(object):
  def __init__(self, controller):
-  self.minbars = 5
+  self.minbars = 10
   self.controller = controller
   self.name = 'triangle'
  def getTriangle(self,ins,granularity,numCandles,spread):

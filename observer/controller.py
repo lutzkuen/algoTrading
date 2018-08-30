@@ -80,3 +80,12 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
+    def getBTreport(self):
+        outname = '/home/ubuntu/algoTrading/backtest.csv'
+        outfile = open(outname,'w')
+        outfile.write('SYSTEM,INS,PL\n')
+        statement = 'select system, ins, sum(pl) from backtest_result where abs(pl) > 0  group by system, ins ;'
+        for row in self.db.query(statement):
+            oline = row['system'] + ',' + row['ins'] + ',' + str(row['sum(pl)'])
+            outfile.write(oline+'\n')
+        outfile.close()
