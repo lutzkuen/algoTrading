@@ -106,9 +106,13 @@ class controller(object):
               return 1.0 / price
   # try conversion via usd
   eurusd = self.getPrice('EUR_USD')
+  if not eurusd:
+   return None
   for ins in self.allowed_ins:
       if leadingCurr in ins.name and 'USD' in ins.name:
           price = self.getPrice(ins.name)
+          if not price:
+              return None
           if ins.name.split('_')[0] == 'USD':
               return price / eurusd
           else:
@@ -163,14 +167,52 @@ class controller(object):
  def manageTrades(self):
   # this method checks all open trades, moves stops and closes were there was no favourable movement
   for trade in self.trades:
-   rsi = self.getRSI(trade.instrument, 'D', 5)
-   rsishort = self.getRSI(trade.instrument, 'D', 3)
-   if trade.currentUnits < 0 and ( rsi > 0.5 or rsishort < 0.2):
-    print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
-    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-   if trade.currentUnits > 0 and ( rsi < 0.5 or rsishort > 0.8 ):
-    print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
-    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+   if trade.currentUnits > 0:
+    newSL = self.getMIN(trade.instrument,'H1',3)
+    slo = trade.stopLossOrder
+    if newSL > float(slo.price):
+     print(trade.instrument + ' new SL ' + str(newSL))
+     self.oanda.order.cancel(self.settings.get('account_id'), slo.id)
+     pipLoc = self.getPipSize(trade.instrument)
+     fstr = '30.' + str(pipLoc) + 'f'
+     newSL = format(newSL, fstr).strip()
+     args = { 'stopLoss': {
+                'instrument': trade.instrument,
+                'units': -trade.currentUnits,
+                'price': newSL,
+                'type': 'STOP_LOSS'}}
+     response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
+     print(str(json.loads(response.raw_body)))
+   if trade.currentUnits < 0:
+    newSL = self.getMAX(trade.instrument,'H1',3)
+    slo = trade.stopLossOrder
+    if newSL < float(slo.price):
+     print(trade.instrument + ' new SL ' + str(newSL))
+     self.oanda.order.cancel(self.settings.get('account_id'), slo.id)
+     pipLoc = self.getPipSize(trade.instrument)
+     fstr = '30.' + str(pipLoc) + 'f'
+     newSL = format(newSL, fstr).strip()
+     args = { 'stopLoss': {
+                'instrument': trade.instrument,
+                'units': -trade.currentUnits,
+                'price': newSL,
+                'type': 'STOP_LOSS'}}
+     response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
+     print(str(json.loads(response.raw_body)))
+   #rsi = self.getRSI(trade.instrument, 'D', 5)
+   #rsishort = self.getRSI(trade.instrument, 'D', 3)
+   #if trade.currentUnits < 0 and ( rsi > 0.5 or rsishort < 0.2):
+   # print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
+   # self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+   #if trade.currentUnits > 0 and ( rsi < 0.5 or rsishort > 0.8 ):
+   # print('Closing ' + trade.instrument + '(' + str(trade.currentUnits) + ')')
+   # self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+ def getMIN(self, ins, granularity, numCandles):
+  candles = self.getCandles(ins,granularity,numCandles)
+  return min([float(c.get('mid').get('l')) for c in candles])
+ def getMAX(self, ins, granularity, numCandles):
+  candles = self.getCandles(ins,granularity,numCandles)
+  return max([float(c.get('mid').get('h')) for c in candles])
  def getRSI(self, ins, granularity, numCandles):
   candles = self.getCandles(ins,granularity,numCandles)
   delta = [float(c.get('mid').get('c')) - float(c.get('mid').get('o')) for c in candles]
