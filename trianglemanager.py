@@ -16,4 +16,5 @@ Author: Lutz Kuenneke, 12.07.2018
 
 from algoTrader.controller import controller
 cont = controller('/home/ubuntu/settings_triangle.conf','demo')
+cont = controller('/home/ubuntu/settings_triangle.conf','demoh')
 cont.manageTrades()

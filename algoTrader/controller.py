@@ -24,6 +24,7 @@ import math
 import datetime
 import numpy as np
 import algoTrader.triangle as triangle
+import algoTrader.triangleh4 as triangleh4
 import algoTrader.divergence as divergence
 import algoTrader.sentiment as sentiment
 import matplotlib
@@ -63,9 +64,13 @@ class controller(object):
   if _type in ['demo','backtest']:
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
-  else:
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self) ]
+  if _type == 'live':
+   self.indicators = [ triangle.indicator(self) ]
+  if _type == 'demoh':
+   self.indicators = [ triangleh4.indicator(self) ]
  def drawImage(self, ins, candles, lines):
+  if self.settings.get('imdir')=='None':
+   return None
   fig = plt.figure()
   ax1 = plt.subplot2grid((1,1), (0,0))
   ohlc = []
@@ -246,5 +251,8 @@ class controller(object):
   for indicator in self.indicators:
    indicator.checkIns(ins)
  def createOrder(self, args):
+  # add client Extensions for MT4
+  args['order']['clientExtensions'] = { 'id': '0', 'tag': '0' }
+  args['order']['tradeClientExtensions'] = { 'id': '0', 'tag': '0' }
   ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
   return json.loads(ticket.raw_body)
