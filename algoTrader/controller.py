@@ -61,13 +61,22 @@ class controller(object):
       self.oanda.trade.list_open(self.settings.get('account_id'
           )).get('trades', '200')
   self.cpers = {}
+  self.mtcounter = 0
   if _type in ['demo','backtest']:
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   if _type == 'live':
-   self.indicators = [ triangle.indicator(self) ]
+   self.indicators = [ triangleh4.indicator(self) ]
   if _type == 'demoh':
    self.indicators = [ triangleh4.indicator(self) ]
+ def updateMTcounter(self):
+  orders = \
+      self.oanda.order.list(self.settings.get('account_id'
+          ))
+  orders = json.loads(orders.raw_body)
+  for order in orders.get('orders'):
+   self.mtcounter = max(int(order.get('tradeClientExtensions').get('id')),self.mtcounter)+1
+  
  def drawImage(self, ins, candles, lines):
   if self.settings.get('imdir')=='None':
    return None
@@ -252,7 +261,8 @@ class controller(object):
    indicator.checkIns(ins)
  def createOrder(self, args):
   # add client Extensions for MT4
-  args['order']['clientExtensions'] = { 'id': '0', 'tag': '0' }
-  args['order']['tradeClientExtensions'] = { 'id': '0', 'tag': '0' }
+  self.updateMTcounter()
+  args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
+  args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
   ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
   return json.loads(ticket.raw_body)
