@@ -47,6 +47,11 @@ class controller(object):
   self.settings['v20_host'] = config.get(_type, 'hostname')
   self.settings['v20_port'] = config.get(_type, 'port')
   self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
+  self.settings['minbars'] = int(config.get('triangle', 'minbars'))
+  self.settings['maxbars'] = int(config.get('triangle', 'maxbars'))
+  self.settings['moveout'] = int(config.get('triangle', 'moveout'))
+  self.settings['tolerance'] = float(config.get('triangle', 'tolerance'))
+  self.settings['granularity'] = config.get('triangle', 'granularity')
   self.settings['myfxbook_email'] = config.get('myfxbook','email')
   self.settings['myfxbook_pwd'] = config.get('myfxbook','pwd')
   self.settings['imdir'] = config.get(_type,'imdir')
@@ -75,7 +80,10 @@ class controller(object):
           ))
   orders = json.loads(orders.raw_body)
   for order in orders.get('orders'):
-   self.mtcounter = max(int(order.get('tradeClientExtensions').get('id')),self.mtcounter)+1
+   try:
+    self.mtcounter = max(int(order.get('tradeClientExtensions').get('id')),self.mtcounter)+1
+   except:
+    self.mtcounter += 1000
   
  def drawImage(self, ins, candles, lines):
   if self.settings.get('imdir')=='None':

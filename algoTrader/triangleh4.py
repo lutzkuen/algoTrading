@@ -26,7 +26,7 @@ import numpy as np
 
 class indicator(object):
  def __init__(self, controller):
-  self.minbars = 10*4
+  self.minbars = controller.settings.get('minbars')
   self.controller = controller
   self.name = 'triangle'
  def getTriangle(self,ins,granularity,numCandles,spread):
@@ -35,9 +35,6 @@ class indicator(object):
   candles = self.controller.getCandles(ins,granularity,numCandles)
   if not candles:
    return None
-  upperFractals = []
-  lowerFractals = []
-  fractRange = 2
   highs = [candle.get('mid').get('h') for candle in candles[:-1]]
   lows = [candle.get('mid').get('l') for candle in candles[:-1]]
   x = len(candles)-1 #datetime.datetime.strptime(candles[-1].get('time').split('.')[0],'%Y-%m-%dT%H:%M:%S')
@@ -139,10 +136,11 @@ class indicator(object):
   spread = self.controller.getSpread(ins)
   pipLoc = self.controller.getPipSize(ins)
   pipVal = 10 ** (-pipLoc + 1)
-  moveout = 2
-  granularity = 'H4'
-  numCandles = 40*6
-  triangle = self.getTriangle(ins,granularity,numCandles,0.0005*price)
+  moveout = self.controller.settings.get('moveout')
+  granularity = self.controller.settings.get('granularity')
+  numCandles = self.controller.settings.get('maxbars')
+  tolerance = self.controller.settings.get('tolerance')
+  triangle = self.getTriangle(ins,granularity,numCandles,tolerance*price)
   if not triangle:
    #triangle = self.getTriangle(ins,'H4',180,spread)
    #if not triangle:
