@@ -71,7 +71,7 @@ class controller(object):
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   if _type == 'live':
-   self.indicators = [ triangleh4.indicator(self) ]
+   self.indicators = [ triangle.indicator(self) ]
   if _type == 'demoh':
    self.indicators = [ triangleh4.indicator(self) ]
  def updateMTcounter(self):
@@ -188,9 +188,20 @@ class controller(object):
   return price
  def manageTrades(self):
   # this method checks all open trades, moves stops and closes were there was no favourable movement
+  fc = 0.681
   for trade in self.trades:
+   price = self.getPrice(trade.instrument)
+   macd_0 = self.getMACD(26, 12,9, 0, trade.instrument, 'D')
+   macd_1 = self.getMACD(26, 12,9, 1, trade.instrument, 'D')
+   print(trade.instrument + ' -- prev. MACD: ' + str(macd_1) + ' now MACD: ' + str(macd_0))
    if trade.currentUnits > 0:
-    newSL = self.getMIN(trade.instrument,'H1',3)
+    # check wether we should exit
+    if macd_0 < macd_1:
+     print('Closing ' + trade.instrument + ' on ' + str(macd_0) + ' < ' + str(macd_1))
+     self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+     continue
+    newSL = self.getMIN(trade.instrument,'D',3)
+    newTP = price + ( price - newSL )/fc
     slo = trade.stopLossOrder
     if newSL > float(slo.price):
      print(trade.instrument + ' new SL ' + str(newSL))
@@ -198,6 +209,7 @@ class controller(object):
      pipLoc = self.getPipSize(trade.instrument)
      fstr = '30.' + str(pipLoc) + 'f'
      newSL = format(newSL, fstr).strip()
+     newTP = format(newTP, fstr).strip()
      args = { 'stopLoss': {
                 'instrument': trade.instrument,
                 'units': -trade.currentUnits,
@@ -205,8 +217,20 @@ class controller(object):
                 'type': 'STOP_LOSS'}}
      response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
      print(str(json.loads(response.raw_body)))
+     args = { 'takeProfit': {
+                'instrument': trade.instrument,
+                'units': -trade.currentUnits,
+                'price': newTP,
+                'type': 'TAKE_PROFIT'}}
+     response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
+     print(str(json.loads(response.raw_body)))
    if trade.currentUnits < 0:
-    newSL = self.getMAX(trade.instrument,'H1',3)
+    if macd_0 > macd_1:
+     print('Closing ' + trade.instrument + ' on ' + str(macd_0) + ' > ' + str(macd_1))
+     self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+     continue
+    newSL = self.getMAX(trade.instrument,'D',3)
+    newTP = price - ( newSL - price )/fc
     slo = trade.stopLossOrder
     if newSL < float(slo.price):
      print(trade.instrument + ' new SL ' + str(newSL))
@@ -214,11 +238,19 @@ class controller(object):
      pipLoc = self.getPipSize(trade.instrument)
      fstr = '30.' + str(pipLoc) + 'f'
      newSL = format(newSL, fstr).strip()
+     newTP = format(newTP, fstr).strip()
      args = { 'stopLoss': {
                 'instrument': trade.instrument,
                 'units': -trade.currentUnits,
                 'price': newSL,
                 'type': 'STOP_LOSS'}}
+     response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
+     print(str(json.loads(response.raw_body)))
+     args = { 'takeProfit': {
+                'instrument': trade.instrument,
+                'units': -trade.currentUnits,
+                'price': newTP,
+                'type': 'TAKE_PROFIT'}}
      response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), trade.id, **args)
      print(str(json.loads(response.raw_body)))
    #rsi = self.getRSI(trade.instrument, 'D', 5)
@@ -263,7 +295,38 @@ class controller(object):
   self.cpers[ckey] = json.loads(response.raw_body)
   candles = json.loads(response.raw_body).get('candles')
   return candles
-
+ def getMeanPrice(self, candle):
+  #return float(candle.get('mid').get('c'))
+  return (float(candle.get('mid').get('l')) + float(candle.get('mid').get('h')) + 2*float(candle.get('mid').get('c')))/4
+ def getEMA(self, ins, period, shift, granularity):
+  nc = period + shift
+  candles = self.getCandles(ins, granularity, nc)
+  if shift > 0:
+   candles[-shift:] = [] # just drop the end to get the shift
+  alpha = 1/(period+1)
+  ema = 0
+  wsum = 0
+  for i in range(0,len(candles)):
+   w = math.exp(alpha*(i-len(candles)))
+   ema += w*self.getMeanPrice(candles[i])
+   wsum += w
+  return ema/wsum
+  
+ def getMACD(self, slowperiod, fastperiod, avperiod, shift, ins, granularity):
+  mcvec = []
+  for i in range(avperiod):
+   mcvec.append(self.getEMA(ins, fastperiod,shift+i, granularity) - self.getEMA(ins, slowperiod,shift+i, granularity))
+  alpha = 1/(1+avperiod)
+  emamacd = 0
+  wsum = 0
+  for i in range(0,avperiod):
+   w = math.exp(alpha*(i-avperiod))
+   j = avperiod - i - 1
+   emamacd += w*mcvec[j]
+   wsum += w
+  emamacd /= wsum
+  return mcvec[0]-emamacd # this returns actually the histogram. Its all pretty weird but the final number is useful on a D1 Basis
+  
  def checkIns(self, ins):
   for indicator in self.indicators:
    indicator.checkIns(ins)
