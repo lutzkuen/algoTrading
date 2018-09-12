@@ -148,11 +148,13 @@ class indicator(object):
   
   upperentry = triangle[1]+moveout*spread
   lowerentry = triangle[0]-moveout*spread
-  sl = (triangle[1]+triangle[0])/2
-  tpupper = upperentry + (upperentry - sl)/0.618 # some serious FIB stuff
-  tplower = lowerentry + (lowerentry - sl)/0.618 # some serious FIB stuff
-  upperunits = self.controller.getUnits(abs(sl-upperentry),ins)
-  lowerunits = -self.controller.getUnits(abs(sl-lowerentry),ins)
+  #sl = (triangle[1]+triangle[0])/2
+  slupper = self.controller.getMIN(ins,'D',3)
+  sllower = self.controller.getMAX(ins,'D',3)
+  tpupper = upperentry + (upperentry - slupper)/0.618 # some serious FIB stuff
+  tplower = lowerentry + (lowerentry - sllower)/0.618 # some serious FIB stuff
+  upperunits = self.controller.getUnits(abs(slupper-upperentry),ins)
+  lowerunits = -self.controller.getUnits(abs(sllower-lowerentry),ins)
   if price > upperentry or price < lowerentry or upperunits == 0 or lowerunits == 0:
    #print('Skipping ' + ins + '. ' + str(price) + ' ' + str(upperentry) + ' ' + str(lowerentry) + ' ' + str(upperunits) + ' ' + str(lowerunits))
    return None # skip if not inside triangle
@@ -160,7 +162,8 @@ class indicator(object):
   fstr = '30.' + str(pipLoc) + 'f'
   tpupper = format(tpupper, fstr).strip()
   tplower = format(tplower, fstr).strip()
-  sl = format(sl, fstr).strip()
+  slupper = format(slupper, fstr).strip()
+  sllower = format(sllower, fstr).strip()
   #sldist = format(sldist, fstr).strip()
   upperentry = format(upperentry, fstr).strip()
   lowerentry = format(lowerentry, fstr).strip()
@@ -173,7 +176,7 @@ class indicator(object):
       'timeInForce': 'GTD',
       'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
       'takeProfitOnFill': {'price': tpupper, 'timeInForce': 'GTC'},
-      'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
+      'stopLossOnFill': {'price': slupper, 'timeInForce': 'GTC'},
       }}
   ticket = self.controller.createOrder(args)
   print(ticket)
@@ -185,7 +188,7 @@ class indicator(object):
       'timeInForce': 'GTD',
       'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
       'takeProfitOnFill': {'price': tplower, 'timeInForce': 'GTC'},
-      'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
+      'stopLossOnFill': {'price': sllower, 'timeInForce': 'GTC'},
       }}
   ticket = self.controller.createOrder(args)
   print(ticket)
