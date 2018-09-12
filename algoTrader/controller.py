@@ -71,7 +71,7 @@ class controller(object):
    self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   if _type == 'live':
-   self.indicators = [ triangle.indicator(self) ]
+   self.indicators = [ triangleh4.indicator(self)]#, sentiment.indicator(self) ]
   if _type == 'demoh':
    self.indicators = [ triangleh4.indicator(self) ]
  def updateMTcounter(self):
@@ -332,8 +332,18 @@ class controller(object):
    indicator.checkIns(ins)
  def createOrder(self, args):
   # add client Extensions for MT4
-  self.updateMTcounter()
-  args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
-  args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
-  ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-  return json.loads(ticket.raw_body)
+  macd_0 = self.getMACD(26, 12,9, 0, args['order'].get('instrument'), 'D')
+  macd_1 = self.getMACD(26, 12,9, 1, args['order'].get('instrument'), 'D')
+  allowed = False
+  if int(args['order'].get('units')) > 0:
+   if macd_0 > macd_1 and macd_1 < 0:
+    allowed = True
+  if int(args['order'].get('units')) < 0:
+   if macd_0 < macd_1 and macd_1 > 0:
+    allowed = True
+  #self.updateMTcounter()
+  #args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
+  #args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
+  if allowed:
+   ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+   return json.loads(ticket.raw_body)
