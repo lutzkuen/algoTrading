@@ -298,6 +298,17 @@ class controller(object):
  def getMeanPrice(self, candle):
   #return float(candle.get('mid').get('c'))
   return (float(candle.get('mid').get('l')) + float(candle.get('mid').get('h')) + 2*float(candle.get('mid').get('c')))/4
+ def getSMA(self, ins, period, shift, granularity):
+  nc = period + shift
+  candles = self.getCandles(ins, granularity, nc)
+  if shift > 0:
+   candles[-shift:] = [] # just drop the end to get the shift
+  sma = 0
+  wsum = 0
+  for i in range(0,len(candles)):
+   sma += self.getMeanPrice(candles[i])
+   wsum += 1
+  return sma/wsum
  def getEMA(self, ins, period, shift, granularity):
   nc = period + shift
   candles = self.getCandles(ins, granularity, nc)
@@ -332,15 +343,19 @@ class controller(object):
    indicator.checkIns(ins)
  def createOrder(self, args):
   # add client Extensions for MT4
-  macd_0 = self.getMACD(26, 12,9, 0, args['order'].get('instrument'), 'D')
-  macd_1 = self.getMACD(26, 12,9, 1, args['order'].get('instrument'), 'D')
+  ins = args['order'].get('instrument')
+  macd_0 = self.getMACD(26, 12,9, 0, ins, 'D')
+  macd_1 = self.getMACD(26, 12,9, 1, ins, 'D')
   allowed = False
+  sma20 = self.getSMA(ins, 20, 0, 'D')
   if int(args['order'].get('units')) > 0:
-   if macd_0 > macd_1 and macd_1 < 0:
-    allowed = True
+   if macd_0 > macd_1 and macd_1 < 0:#Momentum
+    if float(args['order'].get('price')) > sma20:#trend
+     allowed = True
   if int(args['order'].get('units')) < 0:
    if macd_0 < macd_1 and macd_1 > 0:
-    allowed = True
+    if float(args['order'].get('price')) < sma20:
+     allowed = True
   #self.updateMTcounter()
   #args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
   #args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
