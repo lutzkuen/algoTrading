@@ -22,6 +22,7 @@ import configparser
 import math
 import datetime
 import numpy as np
+import pandas as pd
 import dataset
 
 
@@ -80,6 +81,38 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
+    def data2sheet(self,year):
+        inst = []
+        statement = 'select distinct ins from dailycandles order by ins;'
+        for row in self.db.query(statement):
+            inst.append(row['ins'])
+        dates =[]
+        statement = 'select distinct date from dailycandles order by date;'
+        for row in self.db.query(statement):
+            if row['date'][:4] == year:
+                dates.append(row['date'])
+        dstr =[]
+        for date in dates:
+            drow ={'date': date}
+            for ins in inst:
+                icandle = self.table.find_one(date = date, ins = ins)
+                if not icandle:
+                    print('Candle does not exist ' + ins +' '+ str(date))
+                    drow[ins+'_vol'] = -1
+                    drow[ins+'_open'] = -1
+                    drow[ins+'_close'] = -1
+                    drow[ins+'_high'] = -1
+                    drow[ins+'_low'] = -1
+                else:
+                    drow[ins+'_vol'] = icandle['volume']
+                    drow[ins+'_open'] = icandle['open']
+                    drow[ins+'_close'] = icandle['close']
+                    drow[ins+'_high'] = icandle['high']
+                    drow[ins+'_low'] = icandle['low']
+                dstr.append(drow)
+        df = pd.DataFrame(dstr)
+        outname = '/home/ubuntu/algoTrading/cexport_'+year+'.csv'
+        df.to_csv(outname)
     def getBTreport(self):
         outname = '/home/ubuntu/algoTrading/backtest.csv'
         outfile = open(outname,'w')

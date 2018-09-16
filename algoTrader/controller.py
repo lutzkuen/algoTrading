@@ -25,6 +25,7 @@ import datetime
 import numpy as np
 import algoTrader.triangle as triangle
 import algoTrader.triangleh4 as triangleh4
+import algoTrader.triangleh4_lim as triangleh4_lim
 import algoTrader.divergence as divergence
 import algoTrader.sentiment as sentiment
 import matplotlib
@@ -73,7 +74,7 @@ class controller(object):
   if _type == 'live':
    self.indicators = [ triangleh4.indicator(self)]#, sentiment.indicator(self) ]
   if _type == 'demoh':
-   self.indicators = [ triangleh4.indicator(self) ]
+   self.indicators = [ triangleh4.indicator(self), triangleh4_lim.indicator(self) ]
  def updateMTcounter(self):
   orders = \
       self.oanda.order.list(self.settings.get('account_id'
@@ -347,15 +348,18 @@ class controller(object):
   macd_0 = self.getMACD(26, 12,9, 0, ins, 'D')
   macd_1 = self.getMACD(26, 12,9, 1, ins, 'D')
   allowed = False
-  sma20 = self.getSMA(ins, 20, 0, 'D')
+  sma10 = self.getSMA(ins, 10, 0, 'W')
+  sma20 = self.getSMA(ins, 20, 0, 'W')
   if int(args['order'].get('units')) > 0:
-   if macd_0 > macd_1 and macd_1 < 0:#Momentum
-    if float(args['order'].get('price')) > sma20:#trend
-     allowed = True
+   if macd_0 > macd_1:#Momentum
+    if sma10 > sma20:
+     if float(args['order'].get('price')) > sma20:#trend
+      allowed = True
   if int(args['order'].get('units')) < 0:
-   if macd_0 < macd_1 and macd_1 > 0:
-    if float(args['order'].get('price')) < sma20:
-     allowed = True
+   if macd_0 < macd_1:
+    if sma10 < sma20:
+     if float(args['order'].get('price')) < sma20:
+      allowed = True
   #self.updateMTcounter()
   #args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
   #args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
