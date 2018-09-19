@@ -111,7 +111,7 @@ class controller(object):
                     drow[ins+'_low'] = icandle['low']
                 dstr.append(drow)
         df = pd.DataFrame(dstr)
-        outname = '/home/ubuntu/algoTrading/cexport_'+year+'.csv'
+        outname = '/home/ubuntu/data/cexport_'+year+'.csv'
         df.to_csv(outname)
     def getBTreport(self):
         outname = '/home/ubuntu/algoTrading/backtest.csv'
