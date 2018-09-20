@@ -195,6 +195,6 @@ class controller(superc.controller):
    pl = self.evalOrder(ins)
    if pl or pl == 0:
     self.pl2db(ins,indicator.name,pl)
- def createOrder(self, args):
+ def sendOrder(self, args):
   self.orders.append(args)
   return('Opening ' + str(args['order'].get('units')) + ' ' + str(args['order'].get('instrument')))

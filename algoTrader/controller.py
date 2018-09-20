@@ -24,6 +24,7 @@ import math
 import datetime
 import numpy as np
 import algoTrader.triangle as triangle
+import algoTrader.macd_simple as macd_simple
 import algoTrader.triangleh4 as triangleh4
 import algoTrader.triangleh4_lim as triangleh4_lim
 import algoTrader.divergence as divergence
@@ -69,7 +70,7 @@ class controller(object):
   self.cpers = {}
   self.mtcounter = 0
   if _type in ['demo','backtest']:
-   self.indicators = [ divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
+   self.indicators = [ macd_simple.indicator(self) ]# divergence.indicator(self) , triangle.indicator(self)]#, sentiment.indicator(self) ]
    #self.indicators = [ sentiment.indicator(self)]
   if _type == 'live':
    self.indicators = [ triangleh4.indicator(self), triangleh4_lim.indicator(self)]#, sentiment.indicator(self) ]
@@ -342,6 +343,9 @@ class controller(object):
  def checkIns(self, ins):
   for indicator in self.indicators:
    indicator.checkIns(ins)
+ def sendOrder(self, args):
+  ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+  return json.loads(ticket.raw_body)
  def createOrder(self, args):
   # add client Extensions for MT4
   ins = args['order'].get('instrument')
@@ -366,5 +370,5 @@ class controller(object):
   #args['order']['clientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
   #args['order']['tradeClientExtensions'] = { 'id': str(self.mtcounter), 'tag': '0' }
   if allowed:
-   ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-   return json.loads(ticket.raw_body)
+   ticket = self.sendOrder(args)
+   return ticket
