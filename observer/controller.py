@@ -19,6 +19,7 @@ import v20
 from v20.request import Request
 import requests
 import configparser
+#import code
 import math
 import datetime
 import numpy as np
@@ -81,7 +82,7 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
-    def data2sheet(self,year):
+    def data2sheet(self):
         inst = []
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
@@ -89,8 +90,8 @@ class controller(object):
         dates =[]
         statement = 'select distinct date from dailycandles order by date;'
         for row in self.db.query(statement):
-            if row['date'][:4] == year:
-                dates.append(row['date'])
+            #if row['date'][:4] == year:
+            dates.append(row['date'])
         dstr =[]
         for date in dates:
             drow ={'date': date}
@@ -109,9 +110,11 @@ class controller(object):
                     drow[ins+'_close'] = icandle['close']
                     drow[ins+'_high'] = icandle['high']
                     drow[ins+'_low'] = icandle['low']
-                dstr.append(drow)
+            dstr.append(drow)
         df = pd.DataFrame(dstr)
-        outname = '/home/ubuntu/data/cexport_'+year+'.csv'
+        #code.interact(banner='', local=locals())
+        print('Constructe DF with shape ' + str(df.shape))
+        outname = '/home/ubuntu/data/cexport.csv'
         df.to_csv(outname)
     def getBTreport(self):
         outname = '/home/ubuntu/algoTrading/backtest.csv'
