@@ -25,8 +25,9 @@ import datetime
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.model_selection import GridSearchCV
 import dataset
-import json
+import pickle
 
 
 class controller(object):
@@ -41,6 +42,7 @@ class controller(object):
         self.settings['account_id'] = config.get(_type,
                 'active_account')
         self.settings['v20_host'] = config.get(_type, 'hostname')
+        self.settings['estim_path'] = '/home/ubuntu/data/estimators/'
         self.settings['v20_port'] = config.get(_type, 'port')
         self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
         self.settings['minbars'] = int(config.get('triangle', 'minbars'))
@@ -58,6 +60,7 @@ class controller(object):
         self.allowed_ins = \
             self.oanda.account.instruments(self.settings.get('account_id'
                 )).get('instruments', '200')
+        self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
         self.db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
         self.table = self.db['dailycandles']
     def retrieveData(self, numCandles):
@@ -116,7 +119,7 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
-    def data2sheet(self, write_raw = False, write_predict = True):
+    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False):
         inst = []
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
@@ -127,7 +130,14 @@ class controller(object):
             #if row['date'][:4] == year:
             dates.append(row['date'])
         dstr =[]
+        if not improve_model: # if we want to read only it is enough to take the last days
+         dates = dates[-4:]
         for date in dates:
+            # check whether the candle is from a weekday
+            dspl = date.split('-')
+            weekday = int(datetime.datetime(int(dspl[0]), int(dspl[1]), int(dspl[2])).weekday())
+            if weekday == 4 or weekday == 5: # saturday starts on friday and sunday on saturday
+                continue
             drow ={'date': date}
             for ins in inst:
                 icandle = self.table.find_one(date = date, ins = ins)
@@ -151,20 +161,22 @@ class controller(object):
          print('Constructe DF with shape ' + str(df.shape))
          outname = '/home/ubuntu/data/cexport.csv'
          df.to_csv(outname)
+        df.drop(['date'],1,inplace = True)
+        volp = {}
+        for col in df.columns:
+         if improve_model:
+          self.improveEstim(col, df)
+         pvol, vprev = self.predictColumn(col, df, newEstim = False)
+         parts = col.split('_')
+         #print(col)
+         instrument = parts[0] + '_' + parts[1]
+         typ = parts[2]
+         if instrument in volp.keys():
+          volp[instrument][typ] = pvol # store diff to prev day
+         else:
+          volp[instrument] = { typ: pvol }
+         print(col + ' ' + str(pvol))
         if write_predict:
-         df.drop(['date'],1,inplace = True)
-         volp = {}
-         for col in df.columns:
-          pvol, vprev = self.predictColumn(col, df)
-          parts = col.split('_')
-          #print(col)
-          instrument = parts[0] + '_' + parts[1]
-          typ = parts[2]
-          if instrument in volp.keys():
-           volp[instrument][typ] = pvol # store diff to prev day
-          else:
-           volp[instrument] = { typ: pvol }
-          print(col + ' ' + str(pvol))
          
          #psort = sorted(volp, key = lambda x: x.get('relative'), reverse = True)
          outfile = open('/home/ubuntu/data/prices.csv','w')
@@ -172,15 +184,38 @@ class controller(object):
          for instr in volp.keys():
           outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('open')) + ',' + str(volp[instr].get('close')) + ',' + str(volp[instr].get('vol')) + '\n')
          outfile.close()
-    def predictColumn(self, pcol, df):
+    def improveEstim(self, pcol, df):
+     try:
+      dumpname = self.settings.get('estim_path') + pcol + '.rf'
+      regr = pickle.load(open(dumpname,'rb'))
+     except:
+      print('Failed to load model for ' + pcol)
+      return
+     params = regr.get_params()
+     n_estimators_base = int(params.get('n_estimators'))
+     n_lower = math.floor(n_estimators_base*0.9)
+     n_upper = math.ceil(n_estimators_base*1.1)
+     if n_lower < n_estimators_base and n_lower > 0:
+      n_range = [n_lower, n_estimators_base, n_upper]
+     else:
+      n_range = [n_estimators_base, n_upper]
+     n_minsample = params.get('min_samples_split')
+     nmin_low = math.floor(n_minsample*0.9)
+     nmin_up = math.floor(n_minsample*1.1)
+     if nmin_low < n_minsample and nmin_low > 1:
+      minsample = [nmin_low, n_minsample, nmin_up]
+     else:
+      minsample = [n_minsample, nmin_up]
+     parameters = { 'n_estimators': n_range,
+                    'max_features': ['auto', 'sqrt', 'log2'],
+                    'min_samples_split': minsample }
+     gridcv = GridSearchCV(RandomForestRegressor(), parameters)
      x = np.array(df.values[:])
      y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
      vprev = y[-1]
      y = y[1:] # drop first line
      xlast = x[-1,:]
      x = x[:-1,:]# drop the last line
-     regr = RandomForestRegressor()
-     #remove missing lines from the training data
      i = 0
      while i < y.shape[0]:
       if y[i] < 0: # missing values are marked with -1
@@ -188,7 +223,32 @@ class controller(object):
        x = np.delete(x, (i), axis = 0)
       else:
        i += 1
-     regr.fit(x,y)
+     gridcv.fit(x,y)
+     print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_))
+     pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
+    def predictColumn(self, pcol, df, newEstim = True):
+     x = np.array(df.values[:])
+     y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
+     vprev = y[-1]
+     y = y[1:] # drop first line
+     xlast = x[-1,:]
+     x = x[:-1,:]# drop the last line
+     if newEstim:
+      regr = RandomForestRegressor()
+      #remove missing lines from the training data
+      i = 0
+      while i < y.shape[0]:
+       if y[i] < 0: # missing values are marked with -1
+        y = np.delete(y,i)
+        x = np.delete(x, (i), axis = 0)
+       else:
+        i += 1
+      regr.fit(x,y)
+      dumpname = self.settings.get('estim_path') + pcol + '.rf'
+      pickle.dump(regr, open(dumpname,'wb'))
+     else:
+      dumpname = self.settings.get('estim_path') + pcol + '.rf'
+      regr = pickle.load(open(dumpname,'rb'))
      yp = regr.predict(xlast.reshape(1, -1))
      return yp[0], vprev
     def getUnits(self, dist, ins):
@@ -245,23 +305,37 @@ class controller(object):
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
      hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]
      lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]
+     spread = self.getSpread(ins)
+     trade = None
+     for tr in self.trades:
+      if tr.instrument == ins:
+       trade = tr
      if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
       return None
+     if trade:
+      isopen = True
+      if trade.currentUnits > 0 and cl < op:
+       self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+       isopen = False
+      if trade.currentUnits < 0 and cl > op:
+       self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+       isopen = False
+      if isopen:
+       return
      if cl > op:
-      sl = lo - ( op - lo )
+      sl = min(lo - ( op - lo ),lo-5*spread)
       tp = (hi + cl)/2
      else:
-      sl = hi + ( hi - op )
+      sl = max(hi + ( hi - op ),hi+5*spread)
       tp = (lo + cl)/2
      rr = abs((tp-op)/(sl-op))
-     if rr < 1.5:# Risk-reward to low
+     if rr < 1.5:# Risk-reward too low
       return None
      # if you made it here its fine, lets open a limit order
      units = self.getUnits(abs(sl-op),ins)
      if tp < sl:
       units *= -1
      pipLoc = self.getPipSize(ins)
-     spread = self.getSpread(ins)
      if abs(sl-op) < 5*spread: # sl too small
       return None
      fstr = '30.' + str(pipLoc) + 'f'
