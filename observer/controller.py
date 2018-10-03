@@ -164,11 +164,12 @@ class controller(object):
          print('Constructe DF with shape ' + str(df.shape))
          outname = '/home/ubuntu/data/cexport.csv'
          df.to_csv(outname)
+        datecol = df['date'].copy() # copy for usage in improveEstim
         df.drop(['date'],1,inplace = True)
         volp = {}
         for col in df.columns:
          if improve_model:
-          self.improveEstim(col, df)
+          self.improveEstim(col, df, datecol)
          pvol, vprev = self.predictColumn(col, df, newEstim = False)
          parts = col.split('_')
          #print(col)
@@ -194,8 +195,12 @@ class controller(object):
     #     #if row['date'][:4] == year:
     #     dates.append(row['date'])
     # dates[0]
-     
-    def improveEstim(self, pcol, df):
+    def distToNow(self, idate):
+     now = datetime.datetime.now()
+     ida = datetime.datetime.strptime(idate,'%Y-%m-%d')
+     delta = now - ida
+     return math.exp(-delta.days/365.25)# exponentially decaying weight decay
+    def improveEstim(self, pcol, df, datecol):
      try:
       dumpname = self.settings.get('estim_path') + pcol + '.rf'
       regr = pickle.load(open(dumpname,'rb'))
@@ -212,7 +217,7 @@ class controller(object):
       n_range = [n_estimators_base, n_upper]
      n_minsample = params.get('min_samples_split')
      nmin_low = math.floor(n_minsample*0.9)
-     nmin_up = math.floor(n_minsample*1.1)
+     nmin_up = math.ceil(n_minsample*1.1)
      if nmin_low < n_minsample and nmin_low > 1:
       minsample = [nmin_low, n_minsample, nmin_up]
      else:
@@ -220,21 +225,24 @@ class controller(object):
      parameters = { 'n_estimators': n_range,
                     'max_features': ['auto', 'sqrt', 'log2'],
                     'min_samples_split': minsample }
-     gridcv = GridSearchCV(RandomForestRegressor(), parameters)
+     weights = np.array(datecol.apply(self.distToNow).values[:])
      x = np.array(df.values[:])
      y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
      vprev = y[-1]
+     weights = weights[1:]
      y = y[1:] # drop first line
      xlast = x[-1,:]
      x = x[:-1,:]# drop the last line
      i = 0
      while i < y.shape[0]:
       if y[i] < 0: # missing values are marked with -1
+       weights = np.delete(weights, i)
        y = np.delete(y,i)
        x = np.delete(x, (i), axis = 0)
       else:
        i += 1
-     gridcv.fit(x,y)
+     gridcv = GridSearchCV(RandomForestRegressor(), parameters, cv = 3, iid = False)
+     gridcv.fit(x,y, sample_weight = weights)
      print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_))
      pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
     def predictColumn(self, pcol, df, newEstim = True):
