@@ -63,6 +63,7 @@ class controller(object):
         self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
         self.db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
         self.table = self.db['dailycandles']
+        self.estimtable = self.db['estimators']
     def retrieveData(self, numCandles):
         for ins in self.allowed_ins:
             candles = self.getCandles(ins.name,'D',numCandles)
@@ -245,6 +246,8 @@ class controller(object):
      gridcv.fit(x,y, sample_weight = weights)
      print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_))
      pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
+     dobj = {'name': pcol, 'score': gridcv.best_score_ }
+     self.estimtable.upsert(dobj, ['name'])
     def predictColumn(self, pcol, df, newEstim = True):
      x = np.array(df.values[:])
      y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
