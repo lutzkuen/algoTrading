@@ -119,13 +119,16 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
-    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False):
+    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None):
         inst = []
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
             inst.append(row['ins'])
         dates =[]
-        statement = 'select distinct date from dailycandles order by date;'
+        if maxdate:
+         statement = 'select distinct date from dailycandles where date <= ' + maxdate +  ' order by date;'
+        else:
+         statement = 'select distinct date from dailycandles order by date;'
         for row in self.db.query(statement):
             #if row['date'][:4] == year:
             dates.append(row['date'])
@@ -184,6 +187,14 @@ class controller(object):
          for instr in volp.keys():
           outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('open')) + ',' + str(volp[instr].get('close')) + ',' + str(volp[instr].get('vol')) + '\n')
          outfile.close()
+    #def testEstim(self, ins): # this method tests the combined estimators for one instrument
+    # dates = []
+    # statement = 'select distinct date from dailycandles order by date;'
+    # for row in self.db.query(statement):
+    #     #if row['date'][:4] == year:
+    #     dates.append(row['date'])
+    # dates[0]
+     
     def improveEstim(self, pcol, df):
      try:
       dumpname = self.settings.get('estim_path') + pcol + '.rf'
@@ -310,8 +321,6 @@ class controller(object):
      for tr in self.trades:
       if tr.instrument == ins:
        trade = tr
-     if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
-      return None
      if trade:
       isopen = True
       if trade.currentUnits > 0 and cl < op:
@@ -320,8 +329,13 @@ class controller(object):
       if trade.currentUnits < 0 and cl > op:
        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
        isopen = False
+      if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
+       self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+       isopen = False
       if isopen:
        return
+     if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
+      return None
      if cl > op:
       sl = min(lo - ( op - lo ),lo-5*spread)
       tp = (hi + cl)/2
@@ -333,6 +347,8 @@ class controller(object):
       return None
      # if you made it here its fine, lets open a limit order
      units = self.getUnits(abs(sl-op),ins)
+     if abs(units) < 0:
+      return None # oops, risk threshold too small
      if tp < sl:
       units *= -1
      pipLoc = self.getPipSize(ins)
