@@ -244,7 +244,7 @@ class controller(object):
        i += 1
      gridcv = GridSearchCV(RandomForestRegressor(), parameters, cv = 3, iid = False)
      gridcv.fit(x,y, sample_weight = weights)
-     print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_))
+     print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(gridcv.best_score_))
      pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
      dobj = {'name': pcol, 'score': gridcv.best_score_ }
      self.estimtable.upsert(dobj, ['name'])
@@ -327,6 +327,19 @@ class controller(object):
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
      hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]
      lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]
+     # get the R2 of the consisting estimators
+     r2sum = 0
+     for prefix in ['_high', '_low', '_open', '_close']:
+      colname = ins + prefix
+      r2 = self.estimtable.find_one(name = colname)
+      if r2:
+       r2sum += r2.get('score')
+      else: 
+       print('WARNING: Unscored estimator - ' + colname)
+       r2sum -= 1
+     #print(ins + ' - cum. R2: ' + str(r2sum))
+     if r2sum < 0:
+      print('SKIPPING: ' + ins + ' - cum. R2: ' + str(r2sum))
      spread = self.getSpread(ins)
      trade = None
      for tr in self.trades:
@@ -334,6 +347,8 @@ class controller(object):
        trade = tr
      if trade:
       isopen = True
+      if r2sum < 0:# if we do not trust the estimator we should not move forward
+       self.oanda.trade.close(self.settings.get('account_id'), trade.id)
       if trade.currentUnits > 0 and cl < op:
        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
        isopen = False
@@ -345,35 +360,40 @@ class controller(object):
        isopen = False
       if isopen:
        return
+     if r2sum < 0:
+      return
      if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
       return None
+     step = (hi-lo)/8
      if cl > op:
-      sl = min(lo - ( op - lo ),lo-5*spread)
+      sl = min(lo - ( op - lo ),lo-step)
+      entry = (op+lo)/2
       tp = (hi + cl)/2
      else:
-      sl = max(hi + ( hi - op ),hi+5*spread)
+      sl = max(hi + ( hi - op ),hi+step)
+      entry = (op+hi)/2
       tp = (lo + cl)/2
-     rr = abs((tp-op)/(sl-op))
+     rr = abs((tp-entry)/(sl-entry))
      if rr < 1.5:# Risk-reward too low
       return None
      # if you made it here its fine, lets open a limit order
-     units = self.getUnits(abs(sl-op),ins)
+     units = self.getUnits(abs(sl-entry),ins)
      if abs(units) < 0:
       return None # oops, risk threshold too small
      if tp < sl:
       units *= -1
      pipLoc = self.getPipSize(ins)
-     if abs(sl-op) < 5*spread: # sl too small
+     if abs(sl-entry) < 20*10**(-pipLoc): # sl too small
       return None
      fstr = '30.' + str(pipLoc) + 'f'
      tp = format(tp, fstr).strip()
      sl = format(sl, fstr).strip()
-     op = format(op, fstr).strip()
+     entry = format(entry, fstr).strip()
      expiry = datetime.datetime.now() + datetime.timedelta(days=1)
      args = {'order': {
      'instrument': ins,
      'units': units,
-     'price': op,
+     'price': entry,
      'type': 'LIMIT',
      'timeInForce': 'GTD',
      'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
