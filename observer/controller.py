@@ -25,9 +25,12 @@ import datetime
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
+from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.model_selection import GridSearchCV
+from tpot import TPOTRegressor
 import dataset
 import pickle
+
 
 
 class controller(object):
@@ -120,7 +123,7 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
-    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None):
+    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None, newEstim = False):
         inst = []
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
@@ -134,7 +137,7 @@ class controller(object):
             #if row['date'][:4] == year:
             dates.append(row['date'])
         dstr =[]
-        if not improve_model: # if we want to read only it is enough to take the last days
+        if (not improve_model) and (not newEstim): # if we want to read only it is enough to take the last days
          dates = dates[-4:]
         for date in dates:
             # check whether the candle is from a weekday
@@ -171,7 +174,7 @@ class controller(object):
         for col in df.columns:
          if improve_model:
           self.improveEstim(col, df, datecol)
-         pvol, vprev = self.predictColumn(col, df, newEstim = False)
+         pvol, vprev = self.predictColumn(col, df, newEstim = newEstim)
          parts = col.split('_')
          #print(col)
          instrument = parts[0] + '_' + parts[1]
@@ -242,7 +245,7 @@ class controller(object):
        x = np.delete(x, (i), axis = 0)
       else:
        i += 1
-     gridcv = GridSearchCV(RandomForestRegressor(), parameters, cv = 3, iid = False)
+     gridcv = GridSearchCV(GradientBoostingRegressor(), parameters, cv = 3, iid = False)
      gridcv.fit(x,y, sample_weight = weights)
      print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(gridcv.best_score_))
      pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
@@ -256,7 +259,9 @@ class controller(object):
      xlast = x[-1,:]
      x = x[:-1,:]# drop the last line
      if newEstim:
-      regr = RandomForestRegressor()
+      #regr = RandomForestRegressor()
+      regr = GradientBoostingRegressor()
+      #regr = TPOTRegressor(generations = 50, population_size = 10, verbosity = 2)
       #remove missing lines from the training data
       i = 0
       while i < y.shape[0]:
@@ -327,16 +332,17 @@ class controller(object):
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
      hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]
      lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]
+     price = self.getPrice(ins)
      # get the R2 of the consisting estimators
-     r2sum = 0
+     r2sum = 1
      for prefix in ['_high', '_low', '_open', '_close']:
       colname = ins + prefix
       r2 = self.estimtable.find_one(name = colname)
       if r2:
-       r2sum += r2.get('score')
+       r2sum = min(r2.get('score'),r2sum)
       else: 
        print('WARNING: Unscored estimator - ' + colname)
-       r2sum -= 1
+       r2sum = -1
      #print(ins + ' - cum. R2: ' + str(r2sum))
      if r2sum < 0:
       print('SKIPPING: ' + ins + ' - cum. R2: ' + str(r2sum))
@@ -383,8 +389,12 @@ class controller(object):
      if tp < sl:
       units *= -1
      pipLoc = self.getPipSize(ins)
-     if abs(sl-entry) < 20*10**(-pipLoc): # sl too small
+     if abs(sl-entry) < 200*10**(-pipLoc): # sl too small
       return None
+     if (entry-price)*units > 0:
+      otype = 'STOP'
+     else:
+      otype = 'LIMIT'
      fstr = '30.' + str(pipLoc) + 'f'
      tp = format(tp, fstr).strip()
      sl = format(sl, fstr).strip()
@@ -394,7 +404,7 @@ class controller(object):
      'instrument': ins,
      'units': units,
      'price': entry,
-     'type': 'LIMIT',
+     'type': otype,
      'timeInForce': 'GTD',
      'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
      'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
