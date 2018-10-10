@@ -320,7 +320,12 @@ class controller(object):
      if not conversion:
          print('CRITICAL: Could not convert ' + leadingCurr + '_'+trailingCurr+ ' to EUR')
          return 0  # do not place a trade if conversion fails
-     return math.floor(multiplier * targetExp * conversion )
+     rawUnits = multiplier * targetExp * conversion
+     if rawUnits > 0:
+      return math.floor(rawUnits)
+     else:
+      return math.ceil(rawUnits)
+     return 0
     def getConversion(self, leadingCurr):
      # get conversion rate to account currency
      accountCurr = 'EUR'
@@ -406,7 +411,12 @@ class controller(object):
      if rr < 1.5:# Risk-reward too low
       return None
      # if you made it here its fine, lets open a limit order
-     units = self.getUnits(abs(sl-entry),ins)
+     # r2sum is used to scale down the units risked to accomodate the estimator quality
+     units = self.getUnits(abs(sl-entry),ins)*r2sum
+     if units > 0:
+      units = math.floor(units)
+     if units < 0:
+      units = math.ceil(units)
      if abs(units) < 0:
       return None # oops, risk threshold too small
      if tp < sl:
