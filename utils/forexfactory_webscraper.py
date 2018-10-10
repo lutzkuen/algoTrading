@@ -101,7 +101,7 @@ if __name__ == "__main__":
     """
     Run this using the command "python `script_name`.py >> `output_name`.csv"
     """
-    db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
+    db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/calendar.db')
     table = db['economic_calendar']
     setLogger()
     #outf = open('forexfactory_cal.csv','w')
