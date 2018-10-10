@@ -67,6 +67,7 @@ class controller(object):
         self.db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
+        self.importances = self.db['feature_importances']
     def retrieveData(self, numCandles):
         for ins in self.allowed_ins:
             candles = self.getCandles(ins.name,'D',numCandles)
@@ -199,6 +200,28 @@ class controller(object):
     #     #if row['date'][:4] == year:
     #     dates.append(row['date'])
     # dates[0]
+    def getFeatureImportances(self):
+     feature_names = []
+     statement = 'select distinct ins from dailycandles order by ins;'
+     for row in self.db.query(statement):
+         feature_names.append(row['ins'] + '_volume')
+         feature_names.append(row['ins'] + '_open')
+         feature_names.append(row['ins'] + '_close')
+         feature_names.append(row['ins'] + '_high')
+         feature_names.append(row['ins'] + '_low')
+     sql = 'select distinct name from estimators;'
+     for row in self.db.query(sql):
+      pcol = row.get('name')
+      try:
+       dumpname = self.settings.get('estim_path') + pcol + '.rf'
+       regr = pickle.load(open(dumpname,'rb'))
+      except:
+       print('Failed to load model for ' + pcol)
+       continue
+      print(pcol)
+      for name, importance in zip(feature_names, regr.feature_importances_):
+       dbline = {'name': pcol, 'feature': name, 'importance': importance}
+       self.importances.upsert(dbline, ['name', 'feature'])
     def distToNow(self, idate):
      now = datetime.datetime.now()
      ida = datetime.datetime.strptime(idate,'%Y-%m-%d')
