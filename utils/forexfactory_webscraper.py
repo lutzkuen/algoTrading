@@ -10,6 +10,7 @@ import requests
 import datetime
 import logging
 import csv
+import dataset
     
 def setLogger():
     logging.basicConfig(level=logging.INFO,
@@ -21,7 +22,7 @@ def setLogger():
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 
-def getEconomicCalendar(startlink,endlink,outf):
+def getEconomicCalendar(startlink,endlink,table):
 
     
     # write to console current status
@@ -79,7 +80,9 @@ def getEconomicCalendar(startlink,endlink,outf):
                                             "%Y,%a%b %d,%I:%M%p")
             outline = ",".join([str(dt),currency,impact,event,actual,forecast,previous])
             print(outline)
-            outf.write(outline + '\n')
+            dobj = { 'year': curr_year, 'date': curr_date, 'time': curr_time, 'currency': currency, 'impact': impact, 'event': event, 'actual': actual, 'forecast': forecast, 'previous': previous }
+            table.upsert(dobj,['year', 'date', 'time', 'currency', 'event'])
+            #outf.write(outline + '\n')
         except:
             with open("errors.csv","a") as f:
                 csv.writer(f).writerow([curr_year,curr_date,curr_time])
@@ -92,14 +95,16 @@ def getEconomicCalendar(startlink,endlink,outf):
     # get the link for the next week and follow
     follow = soup.select("a.calendar__pagination.calendar__pagination--next.next")
     follow = follow[0]["href"]
-    getEconomicCalendar(follow,endlink,outf)
+    getEconomicCalendar(follow,endlink,table)
 
 if __name__ == "__main__":
     """
     Run this using the command "python `script_name`.py >> `output_name`.csv"
     """
+    db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
+    table = db['economic_calendar']
     setLogger()
-    outf = open('forexfactory_cal.csv','w')
-    outf.write('DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS\n')
-    getEconomicCalendar("calendar.php?week=jan12.2014","calendar.php?week=oct7.2018", outf)
-    outf.close()
+    #outf = open('forexfactory_cal.csv','w')
+    #outf.write('DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS\n')
+    getEconomicCalendar("calendar.php?week=jan12.2014","calendar.php?week=oct14.2018", table)
+    #outf.close()
