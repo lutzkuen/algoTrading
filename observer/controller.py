@@ -64,7 +64,7 @@ class controller(object):
             self.oanda.account.instruments(self.settings.get('account_id'
                 )).get('instruments', '200')
         self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
-        self.db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/barsave.db')
+        self.db = dataset.connect('sqlite:////home/ubuntu/data/barsave.db')
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
