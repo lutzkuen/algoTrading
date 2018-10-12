@@ -11,6 +11,7 @@ import datetime
 import logging
 import csv
 import dataset
+import code
     
 def setLogger():
     logging.basicConfig(level=logging.INFO,
@@ -90,8 +91,9 @@ def getEconomicCalendar(startlink,endlink,table):
     # exit recursion when last available link has reached
     if startlink==endlink:
         logging.info("Successfully retrieved data")
+        #code.interact(banner='', local=locals())
         return
-
+    print(startlink + ' ' + endlink)
     # get the link for the next week and follow
     follow = soup.select("a.calendar__pagination.calendar__pagination--next.next")
     follow = follow[0]["href"]
@@ -101,10 +103,11 @@ if __name__ == "__main__":
     """
     Run this using the command "python `script_name`.py >> `output_name`.csv"
     """
-    db = dataset.connect('sqlite:////home/ubuntu/algoTrading/data/calendar.db')
+    db = dataset.connect('sqlite:///../data/calendar.db')
     table = db['economic_calendar']
     setLogger()
     #outf = open('forexfactory_cal.csv','w')
     #outf.write('DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS\n')
-    getEconomicCalendar("calendar.php?week=jan12.2014","calendar.php?week=oct14.2018", table)
+	now = datetime.datetime.now() 
+    getEconomicCalendar("calendar.php?week=oct5.2018","calendar.php?week=oct5.2018", table)
     #outf.close()

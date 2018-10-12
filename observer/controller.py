@@ -9,62 +9,160 @@ __maintainer__ = "Lutz Künneke"
 __email__ = "lutz.kuenneke89@gmail.com"
 __status__ = "Prototype"
 """
-Spread trading using UK/US 10yr bond yields
+Candle logger and ML controller
 Use at own risk
 Author: Lutz Kuenneke, 26.07.2018
 """
 import json
 import time
-import v20
-from v20.request import Request
+try:
+    import v20
+    from v20.request import Request
+    v20present = True
+except ImportError:
+    print('WARNING: V20 library not present. Connection to broker not possible')
+    v20present = False
 import requests
+import code
+    
 import configparser
 #import code
 import math
+#from sklearn.externals import joblib
 import datetime
 import numpy as np
 import pandas as pd
-from sklearn.ensemble import RandomForestRegressor
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.model_selection import GridSearchCV
-from tpot import TPOTRegressor
+#from tpot import TPOTRegressor
 import dataset
 import pickle
+from sklearn.feature_selection import SelectPercentile, f_regression
+from sklearn.pipeline import make_pipeline
 
 
+def getRangeInt(val,change,lower = -math.inf,upper = math.inf):
+    lval = math.floor(val*(1-change))
+    uval = math.ceil(val*(1+change))
+    rang = []
+    if lval < val and lval >= lower:
+        rang.append(lval)
+    rang.append(val)
+    if uval > val and uval <= upper:
+        rang.append(uval)
+    return rang
+
+def getRangeFlo(val,change,lower = -math.inf,upper = math.inf):
+    lval = val*(1-change)
+    uval = val*(1+change)
+    rang = []
+    if lval < val and lval >= lower:
+        rang.append(lval)
+    rang.append(val)
+    if uval > val and uval <= upper:
+        rang.append(uval)
+    return rang    
+
+
+def getGBimportances(gb, x, y):
+    gb.fit(x,y)
+    return gb.feature_importances_
+
+class estim_pipeline(object):
+    def __init__(self, percentile = 50, learning_rate = 0.1, n_estimators = 100, min_samples_split = 2, path = None, classifier = False):
+        if path: # read from disk 
+            gb_path = path + '.gb'
+            self.gb = pickle.load(open(gb_path,'rb'))
+            perc_path = path + '.pipe'
+            perc_attr = pickle.load(open(perc_path,'rb'))
+            param_path = path + '.param'
+            self.params = pickle.load(open(param_path,'rb'))
+            score_func = lambda x, y: getGBimportances(self.gb, x, y)
+            self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
+            self.percentile.scores_ = perc_attr.get('scores')
+            self.percentile.pvalues_ = perc_attr.get('pvalues')
+            #code.interact(banner='', local=locals())
+        else:
+            self.params = { 'percentile': percentile, 'learning_rate': learning_rate, 'n_estimators': n_estimators, 'min_samples_split': min_samples_split}
+            if classifier:
+                self.gb = GradientBoostingClassifier(learning_rate=learning_rate,  min_samples_split=min_samples_split, n_estimators=n_estimators)
+            else:
+                self.gb = GradientBoostingRegressor(learning_rate=learning_rate,  min_samples_split=min_samples_split, n_estimators=n_estimators)
+            score_func = lambda x, y: getGBimportances(self.gb, x, y)
+            self.percentile = SelectPercentile(score_func=score_func, percentile=percentile)
+        self.pipeline = make_pipeline(
+        self.percentile,
+        self.gb
+        )
+        #print(self.pipeline.named_steps.keys())
+    def get_params(self,deep = True):
+        return self.params
+    def fit(self, x,y,sample_weight = None):
+        self.pipeline.fit(x,y, gradientboostingregressor__sample_weight = sample_weight )
+        self.feature_importances_ = self.gb.feature_importances_
+        return self
+    def writeToDisk(self, path):
+        gb_path = path + '.gb'
+        pickle.dump(self.gb, open(gb_path,'wb'))
+        pipe_path = path + '.pipe'
+        #code.interact(banner='', local=locals())
+        pipe_attr = { 'scores': self.percentile.scores_, 'pvalues': self.percentile.pvalues_ }
+        pickle.dump(pipe_attr, open(pipe_path,'wb'))    
+        param_path = path + '.param'
+        pickle.dump(self.params, open(param_path,'wb'))
+    def predict(self, x):
+        return self.pipeline.predict(x)
+    def score(self, x, y=None, sample_weight = None):
+        return self.pipeline.score(x,y=y,sample_weight = sample_weight)
+    def set_params(self, percentile = None, learning_rate = None, n_estimators = None,  min_samples_split = None):
+        if percentile:
+            self.percentile.set_params(percentile = percentile)
+            self.params['percentile'] = percentile
+        if learning_rate:
+            self.gb.set_params(learning_rate = learning_rate)
+            self.params['learning_rate'] = learning_rate
+        if n_estimators:
+            self.gb.set_params(n_estimators = n_estimators)
+            self.params['n_estimators'] = n_estimators
+        if min_samples_split:
+            self.gb.set_params(min_samples_split = min_samples_split)
+            self.params['min_samples_split'] = min_samples_split
+        return self
 
 class controller(object):
-
     def __init__(self, confname, _type):
         config = configparser.ConfigParser()
         config.read(confname)
         self.settings = {}
-        self.settings['domain'] = config.get(_type,
-          'streaming_hostname')
-        self.settings['access_token'] = config.get(_type, 'token')
-        self.settings['account_id'] = config.get(_type,
-                'active_account')
-        self.settings['v20_host'] = config.get(_type, 'hostname')
-        self.settings['estim_path'] = '/home/ubuntu/data/estimators/'
-        self.settings['v20_port'] = config.get(_type, 'port')
-        self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
-        self.settings['minbars'] = int(config.get('triangle', 'minbars'))
-        self.settings['maxbars'] = int(config.get('triangle', 'maxbars'))
-        self.settings['moveout'] = int(config.get('triangle', 'moveout'))
-        self.settings['tolerance'] = float(config.get('triangle', 'tolerance'))
-        self.settings['granularity'] = config.get('triangle', 'granularity')
-        self.settings['myfxbook_email'] = config.get('myfxbook','email')
-        self.settings['myfxbook_pwd'] = config.get('myfxbook','pwd')
-        self.settings['imdir'] = config.get(_type,'imdir')
-        self.oanda = v20.Context(self.settings.get('v20_host'),
-                           port=self.settings.get('v20_port'),
-                           token=self.settings.get('access_token'
-                           ))
-        self.allowed_ins = \
-            self.oanda.account.instruments(self.settings.get('account_id'
-                )).get('instruments', '200')
-        self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
-        self.db = dataset.connect('sqlite:////home/ubuntu/data/barsave.db')
+        self.settings['estim_path'] = config.get('data', 'estim_path')
+        self.settings['prices_path'] = config.get('data','prices_path')
+        if _type and v20present:
+            self.settings['domain'] = config.get(_type,
+              'streaming_hostname')
+            self.settings['access_token'] = config.get(_type, 'token')
+            self.settings['account_id'] = config.get(_type,
+                    'active_account')
+            self.settings['v20_host'] = config.get(_type, 'hostname')
+            self.settings['v20_port'] = config.get(_type, 'port')
+            self.settings['account_risk'] = int(config.get('triangle', 'account_risk'))
+            self.settings['minbars'] = int(config.get('triangle', 'minbars'))
+            self.settings['maxbars'] = int(config.get('triangle', 'maxbars'))
+            self.settings['moveout'] = int(config.get('triangle', 'moveout'))
+            self.settings['tolerance'] = float(config.get('triangle', 'tolerance'))
+            self.settings['granularity'] = config.get('triangle', 'granularity')
+            self.settings['myfxbook_email'] = config.get('myfxbook','email')
+            self.settings['myfxbook_pwd'] = config.get('myfxbook','pwd')
+            self.settings['imdir'] = config.get(_type,'imdir')
+            self.oanda = v20.Context(self.settings.get('v20_host'),
+                               port=self.settings.get('v20_port'),
+                               token=self.settings.get('access_token'
+                               ))
+            self.allowed_ins = \
+                self.oanda.account.instruments(self.settings.get('account_id'
+                    )).get('instruments', '200')
+            self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
+        self.db = dataset.connect(config.get('data','candle_path'))
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
@@ -140,39 +238,45 @@ class controller(object):
         dstr =[]
         if (not improve_model) and (not newEstim): # if we want to read only it is enough to take the last days
          dates = dates[-4:]
+        #dates = dates[-30:] # use this line to decrease computation time for development
         for date in dates:
             # check whether the candle is from a weekday
             dspl = date.split('-')
             weekday = int(datetime.datetime(int(dspl[0]), int(dspl[1]), int(dspl[2])).weekday())
             if weekday == 4 or weekday == 5: # saturday starts on friday and sunday on saturday
                 continue
-            drow ={'date': date}
+            drow ={'date': date, 'weekday': weekday }
             for ins in inst:
                 icandle = self.table.find_one(date = date, ins = ins)
                 if not icandle:
                     print('Candle does not exist ' + ins +' '+ str(date))
-                    drow[ins+'_vol'] = -1
-                    drow[ins+'_open'] = -1
-                    drow[ins+'_close'] = -1
-                    drow[ins+'_high'] = -1
-                    drow[ins+'_low'] = -1
+                    drow[ins+'_vol'] = -999999
+                    drow[ins+'_open'] = -999999
+                    drow[ins+'_close'] = -999999
+                    drow[ins+'_high'] = -999999
+                    drow[ins+'_low'] = -999999
                 else:
                     drow[ins+'_vol'] = int(icandle['volume'])
                     drow[ins+'_open'] = float(icandle['open'])
-                    drow[ins+'_close'] = float(icandle['close'])
-                    drow[ins+'_high'] = float(icandle['high'])
-                    drow[ins+'_low'] = float(icandle['low'])
+                    if float(icandle['close']) > float(icandle['open']):
+                        drow[ins+'_close'] = int(1)
+                    else:
+                        drow[ins+'_close'] = int(-1)
+                    drow[ins+'_high'] = float(icandle['high'])-float(icandle['open'])
+                    drow[ins+'_low'] = float(icandle['low'])-float(icandle['open'])
             dstr.append(drow)
         df = pd.DataFrame(dstr)
         #code.interact(banner='', local=locals())
         if write_raw:
-         print('Constructe DF with shape ' + str(df.shape))
+         print('Constructed DF with shape ' + str(df.shape))
          outname = '/home/ubuntu/data/cexport.csv'
          df.to_csv(outname)
         datecol = df['date'].copy() # copy for usage in improveEstim
         df.drop(['date'],1,inplace = True)
         volp = {}
         for col in df.columns:
+         if '_vol' in col or '_open' in col:
+          continue
          if improve_model:
           self.improveEstim(col, df, datecol)
          pvol, vprev = self.predictColumn(col, df, newEstim = newEstim)
@@ -186,12 +290,11 @@ class controller(object):
           volp[instrument] = { typ: pvol }
          print(col + ' ' + str(pvol))
         if write_predict:
-         
          #psort = sorted(volp, key = lambda x: x.get('relative'), reverse = True)
-         outfile = open('/home/ubuntu/data/prices.csv','w')
+         outfile = open(self.settings['prices_path'],'w')
          outfile.write('INSTRUMENT,HIGH,LOW,OPEN,CLOSE,VOLUME\n')
          for instr in volp.keys():
-          outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('open')) + ',' + str(volp[instr].get('close')) + ',' + str(volp[instr].get('vol')) + '\n')
+          outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('close')) + '\n')
          outfile.close()
     #def testEstim(self, ins): # this method tests the combined estimators for one instrument
     # dates = []
@@ -213,8 +316,9 @@ class controller(object):
      for row in self.db.query(sql):
       pcol = row.get('name')
       try:
-       dumpname = self.settings.get('estim_path') + pcol + '.rf'
-       regr = pickle.load(open(dumpname,'rb'))
+       dumpname = self.settings.get('estim_path') + pcol
+       #regr = pickle.load(open(dumpname,'rb'))
+       regr = estim_pipeline(path = dumpname)
       except:
        print('Failed to load model for ' + pcol)
        continue
@@ -229,29 +333,38 @@ class controller(object):
      return math.exp(-delta.days/365.25)# exponentially decaying weight decay
     def improveEstim(self, pcol, df, datecol):
      try:
-      dumpname = self.settings.get('estim_path') + pcol + '.rf'
-      regr = pickle.load(open(dumpname,'rb'))
+      dumpname = self.settings.get('estim_path') + pcol
+      #regr = pickle.load(open(dumpname,'rb'))
+      regr = estim_pipeline(path = dumpname)
      except:
       print('Failed to load model for ' + pcol)
       return
      params = regr.get_params()
+     wimper = math.floor(np.random.random()*4)
      n_estimators_base = int(params.get('n_estimators'))
-     n_lower = math.floor(n_estimators_base*0.9)
-     n_upper = math.ceil(n_estimators_base*1.1)
-     if n_lower < n_estimators_base and n_lower > 0:
-      n_range = [n_lower, n_estimators_base, n_upper]
+     if wimper == 0:
+        n_range = getRangeInt(n_estimators_base,0.1,lower = 10)
      else:
-      n_range = [n_estimators_base, n_upper]
+        n_range = [n_estimators_base]
      n_minsample = params.get('min_samples_split')
-     nmin_low = math.floor(n_minsample*0.9)
-     nmin_up = math.ceil(n_minsample*1.1)
-     if nmin_low < n_minsample and nmin_low > 1:
-      minsample = [nmin_low, n_minsample, nmin_up]
+     if wimper == 1:
+        minsample = getRangeInt(n_minsample,0.1,lower = 2)
      else:
-      minsample = [n_minsample, nmin_up]
+        minsample = [n_minsample]
+     learning_rate = params.get('learning_rate')
+     if wimper == 2:
+        n_learn = getRangeFlo(learning_rate,0.01,lower = 0.0001,upper = 1)
+     else:
+        n_learn = [learning_rate]
+     percentile = params.get('percentile')
+     if wimper == 3:
+        n_perc = getRangeInt(percentile,0.01,1,100)
+     else:
+        n_perc = [percentile]
      parameters = { 'n_estimators': n_range,
-                    'max_features': ['auto', 'sqrt', 'log2'],
-                    'min_samples_split': minsample }
+                    'min_samples_split': minsample,
+                    'learning_rate': n_learn,
+                    'percentile': n_perc }    
      weights = np.array(datecol.apply(self.distToNow).values[:])
      x = np.array(df.values[:])
      y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
@@ -262,19 +375,28 @@ class controller(object):
      x = x[:-1,:]# drop the last line
      i = 0
      while i < y.shape[0]:
-      if y[i] < 0: # missing values are marked with -1
+      if y[i] < -999990: # missing values are marked with -999999
        weights = np.delete(weights, i)
        y = np.delete(y,i)
        x = np.delete(x, (i), axis = 0)
       else:
        i += 1
-     gridcv = GridSearchCV(GradientBoostingRegressor(), parameters, cv = 3, iid = False)
+     if '_close' in pcol:
+        base_regr = estim_pipeline(classifier = True)
+        #code.interact(banner='', local=locals())
+        y = np.array(y,dtype = int).round()
+     else:
+        base_regr = estim_pipeline()
+     score_str = 'neg_mean_absolute_error'
+     gridcv = GridSearchCV(base_regr, parameters, cv = 3, iid = False, error_score = 'raise', scoring = score_str) #GradientBoostingRegressor()
      gridcv.fit(x,y, sample_weight = weights)
      print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(gridcv.best_score_))
-     pickle.dump(gridcv.best_estimator_, open(dumpname,'wb'))
+     #pickle.dump(gridcv.best_estimator_.pipeline, open(dumpname,'wb'))
+     gridcv.best_estimator_.writeToDisk(dumpname)
+     #joblib.dump(gridcv.best_estimator_, dumpname)
      dobj = {'name': pcol, 'score': gridcv.best_score_ }
      self.estimtable.upsert(dobj, ['name'])
-    def predictColumn(self, pcol, df, newEstim = True):
+    def predictColumn(self, pcol, df, newEstim = False):
      x = np.array(df.values[:])
      y = np.array(df[pcol].values[:]) # make a deep copy to prevent data loss in future iterations
      vprev = y[-1]
@@ -283,22 +405,28 @@ class controller(object):
      x = x[:-1,:]# drop the last line
      if newEstim:
       #regr = RandomForestRegressor()
-      regr = GradientBoostingRegressor()
+      if '_close' in pcol:
+        regr = estim_pipeline(classifier = True) #GradientBoostingRegressor()
+      else:
+        regr = estim_pipeline() #GradientBoostingRegressor()
       #regr = TPOTRegressor(generations = 50, population_size = 10, verbosity = 2)
       #remove missing lines from the training data
       i = 0
       while i < y.shape[0]:
-       if y[i] < 0: # missing values are marked with -1
+       if y[i] < -999990: # missing values are marked with -999999
         y = np.delete(y,i)
         x = np.delete(x, (i), axis = 0)
        else:
         i += 1
       regr.fit(x,y)
-      dumpname = self.settings.get('estim_path') + pcol + '.rf'
-      pickle.dump(regr, open(dumpname,'wb'))
+      dumpname = self.settings.get('estim_path') + pcol
+      #joblib.dump(regr, dumpname)
+      #pickle.dump(regr, open(dumpname,'wb'))
+      regr.writeToDisk(dumpname)    
      else:
-      dumpname = self.settings.get('estim_path') + pcol + '.rf'
-      regr = pickle.load(open(dumpname,'rb'))
+      dumpname = self.settings.get('estim_path') + pcol
+      #regr = pickle.load(open(dumpname,'rb'))
+      regr = estim_pipeline(path = dumpname)
      yp = regr.predict(xlast.reshape(1, -1))
      return yp[0], vprev
     def getUnits(self, dist, ins):
@@ -355,11 +483,11 @@ class controller(object):
                   return 1.0 / (price * eurusd)
      return None
     def openLimit(self, ins):
-     df = pd.read_csv('/home/ubuntu/data/prices.csv')
-     op = df[df['INSTRUMENT'] == ins]['OPEN'].values[0]
+     df = pd.read_csv(self.settings['prices_path'])
+     op = self.getPrice(ins)
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
-     hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]
-     lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]
+     hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]+op
+     lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]+op
      price = self.getPrice(ins)
      # get the R2 of the consisting estimators
      r2sum = 1

@@ -1,0 +1,74 @@
+DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS
+2018-10-14 00:00:00,All,Low Impact Expected,IMF Meetings,,,
+2018-10-14 19:01:00,GBP,Low Impact Expected,Rightmove HPI m/m,,,0.7%
+2018-10-15 00:30:00,JPY,Low Impact Expected,Revised Industrial Production m/m,,,0.7%
+2018-10-15 03:15:00,CHF,Low Impact Expected,PPI m/m,,,0.0%
+2018-10-15 08:30:00,USD,High Impact Expected,Core Retail Sales m/m,,,0.3%
+2018-10-15 08:30:00,USD,High Impact Expected,Retail Sales m/m,,,0.1%
+2018-10-15 08:30:00,USD,Medium Impact Expected,Empire State Manufacturing Index,,,19.0
+2018-10-15 10:00:00,USD,Low Impact Expected,Business Inventories m/m,,,0.6%
+2018-10-15 10:30:00,CAD,High Impact Expected,BOC Business Outlook Survey,,,
+2018-10-15 17:45:00,NZD,High Impact Expected,CPI q/q,,,0.4%
+2018-10-15 20:30:00,AUD,High Impact Expected,Monetary Policy Meeting Minutes,,,
+2018-10-15 21:30:00,CNY,Medium Impact Expected,CPI y/y,,,2.3%
+2018-10-15 21:30:00,CNY,Low Impact Expected,PPI y/y,,,4.1%
+2018-10-16 02:00:00,EUR,Low Impact Expected,German Import Prices m/m,,,
+2018-10-16 04:30:00,GBP,High Impact Expected,Average Earnings Index 3m/y,,,4.0%
+2018-10-16 04:30:00,GBP,Medium Impact Expected,Claimant Count Change,,,8.7K
+2018-10-16 04:30:00,GBP,Medium Impact Expected,Unemployment Rate,,,2.6%
+2018-10-16 05:00:00,EUR,Medium Impact Expected,German ZEW Economic Sentiment,,,-10.6
+2018-10-16 05:00:00,EUR,Low Impact Expected,Trade Balance,,,12.8B
+2018-10-16 05:00:00,EUR,Low Impact Expected,ZEW Economic Sentiment,,,-7.2
+2018-10-16 06:00:00,EUR,Low Impact Expected,Italian Trade Balance,,,5.68B
+2018-10-16 08:30:00,CAD,Medium Impact Expected,Foreign Securities Purchases,,,12.65B
+2018-10-16 09:15:00,USD,Low Impact Expected,Capacity Utilization Rate,,,78.1%
+2018-10-16 09:15:00,USD,Low Impact Expected,Industrial Production m/m,,,0.4%
+2018-10-16 10:00:00,USD,Low Impact Expected,JOLTS Job Openings,,,6.94M
+2018-10-16 10:00:00,USD,Low Impact Expected,NAHB Housing Market Index,,,67
+2018-10-16 16:00:00,USD,Low Impact Expected,TIC Long-Term Purchases,,,74.8B
+2018-10-16 19:30:00,AUD,Low Impact Expected,MI Leading Index m/m,,,0.1%
+2018-10-17 04:30:00,GBP,High Impact Expected,CPI y/y,,,2.7%
+2018-10-17 04:30:00,GBP,Medium Impact Expected,PPI Input m/m,,,0.5%
+2018-10-17 04:30:00,GBP,Medium Impact Expected,RPI y/y,,,3.5%
+2018-10-17 04:30:00,GBP,Low Impact Expected,Core CPI y/y,,,2.1%
+2018-10-17 04:30:00,GBP,Low Impact Expected,FPC Meeting Minutes,,,
+2018-10-17 04:30:00,GBP,Low Impact Expected,HPI y/y,,,3.1%
+2018-10-17 04:30:00,GBP,Low Impact Expected,PPI Output m/m,,,0.2%
+2018-10-17 05:00:00,EUR,Medium Impact Expected,Final CPI y/y,,,2.1%
+2018-10-17 05:00:00,EUR,Low Impact Expected,Final Core CPI y/y,,,0.9%
+2018-10-17 08:30:00,CAD,Medium Impact Expected,Manufacturing Sales m/m,,,0.9%
+2018-10-17 08:30:00,USD,Medium Impact Expected,Building Permits,,,1.23M
+2018-10-17 08:30:00,USD,Medium Impact Expected,Housing Starts,,,1.28M
+2018-10-17 09:30:00,GBP,Low Impact Expected,CB Leading Index m/m,,,-0.2%
+2018-10-17 10:30:00,USD,Medium Impact Expected,Crude Oil Inventories,,,
+2018-10-17 14:00:00,USD,High Impact Expected,FOMC Meeting Minutes,,,
+2018-10-17 19:50:00,JPY,Low Impact Expected,Trade Balance,,,-0.19T
+2018-10-17 20:30:00,AUD,High Impact Expected,Employment Change,,,44.0K
+2018-10-17 20:30:00,AUD,High Impact Expected,Unemployment Rate,,,5.3%
+2018-10-17 20:30:00,AUD,Low Impact Expected,NAB Quarterly Business Confidence,,,7
+2018-10-18 02:00:00,CHF,Low Impact Expected,Trade Balance,,,2.13B
+2018-10-18 04:30:00,GBP,High Impact Expected,Retail Sales m/m,,,0.3%
+2018-10-18 08:30:00,CAD,Low Impact Expected,ADP Non-Farm Employment Change,,,13.6K
+2018-10-18 08:30:00,USD,Medium Impact Expected,Philly Fed Manufacturing Index,,,22.9
+2018-10-18 08:30:00,USD,Low Impact Expected,Unemployment Claims,,,
+2018-10-18 10:00:00,USD,Low Impact Expected,CB Leading Index m/m,,,0.4%
+2018-10-18 10:30:00,USD,Low Impact Expected,Natural Gas Storage,,,
+2018-10-18 17:45:00,NZD,Low Impact Expected,Visitor Arrivals m/m,,,2.8%
+2018-10-18 19:30:00,JPY,Low Impact Expected,National Core CPI y/y,,,0.9%
+2018-10-18 22:00:00,CNY,High Impact Expected,GDP q/y,,,6.7%
+2018-10-18 22:00:00,CNY,Medium Impact Expected,Fixed Asset Investment ytd/y,,,5.3%
+2018-10-18 22:00:00,CNY,Medium Impact Expected,Industrial Production y/y,,,6.1%
+2018-10-18 22:00:00,CNY,Medium Impact Expected,NBS Press Conference,,,
+2018-10-18 22:00:00,CNY,Low Impact Expected,Retail Sales y/y,,,9.0%
+2018-10-18 22:00:00,CNY,Low Impact Expected,Unemployment Rate,,,5.0%
+2018-10-18 22:00:00,NZD,Low Impact Expected,Credit Card Spending y/y,,,7.7%
+2018-10-19 04:00:00,EUR,Low Impact Expected,Current Account,,,21.3B
+2018-10-19 04:30:00,GBP,Medium Impact Expected,Public Sector Net Borrowing,,,5.9B
+2018-10-19 08:30:00,CAD,High Impact Expected,CPI m/m,,,-0.1%
+2018-10-19 08:30:00,CAD,High Impact Expected,Core Retail Sales m/m,,,0.9%
+2018-10-19 08:30:00,CAD,Medium Impact Expected,Common CPI y/y,,,2.0%
+2018-10-19 08:30:00,CAD,Medium Impact Expected,Median CPI y/y,,,2.1%
+2018-10-19 08:30:00,CAD,Medium Impact Expected,Retail Sales m/m,,,0.3%
+2018-10-19 08:30:00,CAD,Medium Impact Expected,Trimmed CPI y/y,,,2.2%
+2018-10-19 08:30:00,CAD,Low Impact Expected,Core CPI m/m,,,0.1%
+2018-10-19 10:00:00,USD,Low Impact Expected,Existing Home Sales,,,5.34M
