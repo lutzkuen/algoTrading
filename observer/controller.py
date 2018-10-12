@@ -71,6 +71,7 @@ def getGBimportances(gb, x, y):
 
 class estim_pipeline(object):
     def __init__(self, percentile = 50, learning_rate = 0.1, n_estimators = 100, min_samples_split = 2, path = None, classifier = False):
+        self.classifier = classifier
         if path: # read from disk 
             gb_path = path + '.gb'
             self.gb = pickle.load(open(gb_path,'rb'))
@@ -99,7 +100,10 @@ class estim_pipeline(object):
     def get_params(self,deep = True):
         return self.params
     def fit(self, x,y,sample_weight = None):
-        self.pipeline.fit(x,y, gradientboostingregressor__sample_weight = sample_weight )
+        if self.classifier:
+            self.pipeline.fit(x,y, gradientboostingclassifier__sample_weight = sample_weight )
+        else:
+            self.pipeline.fit(x,y, gradientboostingregressor__sample_weight = sample_weight )
         self.feature_importances_ = self.gb.feature_importances_
         return self
     def writeToDisk(self, path):
@@ -281,6 +285,9 @@ class controller(object):
           self.improveEstim(col, df, datecol)
          pvol, vprev = self.predictColumn(col, df, newEstim = newEstim)
          parts = col.split('_')
+         if len(parts) < 3:
+          print('WARNING: Unexpected column ' + col)
+          continue
          #print(col)
          instrument = parts[0] + '_' + parts[1]
          typ = parts[2]
@@ -340,7 +347,7 @@ class controller(object):
       print('Failed to load model for ' + pcol)
       return
      params = regr.get_params()
-     wimper = math.floor(np.random.random()*4)
+     wimper = math.floor(np.random.random()*3)
      n_estimators_base = int(params.get('n_estimators'))
      if wimper == 0:
         n_range = getRangeInt(n_estimators_base,0.1,lower = 10)
@@ -357,10 +364,8 @@ class controller(object):
      else:
         n_learn = [learning_rate]
      percentile = params.get('percentile')
-     if wimper == 3:
-        n_perc = getRangeInt(percentile,0.01,1,100)
-     else:
-        n_perc = [percentile]
+     # percentile is always considered because this might be the most crucial parameter
+     n_perc = getRangeInt(percentile,0.01,1,100)
      parameters = { 'n_estimators': n_range,
                     'min_samples_split': minsample,
                     'learning_rate': n_learn,
@@ -490,18 +495,28 @@ class controller(object):
      lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]+op
      price = self.getPrice(ins)
      # get the R2 of the consisting estimators
-     r2sum = 1
-     for prefix in ['_high', '_low', '_open', '_close']:
-      colname = ins + prefix
-      r2 = self.estimtable.find_one(name = colname)
-      if r2:
-       r2sum = min(r2.get('score'),r2sum)
-      else: 
-       print('WARNING: Unscored estimator - ' + colname)
-       r2sum = -1
+     colname = ins + '_close'
+     row = self.estimtable.find_one(name = colname)
+     if row:
+      close_score = row.get('score')
+     else: 
+      print('WARNING: Unscored estimator - ' + colname)
+      return None
+     colname = ins + '_high'
+     row = self.estimtable.find_one(name = colname)
+     if row:
+      high_score = row.get('score')
+     else: 
+      print('WARNING: Unscored estimator - ' + colname)
+      return None
+     colname = ins + '_low'
+     row = self.estimtable.find_one(name = colname)
+     if row:
+      low_score = row.get('score')
+     else: 
+      print('WARNING: Unscored estimator - ' + colname)
+      return None
      #print(ins + ' - cum. R2: ' + str(r2sum))
-     if r2sum < 0:
-      print('SKIPPING: ' + ins + ' - cum. R2: ' + str(r2sum))
      spread = self.getSpread(ins)
      trade = None
      for tr in self.trades:
@@ -509,38 +524,35 @@ class controller(object):
        trade = tr
      if trade:
       isopen = True
-      if r2sum < 0:# if we do not trust the estimator we should not move forward
+      if close_score < -1:# if we do not trust the estimator we should not move forward
        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-      if trade.currentUnits > 0 and cl < op:
-       self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-       isopen = False
-      if trade.currentUnits < 0 and cl > op:
+      if trade.currentUnits > 0 and cl < 0:
        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
        isopen = False
-      if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
+      if trade.currentUnits < 0 and cl > 0:
        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
        isopen = False
       if isopen:
        return
-     if r2sum < 0:
+     if close_score < -1:
       return
-     if hi < max([op, cl, hi, lo]) or lo > min([op, cl, hi, lo]): # inconsistent
-      return None
-     step = (hi-lo)/8
-     if cl > op:
-      sl = min(lo - ( op - lo ),lo-step)
-      entry = (op+lo)/2
-      tp = (hi + cl)/2
+     if cl > 0:
+      step = 1.8*abs(low_score)
+      sl = lo - step
+      entry = lo
+      tp = hi
      else:
-      sl = max(hi + ( hi - op ),hi+step)
-      entry = (op+hi)/2
-      tp = (lo + cl)/2
+      step = 1.8*abs(high_score)
+      sl = hi+step
+      entry = hi
+      tp = lo
      rr = abs((tp-entry)/(sl-entry))
      if rr < 1.5:# Risk-reward too low
+      print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp))
       return None
      # if you made it here its fine, lets open a limit order
      # r2sum is used to scale down the units risked to accomodate the estimator quality
-     units = self.getUnits(abs(sl-entry),ins)*r2sum
+     units = self.getUnits(abs(sl-entry),ins)/abs(close_score)
      if units > 0:
       units = math.floor(units)
      if units < 0:
