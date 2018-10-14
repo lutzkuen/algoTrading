@@ -23,7 +23,7 @@ def setLogger():
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 
-def getEconomicCalendar(startlink,endlink,table):
+def getEconomicCalendar(startlink,endlink,sq_table):
 
     
     # write to console current status
@@ -80,34 +80,50 @@ def getEconomicCalendar(startlink,endlink,table):
             dt = datetime.datetime.strptime(",".join([curr_year,curr_date,curr_time]),
                                             "%Y,%a%b %d,%I:%M%p")
             outline = ",".join([str(dt),currency,impact,event,actual,forecast,previous])
-            print(outline)
-            dobj = { 'year': curr_year, 'date': curr_date, 'time': curr_time, 'currency': currency, 'impact': impact, 'event': event, 'actual': actual, 'forecast': forecast, 'previous': previous }
-            table.upsert(dobj,['year', 'date', 'time', 'currency', 'event'])
-            #outf.write(outline + '\n')
+            #code.interact(banner='', local=locals())
+            dobj = { 'date': dt.strftime('%Y-%m-%d'), 'time': curr_time, 'currency': currency, 'impact': impact, 'event': event, 'actual': actual, 'forecast': forecast, 'previous': previous }
+            sq_table.upsert(dobj,['year', 'date', 'time', 'currency', 'event'])
+            outf.write(outline + '\n')
         except:
             with open("errors.csv","a") as f:
                 csv.writer(f).writerow([curr_year,curr_date,curr_time])
 
     # exit recursion when last available link has reached
-    if startlink==endlink:
-        logging.info("Successfully retrieved data")
-        #code.interact(banner='', local=locals())
-        return
-    print(startlink + ' ' + endlink)
+    #if startlink==endlink:
+    logging.info("Successfully retrieved data")
+    #code.interact(banner='', local=locals())
+    return
+    #print(startlink + ' ' + endlink)
     # get the link for the next week and follow
-    follow = soup.select("a.calendar__pagination.calendar__pagination--next.next")
-    follow = follow[0]["href"]
-    getEconomicCalendar(follow,endlink,table)
+    #follow = soup.select("a.calendar__pagination.calendar__pagination--next.next")
+    #follow = follow[0]["href"]
+    #getEconomicCalendar(follow,endlink,sq_table)
 
 if __name__ == "__main__":
     """
     Run this using the command "python `script_name`.py >> `output_name`.csv"
     """
-    db = dataset.connect('sqlite:///../data/calendar.db')
-    table = db['economic_calendar']
+    db = dataset.connect('sqlite:///../../data/calendar.db')
+    table = db['calendar']
     setLogger()
     #outf = open('forexfactory_cal.csv','w')
     #outf.write('DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS\n')
-	now = datetime.datetime.now() 
-    getEconomicCalendar("calendar.php?week=oct5.2018","calendar.php?week=oct5.2018", table)
-    #outf.close()
+    ts0 = datetime.datetime.strptime('2016-06-01','%Y-%m-%d')
+    ts1 = datetime.datetime.now()
+    while ts0 < ts1:
+        now = ts0 #datetime.datetime.now()
+        now += datetime.timedelta(days = (6-now.weekday()))
+        now_mon  = now.strftime('%b').lower()
+        now_day = now.strftime('%d').lstrip('0')
+        now_year = now.strftime('%Y')
+        then = now - datetime.timedelta(days = 7)
+        then_mon  = then.strftime('%b').lower()
+        then_day = then.strftime('%d').lstrip('0')
+        then_year = then.strftime('%Y')
+        endlink = 'calendar.php?week=' + now_mon + now_day + '.' + now_year
+        startlink = 'calendar.php?week=' + then_mon + then_day + '.' + then_year
+        #print(startlink + ' ' + endlink)
+        getEconomicCalendar(startlink, startlink, table)
+        ts0 = ts0 + datetime.timedelta(days = 7)
+        #getEconomicCalendar("calendar.php?week=dez18.2016","calendar.php?week=oct14.2018", table)
+        #outf.close()

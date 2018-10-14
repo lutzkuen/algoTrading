@@ -163,6 +163,8 @@ class controller(object):
                     )).get('instruments', '200')
             self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
         self.db = dataset.connect(config.get('data','candle_path'))
+        self.calendar_db = dataset.connect(config.get('data','calendar_path'))
+        self.calendar = self.calendar_db['calendar']
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
@@ -193,6 +195,39 @@ class controller(object):
               )) + float(pobj.get('prices')[0].get('asks'
               )[0].get('price'))) / 2.0
      return price
+    def getCalendarData(self, date):
+        #extract event data regarding the current trading week
+        df = {}
+        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'ALL']
+        impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
+        for curr in currencies:
+            for impact in impacts:
+                colname = curr + impact 
+                colname = colname.replace(' ','')
+                df[colname] = self.calendar.count(date = date, currency = curr, impact = impact)
+        dt = datetime.datetime.strptime(date,'%Y-%m-%d')
+        if dt.weekday() == 4:
+            dt += datetime.timedelta(days = 3)
+        else:
+            dt += datetime.timedelta(days = 1)
+        date_next = dt.strftime('%Y-%m-%d')
+        for curr in currencies:
+            for impact in impacts:
+                colname = curr + impact + '_next'
+                colname = colname.replace(' ','')
+                df[colname] = self.calendar.count(date = date_next, currency = curr, impact = impact)
+        if dt.weekday() == 4:
+            dt += datetime.timedelta(days = 3)
+        else:
+            dt += datetime.timedelta(days = 1)
+        date_next = dt.strftime('%Y-%m-%d')
+        for curr in currencies:
+            for impact in impacts:
+                colname = curr + impact + '_next2'
+                colname = colname.replace(' ','')
+                df[colname] = self.calendar.count(date = date_next, currency = curr, impact = impact)
+        return df
+            
     def candlesToDB(self, candles, ins):
         for candle in candles:
          if not bool(candle.get('complete')):
@@ -245,7 +280,10 @@ class controller(object):
             weekday = int(datetime.datetime(int(dspl[0]), int(dspl[1]), int(dspl[2])).weekday())
             if weekday == 4 or weekday == 5: # saturday starts on friday and sunday on saturday
                 continue
-            drow ={'date': date, 'weekday': weekday }
+            # start with the calendar data 
+            drow = self.getCalendarData(date)
+            drow['date'] = date
+            drow['weekday'] = weekday
             for ins in inst:
                 icandle = self.table.find_one(date = date, ins = ins)
                 if not icandle:
