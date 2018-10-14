@@ -552,7 +552,7 @@ class controller(object):
       return None
      # if you made it here its fine, lets open a limit order
      # r2sum is used to scale down the units risked to accomodate the estimator quality
-     units = self.getUnits(abs(sl-entry),ins)/abs(close_score)
+     units = self.getUnits(abs(sl-entry),ins)*max(abs(cl),1.0) # multiply by close value to assign units proportional to certainity
      if units > 0:
       units = math.floor(units)
      if units < 0:
