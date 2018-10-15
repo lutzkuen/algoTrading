@@ -12,6 +12,7 @@ import logging
 import csv
 import dataset
 import code
+import sys
     
 def setLogger():
     logging.basicConfig(level=logging.INFO,
@@ -23,7 +24,7 @@ def setLogger():
     console.setFormatter(formatter)
     logging.getLogger('').addHandler(console)
 
-def getEconomicCalendar(startlink,endlink,sq_table):
+def getEconomicCalendar(startlink,sq_table):
 
     
     # write to console current status
@@ -88,16 +89,8 @@ def getEconomicCalendar(startlink,endlink,sq_table):
             with open("errors.csv","a") as f:
                 csv.writer(f).writerow([curr_year,curr_date,curr_time])
 
-    # exit recursion when last available link has reached
-    #if startlink==endlink:
     logging.info("Successfully retrieved data")
-    #code.interact(banner='', local=locals())
     return
-    #print(startlink + ' ' + endlink)
-    # get the link for the next week and follow
-    #follow = soup.select("a.calendar__pagination.calendar__pagination--next.next")
-    #follow = follow[0]["href"]
-    #getEconomicCalendar(follow,endlink,sq_table)
 
 if __name__ == "__main__":
     """
@@ -106,12 +99,20 @@ if __name__ == "__main__":
     db = dataset.connect('sqlite:///../../data/calendar.db')
     table = db['calendar']
     setLogger()
-    #outf = open('forexfactory_cal.csv','w')
-    #outf.write('DATE,CURRENCY,IMPACT,EVENT,ACTUAL,FORECAST,PREVIOUS\n')
-    ts0 = datetime.datetime.strptime('2016-06-01','%Y-%m-%d')
-    ts1 = datetime.datetime.now()
-    while ts0 < ts1:
-        now = ts0 #datetime.datetime.now()
+    if sys.argv[1] == 'full_load':
+        ts0 = datetime.datetime.strptime('2009-01-01','%Y-%m-%d')
+        ts1 = datetime.datetime.now()
+        while ts0 < ts1:
+            now = ts0 #datetime.datetime.now()
+            now += datetime.timedelta(days = (6-now.weekday()))
+            now_mon  = now.strftime('%b').lower()
+            now_day = now.strftime('%d').lstrip('0')
+            now_year = now.strftime('%Y')
+            endlink = 'calendar.php?week=' + now_mon + now_day + '.' + now_year
+            getEconomicCalendar(endlink, table)
+            ts0 = ts0 + datetime.timedelta(days = 7)
+    if sys.argv[1] == 'delta_load':
+        now = datetime.datetime.now()
         now += datetime.timedelta(days = (6-now.weekday()))
         now_mon  = now.strftime('%b').lower()
         now_day = now.strftime('%d').lstrip('0')
@@ -122,8 +123,5 @@ if __name__ == "__main__":
         then_year = then.strftime('%Y')
         endlink = 'calendar.php?week=' + now_mon + now_day + '.' + now_year
         startlink = 'calendar.php?week=' + then_mon + then_day + '.' + then_year
-        #print(startlink + ' ' + endlink)
-        getEconomicCalendar(startlink, startlink, table)
-        ts0 = ts0 + datetime.timedelta(days = 7)
-        #getEconomicCalendar("calendar.php?week=dez18.2016","calendar.php?week=oct14.2018", table)
-        #outf.close()
+        getEconomicCalendar(startlink, table)
+        getEconomicCalendar(endlink, table)

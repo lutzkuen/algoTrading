@@ -97,6 +97,8 @@ class estim_pipeline(object):
         self.gb
         )
         #print(self.pipeline.named_steps.keys())
+    def getFeatureImportances(self):
+        return self.gb.feature_importances_
     def get_params(self,deep = True):
         return self.params
     def fit(self, x,y,sample_weight = None):
@@ -317,15 +319,15 @@ class controller(object):
         df.drop(['date'],1,inplace = True)
         volp = {}
         for col in df.columns:
-         if '_vol' in col or '_open' in col:
-          continue
-         if improve_model:
-          self.improveEstim(col, df, datecol)
-         pvol, vprev = self.predictColumn(col, df, newEstim = newEstim)
          parts = col.split('_')
          if len(parts) < 3:
           print('WARNING: Unexpected column ' + col)
           continue
+         if not ('_high' in col or '_low' in col or '_close' in col):
+          continue
+         if improve_model:
+          self.improveEstim(col, df, datecol)
+         pvol, vprev = self.predictColumn(col, df, newEstim = newEstim)
          #print(col)
          instrument = parts[0] + '_' + parts[1]
          typ = parts[2]
@@ -368,7 +370,7 @@ class controller(object):
        print('Failed to load model for ' + pcol)
        continue
       print(pcol)
-      for name, importance in zip(feature_names, regr.feature_importances_):
+      for name, importance in zip(feature_names, regr.getFeatureImportances()):
        dbline = {'name': pcol, 'feature': name, 'importance': importance}
        self.importances.upsert(dbline, ['name', 'feature'])
     def distToNow(self, idate):
