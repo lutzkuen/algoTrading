@@ -339,7 +339,7 @@ class controller(object):
         if write_predict:
          #psort = sorted(volp, key = lambda x: x.get('relative'), reverse = True)
          outfile = open(self.settings['prices_path'],'w')
-         outfile.write('INSTRUMENT,HIGH,LOW,OPEN,CLOSE,VOLUME\n')
+         outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
          for instr in volp.keys():
           outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('close')) + '\n')
          outfile.close()
@@ -434,7 +434,11 @@ class controller(object):
         base_regr = estim_pipeline()
      score_str = 'neg_mean_absolute_error'
      gridcv = GridSearchCV(base_regr, parameters, cv = 3, iid = False, error_score = 'raise', scoring = score_str) #GradientBoostingRegressor()
-     gridcv.fit(x,y, sample_weight = weights)
+     try:
+      gridcv.fit(x,y, sample_weight = weights)
+     except Exception as e:
+      print('FATAL: failed to compute ' + pcol)
+      return
      print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(gridcv.best_score_))
      #pickle.dump(gridcv.best_estimator_.pipeline, open(dumpname,'wb'))
      gridcv.best_estimator_.writeToDisk(dumpname)
@@ -592,12 +596,12 @@ class controller(object):
       return None
      # if you made it here its fine, lets open a limit order
      # r2sum is used to scale down the units risked to accomodate the estimator quality
-     units = self.getUnits(abs(sl-entry),ins)/abs(close_score)
+     units = self.getUnits(abs(sl-entry),ins)*min(abs(cl),1.0) # multiply by close value to assign units proportional to certainity
      if units > 0:
       units = math.floor(units)
      if units < 0:
       units = math.ceil(units)
-     if abs(units) < 0:
+     if abs(units) < 1:
       return None # oops, risk threshold too small
      if tp < sl:
       units *= -1
@@ -623,6 +627,7 @@ class controller(object):
      'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
      'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
      }}
+     #code.interact(banner='', local=locals())
      ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
      print(json.loads(ticket.raw_body))
     def getBTreport(self):
