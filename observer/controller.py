@@ -365,7 +365,7 @@ class controller(object):
         n_learn = [learning_rate]
      percentile = params.get('percentile')
      # percentile is always considered because this might be the most crucial parameter
-     n_perc = getRangeInt(percentile,0.01,1,100)
+     n_perc = getRangeInt(percentile,0.1,1,100)
      parameters = { 'n_estimators': n_range,
                     'min_samples_split': minsample,
                     'learning_rate': n_learn,
@@ -491,7 +491,7 @@ class controller(object):
              else:
                   return 1.0 / (price * eurusd)
      return None
-    def openLimit(self, ins):
+    def openLimit(self, ins, close_only = False):
      df = pd.read_csv(self.settings['prices_path'])
      op = self.getPrice(ins)
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
@@ -538,6 +538,8 @@ class controller(object):
        isopen = False
       if isopen:
        return
+     if close_only:
+      return # if this flag is set only check for closing and then return
      if close_score < -1:
       return
      if cl > 0:
