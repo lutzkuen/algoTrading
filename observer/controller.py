@@ -170,10 +170,10 @@ class controller(object):
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
-    def retrieveData(self, numCandles):
+    def retrieveData(self, numCandles, completed = True, upsert = False):
         for ins in self.allowed_ins:
             candles = self.getCandles(ins.name,'D',numCandles)
-            self.candlesToDB(candles, ins.name)
+            self.candlesToDB(candles, ins.name, completed = completed, upsert = upsert)
     def getPipSize(self, ins):
      pipLoc = [_ins.pipLocation for _ins in self.allowed_ins if _ins.name == ins]
      if not len(pipLoc) == 1:
@@ -197,24 +197,25 @@ class controller(object):
               )) + float(pobj.get('prices')[0].get('asks'
               )[0].get('price'))) / 2.0
      return price
-    def candlesToDB(self, candles, ins):
+    def candlesToDB(self, candles, ins, completed = True, upsert = False):
         for candle in candles:
-         if not bool(candle.get('complete')):
+         if (not bool(candle.get('complete')) ) and completed:
           continue
          time = candle.get('time')[:10]# take the YYYY-MM-DD part
          icandle = self.table.find_one(date = time, ins = ins)
+         cobj = { 'ins': ins, 'date': time, 'open': candle.get('mid').get('o'), 'close': candle.get('mid').get('c'), 'high': candle.get('mid').get('h'), 'low': candle.get('mid').get('l'), 'volume': candle.get('volume'), 'complete': bool(candle.get('complete')) }
          if icandle:
           print(ins + ' ' + time + ' already in dataset')
+          if upsert:
+           self.table.upsert(cobj,['ins', 'date'])
           continue
-         cobj = { 'ins': ins, 'date': time, 'open': candle.get('mid').get('o'), 'close': candle.get('mid').get('c'), 'high': candle.get('mid').get('h'), 'low': candle.get('mid').get('l'), 'volume': candle.get('volume') }
          print('Inserting ' + str(cobj))
          self.table.insert(cobj)
     def getCandles(
         self,
         ins,
         granularity,
-        numCandles,
-        ):
+        numCandles):
         request = Request('GET',
                           '/v3/instruments/{instrument}/candles?count={count}&price={price}&granularity={granularity}'
                           )
@@ -226,16 +227,20 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
-    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None, newEstim = False):
+    def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None, newEstim = False, complete = True):
         inst = []
+        if complete:
+         c_cond = ' and complete = 1'
+        else:
+         c_cond = ' and complete in (0,1)'
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
             inst.append(row['ins'])
         dates =[]
         if maxdate:
-         statement = 'select distinct date from dailycandles where date <= ' + maxdate +  ' order by date;'
+         statement = 'select distinct date from dailycandles where date <= ' + maxdate + c_cond +  ' order by date;'
         else:
-         statement = 'select distinct date from dailycandles order by date;'
+         statement = 'select distinct date from dailycandles order by date ' + c_cond + ';'
         for row in self.db.query(statement):
             #if row['date'][:4] == year:
             dates.append(row['date'])
@@ -251,7 +256,10 @@ class controller(object):
                 continue
             drow ={'date': date, 'weekday': weekday }
             for ins in inst:
-                icandle = self.table.find_one(date = date, ins = ins)
+                if complete:
+                 icandle = self.table.find_one(date = date, ins = ins, complete = 1)
+                else:
+                 icandle = self.table.find_one(date = date, ins = ins)
                 if not icandle:
                     print('Candle does not exist ' + ins +' '+ str(date))
                     drow[ins+'_vol'] = -999999
@@ -298,7 +306,10 @@ class controller(object):
          print(col + ' ' + str(pvol))
         if write_predict:
          #psort = sorted(volp, key = lambda x: x.get('relative'), reverse = True)
-         outfile = open(self.settings['prices_path'],'w')
+         if complete:
+          outfile = open(self.settings['prices_path'],'w')
+         else:
+          outfile = open(self.settings['prices_path']+'.partial','w') # seperate file for partial estimates
          outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
          for instr in volp.keys():
           outfile.write(str(instr) + ',' + str(volp[instr].get('high')) + ',' + str(volp[instr].get('low')) + ',' + str(volp[instr].get('close')) + '\n')
@@ -491,8 +502,11 @@ class controller(object):
              else:
                   return 1.0 / (price * eurusd)
      return None
-    def openLimit(self, ins, close_only = False):
-     df = pd.read_csv(self.settings['prices_path'])
+    def openLimit(self, ins, close_only = False, complete = True):
+     if complete:
+      df = pd.read_csv(self.settings['prices_path'])
+     else:
+      df = pd.read_csv(self.settings['prices_path']+'.partial')
      op = self.getPrice(ins)
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
      hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]+op
