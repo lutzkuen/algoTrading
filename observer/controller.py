@@ -405,7 +405,7 @@ class controller(object):
         n_learn = [learning_rate]
      percentile = params.get('percentile')
      # percentile is always considered because this might be the most crucial parameter
-     n_perc = getRangeInt(percentile,0.01,1,100)
+     n_perc = [1,5,10,20,30,40,50,60,70,80,90,100]# getRangeInt(10,0.1,1,100)#percentile,0.01,1,100)
      parameters = { 'n_estimators': n_range,
                     'min_samples_split': minsample,
                     'learning_rate': n_learn,
