@@ -572,7 +572,6 @@ class controller(object):
      else:
       df = pd.read_csv(self.settings['prices_path']+'.partial')
      op = self.getPrice(ins)
-     spread = self.getSpread(ins)
      cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
      hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0]+op
      lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0]+op
@@ -624,13 +623,13 @@ class controller(object):
      if cl > 0:
       step = 1.8*abs(low_score)
       sl = lo - step
-      entry = lo
-      tp = hi-spread
+      entry = lo+spread/2
+      tp = hi-spread/2
      else:
       step = 1.8*abs(high_score)
       sl = hi+step
-      entry = hi
-      tp = lo+spread
+      entry = hi-spread/2
+      tp = lo+spread/2
      rr = abs((tp-entry)/(sl-entry))
      if rr < 1.5:# Risk-reward too low
       print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp))
