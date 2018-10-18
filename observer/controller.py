@@ -41,6 +41,19 @@ import pickle
 from sklearn.feature_selection import SelectPercentile, f_regression
 from sklearn.pipeline import make_pipeline
 
+def prevWorkingDay(_day):
+    date1 = datetime.datetime.strptime(_day,'%Y-%m-%d')
+    wd = date1.weekday()
+    if wd < 6:
+        date2 = date1 - datetime.timedelta(days = 1)
+    else:
+        date2 = date1 - datetime.timedelta(days = 3) # skip to friday on weekends
+    return date2.strftime('%Y-%m-%d')
+
+def mergedict(dict1, dict2, suffix):
+    for key in dict2.keys():
+        dict1[key+suffix] = dict2[key]
+    return dict1
 
 def getRangeInt(val,change,lower = -math.inf,upper = math.inf):
     lval = math.floor(val*(1-change))
@@ -70,7 +83,7 @@ def getGBimportances(gb, x, y):
     return gb.feature_importances_
 
 class estim_pipeline(object):
-    def __init__(self, percentile = 50, learning_rate = 0.1, n_estimators = 100, min_samples_split = 2, path = None, classifier = False):
+    def __init__(self, percentile = 10, learning_rate = 0.1, n_estimators = 100, min_samples_split = 2, path = None, classifier = False):
         self.classifier = classifier
         if path: # read from disk 
             gb_path = path + '.gb'
@@ -265,6 +278,30 @@ class controller(object):
         #print(response.raw_body)
         candles = json.loads(response.raw_body)
         return candles.get('candles')
+    def getMarketDF(self, date, inst, complete):
+        drow = {'date': date}
+        for ins in inst:
+            if complete:
+             icandle = self.table.find_one(date = date, ins = ins, complete = 1)
+            else:
+             icandle = self.table.find_one(date = date, ins = ins)
+            if not icandle:
+                print('Candle does not exist ' + ins +' '+ str(date))
+                drow[ins+'_vol'] = -999999
+                drow[ins+'_open'] = -999999
+                drow[ins+'_close'] = -999999
+                drow[ins+'_high'] = -999999
+                drow[ins+'_low'] = -999999
+            else:
+                drow[ins+'_vol'] = int(icandle['volume'])
+                drow[ins+'_open'] = float(icandle['open'])
+                if float(icandle['close']) > float(icandle['open']):
+                    drow[ins+'_close'] = int(1)
+                else:
+                    drow[ins+'_close'] = int(-1)
+                drow[ins+'_high'] = float(icandle['high'])-float(icandle['open'])
+                drow[ins+'_low'] = float(icandle['low'])-float(icandle['open'])
+        return drow
     def data2sheet(self, write_raw = False, write_predict = True, improve_model = False, maxdate = None, newEstim = False, complete = True):
         inst = []
         if complete:
@@ -286,6 +323,7 @@ class controller(object):
         if (not improve_model) and (not newEstim): # if we want to read only it is enough to take the last days
          dates = dates[-4:]
         #dates = dates[-30:] # use this line to decrease computation time for development
+        prev = None
         for date in dates:
             # check whether the candle is from a weekday
             dspl = date.split('-')
@@ -294,29 +332,12 @@ class controller(object):
                 continue
             # start with the calendar data 
             drow = self.getCalendarData(date)
-            drow['date'] = date
             drow['weekday'] = weekday
-            for ins in inst:
-                if complete:
-                 icandle = self.table.find_one(date = date, ins = ins, complete = 1)
-                else:
-                 icandle = self.table.find_one(date = date, ins = ins)
-                if not icandle:
-                    print('Candle does not exist ' + ins +' '+ str(date))
-                    drow[ins+'_vol'] = -999999
-                    drow[ins+'_open'] = -999999
-                    drow[ins+'_close'] = -999999
-                    drow[ins+'_high'] = -999999
-                    drow[ins+'_low'] = -999999
-                else:
-                    drow[ins+'_vol'] = int(icandle['volume'])
-                    drow[ins+'_open'] = float(icandle['open'])
-                    if float(icandle['close']) > float(icandle['open']):
-                        drow[ins+'_close'] = int(1)
-                    else:
-                        drow[ins+'_close'] = int(-1)
-                    drow[ins+'_high'] = float(icandle['high'])-float(icandle['open'])
-                    drow[ins+'_low'] = float(icandle['low'])-float(icandle['open'])
+            today_df = self.getMarketDF(date, inst, complete)
+            yest_df = self.getMarketDF(prevWorkingDay(date), inst, complete)
+            yest_df.pop('date') # remove the date key from prev day
+            drow = mergedict(drow, today_df,'')
+            drow = mergedict(drow, yest_df,'_yester')
             dstr.append(drow)
         df = pd.DataFrame(dstr)
         #code.interact(banner='', local=locals())
@@ -333,6 +354,8 @@ class controller(object):
           print('WARNING: Unexpected column ' + col)
           continue
          if not ('_high' in col or '_low' in col or '_close' in col):
+          continue
+         if '_yester' in col: # skip yesterday stuff for prediction
           continue
          if improve_model:
           self.improveEstim(col, df, datecol)
