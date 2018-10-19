@@ -537,7 +537,6 @@ class controller(object):
       return math.floor(rawUnits)
      else:
       return math.ceil(rawUnits)
-     return 0
     def getConversion(self, leadingCurr):
      # get conversion rate to account currency
      accountCurr = 'EUR'
