@@ -1,3 +1,3 @@
-from observer import controller
-cont = controller.controller('../settings_triangle.conf',None)
+from observer import controller_cython as controller
+cont = controller.controller('/home/ubuntu/settings_triangle.conf',None)
 cont.getFeatureImportances()
