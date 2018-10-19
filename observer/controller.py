@@ -30,6 +30,7 @@ except ImportError:
 
 # import code
 
+import progressbar
 import configparser
 import math
 import datetime
@@ -357,8 +358,16 @@ class Controller(object):
         df_dict = []
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
-        #dates = dates[-30:] # use this line to decrease computation time for development
+        dates = dates[-30:] # use this line to decrease computation time for development
+        if self.verbose > 0:
+            print('INFO: Starting data frame preparation')
+            bar = progressbar.ProgressBar(maxval=len(dates),     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+            bar.start()
+        index = 0
         for date in dates:
+            if self.verbose > 0:
+                bar.update(index)
+            index += 1
             # check whether the candle is from a weekday
             date_split = date.split('-')
             weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
@@ -374,6 +383,8 @@ class Controller(object):
             # df_row = merge_dicts(df_row, yest_df, '_yester')
             df_dict.append(df_row)
         df = pd.DataFrame(df_dict)
+        if self.verbose > 0:
+            bar.finish()
         # code.interact(banner='', local=locals())
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
@@ -382,12 +393,21 @@ class Controller(object):
         datecol = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
+        if self.verbose > 0:
+            print('INFO: Starting prediction')
+            bar = progressbar.ProgressBar(maxval=len(df.columns),
+                                          widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+            bar.start()
+        index = 0
         for col in df.columns:
+            if self.verbose > 0:
+                bar.update(index)
+            index += 1
             parts = col.split('_')
             if len(parts) < 3:
                 if self.verbose > 1:
                     print('WARNING: Unexpected column ' + col)
-                    continue
+                continue
             if not ('_high' in col or '_low' in col or '_close' in col):
                 continue
             if '_yester' in col:  # skip yesterday stuff for prediction
@@ -403,6 +423,8 @@ class Controller(object):
                 prediction[instrument] = {typ: prediction_value}
             if self.verbose > 1:
                 print(col + ' ' + str(prediction_value))
+        if self.verbose > 0:
+            bar.finish()
         if write_predict:
             if complete:
                 outfile = open(self.settings['prices_path'], 'w')
