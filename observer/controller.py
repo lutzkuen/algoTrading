@@ -358,7 +358,7 @@ class Controller(object):
         df_dict = []
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
-        dates = dates[-30:] # use this line to decrease computation time for development
+        #dates = dates[-30:] # use this line to decrease computation time for development
         if self.verbose > 0:
             print('INFO: Starting data frame preparation')
             bar = progressbar.ProgressBar(maxval=len(dates),     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
