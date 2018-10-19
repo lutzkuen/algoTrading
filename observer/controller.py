@@ -672,12 +672,18 @@ class Controller(object):
             step = 1.8 * abs(low_score)
             sl = lo - step
             entry = lo + spread / 2
-            tp = hi - spread / 2
+            sldist = entry - sl
+            tp1 = hi - abs(high_score) - spread / 2
+            tp2 = hi - spread / 2
+            tp3 = hi + abs(high_score) - spread / 2
         else:
             step = 1.8 * abs(high_score)
             sl = hi + step
             entry = hi - spread / 2
-            tp = lo + spread / 2
+            sldist = sl - entry
+            tp1 = lo + abs(low_score) + spread / 2
+            tp2 = lo + spread / 2
+            tp3 = lo - abs(low_score) + spread / 2
         rr = abs((tp - entry) / (sl - entry))
         if rr < 1.5:  # Risk-reward too low
             if self.verbose > 1:
@@ -696,6 +702,7 @@ class Controller(object):
         if tp < sl:
             units *= -1
         pip_location = self.get_pip_size(ins)
+        pip_size = 10**(-pip_location+1)
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             return None
         if (entry - price) * units > 0:
@@ -705,6 +712,7 @@ class Controller(object):
         format_string = '30.' + str(pip_location) + 'f'
         tp = format(tp, format_string).strip()
         sl = format(sl, format_string).strip()
+        sldist = round(sldist/pip_size,1)
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
         args = {'order': {
@@ -714,9 +722,33 @@ class Controller(object):
             'type': otype,
             'timeInForce': 'GTD',
             'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-            'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-            'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
+            #'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+            #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
+            'trailingStopLossOnFill': { 'distance': sldist, 'timeInForce': 'GTC'}
         }}
         # code.interact(banner='', local=locals())
         ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-        print(json.loads(ticket.raw_body))
+        # set staged tp
+        units_stoploss = int(units/3)
+        order_id = json.loads(ticket.raw_body).get('id')
+        args = {'takeProfit': {
+            'instrument': ins,
+            'units': -units_stoploss,
+            'price': tp1,
+            'type': 'TAKE_PROFIT'}}
+        response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), order_id, **args)
+        #print(json.loads(ticket.raw_body))
+        args = {'takeProfit': {
+            'instrument': ins,
+            'units': -units_stoploss,
+            'price': tp2,
+            'type': 'TAKE_PROFIT'}}
+        response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), order_id, **args)
+        # print(json.loads(ticket.raw_body))
+        args = {'takeProfit': {
+            'instrument': ins,
+            'units': -units_stoploss,
+            'price': tp3,
+            'type': 'TAKE_PROFIT'}}
+        response = self.oanda.trade.set_dependent_orders(self.settings.get('account_id'), order_id, **args)
+        # print(json.loads(ticket.raw_body))
