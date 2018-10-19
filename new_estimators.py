@@ -1,3 +1,3 @@
-from observer import controller
-cont = controller.controller('../settings_triangle.conf',None)
-cont.data2sheet(newEstim = True, write_predict = False, write_raw = False)
+from observer import controller_cython as controller
+cont = controller.Controller('../settings_triangle.conf',None)
+cont.data2sheet(new_estim = True, write_predict = False, write_raw = False)
