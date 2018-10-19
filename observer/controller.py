@@ -126,7 +126,7 @@ class EstimatorPipeline(object):
     def get_feature_importances(self):
         return self.gb.feature_importances_
 
-    def get_params(self):
+    def get_params(self, deep = True):# keyword deep needed for gridsearch
         return self.params
 
     def fit(self, x, y, sample_weight=None):
@@ -340,24 +340,24 @@ class Controller(object):
                    complete=True):
         inst = []
         if complete:
-            c_cond = ' and complete = 1'
+            c_cond = ' complete = 1'
         else:
-            c_cond = ' and complete in (0,1)'
+            c_cond = ' complete in (0,1)'
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
             inst.append(row['ins'])
         dates = []
         if maxdate:
-            statement = 'select distinct date from dailycandles where date <= ' + maxdate + c_cond + ' order by date;'
+            statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
         else:
-            statement = 'select distinct date from dailycandles order by date ' + c_cond + ';'
+            statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
         for row in self.db.query(statement):
             # if row['date'][:4] == year:
             dates.append(row['date'])
         df_dict = []
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
-        # dates = dates[-30:] # use this line to decrease computation time for development
+        #dates = dates[-30:] # use this line to decrease computation time for development
         for date in dates:
             # check whether the candle is from a weekday
             date_split = date.split('-')
@@ -503,7 +503,7 @@ class Controller(object):
         try:
             gridcv.fit(x, y, sample_weight=weights)
         except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
-            print('FATAL: failed to compute ' + pcol)
+            print('FATAL: failed to compute ' + pcol + ' ' + str(e))
             return
         if self.verbose > 1:
             print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(
