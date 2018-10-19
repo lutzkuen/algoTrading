@@ -28,8 +28,9 @@ except ImportError:
     print('WARNING: V20 library not present. Connection to broker not possible')
     v20present = False
 
-# import code
+import code
 
+import progressbar
 import configparser
 import math
 import datetime
@@ -103,6 +104,7 @@ class EstimatorPipeline(object):
             param_path = path + '.param'
             self.params = pickle.load(open(param_path, 'rb'))
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
+            #score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
             self.percentile.scores_ = percentile_attr.get('scores')
             self.percentile.pvalues_ = percentile_attr.get('pvalues')
@@ -116,6 +118,7 @@ class EstimatorPipeline(object):
             else:
                 self.gb = GradientBoostingRegressor(learning_rate=learning_rate, min_samples_split=min_samples_split,
                                                     n_estimators=n_estimators)
+            #score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=percentile)
         self.pipeline = make_pipeline(
@@ -358,7 +361,15 @@ class Controller(object):
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
         #dates = dates[-30:] # use this line to decrease computation time for development
+        if self.verbose > 0:
+            print('INFO: Starting data frame preparation')
+            bar = progressbar.ProgressBar(maxval=len(dates),     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+            bar.start()
+        index = 0
         for date in dates:
+            if self.verbose > 0:
+                bar.update(index)
+            index += 1
             # check whether the candle is from a weekday
             date_split = date.split('-')
             weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
@@ -368,12 +379,14 @@ class Controller(object):
             df_row = self.get_calendar_data(date)
             df_row['weekday'] = weekday
             today_df = self.get_market_df(date, inst, complete)
-            #yest_df = self.get_market_df(prev_working_day(date), inst, complete)
-            #yest_df.pop('date')  # remove the date key from prev day
+            # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
+            # yest_df.pop('date')  # remove the date key from prev day
             df_row = merge_dicts(df_row, today_df, '')
-            #df_row = merge_dicts(df_row, yest_df, '_yester')
+            # df_row = merge_dicts(df_row, yest_df, '_yester')
             df_dict.append(df_row)
         df = pd.DataFrame(df_dict)
+        if self.verbose > 0:
+            bar.finish()
         # code.interact(banner='', local=locals())
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
@@ -382,12 +395,21 @@ class Controller(object):
         datecol = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
+        if self.verbose > 0:
+            print('INFO: Starting prediction')
+            bar = progressbar.ProgressBar(maxval=len(df.columns),
+                                          widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+            bar.start()
+        index = 0
         for col in df.columns:
+            if self.verbose > 0:
+                bar.update(index)
+            index += 1
             parts = col.split('_')
             if len(parts) < 3:
                 if self.verbose > 1:
                     print('WARNING: Unexpected column ' + col)
-                    continue
+                continue
             if not ('_high' in col or '_low' in col or '_close' in col):
                 continue
             if '_yester' in col:  # skip yesterday stuff for prediction
@@ -403,6 +425,8 @@ class Controller(object):
                 prediction[instrument] = {typ: prediction_value}
             if self.verbose > 1:
                 print(col + ' ' + str(prediction_value))
+        if self.verbose > 0:
+            bar.finish()
         if write_predict:
             if complete:
                 outfile = open(self.settings['prices_path'], 'w')
@@ -650,16 +674,22 @@ class Controller(object):
             step = 1.8 * abs(low_score)
             sl = lo - step
             entry = lo + spread / 2
-            tp = hi - spread / 2
+            sldist = entry - sl
+            tp1 = hi - abs(high_score) - spread / 2
+            tp2 = hi - spread / 2
+            tp3 = hi + abs(high_score) - spread / 2
         else:
             step = 1.8 * abs(high_score)
             sl = hi + step
             entry = hi - spread / 2
-            tp = lo + spread / 2
-        rr = abs((tp - entry) / (sl - entry))
+            sldist = sl - entry
+            tp1 = lo + abs(low_score) + spread / 2
+            tp2 = lo + spread / 2
+            tp3 = lo - abs(low_score) + spread / 2
+        rr = abs((tp2 - entry) / (sl - entry))
         if rr < 1.5:  # Risk-reward too low
             if self.verbose > 1:
-                print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp))
+                print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
         # if you made it here its fine, lets open a limit order
         # r2sum is used to scale down the units risked to accomodate the estimator quality
@@ -671,9 +701,10 @@ class Controller(object):
             units = math.ceil(units)
         if abs(units) < 1:
             return None  # oops, risk threshold too small
-        if tp < sl:
+        if tp2 < sl:
             units *= -1
         pip_location = self.get_pip_size(ins)
+        pip_size = 10**(-pip_location+1)
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             return None
         if (entry - price) * units > 0:
@@ -681,20 +712,29 @@ class Controller(object):
         else:
             otype = 'LIMIT'
         format_string = '30.' + str(pip_location) + 'f'
-        tp = format(tp, format_string).strip()
+        tp1 = format(tp1, format_string).strip()
+        tp2 = format(tp2, format_string).strip()
+        tp3 = format(tp3, format_string).strip()
         sl = format(sl, format_string).strip()
+        sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
-        args = {'order': {
-            'instrument': ins,
-            'units': units,
-            'price': entry,
-            'type': otype,
-            'timeInForce': 'GTD',
-            'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-            'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-            'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
-        }}
-        # code.interact(banner='', local=locals())
-        ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-        print(json.loads(ticket.raw_body))
+        units = int(units/3) # open three trades to spread out the risk
+        for tp in [tp1, tp2, tp3]:
+            args = {'order': {
+                'instrument': ins,
+                'units': units,
+                'price': entry,
+                'type': otype,
+                'timeInForce': 'GTD',
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
+                'trailingStopLossOnFill': { 'distance': sldist, 'timeInForce': 'GTC'}
+            }}
+            #code.interact(banner='', local=locals())
+            if self.verbose > 1:
+                print(args)
+            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            if self.verbose > 1:
+                print(ticket.raw_body)

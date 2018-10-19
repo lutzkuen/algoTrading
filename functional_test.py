@@ -1,3 +1,4 @@
+#from observer import controller as controller
 from observer import controller_cython as controller
 cont = controller.Controller('/home/ubuntu/settings_triangle.conf','live')
 cont.retrieve_data(1, upsert = True)
