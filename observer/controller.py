@@ -368,10 +368,10 @@ class Controller(object):
             df_row = self.get_calendar_data(date)
             df_row['weekday'] = weekday
             today_df = self.get_market_df(date, inst, complete)
-            #yest_df = self.get_market_df(prev_working_day(date), inst, complete)
-            #yest_df.pop('date')  # remove the date key from prev day
+            # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
+            # yest_df.pop('date')  # remove the date key from prev day
             df_row = merge_dicts(df_row, today_df, '')
-            #df_row = merge_dicts(df_row, yest_df, '_yester')
+            # df_row = merge_dicts(df_row, yest_df, '_yester')
             df_dict.append(df_row)
         df = pd.DataFrame(df_dict)
         # code.interact(banner='', local=locals())
