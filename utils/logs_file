@@ -1,4 +1,1024 @@
-2018-10-14 14:40:11,571 - INFO - Scraping data for link: calendar.php?week=oct7.2018
-2018-10-14 14:40:25,150 - INFO - Successfully retrieved data
-2018-10-14 14:40:25,150 - INFO - Scraping data for link: calendar.php?week=oct14.2018
-2018-10-14 14:40:38,152 - INFO - Successfully retrieved data
+2018-10-18 20:00:37,837 - INFO - Scraping data for link: calendar.php?week=jan4.2009
+2018-10-18 20:00:42,582 - INFO - Successfully retrieved data
+2018-10-18 20:00:42,585 - INFO - Scraping data for link: calendar.php?week=jan11.2009
+2018-10-18 20:00:46,685 - INFO - Successfully retrieved data
+2018-10-18 20:00:46,688 - INFO - Scraping data for link: calendar.php?week=jan18.2009
+2018-10-18 20:00:50,470 - INFO - Successfully retrieved data
+2018-10-18 20:00:50,470 - INFO - Scraping data for link: calendar.php?week=jan25.2009
+2018-10-18 20:00:55,020 - INFO - Successfully retrieved data
+2018-10-18 20:00:55,020 - INFO - Scraping data for link: calendar.php?week=feb1.2009
+2018-10-18 20:00:59,700 - INFO - Successfully retrieved data
+2018-10-18 20:00:59,700 - INFO - Scraping data for link: calendar.php?week=feb8.2009
+2018-10-18 20:01:04,545 - INFO - Successfully retrieved data
+2018-10-18 20:01:04,545 - INFO - Scraping data for link: calendar.php?week=feb15.2009
+2018-10-18 20:01:08,800 - INFO - Successfully retrieved data
+2018-10-18 20:01:08,803 - INFO - Scraping data for link: calendar.php?week=feb22.2009
+2018-10-18 20:01:12,838 - INFO - Successfully retrieved data
+2018-10-18 20:01:12,838 - INFO - Scraping data for link: calendar.php?week=mar1.2009
+2018-10-18 20:01:17,468 - INFO - Successfully retrieved data
+2018-10-18 20:01:17,468 - INFO - Scraping data for link: calendar.php?week=mar8.2009
+2018-10-18 20:01:21,941 - INFO - Successfully retrieved data
+2018-10-18 20:01:21,941 - INFO - Scraping data for link: calendar.php?week=mar15.2009
+2018-10-18 20:01:25,916 - INFO - Successfully retrieved data
+2018-10-18 20:01:25,916 - INFO - Scraping data for link: calendar.php?week=mar22.2009
+2018-10-18 20:01:29,686 - INFO - Successfully retrieved data
+2018-10-18 20:01:29,688 - INFO - Scraping data for link: calendar.php?week=mar29.2009
+2018-10-18 20:01:33,976 - INFO - Successfully retrieved data
+2018-10-18 20:01:33,976 - INFO - Scraping data for link: calendar.php?week=apr5.2009
+2018-10-18 20:01:37,866 - INFO - Successfully retrieved data
+2018-10-18 20:01:37,866 - INFO - Scraping data for link: calendar.php?week=apr12.2009
+2018-10-18 20:01:41,478 - INFO - Successfully retrieved data
+2018-10-18 20:01:41,478 - INFO - Scraping data for link: calendar.php?week=apr19.2009
+2018-10-18 20:01:45,423 - INFO - Successfully retrieved data
+2018-10-18 20:01:45,426 - INFO - Scraping data for link: calendar.php?week=apr26.2009
+2018-10-18 20:01:49,213 - INFO - Successfully retrieved data
+2018-10-18 20:01:49,213 - INFO - Scraping data for link: calendar.php?week=may3.2009
+2018-10-18 20:01:53,841 - INFO - Successfully retrieved data
+2018-10-18 20:01:53,844 - INFO - Scraping data for link: calendar.php?week=may10.2009
+2018-10-18 20:01:58,049 - INFO - Successfully retrieved data
+2018-10-18 20:01:58,049 - INFO - Scraping data for link: calendar.php?week=may17.2009
+2018-10-18 20:02:01,954 - INFO - Successfully retrieved data
+2018-10-18 20:02:01,954 - INFO - Scraping data for link: calendar.php?week=may24.2009
+2018-10-18 20:02:07,364 - INFO - Successfully retrieved data
+2018-10-18 20:02:07,366 - INFO - Scraping data for link: calendar.php?week=may31.2009
+2018-10-18 20:02:11,649 - INFO - Successfully retrieved data
+2018-10-18 20:02:11,649 - INFO - Scraping data for link: calendar.php?week=jun7.2009
+2018-10-18 20:02:17,896 - INFO - Successfully retrieved data
+2018-10-18 20:02:17,896 - INFO - Scraping data for link: calendar.php?week=jun14.2009
+2018-10-18 20:02:21,761 - INFO - Successfully retrieved data
+2018-10-18 20:02:21,761 - INFO - Scraping data for link: calendar.php?week=jun21.2009
+2018-10-18 20:02:25,222 - INFO - Successfully retrieved data
+2018-10-18 20:02:25,222 - INFO - Scraping data for link: calendar.php?week=jun28.2009
+2018-10-18 20:02:29,597 - INFO - Successfully retrieved data
+2018-10-18 20:02:29,597 - INFO - Scraping data for link: calendar.php?week=jul5.2009
+2018-10-18 20:02:33,542 - INFO - Successfully retrieved data
+2018-10-18 20:02:33,542 - INFO - Scraping data for link: calendar.php?week=jul12.2009
+2018-10-18 20:02:37,204 - INFO - Successfully retrieved data
+2018-10-18 20:02:37,204 - INFO - Scraping data for link: calendar.php?week=jul19.2009
+2018-10-18 20:02:40,547 - INFO - Successfully retrieved data
+2018-10-18 20:02:40,549 - INFO - Scraping data for link: calendar.php?week=jul26.2009
+2018-10-18 20:02:43,997 - INFO - Successfully retrieved data
+2018-10-18 20:02:43,997 - INFO - Scraping data for link: calendar.php?week=aug2.2009
+2018-10-18 20:02:47,932 - INFO - Successfully retrieved data
+2018-10-18 20:02:47,932 - INFO - Scraping data for link: calendar.php?week=aug9.2009
+2018-10-18 20:02:52,109 - INFO - Successfully retrieved data
+2018-10-18 20:02:52,109 - INFO - Scraping data for link: calendar.php?week=aug16.2009
+2018-10-18 20:02:55,602 - INFO - Successfully retrieved data
+2018-10-18 20:02:55,602 - INFO - Scraping data for link: calendar.php?week=aug23.2009
+2018-10-18 20:02:58,882 - INFO - Successfully retrieved data
+2018-10-18 20:02:58,885 - INFO - Scraping data for link: calendar.php?week=aug30.2009
+2018-10-18 20:03:03,137 - INFO - Successfully retrieved data
+2018-10-18 20:03:03,137 - INFO - Scraping data for link: calendar.php?week=sep6.2009
+2018-10-18 20:03:07,705 - INFO - Successfully retrieved data
+2018-10-18 20:03:07,707 - INFO - Scraping data for link: calendar.php?week=sep13.2009
+2018-10-18 20:03:11,577 - INFO - Successfully retrieved data
+2018-10-18 20:03:11,580 - INFO - Scraping data for link: calendar.php?week=sep20.2009
+2018-10-18 20:03:15,345 - INFO - Successfully retrieved data
+2018-10-18 20:03:15,347 - INFO - Scraping data for link: calendar.php?week=sep27.2009
+2018-10-18 20:03:19,930 - INFO - Successfully retrieved data
+2018-10-18 20:03:19,932 - INFO - Scraping data for link: calendar.php?week=oct4.2009
+2018-10-18 20:03:24,122 - INFO - Successfully retrieved data
+2018-10-18 20:03:24,125 - INFO - Scraping data for link: calendar.php?week=oct11.2009
+2018-10-18 20:03:28,097 - INFO - Successfully retrieved data
+2018-10-18 20:03:28,097 - INFO - Scraping data for link: calendar.php?week=oct18.2009
+2018-10-18 20:03:32,075 - INFO - Successfully retrieved data
+2018-10-18 20:03:32,078 - INFO - Scraping data for link: calendar.php?week=oct25.2009
+2018-10-18 20:03:35,820 - INFO - Successfully retrieved data
+2018-10-18 20:03:35,820 - INFO - Scraping data for link: calendar.php?week=nov1.2009
+2018-10-18 20:03:40,313 - INFO - Successfully retrieved data
+2018-10-18 20:03:40,315 - INFO - Scraping data for link: calendar.php?week=nov8.2009
+2018-10-18 20:03:44,673 - INFO - Successfully retrieved data
+2018-10-18 20:03:44,673 - INFO - Scraping data for link: calendar.php?week=nov15.2009
+2018-10-18 20:03:48,750 - INFO - Successfully retrieved data
+2018-10-18 20:03:48,750 - INFO - Scraping data for link: calendar.php?week=nov22.2009
+2018-10-18 20:03:52,773 - INFO - Successfully retrieved data
+2018-10-18 20:03:52,773 - INFO - Scraping data for link: calendar.php?week=nov29.2009
+2018-10-18 20:03:57,165 - INFO - Successfully retrieved data
+2018-10-18 20:03:57,165 - INFO - Scraping data for link: calendar.php?week=dec6.2009
+2018-10-18 20:04:01,998 - INFO - Successfully retrieved data
+2018-10-18 20:04:01,998 - INFO - Scraping data for link: calendar.php?week=dec13.2009
+2018-10-18 20:04:06,248 - INFO - Successfully retrieved data
+2018-10-18 20:04:06,251 - INFO - Scraping data for link: calendar.php?week=dec20.2009
+2018-10-18 20:04:09,806 - INFO - Successfully retrieved data
+2018-10-18 20:04:09,806 - INFO - Scraping data for link: calendar.php?week=dec27.2009
+2018-10-18 20:04:12,508 - INFO - Successfully retrieved data
+2018-10-18 20:04:12,508 - INFO - Scraping data for link: calendar.php?week=jan3.2010
+2018-10-18 20:04:16,873 - INFO - Successfully retrieved data
+2018-10-18 20:04:16,873 - INFO - Scraping data for link: calendar.php?week=jan10.2010
+2018-10-18 20:04:20,586 - INFO - Successfully retrieved data
+2018-10-18 20:04:20,588 - INFO - Scraping data for link: calendar.php?week=jan17.2010
+2018-10-18 20:04:27,858 - INFO - Successfully retrieved data
+2018-10-18 20:04:27,861 - INFO - Scraping data for link: calendar.php?week=jan24.2010
+2018-10-18 20:04:31,733 - INFO - Successfully retrieved data
+2018-10-18 20:04:31,733 - INFO - Scraping data for link: calendar.php?week=jan31.2010
+2018-10-18 20:04:37,116 - INFO - Successfully retrieved data
+2018-10-18 20:04:37,116 - INFO - Scraping data for link: calendar.php?week=feb7.2010
+2018-10-18 20:04:41,121 - INFO - Successfully retrieved data
+2018-10-18 20:04:41,121 - INFO - Scraping data for link: calendar.php?week=feb14.2010
+2018-10-18 20:04:47,006 - INFO - Successfully retrieved data
+2018-10-18 20:04:47,006 - INFO - Scraping data for link: calendar.php?week=feb21.2010
+2018-10-18 20:04:52,801 - INFO - Successfully retrieved data
+2018-10-18 20:04:52,804 - INFO - Scraping data for link: calendar.php?week=feb28.2010
+2018-10-18 20:04:57,614 - INFO - Successfully retrieved data
+2018-10-18 20:04:57,616 - INFO - Scraping data for link: calendar.php?week=mar7.2010
+2018-10-18 20:05:03,141 - INFO - Successfully retrieved data
+2018-10-18 20:05:03,144 - INFO - Scraping data for link: calendar.php?week=mar14.2010
+2018-10-18 20:05:07,742 - INFO - Successfully retrieved data
+2018-10-18 20:05:07,742 - INFO - Scraping data for link: calendar.php?week=mar21.2010
+2018-10-18 20:05:11,607 - INFO - Successfully retrieved data
+2018-10-18 20:05:11,607 - INFO - Scraping data for link: calendar.php?week=mar28.2010
+2018-10-18 20:05:15,844 - INFO - Successfully retrieved data
+2018-10-18 20:05:15,847 - INFO - Scraping data for link: calendar.php?week=apr4.2010
+2018-10-18 20:05:21,299 - INFO - Successfully retrieved data
+2018-10-18 20:05:21,299 - INFO - Scraping data for link: calendar.php?week=apr11.2010
+2018-10-18 20:05:25,782 - INFO - Successfully retrieved data
+2018-10-18 20:05:25,784 - INFO - Scraping data for link: calendar.php?week=apr18.2010
+2018-10-18 20:05:29,957 - INFO - Successfully retrieved data
+2018-10-18 20:05:29,959 - INFO - Scraping data for link: calendar.php?week=apr25.2010
+2018-10-18 20:05:34,194 - INFO - Successfully retrieved data
+2018-10-18 20:05:34,194 - INFO - Scraping data for link: calendar.php?week=may2.2010
+2018-10-18 20:05:38,697 - INFO - Successfully retrieved data
+2018-10-18 20:05:38,697 - INFO - Scraping data for link: calendar.php?week=may9.2010
+2018-10-18 20:05:43,477 - INFO - Successfully retrieved data
+2018-10-18 20:05:43,477 - INFO - Scraping data for link: calendar.php?week=may16.2010
+2018-10-18 20:05:47,867 - INFO - Successfully retrieved data
+2018-10-18 20:05:47,867 - INFO - Scraping data for link: calendar.php?week=may23.2010
+2018-10-18 20:05:51,457 - INFO - Successfully retrieved data
+2018-10-18 20:05:51,460 - INFO - Scraping data for link: calendar.php?week=may30.2010
+2018-10-18 20:05:56,905 - INFO - Successfully retrieved data
+2018-10-18 20:05:56,905 - INFO - Scraping data for link: calendar.php?week=jun6.2010
+2018-10-18 20:06:01,862 - INFO - Successfully retrieved data
+2018-10-18 20:06:01,862 - INFO - Scraping data for link: calendar.php?week=jun13.2010
+2018-10-18 20:06:06,257 - INFO - Successfully retrieved data
+2018-10-18 20:06:06,257 - INFO - Scraping data for link: calendar.php?week=jun20.2010
+2018-10-18 20:06:09,812 - INFO - Successfully retrieved data
+2018-10-18 20:06:09,812 - INFO - Scraping data for link: calendar.php?week=jun27.2010
+2018-10-18 20:06:13,965 - INFO - Successfully retrieved data
+2018-10-18 20:06:13,965 - INFO - Scraping data for link: calendar.php?week=jul4.2010
+2018-10-18 20:06:17,655 - INFO - Successfully retrieved data
+2018-10-18 20:06:17,655 - INFO - Scraping data for link: calendar.php?week=jul11.2010
+2018-10-18 20:06:22,063 - INFO - Successfully retrieved data
+2018-10-18 20:06:22,063 - INFO - Scraping data for link: calendar.php?week=jul18.2010
+2018-10-18 20:06:25,785 - INFO - Successfully retrieved data
+2018-10-18 20:06:25,785 - INFO - Scraping data for link: calendar.php?week=jul25.2010
+2018-10-18 20:06:29,203 - INFO - Successfully retrieved data
+2018-10-18 20:06:29,205 - INFO - Scraping data for link: calendar.php?week=aug1.2010
+2018-10-18 20:06:33,430 - INFO - Successfully retrieved data
+2018-10-18 20:06:33,433 - INFO - Scraping data for link: calendar.php?week=aug8.2010
+2018-10-18 20:06:37,865 - INFO - Successfully retrieved data
+2018-10-18 20:06:37,865 - INFO - Scraping data for link: calendar.php?week=aug15.2010
+2018-10-18 20:06:41,158 - INFO - Successfully retrieved data
+2018-10-18 20:06:41,158 - INFO - Scraping data for link: calendar.php?week=aug22.2010
+2018-10-18 20:06:44,396 - INFO - Successfully retrieved data
+2018-10-18 20:06:44,398 - INFO - Scraping data for link: calendar.php?week=aug29.2010
+2018-10-18 20:06:49,128 - INFO - Successfully retrieved data
+2018-10-18 20:06:49,128 - INFO - Scraping data for link: calendar.php?week=sep5.2010
+2018-10-18 20:06:53,483 - INFO - Successfully retrieved data
+2018-10-18 20:06:53,483 - INFO - Scraping data for link: calendar.php?week=sep12.2010
+2018-10-18 20:06:57,553 - INFO - Successfully retrieved data
+2018-10-18 20:06:57,556 - INFO - Scraping data for link: calendar.php?week=sep19.2010
+2018-10-18 20:07:00,953 - INFO - Successfully retrieved data
+2018-10-18 20:07:00,953 - INFO - Scraping data for link: calendar.php?week=sep26.2010
+2018-10-18 20:07:05,486 - INFO - Successfully retrieved data
+2018-10-18 20:07:05,486 - INFO - Scraping data for link: calendar.php?week=oct3.2010
+2018-10-18 20:07:09,866 - INFO - Successfully retrieved data
+2018-10-18 20:07:09,868 - INFO - Scraping data for link: calendar.php?week=oct10.2010
+2018-10-18 20:07:14,048 - INFO - Successfully retrieved data
+2018-10-18 20:07:14,048 - INFO - Scraping data for link: calendar.php?week=oct17.2010
+2018-10-18 20:07:18,026 - INFO - Successfully retrieved data
+2018-10-18 20:07:18,026 - INFO - Scraping data for link: calendar.php?week=oct24.2010
+2018-10-18 20:07:22,574 - INFO - Successfully retrieved data
+2018-10-18 20:07:22,576 - INFO - Scraping data for link: calendar.php?week=oct31.2010
+2018-10-18 20:07:26,964 - INFO - Successfully retrieved data
+2018-10-18 20:07:26,966 - INFO - Scraping data for link: calendar.php?week=nov7.2010
+2018-10-18 20:07:31,259 - INFO - Successfully retrieved data
+2018-10-18 20:07:31,259 - INFO - Scraping data for link: calendar.php?week=nov14.2010
+2018-10-18 20:07:35,674 - INFO - Successfully retrieved data
+2018-10-18 20:07:35,676 - INFO - Scraping data for link: calendar.php?week=nov21.2010
+2018-10-18 20:07:39,484 - INFO - Successfully retrieved data
+2018-10-18 20:07:39,484 - INFO - Scraping data for link: calendar.php?week=nov28.2010
+2018-10-18 20:07:44,174 - INFO - Successfully retrieved data
+2018-10-18 20:07:44,176 - INFO - Scraping data for link: calendar.php?week=dec5.2010
+2018-10-18 20:07:48,551 - INFO - Successfully retrieved data
+2018-10-18 20:07:48,554 - INFO - Scraping data for link: calendar.php?week=dec12.2010
+2018-10-18 20:07:53,309 - INFO - Successfully retrieved data
+2018-10-18 20:07:53,312 - INFO - Scraping data for link: calendar.php?week=dec19.2010
+2018-10-18 20:07:56,652 - INFO - Successfully retrieved data
+2018-10-18 20:07:56,652 - INFO - Scraping data for link: calendar.php?week=dec26.2010
+2018-10-18 20:07:59,299 - INFO - Successfully retrieved data
+2018-10-18 20:07:59,299 - INFO - Scraping data for link: calendar.php?week=jan2.2011
+2018-10-18 20:08:03,482 - INFO - Successfully retrieved data
+2018-10-18 20:08:03,482 - INFO - Scraping data for link: calendar.php?week=jan9.2011
+2018-10-18 20:08:07,919 - INFO - Successfully retrieved data
+2018-10-18 20:08:07,919 - INFO - Scraping data for link: calendar.php?week=jan16.2011
+2018-10-18 20:08:11,934 - INFO - Successfully retrieved data
+2018-10-18 20:08:11,937 - INFO - Scraping data for link: calendar.php?week=jan23.2011
+2018-10-18 20:08:15,774 - INFO - Successfully retrieved data
+2018-10-18 20:08:15,777 - INFO - Scraping data for link: calendar.php?week=jan30.2011
+2018-10-18 20:08:20,749 - INFO - Successfully retrieved data
+2018-10-18 20:08:20,749 - INFO - Scraping data for link: calendar.php?week=feb6.2011
+2018-10-18 20:08:24,760 - INFO - Successfully retrieved data
+2018-10-18 20:08:24,762 - INFO - Scraping data for link: calendar.php?week=feb13.2011
+2018-10-18 20:08:29,467 - INFO - Successfully retrieved data
+2018-10-18 20:08:29,467 - INFO - Scraping data for link: calendar.php?week=feb20.2011
+2018-10-18 20:08:33,750 - INFO - Successfully retrieved data
+2018-10-18 20:08:33,750 - INFO - Scraping data for link: calendar.php?week=feb27.2011
+2018-10-18 20:08:38,862 - INFO - Successfully retrieved data
+2018-10-18 20:08:38,865 - INFO - Scraping data for link: calendar.php?week=mar6.2011
+2018-10-18 20:08:43,487 - INFO - Successfully retrieved data
+2018-10-18 20:08:43,490 - INFO - Scraping data for link: calendar.php?week=mar13.2011
+2018-10-18 20:08:47,635 - INFO - Successfully retrieved data
+2018-10-18 20:08:47,637 - INFO - Scraping data for link: calendar.php?week=mar20.2011
+2018-10-18 20:08:54,640 - INFO - Successfully retrieved data
+2018-10-18 20:08:54,643 - INFO - Scraping data for link: calendar.php?week=mar27.2011
+2018-10-18 20:08:59,000 - INFO - Successfully retrieved data
+2018-10-18 20:08:59,000 - INFO - Scraping data for link: calendar.php?week=apr3.2011
+2018-10-18 20:09:03,300 - INFO - Successfully retrieved data
+2018-10-18 20:09:03,300 - INFO - Scraping data for link: calendar.php?week=apr10.2011
+2018-10-18 20:09:08,195 - INFO - Successfully retrieved data
+2018-10-18 20:09:08,198 - INFO - Scraping data for link: calendar.php?week=apr17.2011
+2018-10-18 20:09:11,755 - INFO - Successfully retrieved data
+2018-10-18 20:09:11,755 - INFO - Scraping data for link: calendar.php?week=apr24.2011
+2018-10-18 20:09:16,125 - INFO - Successfully retrieved data
+2018-10-18 20:09:16,125 - INFO - Scraping data for link: calendar.php?week=may1.2011
+2018-10-18 20:09:21,140 - INFO - Successfully retrieved data
+2018-10-18 20:09:21,140 - INFO - Scraping data for link: calendar.php?week=may8.2011
+2018-10-18 20:09:25,290 - INFO - Successfully retrieved data
+2018-10-18 20:09:25,293 - INFO - Scraping data for link: calendar.php?week=may15.2011
+2018-10-18 20:09:29,596 - INFO - Successfully retrieved data
+2018-10-18 20:09:29,596 - INFO - Scraping data for link: calendar.php?week=may22.2011
+2018-10-18 20:09:33,293 - INFO - Successfully retrieved data
+2018-10-18 20:09:33,296 - INFO - Scraping data for link: calendar.php?week=may29.2011
+2018-10-18 20:09:38,043 - INFO - Successfully retrieved data
+2018-10-18 20:09:38,043 - INFO - Scraping data for link: calendar.php?week=jun5.2011
+2018-10-18 20:09:42,223 - INFO - Successfully retrieved data
+2018-10-18 20:09:42,223 - INFO - Scraping data for link: calendar.php?week=jun12.2011
+2018-10-18 20:09:47,881 - INFO - Successfully retrieved data
+2018-10-18 20:09:47,883 - INFO - Scraping data for link: calendar.php?week=jun19.2011
+2018-10-18 20:09:52,193 - INFO - Successfully retrieved data
+2018-10-18 20:09:52,193 - INFO - Scraping data for link: calendar.php?week=jun26.2011
+2018-10-18 20:09:56,463 - INFO - Successfully retrieved data
+2018-10-18 20:09:56,463 - INFO - Scraping data for link: calendar.php?week=jul3.2011
+2018-10-18 20:10:00,461 - INFO - Successfully retrieved data
+2018-10-18 20:10:00,464 - INFO - Scraping data for link: calendar.php?week=jul10.2011
+2018-10-18 20:10:04,709 - INFO - Successfully retrieved data
+2018-10-18 20:10:04,711 - INFO - Scraping data for link: calendar.php?week=jul17.2011
+2018-10-18 20:10:08,181 - INFO - Successfully retrieved data
+2018-10-18 20:10:08,181 - INFO - Scraping data for link: calendar.php?week=jul24.2011
+2018-10-18 20:10:12,116 - INFO - Successfully retrieved data
+2018-10-18 20:10:12,116 - INFO - Scraping data for link: calendar.php?week=jul31.2011
+2018-10-18 20:10:16,871 - INFO - Successfully retrieved data
+2018-10-18 20:10:16,871 - INFO - Scraping data for link: calendar.php?week=aug7.2011
+2018-10-18 20:10:20,906 - INFO - Successfully retrieved data
+2018-10-18 20:10:20,906 - INFO - Scraping data for link: calendar.php?week=aug14.2011
+2018-10-18 20:10:24,574 - INFO - Successfully retrieved data
+2018-10-18 20:10:24,574 - INFO - Scraping data for link: calendar.php?week=aug21.2011
+2018-10-18 20:10:28,114 - INFO - Successfully retrieved data
+2018-10-18 20:10:28,114 - INFO - Scraping data for link: calendar.php?week=aug28.2011
+2018-10-18 20:10:32,922 - INFO - Successfully retrieved data
+2018-10-18 20:10:32,924 - INFO - Scraping data for link: calendar.php?week=sep4.2011
+2018-10-18 20:10:38,324 - INFO - Successfully retrieved data
+2018-10-18 20:10:38,327 - INFO - Scraping data for link: calendar.php?week=sep11.2011
+2018-10-18 20:10:43,229 - INFO - Successfully retrieved data
+2018-10-18 20:10:43,232 - INFO - Scraping data for link: calendar.php?week=sep18.2011
+2018-10-18 20:10:47,167 - INFO - Successfully retrieved data
+2018-10-18 20:10:47,167 - INFO - Scraping data for link: calendar.php?week=sep25.2011
+2018-10-18 20:10:51,329 - INFO - Successfully retrieved data
+2018-10-18 20:10:51,329 - INFO - Scraping data for link: calendar.php?week=oct2.2011
+2018-10-18 20:10:56,027 - INFO - Successfully retrieved data
+2018-10-18 20:10:56,029 - INFO - Scraping data for link: calendar.php?week=oct9.2011
+2018-10-18 20:11:00,069 - INFO - Successfully retrieved data
+2018-10-18 20:11:00,072 - INFO - Scraping data for link: calendar.php?week=oct16.2011
+2018-10-18 20:11:04,279 - INFO - Successfully retrieved data
+2018-10-18 20:11:04,282 - INFO - Scraping data for link: calendar.php?week=oct23.2011
+2018-10-18 20:11:08,692 - INFO - Successfully retrieved data
+2018-10-18 20:11:08,695 - INFO - Scraping data for link: calendar.php?week=oct30.2011
+2018-10-18 20:11:13,040 - INFO - Successfully retrieved data
+2018-10-18 20:11:13,042 - INFO - Scraping data for link: calendar.php?week=nov6.2011
+2018-10-18 20:11:17,815 - INFO - Successfully retrieved data
+2018-10-18 20:11:17,817 - INFO - Scraping data for link: calendar.php?week=nov13.2011
+2018-10-18 20:11:22,695 - INFO - Successfully retrieved data
+2018-10-18 20:11:22,697 - INFO - Scraping data for link: calendar.php?week=nov20.2011
+2018-10-18 20:11:26,660 - INFO - Successfully retrieved data
+2018-10-18 20:11:26,660 - INFO - Scraping data for link: calendar.php?week=nov27.2011
+2018-10-18 20:11:31,260 - INFO - Successfully retrieved data
+2018-10-18 20:11:31,262 - INFO - Scraping data for link: calendar.php?week=dec4.2011
+2018-10-18 20:11:35,780 - INFO - Successfully retrieved data
+2018-10-18 20:11:35,782 - INFO - Scraping data for link: calendar.php?week=dec11.2011
+2018-10-18 20:11:40,235 - INFO - Successfully retrieved data
+2018-10-18 20:11:40,235 - INFO - Scraping data for link: calendar.php?week=dec18.2011
+2018-10-18 20:11:43,958 - INFO - Successfully retrieved data
+2018-10-18 20:11:43,958 - INFO - Scraping data for link: calendar.php?week=dec25.2011
+2018-10-18 20:11:46,673 - INFO - Successfully retrieved data
+2018-10-18 20:11:46,673 - INFO - Scraping data for link: calendar.php?week=jan1.2012
+2018-10-18 20:11:50,678 - INFO - Successfully retrieved data
+2018-10-18 20:11:50,678 - INFO - Scraping data for link: calendar.php?week=jan8.2012
+2018-10-18 20:11:54,563 - INFO - Successfully retrieved data
+2018-10-18 20:11:54,563 - INFO - Scraping data for link: calendar.php?week=jan15.2012
+2018-10-18 20:11:58,660 - INFO - Successfully retrieved data
+2018-10-18 20:11:58,660 - INFO - Scraping data for link: calendar.php?week=jan22.2012
+2018-10-18 20:12:03,078 - INFO - Successfully retrieved data
+2018-10-18 20:12:03,078 - INFO - Scraping data for link: calendar.php?week=jan29.2012
+2018-10-18 20:12:07,520 - INFO - Successfully retrieved data
+2018-10-18 20:12:07,520 - INFO - Scraping data for link: calendar.php?week=feb5.2012
+2018-10-18 20:12:11,606 - INFO - Successfully retrieved data
+2018-10-18 20:12:11,606 - INFO - Scraping data for link: calendar.php?week=feb12.2012
+2018-10-18 20:12:16,043 - INFO - Successfully retrieved data
+2018-10-18 20:12:16,043 - INFO - Scraping data for link: calendar.php?week=feb19.2012
+2018-10-18 20:12:19,513 - INFO - Successfully retrieved data
+2018-10-18 20:12:19,513 - INFO - Scraping data for link: calendar.php?week=feb26.2012
+2018-10-18 20:12:24,581 - INFO - Successfully retrieved data
+2018-10-18 20:12:24,583 - INFO - Scraping data for link: calendar.php?week=mar4.2012
+2018-10-18 20:12:29,373 - INFO - Successfully retrieved data
+2018-10-18 20:12:29,376 - INFO - Scraping data for link: calendar.php?week=mar11.2012
+2018-10-18 20:12:33,631 - INFO - Successfully retrieved data
+2018-10-18 20:12:33,631 - INFO - Scraping data for link: calendar.php?week=mar18.2012
+2018-10-18 20:12:37,578 - INFO - Successfully retrieved data
+2018-10-18 20:12:37,581 - INFO - Scraping data for link: calendar.php?week=mar25.2012
+2018-10-18 20:12:41,608 - INFO - Successfully retrieved data
+2018-10-18 20:12:41,611 - INFO - Scraping data for link: calendar.php?week=apr1.2012
+2018-10-18 20:12:46,139 - INFO - Successfully retrieved data
+2018-10-18 20:12:46,144 - INFO - Scraping data for link: calendar.php?week=apr8.2012
+2018-10-18 20:12:50,451 - INFO - Successfully retrieved data
+2018-10-18 20:12:50,451 - INFO - Scraping data for link: calendar.php?week=apr15.2012
+2018-10-18 20:12:54,251 - INFO - Successfully retrieved data
+2018-10-18 20:12:54,251 - INFO - Scraping data for link: calendar.php?week=apr22.2012
+2018-10-18 20:12:58,744 - INFO - Successfully retrieved data
+2018-10-18 20:12:58,746 - INFO - Scraping data for link: calendar.php?week=apr29.2012
+2018-10-18 20:13:03,259 - INFO - Successfully retrieved data
+2018-10-18 20:13:03,259 - INFO - Scraping data for link: calendar.php?week=may6.2012
+2018-10-18 20:13:07,294 - INFO - Successfully retrieved data
+2018-10-18 20:13:07,294 - INFO - Scraping data for link: calendar.php?week=may13.2012
+2018-10-18 20:13:11,454 - INFO - Successfully retrieved data
+2018-10-18 20:13:11,461 - INFO - Scraping data for link: calendar.php?week=may20.2012
+2018-10-18 20:13:15,489 - INFO - Successfully retrieved data
+2018-10-18 20:13:15,492 - INFO - Scraping data for link: calendar.php?week=may27.2012
+2018-10-18 20:13:20,257 - INFO - Successfully retrieved data
+2018-10-18 20:13:20,257 - INFO - Scraping data for link: calendar.php?week=jun3.2012
+2018-10-18 20:13:24,849 - INFO - Successfully retrieved data
+2018-10-18 20:13:24,849 - INFO - Scraping data for link: calendar.php?week=jun10.2012
+2018-10-18 20:13:29,144 - INFO - Successfully retrieved data
+2018-10-18 20:13:29,144 - INFO - Scraping data for link: calendar.php?week=jun17.2012
+2018-10-18 20:13:33,152 - INFO - Successfully retrieved data
+2018-10-18 20:13:33,154 - INFO - Scraping data for link: calendar.php?week=jun24.2012
+2018-10-18 20:13:37,094 - INFO - Successfully retrieved data
+2018-10-18 20:13:37,094 - INFO - Scraping data for link: calendar.php?week=jul1.2012
+2018-10-18 20:13:41,217 - INFO - Successfully retrieved data
+2018-10-18 20:13:41,217 - INFO - Scraping data for link: calendar.php?week=jul8.2012
+2018-10-18 20:13:45,702 - INFO - Successfully retrieved data
+2018-10-18 20:13:45,702 - INFO - Scraping data for link: calendar.php?week=jul15.2012
+2018-10-18 20:13:49,130 - INFO - Successfully retrieved data
+2018-10-18 20:13:49,132 - INFO - Scraping data for link: calendar.php?week=jul22.2012
+2018-10-18 20:13:52,457 - INFO - Successfully retrieved data
+2018-10-18 20:13:52,460 - INFO - Scraping data for link: calendar.php?week=jul29.2012
+2018-10-18 20:13:57,032 - INFO - Successfully retrieved data
+2018-10-18 20:13:57,035 - INFO - Scraping data for link: calendar.php?week=aug5.2012
+2018-10-18 20:14:01,440 - INFO - Successfully retrieved data
+2018-10-18 20:14:01,440 - INFO - Scraping data for link: calendar.php?week=aug12.2012
+2018-10-18 20:14:05,135 - INFO - Successfully retrieved data
+2018-10-18 20:14:05,137 - INFO - Scraping data for link: calendar.php?week=aug19.2012
+2018-10-18 20:14:08,045 - INFO - Successfully retrieved data
+2018-10-18 20:14:08,045 - INFO - Scraping data for link: calendar.php?week=aug26.2012
+2018-10-18 20:14:11,872 - INFO - Successfully retrieved data
+2018-10-18 20:14:11,872 - INFO - Scraping data for link: calendar.php?week=sep2.2012
+2018-10-18 20:14:16,897 - INFO - Successfully retrieved data
+2018-10-18 20:14:16,900 - INFO - Scraping data for link: calendar.php?week=sep9.2012
+2018-10-18 20:14:21,575 - INFO - Successfully retrieved data
+2018-10-18 20:14:21,578 - INFO - Scraping data for link: calendar.php?week=sep16.2012
+2018-10-18 20:14:25,638 - INFO - Successfully retrieved data
+2018-10-18 20:14:25,638 - INFO - Scraping data for link: calendar.php?week=sep23.2012
+2018-10-18 20:14:29,540 - INFO - Successfully retrieved data
+2018-10-18 20:14:29,540 - INFO - Scraping data for link: calendar.php?week=sep30.2012
+2018-10-18 20:14:34,348 - INFO - Successfully retrieved data
+2018-10-18 20:14:34,350 - INFO - Scraping data for link: calendar.php?week=oct7.2012
+2018-10-18 20:14:38,613 - INFO - Successfully retrieved data
+2018-10-18 20:14:38,615 - INFO - Scraping data for link: calendar.php?week=oct14.2012
+2018-10-18 20:14:42,430 - INFO - Successfully retrieved data
+2018-10-18 20:14:42,433 - INFO - Scraping data for link: calendar.php?week=oct21.2012
+2018-10-18 20:14:45,990 - INFO - Successfully retrieved data
+2018-10-18 20:14:45,993 - INFO - Scraping data for link: calendar.php?week=oct28.2012
+2018-10-18 20:14:50,628 - INFO - Successfully retrieved data
+2018-10-18 20:14:50,628 - INFO - Scraping data for link: calendar.php?week=nov4.2012
+2018-10-18 20:14:54,986 - INFO - Successfully retrieved data
+2018-10-18 20:14:54,988 - INFO - Scraping data for link: calendar.php?week=nov11.2012
+2018-10-18 20:14:59,053 - INFO - Successfully retrieved data
+2018-10-18 20:14:59,056 - INFO - Scraping data for link: calendar.php?week=nov18.2012
+2018-10-18 20:15:02,716 - INFO - Successfully retrieved data
+2018-10-18 20:15:02,718 - INFO - Scraping data for link: calendar.php?week=nov25.2012
+2018-10-18 20:15:07,076 - INFO - Successfully retrieved data
+2018-10-18 20:15:07,076 - INFO - Scraping data for link: calendar.php?week=dec2.2012
+2018-10-18 20:15:12,003 - INFO - Successfully retrieved data
+2018-10-18 20:15:12,003 - INFO - Scraping data for link: calendar.php?week=dec9.2012
+2018-10-18 20:15:16,878 - INFO - Successfully retrieved data
+2018-10-18 20:15:16,878 - INFO - Scraping data for link: calendar.php?week=dec16.2012
+2018-10-18 20:15:21,996 - INFO - Successfully retrieved data
+2018-10-18 20:15:21,996 - INFO - Scraping data for link: calendar.php?week=dec23.2012
+2018-10-18 20:15:24,708 - INFO - Successfully retrieved data
+2018-10-18 20:15:24,708 - INFO - Scraping data for link: calendar.php?week=dec30.2012
+2018-10-18 20:15:28,771 - INFO - Successfully retrieved data
+2018-10-18 20:15:28,771 - INFO - Scraping data for link: calendar.php?week=jan6.2013
+2018-10-18 20:15:32,289 - INFO - Successfully retrieved data
+2018-10-18 20:15:32,291 - INFO - Scraping data for link: calendar.php?week=jan13.2013
+2018-10-18 20:15:35,986 - INFO - Successfully retrieved data
+2018-10-18 20:15:35,986 - INFO - Scraping data for link: calendar.php?week=jan20.2013
+2018-10-18 20:15:39,664 - INFO - Successfully retrieved data
+2018-10-18 20:15:39,664 - INFO - Scraping data for link: calendar.php?week=jan27.2013
+2018-10-18 20:15:44,159 - INFO - Successfully retrieved data
+2018-10-18 20:15:44,159 - INFO - Scraping data for link: calendar.php?week=feb3.2013
+2018-10-18 20:15:48,864 - INFO - Successfully retrieved data
+2018-10-18 20:15:48,866 - INFO - Scraping data for link: calendar.php?week=feb10.2013
+2018-10-18 20:15:53,136 - INFO - Successfully retrieved data
+2018-10-18 20:15:53,136 - INFO - Scraping data for link: calendar.php?week=feb17.2013
+2018-10-18 20:15:57,086 - INFO - Successfully retrieved data
+2018-10-18 20:15:57,086 - INFO - Scraping data for link: calendar.php?week=feb24.2013
+2018-10-18 20:16:02,132 - INFO - Successfully retrieved data
+2018-10-18 20:16:02,134 - INFO - Scraping data for link: calendar.php?week=mar3.2013
+2018-10-18 20:16:06,854 - INFO - Successfully retrieved data
+2018-10-18 20:16:06,857 - INFO - Scraping data for link: calendar.php?week=mar10.2013
+2018-10-18 20:16:10,792 - INFO - Successfully retrieved data
+2018-10-18 20:16:10,792 - INFO - Scraping data for link: calendar.php?week=mar17.2013
+2018-10-18 20:16:14,949 - INFO - Successfully retrieved data
+2018-10-18 20:16:14,949 - INFO - Scraping data for link: calendar.php?week=mar24.2013
+2018-10-18 20:16:18,859 - INFO - Successfully retrieved data
+2018-10-18 20:16:18,859 - INFO - Scraping data for link: calendar.php?week=mar31.2013
+2018-10-18 20:16:23,934 - INFO - Successfully retrieved data
+2018-10-18 20:16:23,934 - INFO - Scraping data for link: calendar.php?week=apr7.2013
+2018-10-18 20:16:28,057 - INFO - Successfully retrieved data
+2018-10-18 20:16:28,059 - INFO - Scraping data for link: calendar.php?week=apr14.2013
+2018-10-18 20:16:32,850 - INFO - Successfully retrieved data
+2018-10-18 20:16:32,850 - INFO - Scraping data for link: calendar.php?week=apr21.2013
+2018-10-18 20:16:36,425 - INFO - Successfully retrieved data
+2018-10-18 20:16:36,425 - INFO - Scraping data for link: calendar.php?week=apr28.2013
+2018-10-18 20:16:41,197 - INFO - Successfully retrieved data
+2018-10-18 20:16:41,200 - INFO - Scraping data for link: calendar.php?week=may5.2013
+2018-10-18 20:16:45,625 - INFO - Successfully retrieved data
+2018-10-18 20:16:45,625 - INFO - Scraping data for link: calendar.php?week=may12.2013
+2018-10-18 20:16:50,145 - INFO - Successfully retrieved data
+2018-10-18 20:16:50,147 - INFO - Scraping data for link: calendar.php?week=may19.2013
+2018-10-18 20:16:54,292 - INFO - Successfully retrieved data
+2018-10-18 20:16:54,292 - INFO - Scraping data for link: calendar.php?week=may26.2013
+2018-10-18 20:16:58,142 - INFO - Successfully retrieved data
+2018-10-18 20:16:58,142 - INFO - Scraping data for link: calendar.php?week=jun2.2013
+2018-10-18 20:17:02,918 - INFO - Successfully retrieved data
+2018-10-18 20:17:02,920 - INFO - Scraping data for link: calendar.php?week=jun9.2013
+2018-10-18 20:17:07,630 - INFO - Successfully retrieved data
+2018-10-18 20:17:07,633 - INFO - Scraping data for link: calendar.php?week=jun16.2013
+2018-10-18 20:17:11,675 - INFO - Successfully retrieved data
+2018-10-18 20:17:11,675 - INFO - Scraping data for link: calendar.php?week=jun23.2013
+2018-10-18 20:17:15,845 - INFO - Successfully retrieved data
+2018-10-18 20:17:15,845 - INFO - Scraping data for link: calendar.php?week=jun30.2013
+2018-10-18 20:17:20,780 - INFO - Successfully retrieved data
+2018-10-18 20:17:20,780 - INFO - Scraping data for link: calendar.php?week=jul7.2013
+2018-10-18 20:17:24,933 - INFO - Successfully retrieved data
+2018-10-18 20:17:24,933 - INFO - Scraping data for link: calendar.php?week=jul14.2013
+2018-10-18 20:17:28,968 - INFO - Successfully retrieved data
+2018-10-18 20:17:28,975 - INFO - Scraping data for link: calendar.php?week=jul21.2013
+2018-10-18 20:17:31,710 - INFO - Successfully retrieved data
+2018-10-18 20:17:31,710 - INFO - Scraping data for link: calendar.php?week=jul28.2013
+2018-10-18 20:17:36,416 - INFO - Successfully retrieved data
+2018-10-18 20:17:36,418 - INFO - Scraping data for link: calendar.php?week=aug4.2013
+2018-10-18 20:17:40,753 - INFO - Successfully retrieved data
+2018-10-18 20:17:40,753 - INFO - Scraping data for link: calendar.php?week=aug11.2013
+2018-10-18 20:17:45,016 - INFO - Successfully retrieved data
+2018-10-18 20:17:45,016 - INFO - Scraping data for link: calendar.php?week=aug18.2013
+2018-10-18 20:17:48,118 - INFO - Successfully retrieved data
+2018-10-18 20:17:48,118 - INFO - Scraping data for link: calendar.php?week=aug25.2013
+2018-10-18 20:17:52,013 - INFO - Successfully retrieved data
+2018-10-18 20:17:52,013 - INFO - Scraping data for link: calendar.php?week=sep1.2013
+2018-10-18 20:17:56,691 - INFO - Successfully retrieved data
+2018-10-18 20:17:56,691 - INFO - Scraping data for link: calendar.php?week=sep8.2013
+2018-10-18 20:18:01,096 - INFO - Successfully retrieved data
+2018-10-18 20:18:01,098 - INFO - Scraping data for link: calendar.php?week=sep15.2013
+2018-10-18 20:18:05,096 - INFO - Successfully retrieved data
+2018-10-18 20:18:05,098 - INFO - Scraping data for link: calendar.php?week=sep22.2013
+2018-10-18 20:18:08,984 - INFO - Successfully retrieved data
+2018-10-18 20:18:08,986 - INFO - Scraping data for link: calendar.php?week=sep29.2013
+2018-10-18 20:18:13,739 - INFO - Successfully retrieved data
+2018-10-18 20:18:13,739 - INFO - Scraping data for link: calendar.php?week=oct6.2013
+2018-10-18 20:18:18,501 - INFO - Successfully retrieved data
+2018-10-18 20:18:18,504 - INFO - Scraping data for link: calendar.php?week=oct13.2013
+2018-10-18 20:18:22,094 - INFO - Successfully retrieved data
+2018-10-18 20:18:22,094 - INFO - Scraping data for link: calendar.php?week=oct20.2013
+2018-10-18 20:18:26,291 - INFO - Successfully retrieved data
+2018-10-18 20:18:26,291 - INFO - Scraping data for link: calendar.php?week=oct27.2013
+2018-10-18 20:18:30,786 - INFO - Successfully retrieved data
+2018-10-18 20:18:30,786 - INFO - Scraping data for link: calendar.php?week=nov3.2013
+2018-10-18 20:18:35,714 - INFO - Successfully retrieved data
+2018-10-18 20:18:35,714 - INFO - Scraping data for link: calendar.php?week=nov10.2013
+2018-10-18 20:18:39,796 - INFO - Successfully retrieved data
+2018-10-18 20:18:39,796 - INFO - Scraping data for link: calendar.php?week=nov17.2013
+2018-10-18 20:18:44,294 - INFO - Successfully retrieved data
+2018-10-18 20:18:44,294 - INFO - Scraping data for link: calendar.php?week=nov24.2013
+2018-10-18 20:18:48,532 - INFO - Successfully retrieved data
+2018-10-18 20:18:48,532 - INFO - Scraping data for link: calendar.php?week=dec1.2013
+2018-10-18 20:18:53,157 - INFO - Successfully retrieved data
+2018-10-18 20:18:53,157 - INFO - Scraping data for link: calendar.php?week=dec8.2013
+2018-10-18 20:18:57,609 - INFO - Successfully retrieved data
+2018-10-18 20:18:57,612 - INFO - Scraping data for link: calendar.php?week=dec15.2013
+2018-10-18 20:19:02,859 - INFO - Successfully retrieved data
+2018-10-18 20:19:02,859 - INFO - Scraping data for link: calendar.php?week=dec22.2013
+2018-10-18 20:19:05,724 - INFO - Successfully retrieved data
+2018-10-18 20:19:05,724 - INFO - Scraping data for link: calendar.php?week=dec29.2013
+2018-10-18 20:19:09,399 - INFO - Successfully retrieved data
+2018-10-18 20:19:09,399 - INFO - Scraping data for link: calendar.php?week=jan5.2014
+2018-10-18 20:19:13,765 - INFO - Successfully retrieved data
+2018-10-18 20:19:13,765 - INFO - Scraping data for link: calendar.php?week=jan12.2014
+2018-10-18 20:19:17,797 - INFO - Successfully retrieved data
+2018-10-18 20:19:17,797 - INFO - Scraping data for link: calendar.php?week=jan19.2014
+2018-10-18 20:19:21,610 - INFO - Successfully retrieved data
+2018-10-18 20:19:21,610 - INFO - Scraping data for link: calendar.php?week=jan26.2014
+2018-10-18 20:19:26,110 - INFO - Successfully retrieved data
+2018-10-18 20:19:26,112 - INFO - Scraping data for link: calendar.php?week=feb2.2014
+2018-10-18 20:19:31,360 - INFO - Successfully retrieved data
+2018-10-18 20:19:31,360 - INFO - Scraping data for link: calendar.php?week=feb9.2014
+2018-10-18 20:19:35,297 - INFO - Successfully retrieved data
+2018-10-18 20:19:35,297 - INFO - Scraping data for link: calendar.php?week=feb16.2014
+2018-10-18 20:19:39,817 - INFO - Successfully retrieved data
+2018-10-18 20:19:39,820 - INFO - Scraping data for link: calendar.php?week=feb23.2014
+2018-10-18 20:19:44,042 - INFO - Successfully retrieved data
+2018-10-18 20:19:44,045 - INFO - Scraping data for link: calendar.php?week=mar2.2014
+2018-10-18 20:19:49,505 - INFO - Successfully retrieved data
+2018-10-18 20:19:49,505 - INFO - Scraping data for link: calendar.php?week=mar9.2014
+2018-10-18 20:19:54,248 - INFO - Successfully retrieved data
+2018-10-18 20:19:54,250 - INFO - Scraping data for link: calendar.php?week=mar16.2014
+2018-10-18 20:19:58,415 - INFO - Successfully retrieved data
+2018-10-18 20:19:58,415 - INFO - Scraping data for link: calendar.php?week=mar23.2014
+2018-10-18 20:20:02,590 - INFO - Successfully retrieved data
+2018-10-18 20:20:02,590 - INFO - Scraping data for link: calendar.php?week=mar30.2014
+2018-10-18 20:20:07,663 - INFO - Successfully retrieved data
+2018-10-18 20:20:07,665 - INFO - Scraping data for link: calendar.php?week=apr6.2014
+2018-10-18 20:20:11,888 - INFO - Successfully retrieved data
+2018-10-18 20:20:11,888 - INFO - Scraping data for link: calendar.php?week=apr13.2014
+2018-10-18 20:20:16,148 - INFO - Successfully retrieved data
+2018-10-18 20:20:16,150 - INFO - Scraping data for link: calendar.php?week=apr20.2014
+2018-10-18 20:20:19,633 - INFO - Successfully retrieved data
+2018-10-18 20:20:19,633 - INFO - Scraping data for link: calendar.php?week=apr27.2014
+2018-10-18 20:20:24,441 - INFO - Successfully retrieved data
+2018-10-18 20:20:24,443 - INFO - Scraping data for link: calendar.php?week=may4.2014
+2018-10-18 20:20:29,106 - INFO - Successfully retrieved data
+2018-10-18 20:20:29,108 - INFO - Scraping data for link: calendar.php?week=may11.2014
+2018-10-18 20:20:33,706 - INFO - Successfully retrieved data
+2018-10-18 20:20:33,706 - INFO - Scraping data for link: calendar.php?week=may18.2014
+2018-10-18 20:20:37,893 - INFO - Successfully retrieved data
+2018-10-18 20:20:37,893 - INFO - Scraping data for link: calendar.php?week=may25.2014
+2018-10-18 20:20:42,126 - INFO - Successfully retrieved data
+2018-10-18 20:20:42,126 - INFO - Scraping data for link: calendar.php?week=jun1.2014
+2018-10-18 20:20:47,943 - INFO - Successfully retrieved data
+2018-10-18 20:20:47,943 - INFO - Scraping data for link: calendar.php?week=jun8.2014
+2018-10-18 20:20:52,821 - INFO - Successfully retrieved data
+2018-10-18 20:20:52,821 - INFO - Scraping data for link: calendar.php?week=jun15.2014
+2018-10-18 20:20:56,974 - INFO - Successfully retrieved data
+2018-10-18 20:20:56,974 - INFO - Scraping data for link: calendar.php?week=jun22.2014
+2018-10-18 20:21:01,184 - INFO - Successfully retrieved data
+2018-10-18 20:21:01,186 - INFO - Scraping data for link: calendar.php?week=jun29.2014
+2018-10-18 20:21:06,119 - INFO - Successfully retrieved data
+2018-10-18 20:21:06,119 - INFO - Scraping data for link: calendar.php?week=jul6.2014
+2018-10-18 20:21:10,101 - INFO - Successfully retrieved data
+2018-10-18 20:21:10,101 - INFO - Scraping data for link: calendar.php?week=jul13.2014
+2018-10-18 20:21:14,669 - INFO - Successfully retrieved data
+2018-10-18 20:21:14,671 - INFO - Scraping data for link: calendar.php?week=jul20.2014
+2018-10-18 20:21:18,409 - INFO - Successfully retrieved data
+2018-10-18 20:21:18,411 - INFO - Scraping data for link: calendar.php?week=jul27.2014
+2018-10-18 20:21:22,654 - INFO - Successfully retrieved data
+2018-10-18 20:21:22,654 - INFO - Scraping data for link: calendar.php?week=aug3.2014
+2018-10-18 20:21:27,334 - INFO - Successfully retrieved data
+2018-10-18 20:21:27,334 - INFO - Scraping data for link: calendar.php?week=aug10.2014
+2018-10-18 20:21:31,649 - INFO - Successfully retrieved data
+2018-10-18 20:21:31,649 - INFO - Scraping data for link: calendar.php?week=aug17.2014
+2018-10-18 20:21:35,339 - INFO - Successfully retrieved data
+2018-10-18 20:21:35,339 - INFO - Scraping data for link: calendar.php?week=aug24.2014
+2018-10-18 20:21:39,232 - INFO - Successfully retrieved data
+2018-10-18 20:21:39,234 - INFO - Scraping data for link: calendar.php?week=aug31.2014
+2018-10-18 20:21:44,259 - INFO - Successfully retrieved data
+2018-10-18 20:21:44,259 - INFO - Scraping data for link: calendar.php?week=sep7.2014
+2018-10-18 20:21:49,269 - INFO - Successfully retrieved data
+2018-10-18 20:21:49,272 - INFO - Scraping data for link: calendar.php?week=sep14.2014
+2018-10-18 20:21:53,719 - INFO - Successfully retrieved data
+2018-10-18 20:21:53,719 - INFO - Scraping data for link: calendar.php?week=sep21.2014
+2018-10-18 20:21:57,297 - INFO - Successfully retrieved data
+2018-10-18 20:21:57,297 - INFO - Scraping data for link: calendar.php?week=sep28.2014
+2018-10-18 20:22:02,910 - INFO - Successfully retrieved data
+2018-10-18 20:22:02,910 - INFO - Scraping data for link: calendar.php?week=oct5.2014
+2018-10-18 20:22:07,900 - INFO - Successfully retrieved data
+2018-10-18 20:22:07,902 - INFO - Scraping data for link: calendar.php?week=oct12.2014
+2018-10-18 20:22:12,317 - INFO - Successfully retrieved data
+2018-10-18 20:22:12,320 - INFO - Scraping data for link: calendar.php?week=oct19.2014
+2018-10-18 20:22:16,472 - INFO - Successfully retrieved data
+2018-10-18 20:22:16,475 - INFO - Scraping data for link: calendar.php?week=oct26.2014
+2018-10-18 20:22:20,487 - INFO - Successfully retrieved data
+2018-10-18 20:22:20,487 - INFO - Scraping data for link: calendar.php?week=nov2.2014
+2018-10-18 20:22:26,150 - INFO - Successfully retrieved data
+2018-10-18 20:22:26,150 - INFO - Scraping data for link: calendar.php?week=nov9.2014
+2018-10-18 20:22:30,978 - INFO - Successfully retrieved data
+2018-10-18 20:22:30,978 - INFO - Scraping data for link: calendar.php?week=nov16.2014
+2018-10-18 20:22:35,435 - INFO - Successfully retrieved data
+2018-10-18 20:22:35,435 - INFO - Scraping data for link: calendar.php?week=nov23.2014
+2018-10-18 20:22:40,668 - INFO - Successfully retrieved data
+2018-10-18 20:22:40,670 - INFO - Scraping data for link: calendar.php?week=nov30.2014
+2018-10-18 20:22:46,715 - INFO - Successfully retrieved data
+2018-10-18 20:22:46,715 - INFO - Scraping data for link: calendar.php?week=dec7.2014
+2018-10-18 20:22:52,827 - INFO - Successfully retrieved data
+2018-10-18 20:22:52,827 - INFO - Scraping data for link: calendar.php?week=dec14.2014
+2018-10-18 20:22:57,677 - INFO - Successfully retrieved data
+2018-10-18 20:22:57,677 - INFO - Scraping data for link: calendar.php?week=dec21.2014
+2018-10-18 20:23:01,302 - INFO - Successfully retrieved data
+2018-10-18 20:23:01,305 - INFO - Scraping data for link: calendar.php?week=dec28.2014
+2018-10-18 20:23:04,542 - INFO - Successfully retrieved data
+2018-10-18 20:23:04,542 - INFO - Scraping data for link: calendar.php?week=jan4.2015
+2018-10-18 20:23:09,080 - INFO - Successfully retrieved data
+2018-10-18 20:23:09,082 - INFO - Scraping data for link: calendar.php?week=jan11.2015
+2018-10-18 20:23:13,157 - INFO - Successfully retrieved data
+2018-10-18 20:23:13,157 - INFO - Scraping data for link: calendar.php?week=jan18.2015
+2018-10-18 20:23:17,401 - INFO - Successfully retrieved data
+2018-10-18 20:23:17,401 - INFO - Scraping data for link: calendar.php?week=jan25.2015
+2018-10-18 20:23:21,679 - INFO - Successfully retrieved data
+2018-10-18 20:23:21,686 - INFO - Scraping data for link: calendar.php?week=feb1.2015
+2018-10-18 20:23:26,696 - INFO - Successfully retrieved data
+2018-10-18 20:23:26,699 - INFO - Scraping data for link: calendar.php?week=feb8.2015
+2018-10-18 20:23:30,974 - INFO - Successfully retrieved data
+2018-10-18 20:23:30,974 - INFO - Scraping data for link: calendar.php?week=feb15.2015
+2018-10-18 20:23:35,414 - INFO - Successfully retrieved data
+2018-10-18 20:23:35,414 - INFO - Scraping data for link: calendar.php?week=feb22.2015
+2018-10-18 20:23:40,104 - INFO - Successfully retrieved data
+2018-10-18 20:23:40,107 - INFO - Scraping data for link: calendar.php?week=mar1.2015
+2018-10-18 20:23:45,854 - INFO - Successfully retrieved data
+2018-10-18 20:23:45,854 - INFO - Scraping data for link: calendar.php?week=mar8.2015
+2018-10-18 20:23:50,539 - INFO - Successfully retrieved data
+2018-10-18 20:23:50,539 - INFO - Scraping data for link: calendar.php?week=mar15.2015
+2018-10-18 20:23:54,759 - INFO - Successfully retrieved data
+2018-10-18 20:23:54,759 - INFO - Scraping data for link: calendar.php?week=mar22.2015
+2018-10-18 20:23:58,944 - INFO - Successfully retrieved data
+2018-10-18 20:23:58,944 - INFO - Scraping data for link: calendar.php?week=mar29.2015
+2018-10-18 20:24:04,079 - INFO - Successfully retrieved data
+2018-10-18 20:24:04,082 - INFO - Scraping data for link: calendar.php?week=apr5.2015
+2018-10-18 20:24:08,795 - INFO - Successfully retrieved data
+2018-10-18 20:24:08,795 - INFO - Scraping data for link: calendar.php?week=apr12.2015
+2018-10-18 20:24:14,057 - INFO - Successfully retrieved data
+2018-10-18 20:24:14,060 - INFO - Scraping data for link: calendar.php?week=apr19.2015
+2018-10-18 20:24:17,647 - INFO - Successfully retrieved data
+2018-10-18 20:24:17,647 - INFO - Scraping data for link: calendar.php?week=apr26.2015
+2018-10-18 20:24:22,527 - INFO - Successfully retrieved data
+2018-10-18 20:24:22,527 - INFO - Scraping data for link: calendar.php?week=may3.2015
+2018-10-18 20:24:27,650 - INFO - Successfully retrieved data
+2018-10-18 20:24:27,652 - INFO - Scraping data for link: calendar.php?week=may10.2015
+2018-10-18 20:24:32,257 - INFO - Successfully retrieved data
+2018-10-18 20:24:32,260 - INFO - Scraping data for link: calendar.php?week=may17.2015
+2018-10-18 20:24:37,205 - INFO - Successfully retrieved data
+2018-10-18 20:24:37,207 - INFO - Scraping data for link: calendar.php?week=may24.2015
+2018-10-18 20:24:41,693 - INFO - Successfully retrieved data
+2018-10-18 20:24:41,695 - INFO - Scraping data for link: calendar.php?week=may31.2015
+2018-10-18 20:24:47,288 - INFO - Successfully retrieved data
+2018-10-18 20:24:47,288 - INFO - Scraping data for link: calendar.php?week=jun7.2015
+2018-10-18 20:24:52,080 - INFO - Successfully retrieved data
+2018-10-18 20:24:52,080 - INFO - Scraping data for link: calendar.php?week=jun14.2015
+2018-10-18 20:24:56,835 - INFO - Successfully retrieved data
+2018-10-18 20:24:56,838 - INFO - Scraping data for link: calendar.php?week=jun21.2015
+2018-10-18 20:25:00,873 - INFO - Successfully retrieved data
+2018-10-18 20:25:00,873 - INFO - Scraping data for link: calendar.php?week=jun28.2015
+2018-10-18 20:25:05,938 - INFO - Successfully retrieved data
+2018-10-18 20:25:05,940 - INFO - Scraping data for link: calendar.php?week=jul5.2015
+2018-10-18 20:25:10,248 - INFO - Successfully retrieved data
+2018-10-18 20:25:10,251 - INFO - Scraping data for link: calendar.php?week=jul12.2015
+2018-10-18 20:25:15,078 - INFO - Successfully retrieved data
+2018-10-18 20:25:15,078 - INFO - Scraping data for link: calendar.php?week=jul19.2015
+2018-10-18 20:25:18,403 - INFO - Successfully retrieved data
+2018-10-18 20:25:18,406 - INFO - Scraping data for link: calendar.php?week=jul26.2015
+2018-10-18 20:25:22,571 - INFO - Successfully retrieved data
+2018-10-18 20:25:22,571 - INFO - Scraping data for link: calendar.php?week=aug2.2015
+2018-10-18 20:25:28,873 - INFO - Successfully retrieved data
+2018-10-18 20:25:28,873 - INFO - Scraping data for link: calendar.php?week=aug9.2015
+2018-10-18 20:25:33,653 - INFO - Successfully retrieved data
+2018-10-18 20:25:33,653 - INFO - Scraping data for link: calendar.php?week=aug16.2015
+2018-10-18 20:25:38,058 - INFO - Successfully retrieved data
+2018-10-18 20:25:38,061 - INFO - Scraping data for link: calendar.php?week=aug23.2015
+2018-10-18 20:25:42,644 - INFO - Successfully retrieved data
+2018-10-18 20:25:42,646 - INFO - Scraping data for link: calendar.php?week=aug30.2015
+2018-10-18 20:25:49,049 - INFO - Successfully retrieved data
+2018-10-18 20:25:49,049 - INFO - Scraping data for link: calendar.php?week=sep6.2015
+2018-10-18 20:25:54,101 - INFO - Successfully retrieved data
+2018-10-18 20:25:54,101 - INFO - Scraping data for link: calendar.php?week=sep13.2015
+2018-10-18 20:25:59,186 - INFO - Successfully retrieved data
+2018-10-18 20:25:59,186 - INFO - Scraping data for link: calendar.php?week=sep20.2015
+2018-10-18 20:26:03,689 - INFO - Successfully retrieved data
+2018-10-18 20:26:03,689 - INFO - Scraping data for link: calendar.php?week=sep27.2015
+2018-10-18 20:26:09,094 - INFO - Successfully retrieved data
+2018-10-18 20:26:09,094 - INFO - Scraping data for link: calendar.php?week=oct4.2015
+2018-10-18 20:26:14,074 - INFO - Successfully retrieved data
+2018-10-18 20:26:14,076 - INFO - Scraping data for link: calendar.php?week=oct11.2015
+2018-10-18 20:26:19,004 - INFO - Successfully retrieved data
+2018-10-18 20:26:19,004 - INFO - Scraping data for link: calendar.php?week=oct18.2015
+2018-10-18 20:26:23,157 - INFO - Successfully retrieved data
+2018-10-18 20:26:23,159 - INFO - Scraping data for link: calendar.php?week=oct25.2015
+2018-10-18 20:26:27,712 - INFO - Successfully retrieved data
+2018-10-18 20:26:27,712 - INFO - Scraping data for link: calendar.php?week=nov1.2015
+2018-10-18 20:26:33,864 - INFO - Successfully retrieved data
+2018-10-18 20:26:33,864 - INFO - Scraping data for link: calendar.php?week=nov8.2015
+2018-10-18 20:26:38,842 - INFO - Successfully retrieved data
+2018-10-18 20:26:38,842 - INFO - Scraping data for link: calendar.php?week=nov15.2015
+2018-10-18 20:26:43,677 - INFO - Successfully retrieved data
+2018-10-18 20:26:43,679 - INFO - Scraping data for link: calendar.php?week=nov22.2015
+2018-10-18 20:26:47,882 - INFO - Successfully retrieved data
+2018-10-18 20:26:47,885 - INFO - Scraping data for link: calendar.php?week=nov29.2015
+2018-10-18 20:26:53,817 - INFO - Successfully retrieved data
+2018-10-18 20:26:53,820 - INFO - Scraping data for link: calendar.php?week=dec6.2015
+2018-10-18 20:26:59,370 - INFO - Successfully retrieved data
+2018-10-18 20:26:59,370 - INFO - Scraping data for link: calendar.php?week=dec13.2015
+2018-10-18 20:27:03,755 - INFO - Successfully retrieved data
+2018-10-18 20:27:03,755 - INFO - Scraping data for link: calendar.php?week=dec20.2015
+2018-10-18 20:27:07,525 - INFO - Successfully retrieved data
+2018-10-18 20:27:07,525 - INFO - Scraping data for link: calendar.php?week=dec27.2015
+2018-10-18 20:27:10,517 - INFO - Successfully retrieved data
+2018-10-18 20:27:10,517 - INFO - Scraping data for link: calendar.php?week=jan3.2016
+2018-10-18 20:27:15,665 - INFO - Successfully retrieved data
+2018-10-18 20:27:15,665 - INFO - Scraping data for link: calendar.php?week=jan10.2016
+2018-10-18 20:27:19,892 - INFO - Successfully retrieved data
+2018-10-18 20:27:19,892 - INFO - Scraping data for link: calendar.php?week=jan17.2016
+2018-10-18 20:27:24,290 - INFO - Successfully retrieved data
+2018-10-18 20:27:24,290 - INFO - Scraping data for link: calendar.php?week=jan24.2016
+2018-10-18 20:27:28,888 - INFO - Successfully retrieved data
+2018-10-18 20:27:28,890 - INFO - Scraping data for link: calendar.php?week=jan31.2016
+2018-10-18 20:27:34,610 - INFO - Successfully retrieved data
+2018-10-18 20:27:34,610 - INFO - Scraping data for link: calendar.php?week=feb7.2016
+2018-10-18 20:27:38,848 - INFO - Successfully retrieved data
+2018-10-18 20:27:38,848 - INFO - Scraping data for link: calendar.php?week=feb14.2016
+2018-10-18 20:27:43,458 - INFO - Successfully retrieved data
+2018-10-18 20:27:43,458 - INFO - Scraping data for link: calendar.php?week=feb21.2016
+2018-10-18 20:27:47,970 - INFO - Successfully retrieved data
+2018-10-18 20:27:47,973 - INFO - Scraping data for link: calendar.php?week=feb28.2016
+2018-10-18 20:27:53,508 - INFO - Successfully retrieved data
+2018-10-18 20:27:53,508 - INFO - Scraping data for link: calendar.php?week=mar6.2016
+2018-10-18 20:27:58,228 - INFO - Successfully retrieved data
+2018-10-18 20:27:58,228 - INFO - Scraping data for link: calendar.php?week=mar13.2016
+2018-10-18 20:28:03,036 - INFO - Successfully retrieved data
+2018-10-18 20:28:03,038 - INFO - Scraping data for link: calendar.php?week=mar20.2016
+2018-10-18 20:28:07,213 - INFO - Successfully retrieved data
+2018-10-18 20:28:07,213 - INFO - Scraping data for link: calendar.php?week=mar27.2016
+2018-10-18 20:28:12,223 - INFO - Successfully retrieved data
+2018-10-18 20:28:12,226 - INFO - Scraping data for link: calendar.php?week=apr3.2016
+2018-10-18 20:28:16,941 - INFO - Successfully retrieved data
+2018-10-18 20:28:16,941 - INFO - Scraping data for link: calendar.php?week=apr10.2016
+2018-10-18 20:28:22,221 - INFO - Successfully retrieved data
+2018-10-18 20:28:22,221 - INFO - Scraping data for link: calendar.php?week=apr17.2016
+2018-10-18 20:28:26,036 - INFO - Successfully retrieved data
+2018-10-18 20:28:26,039 - INFO - Scraping data for link: calendar.php?week=apr24.2016
+2018-10-18 20:28:31,714 - INFO - Successfully retrieved data
+2018-10-18 20:28:31,714 - INFO - Scraping data for link: calendar.php?week=may1.2016
+2018-10-18 20:28:36,711 - INFO - Successfully retrieved data
+2018-10-18 20:28:36,711 - INFO - Scraping data for link: calendar.php?week=may8.2016
+2018-10-18 20:28:41,796 - INFO - Successfully retrieved data
+2018-10-18 20:28:41,796 - INFO - Scraping data for link: calendar.php?week=may15.2016
+2018-10-18 20:28:46,321 - INFO - Successfully retrieved data
+2018-10-18 20:28:46,321 - INFO - Scraping data for link: calendar.php?week=may22.2016
+2018-10-18 20:28:50,754 - INFO - Successfully retrieved data
+2018-10-18 20:28:50,754 - INFO - Scraping data for link: calendar.php?week=may29.2016
+2018-10-18 20:28:56,891 - INFO - Successfully retrieved data
+2018-10-18 20:28:56,891 - INFO - Scraping data for link: calendar.php?week=jun5.2016
+2018-10-18 20:29:01,772 - INFO - Successfully retrieved data
+2018-10-18 20:29:01,774 - INFO - Scraping data for link: calendar.php?week=jun12.2016
+2018-10-18 20:29:06,939 - INFO - Successfully retrieved data
+2018-10-18 20:29:06,942 - INFO - Scraping data for link: calendar.php?week=jun19.2016
+2018-10-18 20:29:11,144 - INFO - Successfully retrieved data
+2018-10-18 20:29:11,147 - INFO - Scraping data for link: calendar.php?week=jun26.2016
+2018-10-18 20:29:16,227 - INFO - Successfully retrieved data
+2018-10-18 20:29:16,227 - INFO - Scraping data for link: calendar.php?week=jul3.2016
+2018-10-18 20:29:21,229 - INFO - Successfully retrieved data
+2018-10-18 20:29:21,229 - INFO - Scraping data for link: calendar.php?week=jul10.2016
+2018-10-18 20:29:26,117 - INFO - Successfully retrieved data
+2018-10-18 20:29:26,117 - INFO - Scraping data for link: calendar.php?week=jul17.2016
+2018-10-18 20:29:30,192 - INFO - Successfully retrieved data
+2018-10-18 20:29:30,194 - INFO - Scraping data for link: calendar.php?week=jul24.2016
+2018-10-18 20:29:34,655 - INFO - Successfully retrieved data
+2018-10-18 20:29:34,657 - INFO - Scraping data for link: calendar.php?week=jul31.2016
+2018-10-18 20:29:39,857 - INFO - Successfully retrieved data
+2018-10-18 20:29:39,857 - INFO - Scraping data for link: calendar.php?week=aug7.2016
+2018-10-18 20:29:44,777 - INFO - Successfully retrieved data
+2018-10-18 20:29:44,777 - INFO - Scraping data for link: calendar.php?week=aug14.2016
+2018-10-18 20:29:48,850 - INFO - Successfully retrieved data
+2018-10-18 20:29:48,852 - INFO - Scraping data for link: calendar.php?week=aug21.2016
+2018-10-18 20:29:52,512 - INFO - Successfully retrieved data
+2018-10-18 20:29:52,512 - INFO - Scraping data for link: calendar.php?week=aug28.2016
+2018-10-18 20:29:57,647 - INFO - Successfully retrieved data
+2018-10-18 20:29:57,647 - INFO - Scraping data for link: calendar.php?week=sep4.2016
+2018-10-18 20:30:02,827 - INFO - Successfully retrieved data
+2018-10-18 20:30:02,827 - INFO - Scraping data for link: calendar.php?week=sep11.2016
+2018-10-18 20:30:08,190 - INFO - Successfully retrieved data
+2018-10-18 20:30:08,190 - INFO - Scraping data for link: calendar.php?week=sep18.2016
+2018-10-18 20:30:12,218 - INFO - Successfully retrieved data
+2018-10-18 20:30:12,220 - INFO - Scraping data for link: calendar.php?week=sep25.2016
+2018-10-18 20:30:17,380 - INFO - Successfully retrieved data
+2018-10-18 20:30:17,383 - INFO - Scraping data for link: calendar.php?week=oct2.2016
+2018-10-18 20:30:22,948 - INFO - Successfully retrieved data
+2018-10-18 20:30:22,948 - INFO - Scraping data for link: calendar.php?week=oct9.2016
+2018-10-18 20:30:27,390 - INFO - Successfully retrieved data
+2018-10-18 20:30:27,393 - INFO - Scraping data for link: calendar.php?week=oct16.2016
+2018-10-18 20:30:32,213 - INFO - Successfully retrieved data
+2018-10-18 20:30:32,215 - INFO - Scraping data for link: calendar.php?week=oct23.2016
+2018-10-18 20:30:36,853 - INFO - Successfully retrieved data
+2018-10-18 20:30:36,853 - INFO - Scraping data for link: calendar.php?week=oct30.2016
+2018-10-18 20:30:43,256 - INFO - Successfully retrieved data
+2018-10-18 20:30:43,256 - INFO - Scraping data for link: calendar.php?week=nov6.2016
+2018-10-18 20:30:48,296 - INFO - Successfully retrieved data
+2018-10-18 20:30:48,296 - INFO - Scraping data for link: calendar.php?week=nov13.2016
+2018-10-18 20:30:53,378 - INFO - Successfully retrieved data
+2018-10-18 20:30:53,378 - INFO - Scraping data for link: calendar.php?week=nov20.2016
+2018-10-18 20:30:57,361 - INFO - Successfully retrieved data
+2018-10-18 20:30:57,361 - INFO - Scraping data for link: calendar.php?week=nov27.2016
+2018-10-18 20:31:02,831 - INFO - Successfully retrieved data
+2018-10-18 20:31:02,831 - INFO - Scraping data for link: calendar.php?week=dec4.2016
+2018-10-18 20:31:08,179 - INFO - Successfully retrieved data
+2018-10-18 20:31:08,179 - INFO - Scraping data for link: calendar.php?week=dec11.2016
+2018-10-18 20:31:13,671 - INFO - Successfully retrieved data
+2018-10-18 20:31:13,671 - INFO - Scraping data for link: calendar.php?week=dec18.2016
+2018-10-18 20:31:21,049 - INFO - Successfully retrieved data
+2018-10-18 20:31:21,051 - INFO - Scraping data for link: calendar.php?week=dec25.2016
+2018-10-18 20:31:24,156 - INFO - Successfully retrieved data
+2018-10-18 20:31:24,156 - INFO - Scraping data for link: calendar.php?week=jan1.2017
+2018-10-18 20:31:29,151 - INFO - Successfully retrieved data
+2018-10-18 20:31:29,151 - INFO - Scraping data for link: calendar.php?week=jan8.2017
+2018-10-18 20:31:33,416 - INFO - Successfully retrieved data
+2018-10-18 20:31:33,416 - INFO - Scraping data for link: calendar.php?week=jan15.2017
+2018-10-18 20:31:38,651 - INFO - Successfully retrieved data
+2018-10-18 20:31:38,651 - INFO - Scraping data for link: calendar.php?week=jan22.2017
+2018-10-18 20:31:43,087 - INFO - Successfully retrieved data
+2018-10-18 20:31:43,087 - INFO - Scraping data for link: calendar.php?week=jan29.2017
+2018-10-18 20:31:49,642 - INFO - Successfully retrieved data
+2018-10-18 20:31:49,644 - INFO - Scraping data for link: calendar.php?week=feb5.2017
+2018-10-18 20:31:54,939 - INFO - Successfully retrieved data
+2018-10-18 20:31:54,939 - INFO - Scraping data for link: calendar.php?week=feb12.2017
+2018-10-18 20:31:59,244 - INFO - Successfully retrieved data
+2018-10-18 20:31:59,244 - INFO - Scraping data for link: calendar.php?week=feb19.2017
+2018-10-18 20:32:03,714 - INFO - Successfully retrieved data
+2018-10-18 20:32:03,714 - INFO - Scraping data for link: calendar.php?week=feb26.2017
+2018-10-18 20:32:10,164 - INFO - Successfully retrieved data
+2018-10-18 20:32:10,164 - INFO - Scraping data for link: calendar.php?week=mar5.2017
+2018-10-18 20:32:15,065 - INFO - Successfully retrieved data
+2018-10-18 20:32:15,065 - INFO - Scraping data for link: calendar.php?week=mar12.2017
+2018-10-18 20:32:20,167 - INFO - Successfully retrieved data
+2018-10-18 20:32:20,167 - INFO - Scraping data for link: calendar.php?week=mar19.2017
+2018-10-18 20:32:25,110 - INFO - Successfully retrieved data
+2018-10-18 20:32:25,110 - INFO - Scraping data for link: calendar.php?week=mar26.2017
+2018-10-18 20:32:29,532 - INFO - Successfully retrieved data
+2018-10-18 20:32:29,535 - INFO - Scraping data for link: calendar.php?week=apr2.2017
+2018-10-18 20:32:35,282 - INFO - Successfully retrieved data
+2018-10-18 20:32:35,285 - INFO - Scraping data for link: calendar.php?week=apr9.2017
+2018-10-18 20:32:40,242 - INFO - Successfully retrieved data
+2018-10-18 20:32:40,242 - INFO - Scraping data for link: calendar.php?week=apr16.2017
+2018-10-18 20:32:44,447 - INFO - Successfully retrieved data
+2018-10-18 20:32:44,450 - INFO - Scraping data for link: calendar.php?week=apr23.2017
+2018-10-18 20:32:49,680 - INFO - Successfully retrieved data
+2018-10-18 20:32:49,680 - INFO - Scraping data for link: calendar.php?week=apr30.2017
+2018-10-18 20:32:55,048 - INFO - Successfully retrieved data
+2018-10-18 20:32:55,048 - INFO - Scraping data for link: calendar.php?week=may7.2017
+2018-10-18 20:33:00,163 - INFO - Successfully retrieved data
+2018-10-18 20:33:00,163 - INFO - Scraping data for link: calendar.php?week=may14.2017
+2018-10-18 20:33:04,785 - INFO - Successfully retrieved data
+2018-10-18 20:33:04,785 - INFO - Scraping data for link: calendar.php?week=may21.2017
+2018-10-18 20:33:09,320 - INFO - Successfully retrieved data
+2018-10-18 20:33:09,320 - INFO - Scraping data for link: calendar.php?week=may28.2017
+2018-10-18 20:33:14,920 - INFO - Successfully retrieved data
+2018-10-18 20:33:14,923 - INFO - Scraping data for link: calendar.php?week=jun4.2017
+2018-10-18 20:33:19,958 - INFO - Successfully retrieved data
+2018-10-18 20:33:19,961 - INFO - Scraping data for link: calendar.php?week=jun11.2017
+2018-10-18 20:33:25,591 - INFO - Successfully retrieved data
+2018-10-18 20:33:25,593 - INFO - Scraping data for link: calendar.php?week=jun18.2017
+2018-10-18 20:33:29,781 - INFO - Successfully retrieved data
+2018-10-18 20:33:29,783 - INFO - Scraping data for link: calendar.php?week=jun25.2017
+2018-10-18 20:33:34,696 - INFO - Successfully retrieved data
+2018-10-18 20:33:34,696 - INFO - Scraping data for link: calendar.php?week=jul2.2017
+2018-10-18 20:33:40,531 - INFO - Successfully retrieved data
+2018-10-18 20:33:40,533 - INFO - Scraping data for link: calendar.php?week=jul9.2017
+2018-10-18 20:33:45,256 - INFO - Successfully retrieved data
+2018-10-18 20:33:45,256 - INFO - Scraping data for link: calendar.php?week=jul16.2017
+2018-10-18 20:33:49,413 - INFO - Successfully retrieved data
+2018-10-18 20:33:49,413 - INFO - Scraping data for link: calendar.php?week=jul23.2017
+2018-10-18 20:33:53,824 - INFO - Successfully retrieved data
+2018-10-18 20:33:53,824 - INFO - Scraping data for link: calendar.php?week=jul30.2017
+2018-10-18 20:33:59,989 - INFO - Successfully retrieved data
+2018-10-18 20:33:59,989 - INFO - Scraping data for link: calendar.php?week=aug6.2017
+2018-10-18 20:34:04,821 - INFO - Successfully retrieved data
+2018-10-18 20:34:04,824 - INFO - Scraping data for link: calendar.php?week=aug13.2017
+2018-10-18 20:34:09,296 - INFO - Successfully retrieved data
+2018-10-18 20:34:09,296 - INFO - Scraping data for link: calendar.php?week=aug20.2017
+2018-10-18 20:34:13,204 - INFO - Successfully retrieved data
+2018-10-18 20:34:13,206 - INFO - Scraping data for link: calendar.php?week=aug27.2017
+2018-10-18 20:34:18,209 - INFO - Successfully retrieved data
+2018-10-18 20:34:18,209 - INFO - Scraping data for link: calendar.php?week=sep3.2017
+2018-10-18 20:34:23,732 - INFO - Successfully retrieved data
+2018-10-18 20:34:23,732 - INFO - Scraping data for link: calendar.php?week=sep10.2017
+2018-10-18 20:34:28,339 - INFO - Successfully retrieved data
+2018-10-18 20:34:28,339 - INFO - Scraping data for link: calendar.php?week=sep17.2017
+2018-10-18 20:34:33,147 - INFO - Successfully retrieved data
+2018-10-18 20:34:33,149 - INFO - Scraping data for link: calendar.php?week=sep24.2017
+2018-10-18 20:34:38,699 - INFO - Successfully retrieved data
+2018-10-18 20:34:38,702 - INFO - Scraping data for link: calendar.php?week=oct1.2017
+2018-10-18 20:34:44,664 - INFO - Successfully retrieved data
+2018-10-18 20:34:44,664 - INFO - Scraping data for link: calendar.php?week=oct8.2017
+2018-10-18 20:34:49,327 - INFO - Successfully retrieved data
+2018-10-18 20:34:49,327 - INFO - Scraping data for link: calendar.php?week=oct15.2017
+2018-10-18 20:34:54,224 - INFO - Successfully retrieved data
+2018-10-18 20:34:54,227 - INFO - Scraping data for link: calendar.php?week=oct22.2017
+2018-10-18 20:34:58,265 - INFO - Successfully retrieved data
+2018-10-18 20:34:58,265 - INFO - Scraping data for link: calendar.php?week=oct29.2017
+2018-10-18 20:35:04,605 - INFO - Successfully retrieved data
+2018-10-18 20:35:04,605 - INFO - Scraping data for link: calendar.php?week=nov5.2017
+2018-10-18 20:35:09,527 - INFO - Successfully retrieved data
+2018-10-18 20:35:09,527 - INFO - Scraping data for link: calendar.php?week=nov12.2017
+2018-10-18 20:35:15,487 - INFO - Successfully retrieved data
+2018-10-18 20:35:15,487 - INFO - Scraping data for link: calendar.php?week=nov19.2017
+2018-10-18 20:35:19,307 - INFO - Successfully retrieved data
+2018-10-18 20:35:19,307 - INFO - Scraping data for link: calendar.php?week=nov26.2017
+2018-10-18 20:35:25,540 - INFO - Successfully retrieved data
+2018-10-18 20:35:25,540 - INFO - Scraping data for link: calendar.php?week=dec3.2017
+2018-10-18 20:35:31,313 - INFO - Successfully retrieved data
+2018-10-18 20:35:31,315 - INFO - Scraping data for link: calendar.php?week=dec10.2017
+2018-10-18 20:35:37,190 - INFO - Successfully retrieved data
+2018-10-18 20:35:37,193 - INFO - Scraping data for link: calendar.php?week=dec17.2017
+2018-10-18 20:35:42,140 - INFO - Successfully retrieved data
+2018-10-18 20:35:42,140 - INFO - Scraping data for link: calendar.php?week=dec24.2017
+2018-10-18 20:35:45,308 - INFO - Successfully retrieved data
+2018-10-18 20:35:45,308 - INFO - Scraping data for link: calendar.php?week=dec31.2017
+2018-10-18 20:35:50,003 - INFO - Successfully retrieved data
+2018-10-18 20:35:50,005 - INFO - Scraping data for link: calendar.php?week=jan7.2018
+2018-10-18 20:35:54,428 - INFO - Successfully retrieved data
+2018-10-18 20:35:54,428 - INFO - Scraping data for link: calendar.php?week=jan14.2018
+2018-10-18 20:35:59,218 - INFO - Successfully retrieved data
+2018-10-18 20:35:59,218 - INFO - Scraping data for link: calendar.php?week=jan21.2018
+2018-10-18 20:36:03,818 - INFO - Successfully retrieved data
+2018-10-18 20:36:03,818 - INFO - Scraping data for link: calendar.php?week=jan28.2018
+2018-10-18 20:36:09,243 - INFO - Successfully retrieved data
+2018-10-18 20:36:09,243 - INFO - Scraping data for link: calendar.php?week=feb4.2018
+2018-10-18 20:36:14,661 - INFO - Successfully retrieved data
+2018-10-18 20:36:14,661 - INFO - Scraping data for link: calendar.php?week=feb11.2018
+2018-10-18 20:36:19,168 - INFO - Successfully retrieved data
+2018-10-18 20:36:19,168 - INFO - Scraping data for link: calendar.php?week=feb18.2018
+2018-10-18 20:36:24,138 - INFO - Successfully retrieved data
+2018-10-18 20:36:24,138 - INFO - Scraping data for link: calendar.php?week=feb25.2018
+2018-10-18 20:36:29,906 - INFO - Successfully retrieved data
+2018-10-18 20:36:29,906 - INFO - Scraping data for link: calendar.php?week=mar4.2018
+2018-10-18 20:36:35,451 - INFO - Successfully retrieved data
+2018-10-18 20:36:35,451 - INFO - Scraping data for link: calendar.php?week=mar11.2018
+2018-10-18 20:36:39,939 - INFO - Successfully retrieved data
+2018-10-18 20:36:39,939 - INFO - Scraping data for link: calendar.php?week=mar18.2018
+2018-10-18 20:36:45,339 - INFO - Successfully retrieved data
+2018-10-18 20:36:45,339 - INFO - Scraping data for link: calendar.php?week=mar25.2018
+2018-10-18 20:36:49,821 - INFO - Successfully retrieved data
+2018-10-18 20:36:49,824 - INFO - Scraping data for link: calendar.php?week=apr1.2018
+2018-10-18 20:36:55,244 - INFO - Successfully retrieved data
+2018-10-18 20:36:55,244 - INFO - Scraping data for link: calendar.php?week=apr8.2018
+2018-10-18 20:36:59,631 - INFO - Successfully retrieved data
+2018-10-18 20:36:59,634 - INFO - Scraping data for link: calendar.php?week=apr15.2018
+2018-10-18 20:37:04,451 - INFO - Successfully retrieved data
+2018-10-18 20:37:04,451 - INFO - Scraping data for link: calendar.php?week=apr22.2018
+2018-10-18 20:37:09,347 - INFO - Successfully retrieved data
+2018-10-18 20:37:09,347 - INFO - Scraping data for link: calendar.php?week=apr29.2018
+2018-10-18 20:37:15,674 - INFO - Successfully retrieved data
+2018-10-18 20:37:15,674 - INFO - Scraping data for link: calendar.php?week=may6.2018
+2018-10-18 20:37:20,862 - INFO - Successfully retrieved data
+2018-10-18 20:37:20,862 - INFO - Scraping data for link: calendar.php?week=may13.2018
+2018-10-18 20:37:25,774 - INFO - Successfully retrieved data
+2018-10-18 20:37:25,774 - INFO - Scraping data for link: calendar.php?week=may20.2018
+2018-10-18 20:37:30,262 - INFO - Successfully retrieved data
+2018-10-18 20:37:30,262 - INFO - Scraping data for link: calendar.php?week=may27.2018
+2018-10-18 20:37:35,722 - INFO - Successfully retrieved data
+2018-10-18 20:37:35,724 - INFO - Scraping data for link: calendar.php?week=jun3.2018
+2018-10-18 20:37:43,462 - INFO - Successfully retrieved data
+2018-10-18 20:37:43,462 - INFO - Scraping data for link: calendar.php?week=jun10.2018
+2018-10-18 20:37:48,452 - INFO - Successfully retrieved data
+2018-10-18 20:37:48,452 - INFO - Scraping data for link: calendar.php?week=jun17.2018
+2018-10-18 20:37:53,320 - INFO - Successfully retrieved data
+2018-10-18 20:37:53,320 - INFO - Scraping data for link: calendar.php?week=jun24.2018
+2018-10-18 20:37:58,252 - INFO - Successfully retrieved data
+2018-10-18 20:37:58,252 - INFO - Scraping data for link: calendar.php?week=jul1.2018
+2018-10-18 20:38:03,345 - INFO - Successfully retrieved data
+2018-10-18 20:38:03,347 - INFO - Scraping data for link: calendar.php?week=jul8.2018
+2018-10-18 20:38:08,220 - INFO - Successfully retrieved data
+2018-10-18 20:38:08,220 - INFO - Scraping data for link: calendar.php?week=jul15.2018
+2018-10-18 20:38:12,475 - INFO - Successfully retrieved data
+2018-10-18 20:38:12,475 - INFO - Scraping data for link: calendar.php?week=jul22.2018
+2018-10-18 20:38:15,930 - INFO - Successfully retrieved data
+2018-10-18 20:38:15,930 - INFO - Scraping data for link: calendar.php?week=jul29.2018
+2018-10-18 20:38:22,113 - INFO - Successfully retrieved data
+2018-10-18 20:38:22,113 - INFO - Scraping data for link: calendar.php?week=aug5.2018
+2018-10-18 20:38:26,680 - INFO - Successfully retrieved data
+2018-10-18 20:38:26,685 - INFO - Scraping data for link: calendar.php?week=aug12.2018
+2018-10-18 20:38:31,093 - INFO - Successfully retrieved data
+2018-10-18 20:38:31,095 - INFO - Scraping data for link: calendar.php?week=aug19.2018
+2018-10-18 20:38:34,745 - INFO - Successfully retrieved data
+2018-10-18 20:38:34,745 - INFO - Scraping data for link: calendar.php?week=aug26.2018
+2018-10-18 20:38:38,418 - INFO - Successfully retrieved data
+2018-10-18 20:38:38,418 - INFO - Scraping data for link: calendar.php?week=sep2.2018
+2018-10-18 20:38:44,441 - INFO - Successfully retrieved data
+2018-10-18 20:38:44,443 - INFO - Scraping data for link: calendar.php?week=sep9.2018
+2018-10-18 20:38:49,551 - INFO - Successfully retrieved data
+2018-10-18 20:38:49,551 - INFO - Scraping data for link: calendar.php?week=sep16.2018
+2018-10-18 20:38:54,068 - INFO - Successfully retrieved data
+2018-10-18 20:38:54,068 - INFO - Scraping data for link: calendar.php?week=sep23.2018
+2018-10-18 20:38:58,973 - INFO - Successfully retrieved data
+2018-10-18 20:38:58,973 - INFO - Scraping data for link: calendar.php?week=sep30.2018
+2018-10-18 20:39:04,476 - INFO - Successfully retrieved data
+2018-10-18 20:39:04,476 - INFO - Scraping data for link: calendar.php?week=oct7.2018
+2018-10-18 20:39:08,956 - INFO - Successfully retrieved data
+2018-10-18 20:39:08,956 - INFO - Scraping data for link: calendar.php?week=oct14.2018
+2018-10-18 20:39:14,266 - INFO - Successfully retrieved data
+2018-10-18 20:39:14,268 - INFO - Scraping data for link: calendar.php?week=oct21.2018
+2018-10-18 20:39:17,914 - INFO - Successfully retrieved data

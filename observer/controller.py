@@ -24,7 +24,7 @@ except ImportError:
     v20present = False
 import requests
 import code
-    
+
 import configparser
 #import code
 import math
