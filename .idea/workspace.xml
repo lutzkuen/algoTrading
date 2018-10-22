@@ -3,8 +3,6 @@
   <component name="ChangeListManager">
     <list default="true" id="906a7d8a-2caf-40bf-9f83-fd3047fcd9c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -16,7 +14,7 @@
     <session id="1656874603">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="2" />
+          <entry key="project.closed" value="3" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="1" />
           <entry key="project.open.time.11" value="1" />
@@ -39,12 +37,12 @@
         <counts>
           <entry key="dummy" value="7" />
           <entry key="py" value="1098" />
-          <entry key="txt" value="59" />
+          <entry key="txt" value="107" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="66" />
+          <entry key="PLAIN_TEXT" value="114" />
           <entry key="Python" value="1098" />
         </counts>
       </usages-collector>
@@ -64,8 +62,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="620">
-              <caret line="750" column="24" selection-start-line="750" selection-start-column="24" selection-end-line="750" selection-end-column="24" />
+            <state relative-caret-position="280">
+              <caret line="730" column="8" selection-start-line="730" selection-start-column="8" selection-end-line="730" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -267,12 +265,18 @@
       <option name="project" value="LOCAL" />
       <updated>1539947537242</updated>
     </task>
-    <option name="localTasksCounter" value="4" />
+    <task id="LOCAL-00004" summary="add trailing stop and spreaded take">
+      <created>1539968931517</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1539968931517</updated>
+    </task>
+    <option name="localTasksCounter" value="5" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.21546261" />
@@ -300,7 +304,8 @@
     <MESSAGE value="Added digit gridsearch" />
     <MESSAGE value="Added keras digit recon" />
     <MESSAGE value="Added progress bar" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added progress bar" />
+    <MESSAGE value="add trailing stop and spreaded take" />
+    <option name="LAST_COMMIT_MESSAGE" value="add trailing stop and spreaded take" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
@@ -381,8 +386,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="620">
-          <caret line="750" column="24" selection-start-line="750" selection-start-column="24" selection-end-line="750" selection-end-column="24" />
+        <state relative-caret-position="280">
+          <caret line="730" column="8" selection-start-line="730" selection-start-column="8" selection-end-line="730" selection-end-column="8" />
         </state>
       </provider>
     </entry>
