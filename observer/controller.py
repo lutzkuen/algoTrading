@@ -654,6 +654,7 @@ class Controller(object):
 
         spread = self.get_spread(ins)
         trade = None
+        current_units = 0
         for tr in self.trades:
             if tr.instrument == ins:
                 trade = tr
@@ -677,7 +678,7 @@ class Controller(object):
             sldist = entry - sl
             tp1 = hi - abs(high_score) - spread / 2
             tp2 = hi - spread / 2
-            tp3 = hi + abs(high_score) - spread / 2
+            tp3 = hi - abs(step) - spread / 2
         else:
             step = 1.8 * abs(high_score)
             sl = hi + step
@@ -685,7 +686,7 @@ class Controller(object):
             sldist = sl - entry
             tp1 = lo + abs(low_score) + spread / 2
             tp2 = lo + spread / 2
-            tp3 = lo - abs(low_score) + spread / 2
+            tp3 = lo + abs(step) + spread / 2
         rr = abs((tp2 - entry) / (sl - entry))
         if rr < 1.5:  # Risk-reward too low
             if self.verbose > 1:
