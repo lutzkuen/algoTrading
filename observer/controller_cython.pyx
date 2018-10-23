@@ -653,18 +653,20 @@ class Controller(object):
             return
 
         spread = self.get_spread(ins)
-        trade = None
+        trades = []
         current_units = 0
         for tr in self.trades:
             if tr.instrument == ins:
-                trade = tr
-        if trade:
+                trades.append(tr)
+        if len(trades) > 0:
             is_open = True
             if close_score < -1:  # if we do not trust the estimator we should not move forward
-                self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-            if trade.currentUnits * cl < 0:
-                self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                is_open = False
+                for trade in trades:
+                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            for trade in trades:
+                if trade.currentUnits * cl < 0:
+                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+                    is_open = False
             if is_open:
                 return
         if close_only:
