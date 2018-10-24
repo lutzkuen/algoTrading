@@ -634,11 +634,15 @@ class Controller(object):
             df = pd.read_csv(self.settings['prices_path'])
         else:
             df = pd.read_csv('{0}.partial'.format(self.settings['prices_path']))
-        op = self.get_price(ins)
+        candles = self.get_candles(ins, 'D', 1)
+        candle = candles[0]
+        op = float(candle.get('mid').get('o'))
         cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
         hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
         lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
         price = self.get_price(ins)
+        if not ( lo < price < hi ):
+            return
         # get the R2 of the consisting estimators
         column_name = ins + '_close'
         close_score = self.get_score(column_name)
@@ -652,7 +656,6 @@ class Controller(object):
         low_score = self.get_score(column_name)
         if not low_score:
             return
-
         spread = self.get_spread(ins)
         trades = []
         current_units = 0
@@ -682,7 +685,7 @@ class Controller(object):
         if cl > 0:
             step = 0.3 * abs(low_score)
             sl = lo - step
-            entry = op - spread / 2
+            entry = price - spread / 2
             sldist = entry - sl
             tp1 = hi - abs(high_score) - spread / 2
             tp2 = hi - spread / 2
@@ -690,13 +693,13 @@ class Controller(object):
         else:
             step = 0.3 * abs(high_score)
             sl = hi + step
-            entry = op + spread / 2
+            entry = price + spread / 2
             sldist = sl - entry
             tp1 = lo + abs(low_score) + spread / 2
             tp2 = lo + spread / 2
             tp3 = lo + abs(step) + spread / 2
         rr = abs((tp2 - entry) / (sl - entry))
-        if rr < 1.5:  # Risk-reward too low
+        if rr < 1.7:  # Risk-reward too low
             if self.verbose > 1:
                 print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
