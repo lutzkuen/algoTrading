@@ -196,6 +196,7 @@ class Controller(object):
                 self.oanda.account.instruments(self.settings.get('account_id'
                                                                  )).get('instruments', '200')
             self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
+            self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
         self.calendar = self.calendar_db['calendar']
@@ -633,11 +634,15 @@ class Controller(object):
             df = pd.read_csv(self.settings['prices_path'])
         else:
             df = pd.read_csv('{0}.partial'.format(self.settings['prices_path']))
-        op = self.get_price(ins)
+        candles = self.get_candles(ins, 'D', 1)
+        candle = candles[0]
+        op = float(candle.get('mid').get('o'))
         cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
         hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
         lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
         price = self.get_price(ins)
+        if not ( lo < price < hi ):
+            return
         # get the R2 of the consisting estimators
         column_name = ins + '_close'
         close_score = self.get_score(column_name)
@@ -651,44 +656,50 @@ class Controller(object):
         low_score = self.get_score(column_name)
         if not low_score:
             return
-
         spread = self.get_spread(ins)
-        trade = None
+        trades = []
         current_units = 0
         for tr in self.trades:
             if tr.instrument == ins:
-                trade = tr
-        if trade:
+                trades.append(tr)
+        if len(trades) > 0:
             is_open = True
             if close_score < -1:  # if we do not trust the estimator we should not move forward
-                self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-            if trade.currentUnits * cl < 0:
-                self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                is_open = False
+                for trade in trades:
+                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            for trade in trades:
+                if trade.currentUnits * cl < 0:
+                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+                    is_open = False
             if is_open:
                 return
         if close_only:
-            return  # if this flag is set only check for closing and then return
+            # if this flag is set we will check wether there are already open orders. If so we will not open a new one
+            for order in self.orders:
+                #code.interact(banner='', local=locals())
+                if  order.type in ['LIMIT', 'STOP']:
+                    if order.instrument == ins:
+                        return  # if this flag is set only check for closing and then return
         if close_score < -1:
             return
         if cl > 0:
-            step = 1.8 * abs(low_score)
+            step = 0.3 * abs(low_score)
             sl = lo - step
-            entry = lo + spread / 2
+            entry = price - spread / 2
             sldist = entry - sl
             tp1 = hi - abs(high_score) - spread / 2
             tp2 = hi - spread / 2
             tp3 = hi - abs(step) - spread / 2
         else:
-            step = 1.8 * abs(high_score)
+            step = 0.3 * abs(high_score)
             sl = hi + step
-            entry = hi - spread / 2
+            entry = price + spread / 2
             sldist = sl - entry
             tp1 = lo + abs(low_score) + spread / 2
             tp2 = lo + spread / 2
             tp3 = lo + abs(step) + spread / 2
         rr = abs((tp2 - entry) / (sl - entry))
-        if rr < 1.5:  # Risk-reward too low
+        if rr < 1.7:  # Risk-reward too low
             if self.verbose > 1:
                 print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
