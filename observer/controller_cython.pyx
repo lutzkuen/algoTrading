@@ -196,6 +196,7 @@ class Controller(object):
                 self.oanda.account.instruments(self.settings.get('account_id'
                                                                  )).get('instruments', '200')
             self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
+            self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
         self.calendar = self.calendar_db['calendar']
@@ -670,21 +671,26 @@ class Controller(object):
             if is_open:
                 return
         if close_only:
-            return  # if this flag is set only check for closing and then return
+            # if this flag is set we will check wether there are already open orders. If so we will not open a new one
+            for order in self.orders:
+                #code.interact(banner='', local=locals())
+                if  order.type in ['LIMIT', 'STOP']:
+                    if order.instrument == ins:
+                        return  # if this flag is set only check for closing and then return
         if close_score < -1:
             return
         if cl > 0:
-            step = 1.8 * abs(low_score)
+            step = 0.3 * abs(low_score)
             sl = lo - step
-            entry = lo + spread / 2
+            entry = op - spread / 2
             sldist = entry - sl
             tp1 = hi - abs(high_score) - spread / 2
             tp2 = hi - spread / 2
             tp3 = hi - abs(step) - spread / 2
         else:
-            step = 1.8 * abs(high_score)
+            step = 0.3 * abs(high_score)
             sl = hi + step
-            entry = hi - spread / 2
+            entry = op + spread / 2
             sldist = sl - entry
             tp1 = lo + abs(low_score) + spread / 2
             tp2 = lo + spread / 2
