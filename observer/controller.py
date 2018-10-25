@@ -664,8 +664,6 @@ class Controller(object):
         hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
         lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
         price = self.get_price(ins)
-        if not ( lo < price < hi ):
-            return
         # get the R2 of the consisting estimators
         column_name = ins + '_close'
         close_score = self.get_score(column_name)
@@ -697,32 +695,31 @@ class Controller(object):
             if is_open:
                 return
         if close_only:
-            # if this flag is set we will check wether there are already open orders. If so we will not open a new one
-            for order in self.orders:
-                #code.interact(banner='', local=locals())
-                if  order.type in ['LIMIT', 'STOP']:
-                    if order.instrument == ins:
-                        return  # if this flag is set only check for closing and then return
+            return
+        if not ( lo < price < hi ):
+            return
         if close_score < -1:
             return
         if cl > 0:
-            step = 0.3 * abs(low_score)
+            step = abs(low_score)
             sl = lo - step
-            entry = price - spread / 2
+            entry = price + spread
             sldist = entry - sl
-            tp1 = hi - abs(high_score) - spread / 2
-            tp2 = hi - spread / 2
-            tp3 = hi - abs(step) - spread / 2
+            tp2 = hi
+            tpstep = (tp2 - price)/3
+            tp1 = hi - 2*tpstep
+            tp3 = hi - tpstep
         else:
-            step = 0.3 * abs(high_score)
+            step = abs(high_score)
             sl = hi + step
-            entry = price + spread / 2
+            entry = price + spread
             sldist = sl - entry
-            tp1 = lo + abs(low_score) + spread / 2
-            tp2 = lo + spread / 2
-            tp3 = lo + abs(step) + spread / 2
+            tp2 = lo
+            tpstep = (price - tp2)/3
+            tp1 = lo + 2*tpstep
+            tp3 = lo + tpstep
         rr = abs((tp2 - entry) / (sl - entry))
-        if rr < 1.7:  # Risk-reward too low
+        if rr < 2:  # Risk-reward too low
             if self.verbose > 1:
                 print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
@@ -746,6 +743,7 @@ class Controller(object):
             otype = 'STOP'
         else:
             otype = 'LIMIT'
+        otype = 'MARKET'
         format_string = '30.' + str(pip_location) + 'f'
         tp1 = format(tp1, format_string).strip()
         tp2 = format(tp2, format_string).strip()
@@ -755,14 +753,16 @@ class Controller(object):
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
         units = int(units/3) # open three trades to spread out the risk
+        if abs(units) < 1:
+            return
         for tp in [tp1, tp2, tp3]:
             args = {'order': {
                 'instrument': ins,
                 'units': units,
-                'price': entry,
+                #'price': entry,
                 'type': otype,
-                'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                #'timeInForce': 'GTD',
+                #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
                 'trailingStopLossOnFill': { 'distance': sldist, 'timeInForce': 'GTC'}

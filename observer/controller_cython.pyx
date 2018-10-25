@@ -61,7 +61,11 @@ def merge_dicts(dict1, dict2, suffix):
     return dict1
 
 
-def get_range_int(val, change, lower=-math.inf, upper=math.inf):
+def get_range_int(_val, change, lower=-math.inf, upper=math.inf):
+    if _val > upper:
+        val = upper
+    else:
+        val = _val
     lval = math.floor(val * (1 - change))
     uval = math.ceil(val * (1 + change))
     rang = []
@@ -340,6 +344,19 @@ class Controller(object):
                 drow[ins + '_low'] = float(icandle['low']) - float(icandle['open'])
         return drow
 
+    def get_df_for_date(self, date, inst, complete):
+        date_split = date.split('-')
+        weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
+        if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
+            return None
+        # start with the calendar data
+        df_row = self.get_calendar_data(date)
+        df_row['weekday'] = weekday
+        today_df = self.get_market_df(date, inst, complete)
+        # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
+        # yest_df.pop('date')  # remove the date key from prev day
+        return merge_dicts(df_row, today_df, '')
+
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None, new_estim=False,
                    complete=True):
         inst = []
@@ -372,19 +389,10 @@ class Controller(object):
                 bar.update(index)
             index += 1
             # check whether the candle is from a weekday
-            date_split = date.split('-')
-            weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
-            if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
-                continue
-            # start with the calendar data
-            df_row = self.get_calendar_data(date)
-            df_row['weekday'] = weekday
-            today_df = self.get_market_df(date, inst, complete)
-            # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
-            # yest_df.pop('date')  # remove the date key from prev day
-            df_row = merge_dicts(df_row, today_df, '')
+            df_row = self.get_df_for_date(date, inst, complete)
             # df_row = merge_dicts(df_row, yest_df, '_yester')
-            df_dict.append(df_row)
+            if df_row:
+                df_dict.append(df_row)
         df = pd.DataFrame(df_dict)
         if self.verbose > 0:
             bar.finish()
@@ -442,15 +450,27 @@ class Controller(object):
             outfile.close()
 
     def get_feature_importances(self):
-        feature_names = []
+        inst = []
+        dates = []
         statement = 'select distinct ins from dailycandles order by ins;'
         for row in self.db.query(statement):
-            feature_names.append(row['ins'] + '_volume')
-            feature_names.append(row['ins'] + '_open')
-            feature_names.append(row['ins'] + '_close')
-            feature_names.append(row['ins'] + '_high')
-            feature_names.append(row['ins'] + '_low')
+            inst.append(row['ins'])
+        statement = 'select distinct date from dailycandles where complete = 1 order by date;'
+        for row in self.db.query(statement):
+            # if row['date'][:4] == year:
+            dates.append(row['date'])
+        dates = dates[-10:]
+        df_dict = None
+        df_all = []
+        for date in dates:
+            df_dict = self.get_df_for_date(date, inst, True)
+            if not df_dict:
+                continue
+            df_all.append(df_dict)
+        df = pd.DataFrame(df_all)
+        feature_names = df.columns
         sql = 'select distinct name from estimators;'
+        #code.interact(banner='', local=locals())
         for row in self.db.query(sql):
             pcol = row.get('name')
             try:
@@ -498,7 +518,10 @@ class Controller(object):
             n_learn = [learning_rate]
         percentile = params.get('percentile')
         # percentile is always considered because this might be the most crucial parameter
-        n_perc = get_range_int(percentile, 0.1, 1, 100)
+        n_samples = df.shape[0]
+        # as a rule of thumb the number of used features should be at most sqrt(num of samples)
+        max_features_percentile = int(100*math.sqrt(n_samples)/n_samples)
+        n_perc = get_range_int(percentile, 0.1, 1, max_features_percentile)
         parameters = {'n_estimators': n_range,
                       'min_samples_split': minsample,
                       'learning_rate': n_learn,
@@ -641,8 +664,6 @@ class Controller(object):
         hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
         lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
         price = self.get_price(ins)
-        if not ( lo < price < hi ):
-            return
         # get the R2 of the consisting estimators
         column_name = ins + '_close'
         close_score = self.get_score(column_name)
@@ -674,32 +695,31 @@ class Controller(object):
             if is_open:
                 return
         if close_only:
-            # if this flag is set we will check wether there are already open orders. If so we will not open a new one
-            for order in self.orders:
-                #code.interact(banner='', local=locals())
-                if  order.type in ['LIMIT', 'STOP']:
-                    if order.instrument == ins:
-                        return  # if this flag is set only check for closing and then return
+            return
+        if not ( lo < price < hi ):
+            return
         if close_score < -1:
             return
         if cl > 0:
-            step = 0.3 * abs(low_score)
+            step = abs(low_score)
             sl = lo - step
-            entry = price - spread / 2
+            entry = price + spread
             sldist = entry - sl
-            tp1 = hi - abs(high_score) - spread / 2
-            tp2 = hi - spread / 2
-            tp3 = hi - abs(step) - spread / 2
+            tp2 = hi
+            tpstep = (tp2 - price)/3
+            tp1 = hi - 2*tpstep
+            tp3 = hi - tpstep
         else:
-            step = 0.3 * abs(high_score)
+            step = abs(high_score)
             sl = hi + step
-            entry = price + spread / 2
+            entry = price + spread
             sldist = sl - entry
-            tp1 = lo + abs(low_score) + spread / 2
-            tp2 = lo + spread / 2
-            tp3 = lo + abs(step) + spread / 2
+            tp2 = lo
+            tpstep = (price - tp2)/3
+            tp1 = lo + 2*tpstep
+            tp3 = lo + tpstep
         rr = abs((tp2 - entry) / (sl - entry))
-        if rr < 1.7:  # Risk-reward too low
+        if rr < 2:  # Risk-reward too low
             if self.verbose > 1:
                 print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
@@ -723,6 +743,7 @@ class Controller(object):
             otype = 'STOP'
         else:
             otype = 'LIMIT'
+        otype = 'MARKET'
         format_string = '30.' + str(pip_location) + 'f'
         tp1 = format(tp1, format_string).strip()
         tp2 = format(tp2, format_string).strip()
@@ -732,14 +753,16 @@ class Controller(object):
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
         units = int(units/3) # open three trades to spread out the risk
+        if abs(units) < 1:
+            return
         for tp in [tp1, tp2, tp3]:
             args = {'order': {
                 'instrument': ins,
                 'units': units,
-                'price': entry,
+                #'price': entry,
                 'type': otype,
-                'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                #'timeInForce': 'GTD',
+                #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
                 'trailingStopLossOnFill': { 'distance': sldist, 'timeInForce': 'GTC'}
