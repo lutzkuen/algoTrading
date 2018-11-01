@@ -520,8 +520,8 @@ class Controller(object):
         # percentile is always considered because this might be the most crucial parameter
         n_samples = df.shape[0]
         # as a rule of thumb the number of used features should be at most sqrt(num of samples)
-        max_features_percentile = int(100*math.sqrt(n_samples)/n_samples)
-        n_perc = get_range_int(percentile, 0.1, 1, max_features_percentile)
+        max_features_percentile = 100 #min(100*math.sqrt(n_samples)/n_samples,100)
+        n_perc = get_range_flo(percentile, 0.1, 1, max_features_percentile)
         parameters = {'n_estimators': n_range,
                       'min_samples_split': minsample,
                       'learning_rate': n_learn,
@@ -701,32 +701,32 @@ class Controller(object):
         if close_score < -1:
             return
         if cl > 0:
-            step = abs(low_score)
+            step = 1.5*abs(low_score)
             sl = lo - step
             entry = price + spread
-            sldist = entry - sl
+            sldist = entry - sl + spread
             tp2 = hi
             tpstep = (tp2 - price)/3
             tp1 = hi - 2*tpstep
             tp3 = hi - tpstep
         else:
-            step = abs(high_score)
+            step = 1.5*abs(high_score)
             sl = hi + step
             entry = price + spread
-            sldist = sl - entry
+            sldist = sl - entry + spread
             tp2 = lo
             tpstep = (price - tp2)/3
             tp1 = lo + 2*tpstep
             tp3 = lo + tpstep
         rr = abs((tp2 - entry) / (sl - entry))
-        if rr < 2:  # Risk-reward too low
+        if rr < 1.5:  # Risk-reward too low
             if self.verbose > 1:
                 print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
             return None
         # if you made it here its fine, lets open a limit order
         # r2sum is used to scale down the units risked to accomodate the estimator quality
         units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                           1.0)
+                                                           1.0)*(1+close_score)
         if units > 0:
             units = math.floor(units)
         if units < 0:
@@ -752,7 +752,7 @@ class Controller(object):
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
-        units = int(units/3) # open three trades to spread out the risk
+        #units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
         for tp in [tp1, tp2, tp3]:
