@@ -43,6 +43,7 @@ import dataset
 import pickle
 from sklearn.feature_selection import SelectPercentile
 from sklearn.pipeline import make_pipeline
+import re
 
 
 def prev_working_day(_day):
@@ -97,7 +98,7 @@ def get_gb_importances(gb, x, y):
 class EstimatorPipeline(object):
     feature_importances_: object
 
-    def __init__(self, percentile=50, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
+    def __init__(self, percentile=10, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
                  classifier=False):
         self.classifier = classifier
         if path:  # read from disk
@@ -242,12 +243,35 @@ class Controller(object):
             'price'))) / 2.0
         return price
 
+    def strip_number(self, _number):
+        try:
+            return float(re.sub('[^0-9]', '', _number))
+        except Exception as e:
+            return None
+
     def get_calendar_data(self, date):
         # extract event data regarding the current trading week
         df = {}
         currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'ALL']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
+            # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
+            sentiment = 0
+            for row in self.calendar.find(date=date, currency=curr):
+                impact = impacts.index(row.get('impact'))
+                actual = self.strip_number(row.get('actual'))
+                if not actual:
+                    continue
+                forecast = self.strip_number(row.get('forecast'))
+                if forecast:
+                    sentiment += math.copysign(impact**2+1, actual-forecast)
+                    continue
+                previous = self.strip_number(row.get('previous'))
+                if previous:
+                    sentiment += math.copysign(impact**2+1, actual-previous)
+            column_name = curr + '_sentiment'
+            df[column_name] = sentiment
+            #print(column_name + ' ' + str(sentiment))
             for impact in impacts:
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
@@ -259,6 +283,22 @@ class Controller(object):
             dt += datetime.timedelta(days=1)
         date_next = dt.strftime('%Y-%m-%d')
         for curr in currencies:
+            # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
+            sentiment = 0
+            for row in self.calendar.find(date=date, currency=curr):
+                impact = impacts.index(row.get('impact'))
+                actual = self.strip_number(row.get('actual'))
+                if not actual:
+                    continue
+                forecast = self.strip_number(row.get('forecast'))
+                if forecast:
+                    sentiment += math.copysign(impact ** 2 + 1, actual - forecast)
+                    continue
+                previous = self.strip_number(row.get('previous'))
+                if previous:
+                    sentiment += math.copysign(impact ** 2 + 1, actual - previous)
+            column_name = curr + '_sentiment_next'
+            df[column_name] = sentiment
             for impact in impacts:
                 column_name = curr + impact + '_next'
                 column_name = column_name.replace(' ', '')
@@ -269,6 +309,18 @@ class Controller(object):
             dt += datetime.timedelta(days=1)
         date_next = dt.strftime('%Y-%m-%d')
         for curr in currencies:
+            # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
+            sentiment = 0
+            for row in self.calendar.find(date=date, currency=curr):
+                impact = impacts.index(row.get('impact'))
+                forecast = self.strip_number(row.get('forecast'))
+                if not forecast:
+                    continue
+                previous = self.strip_number(row.get('previous'))
+                if previous:
+                    sentiment += math.copysign(impact ** 2 + 1, forecast - previous)
+            column_name = curr + '_sentiment_next2'
+            df[column_name] = sentiment
             for impact in impacts:
                 column_name = curr + impact + '_next2'
                 column_name = column_name.replace(' ', '')
@@ -378,7 +430,8 @@ class Controller(object):
         df_dict = []
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
-        #dates = dates[-30:] # use this line to decrease computation time for development
+        dates = dates[-100:] # use this line to decrease computation time for development
+        bar = None
         if self.verbose > 0:
             print('INFO: Starting data frame preparation')
             bar = progressbar.ProgressBar(maxval=len(dates),     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
