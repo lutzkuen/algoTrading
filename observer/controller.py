@@ -767,14 +767,12 @@ class Controller(object):
                 return
         if close_only:
             return
-        if not (lo < price < hi):
-            return
         if close_score < -1:
             return
         if cl > 0:
             step = 1.5 * abs(low_score)
             sl = lo - step
-            entry = price + spread
+            entry = max([price + 2 * spread, lo])
             sldist = entry - sl + spread
             tp2 = hi
             tpstep = (tp2 - price) / 3
@@ -783,7 +781,7 @@ class Controller(object):
         else:
             step = 1.5 * abs(high_score)
             sl = hi + step
-            entry = price + spread
+            entry = min([price - 2 * spread, hi])
             sldist = sl - entry + spread
             tp2 = lo
             tpstep = (price - tp2) / 3
@@ -814,7 +812,8 @@ class Controller(object):
             otype = 'STOP'
         else:
             otype = 'LIMIT'
-        otype = 'MARKET'
+        # otype = 'MARKET'
+        otype = 'STOP'
         format_string = '30.' + str(pip_location) + 'f'
         tp1 = format(tp1, format_string).strip()
         tp2 = format(tp2, format_string).strip()
@@ -822,7 +821,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(days=1)
+        expiry = datetime.datetime.now() + datetime.timedelta(minutes=10)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
@@ -830,10 +829,10 @@ class Controller(object):
             args = {'order': {
                 'instrument': ins,
                 'units': units,
-                # 'price': entry,
+                'price': entry,
                 'type': otype,
-                # 'timeInForce': 'GTD',
-                # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                'timeInForce': 'GTD',
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
                 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
