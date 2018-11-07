@@ -5,6 +5,7 @@
       <w>relu</w>
       <w>rmsprop</w>
       <w>softmax</w>
+      <w>strftime</w>
     </words>
   </dictionary>
 </component>

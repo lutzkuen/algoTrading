@@ -16,13 +16,13 @@
     <session id="1656874603">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="5" />
+          <entry key="project.closed" value="9" />
           <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.10" value="2" />
-          <entry key="project.open.time.11" value="2" />
-          <entry key="project.open.time.12" value="1" />
-          <entry key="project.open.time.9" value="1" />
-          <entry key="project.opened" value="7" />
+          <entry key="project.open.time.10" value="3" />
+          <entry key="project.open.time.11" value="3" />
+          <entry key="project.open.time.12" value="2" />
+          <entry key="project.open.time.9" value="2" />
+          <entry key="project.opened" value="11" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -40,14 +40,14 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="2395" />
-          <entry key="txt" value="107" />
+          <entry key="py" value="3008" />
+          <entry key="txt" value="136" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="114" />
-          <entry key="Python" value="2395" />
+          <entry key="PLAIN_TEXT" value="143" />
+          <entry key="Python" value="3008" />
         </counts>
       </usages-collector>
     </session>
@@ -66,11 +66,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="357">
-              <caret line="432" column="25" selection-start-line="432" selection-start-column="25" selection-end-line="432" selection-end-column="25" />
-              <folding>
-                <marker date="1541437360150" expanded="true" signature="9941:10058" ph="..." />
-              </folding>
+            <state relative-caret-position="17">
+              <caret line="807" column="8" lean-forward="true" selection-start-line="807" selection-start-column="8" selection-end-line="807" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -78,8 +75,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="592">
-              <caret line="101" column="17" lean-forward="true" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
+            <state relative-caret-position="1598">
+              <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
             </state>
           </provider>
         </entry>
@@ -151,6 +148,8 @@
       <find>set_de</find>
       <find>trailing</find>
       <find>get_feat</find>
+      <find>improve_es</find>
+      <find>improve_</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -304,11 +303,19 @@
       <option name="project" value="LOCAL" />
       <updated>1539968931517</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="added sentiment for news data">
+      <created>1541439769695</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1541439769695</updated>
+    </task>
+    <option name="localTasksCounter" value="6" />
     <servers />
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info active="true" content_ui="combo" id="Project" order="1" visible="true" weight="0.21546261" />
@@ -337,7 +344,8 @@
     <MESSAGE value="Added keras digit recon" />
     <MESSAGE value="Added progress bar" />
     <MESSAGE value="add trailing stop and spreaded take" />
-    <option name="LAST_COMMIT_MESSAGE" value="add trailing stop and spreaded take" />
+    <MESSAGE value="added sentiment for news data" />
+    <option name="LAST_COMMIT_MESSAGE" value="added sentiment for news data" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/../ML_Examples/house_price_prediction/tpot_pipeline.py">
@@ -375,6 +383,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1598">
+          <caret line="101" column="17" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/get_feature_importances.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -406,9 +421,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/observe.sh">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/improve_observer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="102">
@@ -416,20 +428,13 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="592">
-          <caret line="101" column="17" lean-forward="true" selection-start-line="101" selection-start-column="17" selection-end-line="101" selection-end-column="17" />
-        </state>
-      </provider>
+    <entry file="file://$PROJECT_DIR$/observe.sh">
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="357">
-          <caret line="432" column="25" selection-start-line="432" selection-start-column="25" selection-end-line="432" selection-end-column="25" />
-          <folding>
-            <marker date="1541437360150" expanded="true" signature="9941:10058" ph="..." />
-          </folding>
+        <state relative-caret-position="17">
+          <caret line="807" column="8" lean-forward="true" selection-start-line="807" selection-start-column="8" selection-end-line="807" selection-end-column="8" />
         </state>
       </provider>
     </entry>

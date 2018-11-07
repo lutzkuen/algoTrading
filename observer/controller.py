@@ -28,7 +28,7 @@ except ImportError:
     print('WARNING: V20 library not present. Connection to broker not possible')
     v20present = False
 
-import code
+# import code
 
 import progressbar
 import configparser
@@ -109,7 +109,7 @@ class EstimatorPipeline(object):
             param_path = path + '.param'
             self.params = pickle.load(open(param_path, 'rb'))
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
-            #score_func = lambda x, y: get_gb_importances(self.gb, x, y)
+            # score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
             self.percentile.scores_ = percentile_attr.get('scores')
             self.percentile.pvalues_ = percentile_attr.get('pvalues')
@@ -123,7 +123,7 @@ class EstimatorPipeline(object):
             else:
                 self.gb = GradientBoostingRegressor(learning_rate=learning_rate, min_samples_split=min_samples_split,
                                                     n_estimators=n_estimators)
-            #score_func = lambda x, y: get_gb_importances(self.gb, x, y)
+            # score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=percentile)
         self.pipeline = make_pipeline(
@@ -134,7 +134,7 @@ class EstimatorPipeline(object):
     def get_feature_importances(self):
         return self.gb.feature_importances_
 
-    def get_params(self, deep = True):# keyword deep needed for gridsearch
+    def get_params(self, deep=True):  # keyword deep needed for gridsearch
         return self.params
 
     def fit(self, x, y, sample_weight=None):
@@ -208,6 +208,7 @@ class Controller(object):
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
+        self.accuracy_array = []
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
         for ins in self.allowed_ins:
@@ -243,7 +244,8 @@ class Controller(object):
             'price'))) / 2.0
         return price
 
-    def strip_number(self, _number):
+    @staticmethod
+    def strip_number(_number):
         try:
             return float(re.sub('[^0-9]', '', _number))
         except Exception as e:
@@ -258,20 +260,23 @@ class Controller(object):
             # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
             sentiment = 0
             for row in self.calendar.find(date=date, currency=curr):
-                impact = impacts.index(row.get('impact'))
+                impact_num = impacts.index(row.get('impact'))
                 actual = self.strip_number(row.get('actual'))
                 if not actual:
                     continue
                 forecast = self.strip_number(row.get('forecast'))
                 if forecast:
-                    sentiment += math.copysign(impact**2+1, actual-forecast)
+                    sentiment += math.copysign(impact_num ** 2 + 1,
+                                               actual - forecast)
+                    # (actual - forecast)/(abs(actual)+abs(forecast)+0.01)
                     continue
                 previous = self.strip_number(row.get('previous'))
                 if previous:
-                    sentiment += math.copysign(impact**2+1, actual-previous)
+                    sentiment += math.copysign(impact_num ** 2 + 1,
+                                               actual - previous)  # (actual-previous)/(abs(actual)+abs(previous)+0.01)
             column_name = curr + '_sentiment'
             df[column_name] = sentiment
-            #print(column_name + ' ' + str(sentiment))
+            # print(column_name + ' ' + str(sentiment))
             for impact in impacts:
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
@@ -286,17 +291,19 @@ class Controller(object):
             # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
             sentiment = 0
             for row in self.calendar.find(date=date, currency=curr):
-                impact = impacts.index(row.get('impact'))
+                impact_num = impacts.index(row.get('impact'))
                 actual = self.strip_number(row.get('actual'))
                 if not actual:
                     continue
                 forecast = self.strip_number(row.get('forecast'))
                 if forecast:
-                    sentiment += math.copysign(impact ** 2 + 1, actual - forecast)
+                    sentiment += math.copysign(impact_num ** 2 + 1,
+                                               actual - forecast)  # (actual - forecast) / (abs(actual) + abs(forecast) + 0.01)
                     continue
                 previous = self.strip_number(row.get('previous'))
                 if previous:
-                    sentiment += math.copysign(impact ** 2 + 1, actual - previous)
+                    sentiment += math.copysign(impact_num ** 2 + 1,
+                                               actual - previous)  # (actual - previous) / (abs(actual) + abs(previous) + 0.01)
             column_name = curr + '_sentiment_next'
             df[column_name] = sentiment
             for impact in impacts:
@@ -309,16 +316,19 @@ class Controller(object):
             dt += datetime.timedelta(days=1)
         date_next = dt.strftime('%Y-%m-%d')
         for curr in currencies:
-            # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
+            # calculate how actual and forecasted numbers compare.
+            #  If no forecast available just use the previous number
             sentiment = 0
             for row in self.calendar.find(date=date, currency=curr):
-                impact = impacts.index(row.get('impact'))
+                impact_num = impacts.index(row.get('impact'))
                 forecast = self.strip_number(row.get('forecast'))
                 if not forecast:
                     continue
                 previous = self.strip_number(row.get('previous'))
                 if previous:
-                    sentiment += math.copysign(impact ** 2 + 1, forecast - previous)
+                    sentiment += math.copysign(impact_num ** 2 + 1,
+                                               forecast - previous)
+                    # (forecast-previous)/(abs(forecast)+abs(previous)+0.01)
             column_name = curr + '_sentiment_next2'
             df[column_name] = sentiment
             for impact in impacts:
@@ -430,11 +440,12 @@ class Controller(object):
         df_dict = []
         if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
             dates = dates[-4:]
-        dates = dates[-100:] # use this line to decrease computation time for development
+        # dates = dates[-100:] # use this line to decrease computation time for development
         bar = None
         if self.verbose > 0:
             print('INFO: Starting data frame preparation')
-            bar = progressbar.ProgressBar(maxval=len(dates),     widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+            bar = progressbar.ProgressBar(maxval=len(dates),
+                                          widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
             bar.start()
         index = 0
         for date in dates:
@@ -487,6 +498,9 @@ class Controller(object):
                 prediction[instrument] = {typ: prediction_value}
             if self.verbose > 1:
                 print(col + ' ' + str(prediction_value))
+        if improve_model and self.verbose > 0:
+            print('Final Model accuracy: Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
+                np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
         if self.verbose > 0:
             bar.finish()
         if write_predict:
@@ -523,7 +537,7 @@ class Controller(object):
         df = pd.DataFrame(df_all)
         feature_names = df.columns
         sql = 'select distinct name from estimators;'
-        #code.interact(banner='', local=locals())
+        # code.interact(banner='', local=locals())
         for row in self.db.query(sql):
             pcol = row.get('name')
             try:
@@ -573,7 +587,7 @@ class Controller(object):
         # percentile is always considered because this might be the most crucial parameter
         n_samples = df.shape[0]
         # as a rule of thumb the number of used features should be at most sqrt(num of samples)
-        max_features_percentile = 100 #min(100*math.sqrt(n_samples)/n_samples,100)
+        max_features_percentile = 100  # min(100*math.sqrt(n_samples)/n_samples,100)
         n_perc = get_range_flo(percentile, 0.1, 1, max_features_percentile)
         parameters = {'n_estimators': n_range,
                       'min_samples_split': minsample,
@@ -607,8 +621,12 @@ class Controller(object):
             print('FATAL: failed to compute ' + pcol + ' ' + str(e))
             return
         if self.verbose > 1:
-            print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(
-                gridcv.best_score_))
+            if '_close' in pcol:
+                self.accuracy_array.append(gridcv.best_score_)
+                print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(
+                    gridcv.best_score_))
+                print('Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
+                    np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
         gridcv.best_estimator_.write_to_disk(estimator_name)
         estimator_score = {'name': pcol, 'score': gridcv.best_score_}
         self.estimtable.upsert(estimator_score, ['name'])
@@ -749,27 +767,27 @@ class Controller(object):
                 return
         if close_only:
             return
-        if not ( lo < price < hi ):
+        if not (lo < price < hi):
             return
         if close_score < -1:
             return
         if cl > 0:
-            step = 1.5*abs(low_score)
+            step = 1.5 * abs(low_score)
             sl = lo - step
             entry = price + spread
             sldist = entry - sl + spread
             tp2 = hi
-            tpstep = (tp2 - price)/3
-            tp1 = hi - 2*tpstep
+            tpstep = (tp2 - price) / 3
+            tp1 = hi - 2 * tpstep
             tp3 = hi - tpstep
         else:
-            step = 1.5*abs(high_score)
+            step = 1.5 * abs(high_score)
             sl = hi + step
             entry = price + spread
             sldist = sl - entry + spread
             tp2 = lo
-            tpstep = (price - tp2)/3
-            tp1 = lo + 2*tpstep
+            tpstep = (price - tp2) / 3
+            tp1 = lo + 2 * tpstep
             tp3 = lo + tpstep
         rr = abs((tp2 - entry) / (sl - entry))
         if rr < 1.5:  # Risk-reward too low
@@ -779,7 +797,7 @@ class Controller(object):
         # if you made it here its fine, lets open a limit order
         # r2sum is used to scale down the units risked to accomodate the estimator quality
         units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                           1.0)*(1+close_score)
+                                                           1.0) * (1 + close_score)
         if units > 0:
             units = math.floor(units)
         if units < 0:
@@ -789,7 +807,7 @@ class Controller(object):
         if tp2 < sl:
             units *= -1
         pip_location = self.get_pip_size(ins)
-        pip_size = 10**(-pip_location+1)
+        pip_size = 10 ** (-pip_location + 1)
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             return None
         if (entry - price) * units > 0:
@@ -805,22 +823,22 @@ class Controller(object):
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
         expiry = datetime.datetime.now() + datetime.timedelta(days=1)
-        #units = int(units/3) # open three trades to spread out the risk
+        # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
         for tp in [tp1, tp2, tp3]:
             args = {'order': {
                 'instrument': ins,
                 'units': units,
-                #'price': entry,
+                # 'price': entry,
                 'type': otype,
-                #'timeInForce': 'GTD',
-                #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                # 'timeInForce': 'GTD',
+                # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
-                'trailingStopLossOnFill': { 'distance': sldist, 'timeInForce': 'GTC'}
+                'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            #code.interact(banner='', local=locals())
+            # code.interact(banner='', local=locals())
             if self.verbose > 1:
                 print(args)
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
