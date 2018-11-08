@@ -47,6 +47,9 @@ import re
 
 
 def prev_working_day(_day):
+    # Get the previous working day for this day. Since we work with NY candle alignment the week is sunday to thursday
+    # _day: String representing the day in Format 2018-11-23
+
     date1 = datetime.datetime.strptime(_day, '%Y-%m-%d')
     wd = date1.weekday()
     if wd < 6:
@@ -57,49 +60,84 @@ def prev_working_day(_day):
 
 
 def merge_dicts(dict1, dict2, suffix):
+    # Merge two dicts
+    # dict1: this dict will keep all the key names as are
+    # dict2: The keys of this dict will receive the suffix
+    # suffix: suffix to append to the keys of dict2
+
     for key in dict2.keys():
-        dict1[key + suffix] = dict2[key]
+        key_name = key + suffix
+        if key_name in dict1.keys():
+            raise ValueError('duplicate key {0} while merging'.format(key_name))
+        dict1[key_name] = dict2[key]
     return dict1
 
 
 def get_range_int(_val, change, lower=-math.inf, upper=math.inf):
+    # Returns a range including a decremented and incremented integer value within the range
+    # _val: Center value
+    # change: relative distance of range values from center
+    # lower: lower bound
+    # upper: upper bound
+
     if _val > upper:
         val = upper
     else:
         val = _val
-    lval = math.floor(val * (1 - change))
-    uval = math.ceil(val * (1 + change))
+    lower_value = math.floor(val * (1 - change))
+    upper_value = math.ceil(val * (1 + change))
     rang = []
-    if lower <= lval < val:
-        rang.append(lval)
+    if lower <= lower_value < val:
+        rang.append(lower_value)
     rang.append(val)
-    if val < uval <= upper:
-        rang.append(uval)
+    if val < upper_value <= upper:
+        rang.append(upper_value)
     return rang
 
 
 def get_range_flo(val, change, lower=-math.inf, upper=math.inf):
-    lval = val * (1 - change)
-    uval = val * (1 + change)
+    # Returns a range including a decremented and incremented floating value within the range
+    # _val: Center value
+    # change: relative distance of range values from center
+    # lower: lower bound
+    # upper: upper bound
+
+    lower_value = val * (1 - change)
+    upper_value = val * (1 + change)
     rang = []
-    if lower <= lval < val:
-        rang.append(lval)
+    if lower <= lower_value < val:
+        rang.append(lower_value)
     rang.append(val)
-    if val < uval <= upper:
-        rang.append(uval)
+    if val < upper_value <= upper:
+        rang.append(upper_value)
     return rang
 
 
 def get_gb_importances(gb, x, y):
+    # returns the feature_importances using the provided estimator
+    # gb: Estimator
+    # x: Features
+    # y: target
+
     gb.fit(x, y)
     return gb.feature_importances_
 
 
 class EstimatorPipeline(object):
+    # Custom estimator class combining percentile selection with gradient boosting
+
     feature_importances_: object
 
     def __init__(self, percentile=10, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
                  classifier=False):
+        # Class init
+        # percentile: importance percentile of features to use
+        # learning_rate: learning rate for the gradient boosting
+        # n_estimators: Number of estimators for the gradient boosting
+        # min_samples_split: Min. samples to split in the gradient boosting
+        # path: if provided will attempt to load stored estimators
+        # classifier: Whether to train a classifier and not a regressor
+
         self.classifier = classifier
         if path:  # read from disk
             gb_path = path + '.gb'
@@ -109,11 +147,9 @@ class EstimatorPipeline(object):
             param_path = path + '.param'
             self.params = pickle.load(open(param_path, 'rb'))
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
-            # score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
             self.percentile.scores_ = percentile_attr.get('scores')
             self.percentile.pvalues_ = percentile_attr.get('pvalues')
-            # code.interact(banner='', local=locals())
         else:
             self.params = {'percentile': percentile, 'learning_rate': learning_rate, 'n_estimators': n_estimators,
                            'min_samples_split': min_samples_split}
@@ -132,12 +168,21 @@ class EstimatorPipeline(object):
         )
 
     def get_feature_importances(self):
+        # provide feature importances of encapsuled gradient boosting
+
         return self.gb.feature_importances_
 
     def get_params(self, deep=True):  # keyword deep needed for gridsearch
+        # this function is needed for the custom estimator that it can be passed to gridseearch
+
         return self.params
 
     def fit(self, x, y, sample_weight=None):
+        # fit encapsuled pipeline
+        # x: features
+        # y: target
+        # sample_weight: Optional sample weight
+
         if self.classifier:
             self.pipeline.fit(x, y, gradientboostingclassifier__sample_weight=sample_weight)
         else:
@@ -146,8 +191,13 @@ class EstimatorPipeline(object):
         return self
 
     def write_to_disk(self, path):
+        # Write the different parts of the estimator to disk for later usage
+        # path: Filename without any extensions
+
         gb_path = path + '.gb'
         pickle.dump(self.gb, open(gb_path, 'wb'))
+        # the select_percentile can not be pickles due to the choice of the importance func.
+        # So we pickle the attributes
         pipe_path = path + '.pipe'
         pipe_attr = {'scores': self.percentile.scores_, 'pvalues': self.percentile.pvalues_}
         pickle.dump(pipe_attr, open(pipe_path, 'wb'))
@@ -155,12 +205,26 @@ class EstimatorPipeline(object):
         pickle.dump(self.params, open(param_path, 'wb'))
 
     def predict(self, x):
+        # predict using pre trained estimator
+        # x: features
+
         return self.pipeline.predict(x)
 
     def score(self, x, y=None, sample_weight=None):
+        # Calculate accuracy score
+        # x: Features
+        # y: Targets
+        # sample_weight: Optional sample weight
+
         return self.pipeline.score(x, y=y, sample_weight=sample_weight)
 
     def set_params(self, percentile=None, learning_rate=None, n_estimators=None, min_samples_split=None):
+        # Set the estimator parameters
+        # percentile: Feature importance percentile used for prediction
+        # learning_rate: Learning rate for gradient boosting
+        # n_estimators: Number of estimators for gradient boosting
+        # min_samples_split: Min Samples split for gradient boosting
+
         if percentile:
             self.percentile.set_params(percentile=percentile)
             self.params['percentile'] = percentile
@@ -177,7 +241,18 @@ class EstimatorPipeline(object):
 
 
 class Controller(object):
+    # This class controls most of the program flow for:
+    # - getting the data
+    # - constructing the data frame for training and prediction
+    # - actual training and prediction of required models
+    # - acting in the market based on the prediction
+
     def __init__(self, config_name, _type, verbose=2):
+        # class init
+        # config_name: Path to config file
+        # _type: which section of the config file to use for broker connection
+        # verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
+
         config = configparser.ConfigParser()
         config.read(config_name)
         self.verbose = verbose
@@ -211,17 +286,28 @@ class Controller(object):
         self.accuracy_array = []
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
+        # collect data for all available instrument from broker and store in database
+        # num_candles: Number of candles, max. 500
+        # completed: Whether to use only completed candles, in other words whether to ignore today
+        # upsert: Whether to update existing entries
+
         for ins in self.allowed_ins:
             candles = self.get_candles(ins.name, 'D', num_candles)
             self.candles_to_db(candles, ins.name, completed=completed, upsert=upsert)
 
     def get_pip_size(self, ins):
+        # Returns pip size for a given instrument
+        # ins: Instrument, e.g. EUR_USD
+
         pip_loc = [_ins.pipLocation for _ins in self.allowed_ins if _ins.name == ins]
         if not len(pip_loc) == 1:
             return None
         return -pip_loc[0] + 1
 
     def get_spread(self, ins):
+        # Returns spread for a instrument
+        # ins: Instrument, e.g. EUR_USD
+
         args = {'instruments': ins}
         price_raw = self.oanda.pricing.get(self.settings.get('account_id'
                                                              ), **args)
@@ -233,6 +319,9 @@ class Controller(object):
         return spread
 
     def get_price(self, ins):
+        # Returns price for a instrument
+        # ins: Instrument, e.g. EUR_USD
+
         args = {'instruments': ins}
         price_raw = self.oanda.pricing.get(self.settings.get('account_id'
                                                              ), **args)
@@ -244,44 +333,54 @@ class Controller(object):
             'price'))) / 2.0
         return price
 
-    @staticmethod
-    def strip_number(_number):
+    def strip_number(self, _number):
+        # try to get a numeric value from a string like e.g. '3.4M'
+        # _number: partly numeric string
+
         try:
             return float(re.sub('[^0-9]', '', _number))
-        except Exception as e:
+        except ValueError as e:
+            if self.verbose > 0:
+                print(str(e))
             return None
 
     def get_calendar_data(self, date):
         # extract event data regarding the current trading week
+        # date: Date in format '2018-06-23'
+
+        # the date is taken from oanday NY open alignment. Hence if we use only complete candles this date
+        # will be the day before yesterday
         df = {}
         currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'ALL']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
-            # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
-            sentiment = 0
-            for row in self.calendar.find(date=date, currency=curr):
-                impact_num = impacts.index(row.get('impact'))
-                actual = self.strip_number(row.get('actual'))
-                if not actual:
-                    continue
-                forecast = self.strip_number(row.get('forecast'))
-                if forecast:
-                    sentiment += math.copysign(impact_num ** 2 + 1,
-                                               actual - forecast)
-                    # (actual - forecast)/(abs(actual)+abs(forecast)+0.01)
-                    continue
-                previous = self.strip_number(row.get('previous'))
-                if previous:
-                    sentiment += math.copysign(impact_num ** 2 + 1,
-                                               actual - previous)  # (actual-previous)/(abs(actual)+abs(previous)+0.01)
-            column_name = curr + '_sentiment'
-            df[column_name] = sentiment
-            # print(column_name + ' ' + str(sentiment))
+            # calculate how actual and forecast numbers compare. If no forecast available just use the previous number
+            for impact in impacts:
+                sentiment = 0
+                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                    actual = self.strip_number(row.get('actual'))
+                    if not actual:
+                        continue
+                    forecast = self.strip_number(row.get('forecast'))
+                    if forecast:
+                        sentiment += math.copysign(1,
+                                                   actual - forecast)
+                        # (actual - forecast)/(abs(actual)+abs(forecast)+0.01)
+                        continue
+                    previous = self.strip_number(row.get('previous'))
+                    if previous:
+                        sentiment += math.copysign(1,
+                                                   actual - previous)
+                        # (actual-previous)/(abs(actual)+abs(previous)+0.01)
+                column_name = curr + '_sentiment_' + impact
+                df[column_name] = sentiment
             for impact in impacts:
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date, currency=curr, impact=impact)
         dt = datetime.datetime.strptime(date, '%Y-%m-%d')
+
+        # when today is friday (4) skip the weekend, else go one day forward. Then we have reached yesterday
         if dt.weekday() == 4:
             dt += datetime.timedelta(days=3)
         else:
@@ -289,27 +388,30 @@ class Controller(object):
         date_next = dt.strftime('%Y-%m-%d')
         for curr in currencies:
             # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
-            sentiment = 0
-            for row in self.calendar.find(date=date, currency=curr):
-                impact_num = impacts.index(row.get('impact'))
-                actual = self.strip_number(row.get('actual'))
-                if not actual:
-                    continue
-                forecast = self.strip_number(row.get('forecast'))
-                if forecast:
-                    sentiment += math.copysign(impact_num ** 2 + 1,
-                                               actual - forecast)  # (actual - forecast) / (abs(actual) + abs(forecast) + 0.01)
-                    continue
-                previous = self.strip_number(row.get('previous'))
-                if previous:
-                    sentiment += math.copysign(impact_num ** 2 + 1,
-                                               actual - previous)  # (actual - previous) / (abs(actual) + abs(previous) + 0.01)
-            column_name = curr + '_sentiment_next'
-            df[column_name] = sentiment
+            for impact in impacts:
+                sentiment = 0
+                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                    actual = self.strip_number(row.get('actual'))
+                    if not actual:
+                        continue
+                    forecast = self.strip_number(row.get('forecast'))
+                    if forecast:
+                        sentiment += math.copysign(1,
+                                                   actual - forecast)
+                        # (actual - forecast) / (abs(actual) + abs(forecast) + 0.01)
+                        continue
+                    previous = self.strip_number(row.get('previous'))
+                    if previous:
+                        sentiment += math.copysign(1,
+                                                   actual - previous)
+                        # (actual - previous) / (abs(actual) + abs(previous) + 0.01)
+                column_name = curr + '_sentiment_' + impact + '_next'
+                df[column_name] = sentiment
             for impact in impacts:
                 column_name = curr + impact + '_next'
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+        # when today is friday (4) skip the weekend, else go one day forward. Then we have reached today
         if dt.weekday() == 4:
             dt += datetime.timedelta(days=3)
         else:
@@ -318,19 +420,19 @@ class Controller(object):
         for curr in currencies:
             # calculate how actual and forecasted numbers compare.
             #  If no forecast available just use the previous number
-            sentiment = 0
-            for row in self.calendar.find(date=date, currency=curr):
-                impact_num = impacts.index(row.get('impact'))
-                forecast = self.strip_number(row.get('forecast'))
-                if not forecast:
-                    continue
-                previous = self.strip_number(row.get('previous'))
-                if previous:
-                    sentiment += math.copysign(impact_num ** 2 + 1,
-                                               forecast - previous)
-                    # (forecast-previous)/(abs(forecast)+abs(previous)+0.01)
-            column_name = curr + '_sentiment_next2'
-            df[column_name] = sentiment
+            for impact in impacts:
+                sentiment = 0
+                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                    forecast = self.strip_number(row.get('forecast'))
+                    if not forecast:
+                        continue
+                    previous = self.strip_number(row.get('previous'))
+                    if previous:
+                        sentiment += math.copysign(1,
+                                                   forecast - previous)
+                        # (forecast-previous)/(abs(forecast)+abs(previous)+0.01)
+                column_name = curr + '_sentiment_' + impact + '_next2'
+                df[column_name] = sentiment
             for impact in impacts:
                 column_name = curr + impact + '_next2'
                 column_name = column_name.replace(' ', '')
@@ -420,51 +522,62 @@ class Controller(object):
         return merge_dicts(df_row, today_df, '')
 
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None, new_estim=False,
-                   complete=True):
-        inst = []
-        if complete:
-            c_cond = ' complete = 1'
+                   complete=True, read_raw=False):
+        # write_raw: Write data frame used for training to disk
+        # read_raw: Read data frame used for training from disk
+        # write_predict: Write prediction file to disk to use it for trading later on
+        # improve_model: Perform Hyper parameter improvement for the estimators
+        # maxdate: Maximum data to use in the prediction. If None use all.
+        # new_estim: Build new estimators with new Hyper parameters
+
+        raw_name = '../data/cexport.csv'
+        if read_raw:
+            df = pd.read_csv(raw_name)
         else:
-            c_cond = ' complete in (0,1)'
-        statement = 'select distinct ins from dailycandles order by ins;'
-        for row in self.db.query(statement):
-            inst.append(row['ins'])
-        dates = []
-        if maxdate:
-            statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
-        else:
-            statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
-        for row in self.db.query(statement):
-            # if row['date'][:4] == year:
-            dates.append(row['date'])
-        df_dict = []
-        if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
-            dates = dates[-4:]
-        # dates = dates[-100:] # use this line to decrease computation time for development
-        bar = None
-        if self.verbose > 0:
-            print('INFO: Starting data frame preparation')
-            bar = progressbar.ProgressBar(maxval=len(dates),
-                                          widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
-            bar.start()
-        index = 0
-        for date in dates:
+            inst = []
+            if complete:
+                c_cond = ' complete = 1'
+            else:
+                c_cond = ' complete in (0,1)'
+            statement = 'select distinct ins from dailycandles order by ins;'
+            for row in self.db.query(statement):
+                inst.append(row['ins'])
+            dates = []
+            if maxdate:
+                statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+            else:
+                statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+            for row in self.db.query(statement):
+                # if row['date'][:4] == year:
+                dates.append(row['date'])
+            df_dict = []
+            if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
+                dates = dates[-4:]
+            # dates = dates[-100:] # use this line to decrease computation time for development
+            bar = None
             if self.verbose > 0:
-                bar.update(index)
-            index += 1
-            # check whether the candle is from a weekday
-            df_row = self.get_df_for_date(date, inst, complete)
-            # df_row = merge_dicts(df_row, yest_df, '_yester')
-            if df_row:
-                df_dict.append(df_row)
-        df = pd.DataFrame(df_dict)
+                print('INFO: Starting data frame preparation')
+                bar = progressbar.ProgressBar(maxval=len(dates),
+                                              widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
+                bar.start()
+            index = 0
+            for date in dates:
+                if self.verbose > 0:
+                    bar.update(index)
+                index += 1
+                # check whether the candle is from a weekday
+                df_row = self.get_df_for_date(date, inst, complete)
+                # df_row = merge_dicts(df_row, yest_df, '_yester')
+                if df_row:
+                    df_dict.append(df_row)
+            df = pd.DataFrame(df_dict)
         if self.verbose > 0:
             bar.finish()
         # code.interact(banner='', local=locals())
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
-            outname = '/home/ubuntu/data/cexport.csv'
-            df.to_csv(outname)
+            df.to_csv(raw_name)
+            return
         datecol = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
@@ -517,6 +630,8 @@ class Controller(object):
             outfile.close()
 
     def get_feature_importances(self):
+        # Writes feature importances for all trained estimators to sqlite for further inspection
+
         inst = []
         dates = []
         statement = 'select distinct ins from dailycandles order by ins;'
@@ -632,6 +747,11 @@ class Controller(object):
         self.estimtable.upsert(estimator_score, ['name'])
 
     def predict_column(self, predict_column, df, new_estimator=False):
+        # Predict the next outcome for a given column
+        # predict_column: Columns to predict
+        # df: Data Frame containing the column itself as well as any features
+        # new_estimator: Whether to lead the existing estimator from disk or create a new one
+
         x = np.array(df.values[:])
         y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
         vprev = y[-1]
@@ -661,6 +781,9 @@ class Controller(object):
 
     def get_units(self, dist, ins):
         # get the number of units to trade for a given pair
+        # dist: Distance to the SL
+        # ins: Instrument to trade, e.g. EUR_USD
+
         trailing_currency = ''
         if dist == 0:
             return 0
@@ -687,6 +810,8 @@ class Controller(object):
 
     def get_conversion(self, leading_currency):
         # get conversion rate to account currency
+        # leading_currency: ISO Code of the leading currency for the traded pair
+
         account_currency = 'EUR'
         # trivial case
         if leading_currency == account_currency:
@@ -715,6 +840,9 @@ class Controller(object):
         return None
 
     def get_score(self, column_name):
+        # retrieves training score for given estimator
+        # column_name: Name of the columns the estimator is predicting
+
         row = self.estimtable.find_one(name=column_name)
         if row:
             return row.get('score')
@@ -724,6 +852,10 @@ class Controller(object):
             return None
 
     def open_limit(self, ins, close_only=False, complete=True):
+        # Open orders and close trades using the predicted market movements
+        # close_only: Set to true to close only without checking for opening Orders
+        # complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
+
         if complete:
             df = pd.read_csv(self.settings['prices_path'])
         else:
@@ -808,10 +940,6 @@ class Controller(object):
         pip_size = 10 ** (-pip_location + 1)
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             return None
-        if (entry - price) * units > 0:
-            otype = 'STOP'
-        else:
-            otype = 'LIMIT'
         # otype = 'MARKET'
         otype = 'STOP'
         format_string = '30.' + str(pip_location) + 'f'
