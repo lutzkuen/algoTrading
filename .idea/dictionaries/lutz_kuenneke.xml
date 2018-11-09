@@ -2,10 +2,16 @@
   <dictionary name="lutz.kuenneke">
     <words>
       <w>crossentropy</w>
+      <w>dailycandles</w>
+      <w>forecasted</w>
+      <w>gridsearch</w>
+      <w>oanda</w>
+      <w>pvalues</w>
       <w>relu</w>
       <w>rmsprop</w>
       <w>softmax</w>
       <w>strftime</w>
+      <w>upsert</w>
     </words>
   </dictionary>
 </component>

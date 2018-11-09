@@ -43,6 +43,7 @@ import dataset
 import pickle
 from sklearn.feature_selection import SelectPercentile
 from sklearn.pipeline import make_pipeline
+from sklearn.decomposition import PCA
 import re
 
 
@@ -128,7 +129,7 @@ class EstimatorPipeline(object):
 
     feature_importances_: object
 
-    def __init__(self, percentile=10, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
+    def __init__(self, percentile=5, n_components=35, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
                  classifier=False):
         # Class init
         # percentile: importance percentile of features to use
@@ -150,9 +151,14 @@ class EstimatorPipeline(object):
             self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
             self.percentile.scores_ = percentile_attr.get('scores')
             self.percentile.pvalues_ = percentile_attr.get('pvalues')
+            pca_path = path+'.pca'
+            try:
+                self.pca = pickle.load(open(pca_path, 'rb'))
+            except:
+                self.pca = None
         else:
             self.params = {'percentile': percentile, 'learning_rate': learning_rate, 'n_estimators': n_estimators,
-                           'min_samples_split': min_samples_split}
+                           'min_samples_split': min_samples_split, 'n_components': n_components}
             if classifier:
                 self.gb = GradientBoostingClassifier(learning_rate=learning_rate, min_samples_split=min_samples_split,
                                                      n_estimators=n_estimators)
@@ -162,10 +168,21 @@ class EstimatorPipeline(object):
             # score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=percentile)
-        self.pipeline = make_pipeline(
-            self.percentile,
-            self.gb
-        )
+            if n_components > 0:
+                self.pca = PCA(n_components=n_components)
+            else:
+                self.pca = None
+        if not self.pca:
+            self.pipeline = make_pipeline(
+                self.percentile,
+                self.gb
+            )
+        else:
+            self.pipeline = make_pipeline(
+                self.percentile,
+                self.pca,
+                self.gb
+            )
 
     def get_feature_importances(self):
         # provide feature importances of encapsuled gradient boosting
@@ -196,6 +213,8 @@ class EstimatorPipeline(object):
 
         gb_path = path + '.gb'
         pickle.dump(self.gb, open(gb_path, 'wb'))
+        pca_path = path + '.pca'
+        pickle.dump(self.pca, open(pca_path, 'wb'))
         # the select_percentile can not be pickles due to the choice of the importance func.
         # So we pickle the attributes
         pipe_path = path + '.pipe'
@@ -218,13 +237,14 @@ class EstimatorPipeline(object):
 
         return self.pipeline.score(x, y=y, sample_weight=sample_weight)
 
-    def set_params(self, percentile=None, learning_rate=None, n_estimators=None, min_samples_split=None):
+    def set_params(self, percentile=None, learning_rate=None, n_estimators=None, min_samples_split=None, n_components=None):
         # Set the estimator parameters
         # percentile: Feature importance percentile used for prediction
         # learning_rate: Learning rate for gradient boosting
         # n_estimators: Number of estimators for gradient boosting
         # min_samples_split: Min Samples split for gradient boosting
-
+        if n_components:
+            self.pca.set_params(n_components=n_components)
         if percentile:
             self.percentile.set_params(percentile=percentile)
             self.params['percentile'] = percentile
@@ -283,7 +303,9 @@ class Controller(object):
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
+        # the following arrays are used to collect aggregate information in estimator improvement
         self.accuracy_array = []
+        self.n_components_array = []
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
         # collect data for all available instrument from broker and store in database
@@ -340,7 +362,7 @@ class Controller(object):
         try:
             return float(re.sub('[^0-9]', '', _number))
         except ValueError as e:
-            if self.verbose > 0:
+            if self.verbose > 1:
                 print(str(e))
             return None
 
@@ -348,7 +370,7 @@ class Controller(object):
         # extract event data regarding the current trading week
         # date: Date in format '2018-06-23'
 
-        # the date is taken from oanday NY open alignment. Hence if we use only complete candles this date
+        # the date is taken from oanda NY open alignment. Hence if we use only complete candles this date
         # will be the day before yesterday
         df = {}
         currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'ALL']
@@ -440,6 +462,12 @@ class Controller(object):
         return df
 
     def candles_to_db(self, candles, ins, completed=True, upsert=False):
+        # Write candles to sqlite database
+        # candles: Array of candles
+        # ins: Instrument, e.g. EUR_USD
+        # completed: Whether to write only completed candles
+        # upsert: Whether to update if a dataset exists
+
         new_count = 0
         update_count = 0
         for candle in candles:
@@ -466,11 +494,12 @@ class Controller(object):
                 print('New Candles: ' + str(new_count) + ' | Updated Candles: ' + str(update_count))
             self.table.insert(candle_new)
 
-    def get_candles(
-            self,
-            ins,
-            granularity,
-            num_candles):
+    def get_candles(self, ins, granularity, num_candles):
+        # Get pricing data in candle format from broker
+        # ins: Instrument
+        # granularity: Granularity as in 'H1', 'H4', 'D', etc
+        # num_candles: Number of candles, max. 500
+
         request = Request('GET',
                           '/v3/instruments/{instrument}/candles?count={count}&price={price}&granularity={granularity}'
                           )
@@ -483,32 +512,42 @@ class Controller(object):
         return candles.get('candles')
 
     def get_market_df(self, date, inst, complete):
-        drow = {'date': date}
+        # Create Market data portion of data frame
+        # date: Date in Format 'YYYY-MM-DD'
+        # inst: Array of instruments
+        # complete: Whether to use only complete candles
+
+        data_frame = {'date': date}
         for ins in inst:
             if complete:
-                icandle = self.table.find_one(date=date, ins=ins, complete=1)
+                candle = self.table.find_one(date=date, ins=ins, complete=1)
             else:
-                icandle = self.table.find_one(date=date, ins=ins)
-            if not icandle:
+                candle = self.table.find_one(date=date, ins=ins)
+            if not candle:
                 if self.verbose > 1:
                     print('Candle does not exist ' + ins + ' ' + str(date))
-                drow[ins + '_vol'] = -999999
-                drow[ins + '_open'] = -999999
-                drow[ins + '_close'] = -999999
-                drow[ins + '_high'] = -999999
-                drow[ins + '_low'] = -999999
+                data_frame[ins + '_vol'] = -999999
+                data_frame[ins + '_open'] = -999999
+                data_frame[ins + '_close'] = -999999
+                data_frame[ins + '_high'] = -999999
+                data_frame[ins + '_low'] = -999999
             else:
-                drow[ins + '_vol'] = int(icandle['volume'])
-                drow[ins + '_open'] = float(icandle['open'])
-                if float(icandle['close']) > float(icandle['open']):
-                    drow[ins + '_close'] = int(1)
+                data_frame[ins + '_vol'] = int(candle['volume'])
+                data_frame[ins + '_open'] = float(candle['open'])
+                if float(candle['close']) > float(candle['open']):
+                    data_frame[ins + '_close'] = int(1)
                 else:
-                    drow[ins + '_close'] = int(-1)
-                drow[ins + '_high'] = float(icandle['high']) - float(icandle['open'])
-                drow[ins + '_low'] = float(icandle['low']) - float(icandle['open'])
-        return drow
+                    data_frame[ins + '_close'] = int(-1)
+                    data_frame[ins + '_high'] = float(candle['high']) - float(candle['open'])
+                    data_frame[ins + '_low'] = float(candle['low']) - float(candle['open'])
+        return data_frame
 
     def get_df_for_date(self, date, inst, complete):
+        # Creates a dict containing all fields for the given date
+        # date: Date to use in format 'YYYY-MM-DD'
+        # inst: Array of instruments to use as inputs
+        # complete: Whether to use only complete candles
+
         date_split = date.split('-')
         weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
         if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
@@ -522,7 +561,8 @@ class Controller(object):
         return merge_dicts(df_row, today_df, '')
 
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None, new_estim=False,
-                   complete=True, read_raw=False):
+                   complete=True, read_raw=False, close_only=False):
+        # This method will take the input collected from oanda and forexfactory and merge in a Data Frame
         # write_raw: Write data frame used for training to disk
         # read_raw: Read data frame used for training from disk
         # write_predict: Write prediction file to disk to use it for trading later on
@@ -571,20 +611,20 @@ class Controller(object):
                 if df_row:
                     df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
-        if self.verbose > 0:
-            bar.finish()
+            if self.verbose > 0:
+                bar.finish()
         # code.interact(banner='', local=locals())
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
-            df.to_csv(raw_name)
+            df.to_csv(raw_name, index=False)
             return
-        datecol = df['date'].copy()  # copy for usage in improveEstim
+        date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
+        bar = progressbar.ProgressBar(maxval=len(df.columns),
+                                      widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         if self.verbose > 0:
             print('INFO: Starting prediction')
-            bar = progressbar.ProgressBar(maxval=len(df.columns),
-                                          widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
             bar.start()
         index = 0
         for col in df.columns:
@@ -598,10 +638,12 @@ class Controller(object):
                 continue
             if not ('_high' in col or '_low' in col or '_close' in col):
                 continue
+            if close_only and not ('_close' in col):
+                continue
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
-                self.improve_estimator(col, df, datecol)
+                self.improve_estimator(col, df, date_column)
             prediction_value, previous_value = self.predict_column(col, df, new_estimator=new_estim)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
@@ -614,6 +656,7 @@ class Controller(object):
         if improve_model and self.verbose > 0:
             print('Final Model accuracy: Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
                 np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
+            print('Percentile: ' + str(np.min(self.n_components_array)) + '/' + str(np.mean(self.n_components_array)) + '/' + str(np.max(self.n_components_array)))
         if self.verbose > 0:
             bar.finish()
         if write_predict:
@@ -642,7 +685,6 @@ class Controller(object):
             # if row['date'][:4] == year:
             dates.append(row['date'])
         dates = dates[-10:]
-        df_dict = None
         df_all = []
         for date in dates:
             df_dict = self.get_df_for_date(date, inst, True)
@@ -700,14 +742,24 @@ class Controller(object):
             n_learn = [learning_rate]
         percentile = params.get('percentile')
         # percentile is always considered because this might be the most crucial parameter
-        n_samples = df.shape[0]
         # as a rule of thumb the number of used features should be at most sqrt(num of samples)
+        n_features = df.shape[1]
         max_features_percentile = 100  # min(100*math.sqrt(n_samples)/n_samples,100)
-        n_perc = get_range_flo(percentile, 0.1, 1, max_features_percentile)
+        percentile_range = get_range_flo(percentile, 0.1, 1, max_features_percentile)
+        min_features_percentile = min(percentile_range)
+        max_components = math.floor(n_features * min_features_percentile/100)
+        #n_components = params.get('n_components')
+        n_components_range = [0, math.floor(max_components*0.5), math.floor(max_components*0.8)]
+        #n_components_range = get_range_int(n_components, 0.01, 4, max_components)
+        #n_components_range.append(0)  # always include 0 since the component stuff can break the estimator
+        if max_components not in n_components_range:
+            n_components_range.append(max_components)
         parameters = {'n_estimators': n_range,
                       'min_samples_split': minsample,
                       'learning_rate': n_learn,
-                      'percentile': n_perc}
+                      'percentile': percentile_range,
+                      'n_components': n_components_range
+                      }
         weights = np.array(datecol.apply(self.dist_to_now).values[:])
         x = np.array(df.values[:])
         y = np.array(df[pcol].values[:])  # make a deep copy to prevent data loss in future iterations
@@ -728,22 +780,23 @@ class Controller(object):
         else:
             base_estimator = EstimatorPipeline()
         score_str = 'neg_mean_absolute_error'
-        gridcv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score='raise',
-                              scoring=score_str)
+        gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score='raise',
+                                     scoring=score_str)
         try:
-            gridcv.fit(x, y, sample_weight=weights)
+            gridsearch_cv.fit(x, y, sample_weight=weights)
         except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
             print('FATAL: failed to compute ' + pcol + ' ' + str(e))
             return
         if self.verbose > 1:
             if '_close' in pcol:
-                self.accuracy_array.append(gridcv.best_score_)
-                print('Improving Estimator for ' + pcol + ' ' + str(gridcv.best_params_) + ' score: ' + str(
-                    gridcv.best_score_))
+                self.accuracy_array.append(gridsearch_cv.best_score_)
                 print('Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
                     np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
-        gridcv.best_estimator_.write_to_disk(estimator_name)
-        estimator_score = {'name': pcol, 'score': gridcv.best_score_}
+                self.n_components_array.append(gridsearch_cv.best_params_.get('n_components'))
+            print('Improving Estimator for ' + pcol + ' ' + str(gridsearch_cv.best_params_) + ' score: ' + str(
+                gridsearch_cv.best_score_))
+        gridsearch_cv.best_estimator_.write_to_disk(estimator_name)
+        estimator_score = {'name': pcol, 'score': gridsearch_cv.best_score_}
         self.estimtable.upsert(estimator_score, ['name'])
 
     def predict_column(self, predict_column, df, new_estimator=False):
@@ -759,10 +812,10 @@ class Controller(object):
         xlast = x[-1, :]
         x = x[:-1, :]  # drop the last line
         if new_estimator:
-            if '_close' in predict_column:
-                estimator = EstimatorPipeline(classifier=True)  # GradientBoostingRegressor()
-            else:
-                estimator = EstimatorPipeline()  # GradientBoostingRegressor()
+            #if '_close' in predict_column:
+            #    estimator = EstimatorPipeline(classifier=True)  # GradientBoostingRegressor()
+            #else:
+            estimator = EstimatorPipeline()  # GradientBoostingRegressor()
             i = 0
             while i < y.shape[0]:
                 if y[i] < -999990:  # missing values are marked with -999999
