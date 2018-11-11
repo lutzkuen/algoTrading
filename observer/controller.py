@@ -16,6 +16,7 @@ Use at own risk
 Author: Lutz Kuenneke, 26.07.2018
 """
 import json
+import code
 
 try:
     # noinspection PyUnresolvedReferences
@@ -147,6 +148,7 @@ class EstimatorPipeline(object):
             percentile_attr = pickle.load(open(percentile_path, 'rb'))
             param_path = path + '.param'
             self.params = pickle.load(open(param_path, 'rb'))
+            # score_func = lambda x, y: get_gb_importances(self.gb, x, y)
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=self.params.get('percentile'))
             self.percentile.scores_ = percentile_attr.get('scores')
@@ -200,6 +202,8 @@ class EstimatorPipeline(object):
         # y: target
         # sample_weight: Optional sample weight
 
+        x = np.nan_to_num(x)
+        #code.interact(banner='',local=locals())
         if self.classifier:
             self.pipeline.fit(x, y, gradientboostingclassifier__sample_weight=sample_weight)
         else:
@@ -227,6 +231,7 @@ class EstimatorPipeline(object):
         # predict using pre trained estimator
         # x: features
 
+        x = np.nan_to_num(x)
         return self.pipeline.predict(x)
 
     def score(self, x, y=None, sample_weight=None):
@@ -235,6 +240,7 @@ class EstimatorPipeline(object):
         # y: Targets
         # sample_weight: Optional sample weight
 
+        x = np.nan_to_num(x)
         return self.pipeline.score(x, y=y, sample_weight=sample_weight)
 
     def set_params(self, percentile=None, learning_rate=None, n_estimators=None, min_samples_split=None, n_components=None):
@@ -360,9 +366,12 @@ class Controller(object):
         # _number: partly numeric string
 
         try:
-            return float(re.sub('[^0-9]', '', _number))
+            num = float(re.sub('[^0-9]', '', _number))
+            if np.isnan(num):
+                return 0
+            return num
         except ValueError as e:
-            if self.verbose > 1:
+            if self.verbose > 2:
                 print(str(e))
             return None
 
@@ -593,7 +602,7 @@ class Controller(object):
             df_dict = []
             if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
                 dates = dates[-4:]
-            # dates = dates[-100:] # use this line to decrease computation time for development
+            #dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
             if self.verbose > 0:
                 print('INFO: Starting data frame preparation')
@@ -768,7 +777,7 @@ class Controller(object):
         x = x[:-1, :]  # drop the last line
         i = 0
         while i < y.shape[0]:
-            if y[i] < -999990:  # missing values are marked with -999999
+            if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
                 weights = np.delete(weights, i)
                 y = np.delete(y, i)
                 x = np.delete(x, i, axis=0)
@@ -783,9 +792,11 @@ class Controller(object):
         gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score='raise',
                                      scoring=score_str)
         try:
+            x = np.nan_to_num(x)
             gridsearch_cv.fit(x, y, sample_weight=weights)
         except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
             print('FATAL: failed to compute ' + pcol + ' ' + str(e))
+            #code.interact(banner='',local=locals())
             return
         if self.verbose > 1:
             if '_close' in pcol:
@@ -810,7 +821,7 @@ class Controller(object):
         vprev = y[-1]
         y = y[1:]  # drop first line
         xlast = x[-1, :]
-        x = x[:-1, :]  # drop the last line
+        x = np.nan_to_num(x[:-1, :])  # drop the last line
         if new_estimator:
             #if '_close' in predict_column:
             #    estimator = EstimatorPipeline(classifier=True)  # GradientBoostingRegressor()
@@ -818,11 +829,12 @@ class Controller(object):
             estimator = EstimatorPipeline()  # GradientBoostingRegressor()
             i = 0
             while i < y.shape[0]:
-                if y[i] < -999990:  # missing values are marked with -999999
+                if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
                     y = np.delete(y, i)
                     x = np.delete(x, i, axis=0)
                 else:
                     i += 1
+            x = np.nan_to_num(x)  # drop the last line
             estimator.fit(x, y)
             estimator_name = self.settings.get('estim_path') + predict_column
             estimator.write_to_disk(estimator_name)
