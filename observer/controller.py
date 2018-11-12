@@ -203,7 +203,6 @@ class EstimatorPipeline(object):
         # sample_weight: Optional sample weight
 
         x = np.nan_to_num(x)
-        #code.interact(banner='',local=locals())
         if self.classifier:
             self.pipeline.fit(x, y, gradientboostingclassifier__sample_weight=sample_weight)
         else:
@@ -232,7 +231,11 @@ class EstimatorPipeline(object):
         # x: features
 
         x = np.nan_to_num(x)
-        return self.pipeline.predict(x)
+        try:
+            return self.pipeline.predict(x)
+        except Exception as e:
+            print('Failed to predict ' + str(e))
+            return [0,]
 
     def score(self, x, y=None, sample_weight=None):
         # Calculate accuracy score
@@ -547,8 +550,8 @@ class Controller(object):
                     data_frame[ins + '_close'] = int(1)
                 else:
                     data_frame[ins + '_close'] = int(-1)
-                    data_frame[ins + '_high'] = float(candle['high']) - float(candle['open'])
-                    data_frame[ins + '_low'] = float(candle['low']) - float(candle['open'])
+                data_frame[ins + '_high'] = float(candle['high']) - float(candle['open'])
+                data_frame[ins + '_low'] = float(candle['low']) - float(candle['open'])
         return data_frame
 
     def get_df_for_date(self, date, inst, complete):
@@ -598,10 +601,15 @@ class Controller(object):
                 statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
             for row in self.db.query(statement):
                 # if row['date'][:4] == year:
+                date = row['date']
+                date_split = date.split('-')
+                weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
+                if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
+                    continue
                 dates.append(row['date'])
             df_dict = []
             if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
-                dates = dates[-4:]
+                dates = dates[-3:]
             #dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
             if self.verbose > 0:
@@ -622,7 +630,6 @@ class Controller(object):
             df = pd.DataFrame(df_dict)
             if self.verbose > 0:
                 bar.finish()
-        # code.interact(banner='', local=locals())
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
             df.to_csv(raw_name, index=False)
@@ -703,7 +710,6 @@ class Controller(object):
         df = pd.DataFrame(df_all)
         feature_names = df.columns
         sql = 'select distinct name from estimators;'
-        # code.interact(banner='', local=locals())
         for row in self.db.query(sql):
             pcol = row.get('name')
             try:
@@ -789,14 +795,13 @@ class Controller(object):
         else:
             base_estimator = EstimatorPipeline()
         score_str = 'neg_mean_absolute_error'
-        gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score='raise',
+        gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score=-999999,
                                      scoring=score_str)
         try:
             x = np.nan_to_num(x)
             gridsearch_cv.fit(x, y, sample_weight=weights)
         except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
             print('FATAL: failed to compute ' + pcol + ' ' + str(e))
-            #code.interact(banner='',local=locals())
             return
         if self.verbose > 1:
             if '_close' in pcol:
@@ -1030,7 +1035,6 @@ class Controller(object):
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
                 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            # code.interact(banner='', local=locals())
             if self.verbose > 1:
                 print(args)
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)

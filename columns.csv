@@ -1,0 +1,848 @@
+ALLHighImpactExpected
+ALLHighImpactExpected_next
+ALLHighImpactExpected_next2
+ALLLowImpactExpected
+ALLLowImpactExpected_next
+ALLLowImpactExpected_next2
+ALLMediumImpactExpected
+ALLMediumImpactExpected_next
+ALLMediumImpactExpected_next2
+ALLNon-Economic
+ALLNon-Economic_next
+ALLNon-Economic_next2
+ALL_sentiment_High Impact Expected
+ALL_sentiment_High Impact Expected_next
+ALL_sentiment_High Impact Expected_next2
+ALL_sentiment_Low Impact Expected
+ALL_sentiment_Low Impact Expected_next
+ALL_sentiment_Low Impact Expected_next2
+ALL_sentiment_Medium Impact Expected
+ALL_sentiment_Medium Impact Expected_next
+ALL_sentiment_Medium Impact Expected_next2
+ALL_sentiment_Non-Economic
+ALL_sentiment_Non-Economic_next
+ALL_sentiment_Non-Economic_next2
+AU200_AUD_close
+AU200_AUD_open
+AU200_AUD_vol
+AUDHighImpactExpected
+AUDHighImpactExpected_next
+AUDHighImpactExpected_next2
+AUDLowImpactExpected
+AUDLowImpactExpected_next
+AUDLowImpactExpected_next2
+AUDMediumImpactExpected
+AUDMediumImpactExpected_next
+AUDMediumImpactExpected_next2
+AUDNon-Economic
+AUDNon-Economic_next
+AUDNon-Economic_next2
+AUD_CAD_close
+AUD_CAD_open
+AUD_CAD_vol
+AUD_CHF_close
+AUD_CHF_open
+AUD_CHF_vol
+AUD_HKD_close
+AUD_HKD_high
+AUD_HKD_low
+AUD_HKD_open
+AUD_HKD_vol
+AUD_JPY_close
+AUD_JPY_open
+AUD_JPY_vol
+AUD_NZD_close
+AUD_NZD_high
+AUD_NZD_low
+AUD_NZD_open
+AUD_NZD_vol
+AUD_SGD_close
+AUD_SGD_high
+AUD_SGD_low
+AUD_SGD_open
+AUD_SGD_vol
+AUD_USD_close
+AUD_USD_high
+AUD_USD_low
+AUD_USD_open
+AUD_USD_vol
+AUD_sentiment_High Impact Expected
+AUD_sentiment_High Impact Expected_next
+AUD_sentiment_High Impact Expected_next2
+AUD_sentiment_Low Impact Expected
+AUD_sentiment_Low Impact Expected_next
+AUD_sentiment_Low Impact Expected_next2
+AUD_sentiment_Medium Impact Expected
+AUD_sentiment_Medium Impact Expected_next
+AUD_sentiment_Medium Impact Expected_next2
+AUD_sentiment_Non-Economic
+AUD_sentiment_Non-Economic_next
+AUD_sentiment_Non-Economic_next2
+BCO_USD_close
+BCO_USD_high
+BCO_USD_low
+BCO_USD_open
+BCO_USD_vol
+CADHighImpactExpected
+CADHighImpactExpected_next
+CADHighImpactExpected_next2
+CADLowImpactExpected
+CADLowImpactExpected_next
+CADLowImpactExpected_next2
+CADMediumImpactExpected
+CADMediumImpactExpected_next
+CADMediumImpactExpected_next2
+CADNon-Economic
+CADNon-Economic_next
+CADNon-Economic_next2
+CAD_CHF_close
+CAD_CHF_high
+CAD_CHF_low
+CAD_CHF_open
+CAD_CHF_vol
+CAD_HKD_close
+CAD_HKD_high
+CAD_HKD_low
+CAD_HKD_open
+CAD_HKD_vol
+CAD_JPY_close
+CAD_JPY_high
+CAD_JPY_low
+CAD_JPY_open
+CAD_JPY_vol
+CAD_SGD_close
+CAD_SGD_high
+CAD_SGD_low
+CAD_SGD_open
+CAD_SGD_vol
+CAD_sentiment_High Impact Expected
+CAD_sentiment_High Impact Expected_next
+CAD_sentiment_High Impact Expected_next2
+CAD_sentiment_Low Impact Expected
+CAD_sentiment_Low Impact Expected_next
+CAD_sentiment_Low Impact Expected_next2
+CAD_sentiment_Medium Impact Expected
+CAD_sentiment_Medium Impact Expected_next
+CAD_sentiment_Medium Impact Expected_next2
+CAD_sentiment_Non-Economic
+CAD_sentiment_Non-Economic_next
+CAD_sentiment_Non-Economic_next2
+CHFHighImpactExpected
+CHFHighImpactExpected_next
+CHFHighImpactExpected_next2
+CHFLowImpactExpected
+CHFLowImpactExpected_next
+CHFLowImpactExpected_next2
+CHFMediumImpactExpected
+CHFMediumImpactExpected_next
+CHFMediumImpactExpected_next2
+CHFNon-Economic
+CHFNon-Economic_next
+CHFNon-Economic_next2
+CHF_HKD_close
+CHF_HKD_high
+CHF_HKD_low
+CHF_HKD_open
+CHF_HKD_vol
+CHF_JPY_close
+CHF_JPY_high
+CHF_JPY_low
+CHF_JPY_open
+CHF_JPY_vol
+CHF_ZAR_close
+CHF_ZAR_high
+CHF_ZAR_low
+CHF_ZAR_open
+CHF_ZAR_vol
+CHF_sentiment_High Impact Expected
+CHF_sentiment_High Impact Expected_next
+CHF_sentiment_High Impact Expected_next2
+CHF_sentiment_Low Impact Expected
+CHF_sentiment_Low Impact Expected_next
+CHF_sentiment_Low Impact Expected_next2
+CHF_sentiment_Medium Impact Expected
+CHF_sentiment_Medium Impact Expected_next
+CHF_sentiment_Medium Impact Expected_next2
+CHF_sentiment_Non-Economic
+CHF_sentiment_Non-Economic_next
+CHF_sentiment_Non-Economic_next2
+CN50_USD_close
+CN50_USD_high
+CN50_USD_low
+CN50_USD_open
+CN50_USD_vol
+CNYHighImpactExpected
+CNYHighImpactExpected_next
+CNYHighImpactExpected_next2
+CNYLowImpactExpected
+CNYLowImpactExpected_next
+CNYLowImpactExpected_next2
+CNYMediumImpactExpected
+CNYMediumImpactExpected_next
+CNYMediumImpactExpected_next2
+CNYNon-Economic
+CNYNon-Economic_next
+CNYNon-Economic_next2
+CNY_sentiment_High Impact Expected
+CNY_sentiment_High Impact Expected_next
+CNY_sentiment_High Impact Expected_next2
+CNY_sentiment_Low Impact Expected
+CNY_sentiment_Low Impact Expected_next
+CNY_sentiment_Low Impact Expected_next2
+CNY_sentiment_Medium Impact Expected
+CNY_sentiment_Medium Impact Expected_next
+CNY_sentiment_Medium Impact Expected_next2
+CNY_sentiment_Non-Economic
+CNY_sentiment_Non-Economic_next
+CNY_sentiment_Non-Economic_next2
+CORN_USD_close
+CORN_USD_high
+CORN_USD_low
+CORN_USD_open
+CORN_USD_vol
+DE10YB_EUR_close
+DE10YB_EUR_high
+DE10YB_EUR_low
+DE10YB_EUR_open
+DE10YB_EUR_vol
+DE30_EUR_close
+DE30_EUR_high
+DE30_EUR_low
+DE30_EUR_open
+DE30_EUR_vol
+EU50_EUR_close
+EU50_EUR_high
+EU50_EUR_low
+EU50_EUR_open
+EU50_EUR_vol
+EURHighImpactExpected
+EURHighImpactExpected_next
+EURHighImpactExpected_next2
+EURLowImpactExpected
+EURLowImpactExpected_next
+EURLowImpactExpected_next2
+EURMediumImpactExpected
+EURMediumImpactExpected_next
+EURMediumImpactExpected_next2
+EURNon-Economic
+EURNon-Economic_next
+EURNon-Economic_next2
+EUR_AUD_close
+EUR_AUD_high
+EUR_AUD_low
+EUR_AUD_open
+EUR_AUD_vol
+EUR_CAD_close
+EUR_CAD_high
+EUR_CAD_low
+EUR_CAD_open
+EUR_CAD_vol
+EUR_CHF_close
+EUR_CHF_high
+EUR_CHF_low
+EUR_CHF_open
+EUR_CHF_vol
+EUR_CZK_close
+EUR_CZK_high
+EUR_CZK_low
+EUR_CZK_open
+EUR_CZK_vol
+EUR_DKK_close
+EUR_DKK_high
+EUR_DKK_low
+EUR_DKK_open
+EUR_DKK_vol
+EUR_GBP_close
+EUR_GBP_high
+EUR_GBP_low
+EUR_GBP_open
+EUR_GBP_vol
+EUR_HKD_close
+EUR_HKD_high
+EUR_HKD_low
+EUR_HKD_open
+EUR_HKD_vol
+EUR_HUF_close
+EUR_HUF_high
+EUR_HUF_low
+EUR_HUF_open
+EUR_HUF_vol
+EUR_JPY_close
+EUR_JPY_high
+EUR_JPY_low
+EUR_JPY_open
+EUR_JPY_vol
+EUR_NOK_close
+EUR_NOK_high
+EUR_NOK_low
+EUR_NOK_open
+EUR_NOK_vol
+EUR_NZD_close
+EUR_NZD_high
+EUR_NZD_low
+EUR_NZD_open
+EUR_NZD_vol
+EUR_PLN_close
+EUR_PLN_high
+EUR_PLN_low
+EUR_PLN_open
+EUR_PLN_vol
+EUR_SEK_close
+EUR_SEK_high
+EUR_SEK_low
+EUR_SEK_open
+EUR_SEK_vol
+EUR_SGD_close
+EUR_SGD_high
+EUR_SGD_low
+EUR_SGD_open
+EUR_SGD_vol
+EUR_TRY_close
+EUR_TRY_high
+EUR_TRY_low
+EUR_TRY_open
+EUR_TRY_vol
+EUR_USD_close
+EUR_USD_high
+EUR_USD_low
+EUR_USD_open
+EUR_USD_vol
+EUR_ZAR_close
+EUR_ZAR_high
+EUR_ZAR_low
+EUR_ZAR_open
+EUR_ZAR_vol
+EUR_sentiment_High Impact Expected
+EUR_sentiment_High Impact Expected_next
+EUR_sentiment_High Impact Expected_next2
+EUR_sentiment_Low Impact Expected
+EUR_sentiment_Low Impact Expected_next
+EUR_sentiment_Low Impact Expected_next2
+EUR_sentiment_Medium Impact Expected
+EUR_sentiment_Medium Impact Expected_next
+EUR_sentiment_Medium Impact Expected_next2
+EUR_sentiment_Non-Economic
+EUR_sentiment_Non-Economic_next
+EUR_sentiment_Non-Economic_next2
+FR40_EUR_close
+FR40_EUR_high
+FR40_EUR_low
+FR40_EUR_open
+FR40_EUR_vol
+GBPHighImpactExpected
+GBPHighImpactExpected_next
+GBPHighImpactExpected_next2
+GBPLowImpactExpected
+GBPLowImpactExpected_next
+GBPLowImpactExpected_next2
+GBPMediumImpactExpected
+GBPMediumImpactExpected_next
+GBPMediumImpactExpected_next2
+GBPNon-Economic
+GBPNon-Economic_next
+GBPNon-Economic_next2
+GBP_AUD_close
+GBP_AUD_high
+GBP_AUD_low
+GBP_AUD_open
+GBP_AUD_vol
+GBP_CAD_close
+GBP_CAD_high
+GBP_CAD_low
+GBP_CAD_open
+GBP_CAD_vol
+GBP_CHF_close
+GBP_CHF_high
+GBP_CHF_low
+GBP_CHF_open
+GBP_CHF_vol
+GBP_HKD_close
+GBP_HKD_high
+GBP_HKD_low
+GBP_HKD_open
+GBP_HKD_vol
+GBP_JPY_close
+GBP_JPY_high
+GBP_JPY_low
+GBP_JPY_open
+GBP_JPY_vol
+GBP_NZD_close
+GBP_NZD_high
+GBP_NZD_low
+GBP_NZD_open
+GBP_NZD_vol
+GBP_PLN_close
+GBP_PLN_high
+GBP_PLN_low
+GBP_PLN_open
+GBP_PLN_vol
+GBP_SGD_close
+GBP_SGD_high
+GBP_SGD_low
+GBP_SGD_open
+GBP_SGD_vol
+GBP_USD_close
+GBP_USD_high
+GBP_USD_low
+GBP_USD_open
+GBP_USD_vol
+GBP_ZAR_close
+GBP_ZAR_high
+GBP_ZAR_low
+GBP_ZAR_open
+GBP_ZAR_vol
+GBP_sentiment_High Impact Expected
+GBP_sentiment_High Impact Expected_next
+GBP_sentiment_High Impact Expected_next2
+GBP_sentiment_Low Impact Expected
+GBP_sentiment_Low Impact Expected_next
+GBP_sentiment_Low Impact Expected_next2
+GBP_sentiment_Medium Impact Expected
+GBP_sentiment_Medium Impact Expected_next
+GBP_sentiment_Medium Impact Expected_next2
+GBP_sentiment_Non-Economic
+GBP_sentiment_Non-Economic_next
+GBP_sentiment_Non-Economic_next2
+HK33_HKD_close
+HK33_HKD_high
+HK33_HKD_low
+HK33_HKD_open
+HK33_HKD_vol
+HKD_JPY_close
+HKD_JPY_high
+HKD_JPY_low
+HKD_JPY_open
+HKD_JPY_vol
+IN50_USD_close
+IN50_USD_high
+IN50_USD_low
+IN50_USD_open
+IN50_USD_vol
+JP225_USD_close
+JP225_USD_high
+JP225_USD_low
+JP225_USD_open
+JP225_USD_vol
+JPYHighImpactExpected
+JPYHighImpactExpected_next
+JPYHighImpactExpected_next2
+JPYLowImpactExpected
+JPYLowImpactExpected_next
+JPYLowImpactExpected_next2
+JPYMediumImpactExpected
+JPYMediumImpactExpected_next
+JPYMediumImpactExpected_next2
+JPYNon-Economic
+JPYNon-Economic_next
+JPYNon-Economic_next2
+JPY_sentiment_High Impact Expected
+JPY_sentiment_High Impact Expected_next
+JPY_sentiment_High Impact Expected_next2
+JPY_sentiment_Low Impact Expected
+JPY_sentiment_Low Impact Expected_next
+JPY_sentiment_Low Impact Expected_next2
+JPY_sentiment_Medium Impact Expected
+JPY_sentiment_Medium Impact Expected_next
+JPY_sentiment_Medium Impact Expected_next2
+JPY_sentiment_Non-Economic
+JPY_sentiment_Non-Economic_next
+JPY_sentiment_Non-Economic_next2
+NAS100_USD_close
+NAS100_USD_high
+NAS100_USD_low
+NAS100_USD_open
+NAS100_USD_vol
+NATGAS_USD_close
+NATGAS_USD_high
+NATGAS_USD_low
+NATGAS_USD_open
+NATGAS_USD_vol
+NL25_EUR_close
+NL25_EUR_high
+NL25_EUR_low
+NL25_EUR_open
+NL25_EUR_vol
+NZDHighImpactExpected
+NZDHighImpactExpected_next
+NZDHighImpactExpected_next2
+NZDLowImpactExpected
+NZDLowImpactExpected_next
+NZDLowImpactExpected_next2
+NZDMediumImpactExpected
+NZDMediumImpactExpected_next
+NZDMediumImpactExpected_next2
+NZDNon-Economic
+NZDNon-Economic_next
+NZDNon-Economic_next2
+NZD_CAD_close
+NZD_CAD_high
+NZD_CAD_low
+NZD_CAD_open
+NZD_CAD_vol
+NZD_CHF_close
+NZD_CHF_high
+NZD_CHF_low
+NZD_CHF_open
+NZD_CHF_vol
+NZD_HKD_close
+NZD_HKD_high
+NZD_HKD_low
+NZD_HKD_open
+NZD_HKD_vol
+NZD_JPY_close
+NZD_JPY_high
+NZD_JPY_low
+NZD_JPY_open
+NZD_JPY_vol
+NZD_SGD_close
+NZD_SGD_high
+NZD_SGD_low
+NZD_SGD_open
+NZD_SGD_vol
+NZD_USD_close
+NZD_USD_high
+NZD_USD_low
+NZD_USD_open
+NZD_USD_vol
+NZD_sentiment_High Impact Expected
+NZD_sentiment_High Impact Expected_next
+NZD_sentiment_High Impact Expected_next2
+NZD_sentiment_Low Impact Expected
+NZD_sentiment_Low Impact Expected_next
+NZD_sentiment_Low Impact Expected_next2
+NZD_sentiment_Medium Impact Expected
+NZD_sentiment_Medium Impact Expected_next
+NZD_sentiment_Medium Impact Expected_next2
+NZD_sentiment_Non-Economic
+NZD_sentiment_Non-Economic_next
+NZD_sentiment_Non-Economic_next2
+SG30_SGD_close
+SG30_SGD_high
+SG30_SGD_low
+SG30_SGD_open
+SG30_SGD_vol
+SGD_CHF_close
+SGD_CHF_high
+SGD_CHF_low
+SGD_CHF_open
+SGD_CHF_vol
+SGD_HKD_close
+SGD_HKD_high
+SGD_HKD_low
+SGD_HKD_open
+SGD_HKD_vol
+SGD_JPY_close
+SGD_JPY_high
+SGD_JPY_low
+SGD_JPY_open
+SGD_JPY_vol
+SOYBN_USD_close
+SOYBN_USD_high
+SOYBN_USD_low
+SOYBN_USD_open
+SOYBN_USD_vol
+SPX500_USD_close
+SPX500_USD_high
+SPX500_USD_low
+SPX500_USD_open
+SPX500_USD_vol
+SUGAR_USD_close
+SUGAR_USD_high
+SUGAR_USD_low
+SUGAR_USD_open
+SUGAR_USD_vol
+TRY_JPY_close
+TRY_JPY_high
+TRY_JPY_low
+TRY_JPY_open
+TRY_JPY_vol
+TWIX_USD_close
+TWIX_USD_high
+TWIX_USD_low
+TWIX_USD_open
+TWIX_USD_vol
+UK100_GBP_close
+UK100_GBP_high
+UK100_GBP_low
+UK100_GBP_open
+UK100_GBP_vol
+UK10YB_GBP_close
+UK10YB_GBP_high
+UK10YB_GBP_low
+UK10YB_GBP_open
+UK10YB_GBP_vol
+US2000_USD_close
+US2000_USD_high
+US2000_USD_low
+US2000_USD_open
+US2000_USD_vol
+US30_USD_close
+US30_USD_open
+US30_USD_vol
+USB02Y_USD_close
+USB02Y_USD_high
+USB02Y_USD_low
+USB02Y_USD_open
+USB02Y_USD_vol
+USB05Y_USD_close
+USB05Y_USD_high
+USB05Y_USD_low
+USB05Y_USD_open
+USB05Y_USD_vol
+USB10Y_USD_close
+USB10Y_USD_high
+USB10Y_USD_low
+USB10Y_USD_open
+USB10Y_USD_vol
+USB30Y_USD_close
+USB30Y_USD_high
+USB30Y_USD_low
+USB30Y_USD_open
+USB30Y_USD_vol
+USDHighImpactExpected
+USDHighImpactExpected_next
+USDHighImpactExpected_next2
+USDLowImpactExpected
+USDLowImpactExpected_next
+USDLowImpactExpected_next2
+USDMediumImpactExpected
+USDMediumImpactExpected_next
+USDMediumImpactExpected_next2
+USDNon-Economic
+USDNon-Economic_next
+USDNon-Economic_next2
+USD_CAD_close
+USD_CAD_high
+USD_CAD_low
+USD_CAD_open
+USD_CAD_vol
+USD_CHF_close
+USD_CHF_high
+USD_CHF_low
+USD_CHF_open
+USD_CHF_vol
+USD_CNH_close
+USD_CNH_high
+USD_CNH_low
+USD_CNH_open
+USD_CNH_vol
+USD_CZK_close
+USD_CZK_high
+USD_CZK_low
+USD_CZK_open
+USD_CZK_vol
+USD_DKK_close
+USD_DKK_high
+USD_DKK_low
+USD_DKK_open
+USD_DKK_vol
+USD_HKD_close
+USD_HKD_high
+USD_HKD_low
+USD_HKD_open
+USD_HKD_vol
+USD_HUF_close
+USD_HUF_high
+USD_HUF_low
+USD_HUF_open
+USD_HUF_vol
+USD_INR_close
+USD_INR_high
+USD_INR_low
+USD_INR_open
+USD_INR_vol
+USD_JPY_close
+USD_JPY_open
+USD_JPY_vol
+USD_MXN_close
+USD_MXN_high
+USD_MXN_low
+USD_MXN_open
+USD_MXN_vol
+USD_NOK_close
+USD_NOK_high
+USD_NOK_low
+USD_NOK_open
+USD_NOK_vol
+USD_PLN_close
+USD_PLN_high
+USD_PLN_low
+USD_PLN_open
+USD_PLN_vol
+USD_SAR_close
+USD_SAR_open
+USD_SAR_vol
+USD_SEK_close
+USD_SEK_high
+USD_SEK_low
+USD_SEK_open
+USD_SEK_vol
+USD_SGD_close
+USD_SGD_high
+USD_SGD_low
+USD_SGD_open
+USD_SGD_vol
+USD_THB_close
+USD_THB_high
+USD_THB_low
+USD_THB_open
+USD_THB_vol
+USD_TRY_close
+USD_TRY_high
+USD_TRY_low
+USD_TRY_open
+USD_TRY_vol
+USD_ZAR_close
+USD_ZAR_high
+USD_ZAR_low
+USD_ZAR_open
+USD_ZAR_vol
+USD_sentiment_High Impact Expected
+USD_sentiment_High Impact Expected_next
+USD_sentiment_High Impact Expected_next2
+USD_sentiment_Low Impact Expected
+USD_sentiment_Low Impact Expected_next
+USD_sentiment_Low Impact Expected_next2
+USD_sentiment_Medium Impact Expected
+USD_sentiment_Medium Impact Expected_next
+USD_sentiment_Medium Impact Expected_next2
+USD_sentiment_Non-Economic
+USD_sentiment_Non-Economic_next
+USD_sentiment_Non-Economic_next2
+WHEAT_USD_close
+WHEAT_USD_high
+WHEAT_USD_low
+WHEAT_USD_open
+WHEAT_USD_vol
+WTICO_USD_close
+WTICO_USD_high
+WTICO_USD_low
+WTICO_USD_open
+WTICO_USD_vol
+XAG_AUD_close
+XAG_AUD_high
+XAG_AUD_low
+XAG_AUD_open
+XAG_AUD_vol
+XAG_CAD_close
+XAG_CAD_high
+XAG_CAD_low
+XAG_CAD_open
+XAG_CAD_vol
+XAG_CHF_close
+XAG_CHF_high
+XAG_CHF_low
+XAG_CHF_open
+XAG_CHF_vol
+XAG_EUR_close
+XAG_EUR_high
+XAG_EUR_low
+XAG_EUR_open
+XAG_EUR_vol
+XAG_GBP_close
+XAG_GBP_high
+XAG_GBP_low
+XAG_GBP_open
+XAG_GBP_vol
+XAG_HKD_close
+XAG_HKD_high
+XAG_HKD_low
+XAG_HKD_open
+XAG_HKD_vol
+XAG_JPY_close
+XAG_JPY_high
+XAG_JPY_low
+XAG_JPY_open
+XAG_JPY_vol
+XAG_NZD_close
+XAG_NZD_high
+XAG_NZD_low
+XAG_NZD_open
+XAG_NZD_vol
+XAG_SGD_close
+XAG_SGD_high
+XAG_SGD_low
+XAG_SGD_open
+XAG_SGD_vol
+XAG_USD_close
+XAG_USD_high
+XAG_USD_low
+XAG_USD_open
+XAG_USD_vol
+XAU_AUD_close
+XAU_AUD_high
+XAU_AUD_low
+XAU_AUD_open
+XAU_AUD_vol
+XAU_CAD_close
+XAU_CAD_high
+XAU_CAD_low
+XAU_CAD_open
+XAU_CAD_vol
+XAU_CHF_close
+XAU_CHF_high
+XAU_CHF_low
+XAU_CHF_open
+XAU_CHF_vol
+XAU_EUR_close
+XAU_EUR_high
+XAU_EUR_low
+XAU_EUR_open
+XAU_EUR_vol
+XAU_GBP_close
+XAU_GBP_high
+XAU_GBP_low
+XAU_GBP_open
+XAU_GBP_vol
+XAU_HKD_close
+XAU_HKD_high
+XAU_HKD_low
+XAU_HKD_open
+XAU_HKD_vol
+XAU_JPY_close
+XAU_JPY_high
+XAU_JPY_low
+XAU_JPY_open
+XAU_JPY_vol
+XAU_NZD_close
+XAU_NZD_high
+XAU_NZD_low
+XAU_NZD_open
+XAU_NZD_vol
+XAU_SGD_close
+XAU_SGD_high
+XAU_SGD_low
+XAU_SGD_open
+XAU_SGD_vol
+XAU_USD_close
+XAU_USD_high
+XAU_USD_low
+XAU_USD_open
+XAU_USD_vol
+XAU_XAG_close
+XAU_XAG_high
+XAU_XAG_low
+XAU_XAG_open
+XAU_XAG_vol
+XCU_USD_close
+XCU_USD_high
+XCU_USD_low
+XCU_USD_open
+XCU_USD_vol
+XPD_USD_close
+XPD_USD_high
+XPD_USD_low
+XPD_USD_open
+XPD_USD_vol
+XPT_USD_close
+XPT_USD_high
+XPT_USD_low
+XPT_USD_open
+XPT_USD_vol
+ZAR_JPY_close
+ZAR_JPY_high
+ZAR_JPY_low
+ZAR_JPY_open
+ZAR_JPY_vol
+date
+weekday

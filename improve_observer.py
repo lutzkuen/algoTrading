@@ -6,4 +6,4 @@ except ImportError:
     from observer import controller as controller
 
 cont = controller.Controller('../settings_triangle.conf', None, verbose=2)
-cont.data2sheet(improve_model=True, write_predict=False, read_raw=True)
+cont.data2sheet(improve_model=True, write_predict=False, write_raw=False)
