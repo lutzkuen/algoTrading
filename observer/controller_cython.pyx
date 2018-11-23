@@ -335,6 +335,19 @@ class Controller(object):
             return None
         return -pip_loc[0] + 1
 
+    def get_bidask(self, ins):
+        # Returns spread for a instrument
+        # ins: Instrument, e.g. EUR_USD
+
+        args = {'instruments': ins}
+        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
+                                                             ), **args)
+        price = json.loads(price_raw.raw_body)
+        return (float(price.get('prices')[0].get('bids')[0].get('price'
+                                                                     )), float(price.get('prices')[0].get('asks'
+                                                                                                           )[0].get(
+            'price')))
+
     def get_spread(self, ins):
         # Returns spread for a instrument
         # ins: Instrument, e.g. EUR_USD
@@ -951,6 +964,7 @@ class Controller(object):
         if not low_score:
             return
         spread = self.get_spread(ins)
+        bid, ask = self.get_bidask(ins)
         trades = []
         current_units = 0
         for tr in self.trades:
@@ -972,18 +986,22 @@ class Controller(object):
         if close_score < -1:
             return
         if cl > 0:
-            step = 1.5 * abs(low_score)
+            step = 2 * abs(low_score)
             sl = lo - step
-            entry = max([price + 2 * spread, lo])
+            entry = bid
+            if bid > lo:
+                return
             sldist = entry - sl + spread
             tp2 = hi
             tpstep = (tp2 - price) / 3
             tp1 = hi - 2 * tpstep
             tp3 = hi - tpstep
         else:
-            step = 1.5 * abs(high_score)
+            step = 2 * abs(high_score)
             sl = hi + step
-            entry = min([price - 2 * spread, hi])
+            entry = ask
+            if ask < hi:
+                return
             sldist = sl - entry + spread
             tp2 = lo
             tpstep = (price - tp2) / 3
@@ -1014,7 +1032,7 @@ class Controller(object):
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             return None
         # otype = 'MARKET'
-        otype = 'STOP'
+        otype = 'LIMIT'
         format_string = '30.' + str(pip_location) + 'f'
         tp1 = format(tp1, format_string).strip()
         tp2 = format(tp2, format_string).strip()
@@ -1026,7 +1044,7 @@ class Controller(object):
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
-        for tp in [tp1, tp2, tp3]:
+        for tp in [tp2]:
             args = {'order': {
                 'instrument': ins,
                 'units': units,
@@ -1035,8 +1053,8 @@ class Controller(object):
                 'timeInForce': 'GTD',
                 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'},
-                'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                #'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
             if self.verbose > 1:
                 print(args)
