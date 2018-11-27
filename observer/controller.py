@@ -17,6 +17,7 @@ Author: Lutz Kuenneke, 26.07.2018
 """
 import json
 import code
+import time
 
 try:
     # noinspection PyUnresolvedReferences
@@ -317,6 +318,8 @@ class Controller(object):
         # the following arrays are used to collect aggregate information in estimator improvement
         self.accuracy_array = []
         self.n_components_array = []
+        self.spreads = {}
+        self.prices = {}
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
         # collect data for all available instrument from broker and store in database
@@ -342,8 +345,14 @@ class Controller(object):
         # ins: Instrument, e.g. EUR_USD
 
         args = {'instruments': ins}
-        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
-                                                             ), **args)
+        success = False
+        while not success:
+            try:
+                price_raw = self.oanda.pricing.get(self.settings.get('account_id'), **args)
+                success = True
+            except Exception as e:
+                print(str(e))
+                time.sleep(1)
         price = json.loads(price_raw.raw_body)
         return (float(price.get('prices')[0].get('bids')[0].get('price'
                                                                      )), float(price.get('prices')[0].get('asks'
@@ -356,14 +365,23 @@ class Controller(object):
 
         if not v20present:
             return 0.00001
+        if ins in self.spreads.keys():
+            return self.spreads[ins]
         args = {'instruments': ins}
-        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
-                                                             ), **args)
+        success = False
+        while not success:
+            try:
+                price_raw = self.oanda.pricing.get(self.settings.get('account_id'), **args)
+                success = True
+            except Exception as e:
+                print(str(e))
+                time.sleep(1)
         price = json.loads(price_raw.raw_body)
         spread = abs(float(price.get('prices')[0].get('bids')[0].get('price'
                                                                      )) - float(price.get('prices')[0].get('asks'
                                                                                                            )[0].get(
             'price')))
+        self.spreads[ins] = spread
         return spread
 
     def get_price(self, ins):
@@ -371,6 +389,8 @@ class Controller(object):
         # ins: Instrument, e.g. EUR_USD
 
         args = {'instruments': ins}
+        if ins in self.prices.keys():
+            return self.prices[ins]
         price_raw = self.oanda.pricing.get(self.settings.get('account_id'
                                                              ), **args)
         price_json = json.loads(price_raw.raw_body)
@@ -379,6 +399,7 @@ class Controller(object):
                                                                                                                  )[
             0].get(
             'price'))) / 2.0
+        self.prices[ins] = price
         return price
 
     def strip_number(self, _number):
@@ -556,7 +577,7 @@ class Controller(object):
             else:
                 candle = self.table.find_one(date=date, ins=ins)
             if not candle:
-                if self.verbose > 1:
+                if self.verbose > 2:
                     print('Candle does not exist ' + ins + ' ' + str(date))
                 data_frame[ins + '_vol'] = -999999
                 data_frame[ins + '_open'] = -999999
@@ -644,14 +665,14 @@ class Controller(object):
                                               widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
                 bar.start()
             index = 0
-            num_samples = 1
+            self.num_samples = 1
             if improve_model:
-                num_samples = 10
+                self.num_samples = 2
             for date in dates:
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
-                for i in range(num_samples):  # 2 fold over sampling
+                for i in range(self.num_samples):  # 2 fold over sampling
                     df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
@@ -700,7 +721,6 @@ class Controller(object):
         if improve_model and self.verbose > 0:
             print('Final Model accuracy: Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
                 np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
-            print('Percentile: ' + str(np.min(self.n_components_array)) + '/' + str(np.mean(self.n_components_array)) + '/' + str(np.max(self.n_components_array)))
         if self.verbose > 0:
             bar.finish()
         if write_predict:
@@ -774,9 +794,9 @@ class Controller(object):
             'max_features': [None],
             'max_leaf_nodes': [None]
         }
-        weights = weights[1:]
-        y = y[1:]  # drop first line
-        x = x[:-1, :]  # drop the last line
+        weights = weights[self.num_samples:]
+        y = y[self.num_samples:]  # drop first line
+        x = x[:-self.num_samples, :]  # drop the last line
         i = 0
         while i < y.shape[0]:
             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
@@ -966,10 +986,8 @@ class Controller(object):
             return
         if cl > 0:
             step = 2 * abs(low_score)
-            sl = lo - step
-            entry = bid
-            if bid > lo:
-                return
+            sl = lo - step - spread
+            entry = min(lo, bid)
             sldist = entry - sl + spread
             tp2 = hi
             tpstep = (tp2 - price) / 3
@@ -977,10 +995,8 @@ class Controller(object):
             tp3 = hi - tpstep
         else:
             step = 2 * abs(high_score)
-            sl = hi + step
-            entry = ask
-            if ask < hi:
-                return
+            sl = hi + step + spread
+            entry = max(hi, ask)
             sldist = sl - entry + spread
             tp2 = lo
             tpstep = (price - tp2) / 3
@@ -1019,7 +1035,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(minutes=10)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=18)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
