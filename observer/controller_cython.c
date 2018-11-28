@@ -25868,7 +25868,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
  *         if tp2 < sl:
  *             units *= -1             # <<<<<<<<<<<<<<
  *         relative_cost = spread/abs(tp2 - entry)
- *         if (1 + close_score) <= relative_cost:
+ *         if abs(cl) <= relative_cost:
  */
     __pyx_t_4 = PyNumber_InPlaceMultiply(__pyx_v_units, __pyx_int_neg_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1021, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -25888,7 +25888,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
  *         if tp2 < sl:
  *             units *= -1
  *         relative_cost = spread/abs(tp2 - entry)             # <<<<<<<<<<<<<<
- *         if (1 + close_score) <= relative_cost:
+ *         if abs(cl) <= relative_cost:
  *             return None # edge too small to cover cost
  */
   __pyx_t_4 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_entry); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1022, __pyx_L1_error)
@@ -25905,11 +25905,11 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
   /* "controller_cython.pyx":1023
  *             units *= -1
  *         relative_cost = spread/abs(tp2 - entry)
- *         if (1 + close_score) <= relative_cost:             # <<<<<<<<<<<<<<
+ *         if abs(cl) <= relative_cost:             # <<<<<<<<<<<<<<
  *             return None # edge too small to cover cost
  *         pip_location = self.get_pip_size(ins)
  */
-  __pyx_t_4 = __Pyx_PyInt_AddCObj(__pyx_int_1, __pyx_v_close_score, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1023, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_v_cl); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 1023, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_v_relative_cost, Py_LE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 1023, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -25919,7 +25919,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
 
     /* "controller_cython.pyx":1024
  *         relative_cost = spread/abs(tp2 - entry)
- *         if (1 + close_score) <= relative_cost:
+ *         if abs(cl) <= relative_cost:
  *             return None # edge too small to cover cost             # <<<<<<<<<<<<<<
  *         pip_location = self.get_pip_size(ins)
  *         pip_size = 10 ** (-pip_location + 1)
@@ -25931,14 +25931,14 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
     /* "controller_cython.pyx":1023
  *             units *= -1
  *         relative_cost = spread/abs(tp2 - entry)
- *         if (1 + close_score) <= relative_cost:             # <<<<<<<<<<<<<<
+ *         if abs(cl) <= relative_cost:             # <<<<<<<<<<<<<<
  *             return None # edge too small to cover cost
  *         pip_location = self.get_pip_size(ins)
  */
   }
 
   /* "controller_cython.pyx":1025
- *         if (1 + close_score) <= relative_cost:
+ *         if abs(cl) <= relative_cost:
  *             return None # edge too small to cover cost
  *         pip_location = self.get_pip_size(ins)             # <<<<<<<<<<<<<<
  *         pip_size = 10 ** (-pip_location + 1)

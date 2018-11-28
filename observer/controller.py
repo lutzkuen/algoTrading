@@ -1020,7 +1020,7 @@ class Controller(object):
         if tp2 < sl:
             units *= -1
         relative_cost = spread/abs(tp2 - entry)
-        if (1 + close_score) <= relative_cost:
+        if abs(cl) <= relative_cost:
             return None # edge too small to cover cost
         pip_location = self.get_pip_size(ins)
         pip_size = 10 ** (-pip_location + 1)
