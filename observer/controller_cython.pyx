@@ -17,6 +17,7 @@ Author: Lutz Kuenneke, 26.07.2018
 """
 import json
 import code
+import time
 
 try:
     # noinspection PyUnresolvedReferences
@@ -37,8 +38,10 @@ import math
 import datetime
 import numpy as np
 import pandas as pd
+from sklearn import preprocessing
 from sklearn.ensemble import GradientBoostingRegressor
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.neural_network import MLPRegressor, MLPClassifier
 from sklearn.model_selection import GridSearchCV
 import dataset
 import pickle
@@ -130,8 +133,8 @@ class EstimatorPipeline(object):
 
     feature_importances_: object
 
-    def __init__(self, percentile=5, n_components=35, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
-                 classifier=False):
+    def __init__(self, percentile=5, n_components=0, learning_rate=0.1, n_estimators=100, min_samples_split=2, path=None,
+                 classifier=False, input_dimension=150):
         # Class init
         # percentile: importance percentile of features to use
         # learning_rate: learning rate for the gradient boosting
@@ -171,7 +174,7 @@ class EstimatorPipeline(object):
             score_func: Callable[[Any, Any], Any] = lambda x, y: get_gb_importances(self.gb, x, y)
             self.percentile = SelectPercentile(score_func=score_func, percentile=percentile)
             if n_components > 0:
-                self.pca = PCA(n_components=n_components)
+                self.pca = PCA(n_components=int(input_dimension*n_components*percentile/100))
             else:
                 self.pca = None
         if not self.pca:
@@ -315,6 +318,8 @@ class Controller(object):
         # the following arrays are used to collect aggregate information in estimator improvement
         self.accuracy_array = []
         self.n_components_array = []
+        self.spreads = {}
+        self.prices = {}
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
         # collect data for all available instrument from broker and store in database
@@ -340,8 +345,14 @@ class Controller(object):
         # ins: Instrument, e.g. EUR_USD
 
         args = {'instruments': ins}
-        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
-                                                             ), **args)
+        success = False
+        while not success:
+            try:
+                price_raw = self.oanda.pricing.get(self.settings.get('account_id'), **args)
+                success = True
+            except Exception as e:
+                print(str(e))
+                time.sleep(1)
         price = json.loads(price_raw.raw_body)
         return (float(price.get('prices')[0].get('bids')[0].get('price'
                                                                      )), float(price.get('prices')[0].get('asks'
@@ -352,14 +363,25 @@ class Controller(object):
         # Returns spread for a instrument
         # ins: Instrument, e.g. EUR_USD
 
+        if not v20present:
+            return 0.00001
+        if ins in self.spreads.keys():
+            return self.spreads[ins]
         args = {'instruments': ins}
-        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
-                                                             ), **args)
+        success = False
+        while not success:
+            try:
+                price_raw = self.oanda.pricing.get(self.settings.get('account_id'), **args)
+                success = True
+            except Exception as e:
+                print(str(e))
+                time.sleep(1)
         price = json.loads(price_raw.raw_body)
         spread = abs(float(price.get('prices')[0].get('bids')[0].get('price'
                                                                      )) - float(price.get('prices')[0].get('asks'
                                                                                                            )[0].get(
             'price')))
+        self.spreads[ins] = spread
         return spread
 
     def get_price(self, ins):
@@ -367,6 +389,8 @@ class Controller(object):
         # ins: Instrument, e.g. EUR_USD
 
         args = {'instruments': ins}
+        if ins in self.prices.keys():
+            return self.prices[ins]
         price_raw = self.oanda.pricing.get(self.settings.get('account_id'
                                                              ), **args)
         price_json = json.loads(price_raw.raw_body)
@@ -375,6 +399,7 @@ class Controller(object):
                                                                                                                  )[
             0].get(
             'price'))) / 2.0
+        self.prices[ins] = price
         return price
 
     def strip_number(self, _number):
@@ -536,12 +561,15 @@ class Controller(object):
         candles = json.loads(response.raw_body)
         return candles.get('candles')
 
-    def get_market_df(self, date, inst, complete):
+    def get_market_df(self, date, inst, complete, bootstrap=False):
         # Create Market data portion of data frame
         # date: Date in Format 'YYYY-MM-DD'
         # inst: Array of instruments
         # complete: Whether to use only complete candles
-
+        if bootstrap:
+            bs_flag = 1
+        else:
+            bs_flag = 0
         data_frame = {'date': date}
         for ins in inst:
             if complete:
@@ -549,7 +577,7 @@ class Controller(object):
             else:
                 candle = self.table.find_one(date=date, ins=ins)
             if not candle:
-                if self.verbose > 1:
+                if self.verbose > 2:
                     print('Candle does not exist ' + ins + ' ' + str(date))
                 data_frame[ins + '_vol'] = -999999
                 data_frame[ins + '_open'] = -999999
@@ -557,17 +585,23 @@ class Controller(object):
                 data_frame[ins + '_high'] = -999999
                 data_frame[ins + '_low'] = -999999
             else:
-                data_frame[ins + '_vol'] = int(candle['volume'])
-                data_frame[ins + '_open'] = float(candle['open'])
-                if float(candle['close']) > float(candle['open']):
+                spread = self.get_spread(ins)
+                volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
+                open = float(candle['open'])+spread*np.random.normal()*0.5 * bs_flag
+                close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
+                high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
+                low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
+                data_frame[ins + '_vol'] = int(volume)
+                data_frame[ins + '_open'] = float(open)
+                if float(close) > float(open):
                     data_frame[ins + '_close'] = int(1)
                 else:
                     data_frame[ins + '_close'] = int(-1)
-                data_frame[ins + '_high'] = float(candle['high']) - float(candle['open'])
-                data_frame[ins + '_low'] = float(candle['low']) - float(candle['open'])
+                data_frame[ins + '_high'] = float(high) - float(open)
+                data_frame[ins + '_low'] = float(low) - float(open)
         return data_frame
 
-    def get_df_for_date(self, date, inst, complete):
+    def get_df_for_date(self, date, inst, complete, bootstrap=False):
         # Creates a dict containing all fields for the given date
         # date: Date to use in format 'YYYY-MM-DD'
         # inst: Array of instruments to use as inputs
@@ -580,12 +614,12 @@ class Controller(object):
         # start with the calendar data
         df_row = self.get_calendar_data(date)
         df_row['weekday'] = weekday
-        today_df = self.get_market_df(date, inst, complete)
+        today_df = self.get_market_df(date, inst, complete, bootstrap=bootstrap)
         # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
         # yest_df.pop('date')  # remove the date key from prev day
         return merge_dicts(df_row, today_df, '')
 
-    def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None, new_estim=False,
+    def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
                    complete=True, read_raw=False, close_only=False):
         # This method will take the input collected from oanda and forexfactory and merge in a Data Frame
         # write_raw: Write data frame used for training to disk
@@ -621,7 +655,7 @@ class Controller(object):
                     continue
                 dates.append(row['date'])
             df_dict = []
-            if (not improve_model) and (not new_estim):  # if we want to read only it is enough to take the last days
+            if (not improve_model):  # if we want to read only it is enough to take the last days
                 dates = dates[-3:]
             #dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
@@ -631,22 +665,24 @@ class Controller(object):
                                               widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
                 bar.start()
             index = 0
+            self.num_samples = 1
+            if improve_model:
+                self.num_samples = 4
             for date in dates:
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
-                # check whether the candle is from a weekday
-                df_row = self.get_df_for_date(date, inst, complete)
-                # df_row = merge_dicts(df_row, yest_df, '_yester')
-                if df_row:
-                    df_dict.append(df_row)
+                for i in range(self.num_samples):  # 2 fold over sampling
+                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
+                    # df_row = merge_dicts(df_row, yest_df, '_yester')
+                    if df_row:
+                        df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
             if self.verbose > 0:
                 bar.finish()
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
             df.to_csv(raw_name, index=False)
-            return
         date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
@@ -662,7 +698,7 @@ class Controller(object):
             index += 1
             parts = col.split('_')
             if len(parts) < 3:
-                if self.verbose > 1:
+                if self.verbose > 2:
                     print('WARNING: Unexpected column ' + col)
                 continue
             if not ('_high' in col or '_low' in col or '_close' in col):
@@ -673,7 +709,7 @@ class Controller(object):
                 continue
             if improve_model:
                 self.improve_estimator(col, df, date_column)
-            prediction_value, previous_value = self.predict_column(col, df, new_estimator=new_estim)
+            prediction_value, previous_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
             if instrument in prediction.keys():
@@ -685,7 +721,6 @@ class Controller(object):
         if improve_model and self.verbose > 0:
             print('Final Model accuracy: Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
                 np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
-            print('Percentile: ' + str(np.min(self.n_components_array)) + '/' + str(np.mean(self.n_components_array)) + '/' + str(np.max(self.n_components_array)))
         if self.verbose > 0:
             bar.finish()
         if write_predict:
@@ -727,7 +762,7 @@ class Controller(object):
             pcol = row.get('name')
             try:
                 estimator_path = self.settings.get('estim_path') + pcol
-                estimator = EstimatorPipeline(path=estimator_path)
+                estimator = pickle.load(open(estimator_path ,'rb')) # EstimatorPipeline(path=estimator_path)
             except FileNotFoundError:
                 print('Failed to load model for ' + pcol)
                 continue
@@ -745,55 +780,23 @@ class Controller(object):
         return math.exp(-delta.days / 365.25)  # exponentially decaying weight decay
 
     def improve_estimator(self, pcol, df, datecol):
-        try:
-            estimator_name = self.settings.get('estim_path') + pcol
-            estimator = EstimatorPipeline(path=estimator_name)
-        except FileNotFoundError:
-            print('Failed to load model for ' + pcol)
-            return
-        params = estimator.get_params()
-        attribute_switch = math.floor(np.random.random() * 3)
-        n_estimators_base = int(params.get('n_estimators'))
-        if attribute_switch == 0:
-            n_range = get_range_int(n_estimators_base, 0.1, lower=10)
-        else:
-            n_range = [n_estimators_base]
-        n_minsample = params.get('min_samples_split')
-        if attribute_switch == 1:
-            minsample = get_range_int(n_minsample, 0.1, lower=2)
-        else:
-            minsample = [n_minsample]
-        learning_rate = params.get('learning_rate')
-        if attribute_switch == 2:
-            n_learn = get_range_flo(learning_rate, 0.01, lower=0.0001, upper=1)
-        else:
-            n_learn = [learning_rate]
-        percentile = params.get('percentile')
-        # percentile is always considered because this might be the most crucial parameter
-        # as a rule of thumb the number of used features should be at most sqrt(num of samples)
-        n_features = df.shape[1]
-        max_features_percentile = 100  # min(100*math.sqrt(n_samples)/n_samples,100)
-        percentile_range = get_range_flo(percentile, 0.1, 1, max_features_percentile)
-        min_features_percentile = min(percentile_range)
-        max_components = math.floor(n_features * min_features_percentile/100)
-        #n_components = params.get('n_components')
-        n_components_range = [0, math.floor(max_components*0.5), math.floor(max_components*0.8)]
-        #n_components_range = get_range_int(n_components, 0.01, 4, max_components)
-        #n_components_range.append(0)  # always include 0 since the component stuff can break the estimator
-        if max_components not in n_components_range:
-            n_components_range.append(max_components)
-        parameters = {'n_estimators': n_range,
-                      'min_samples_split': minsample,
-                      'learning_rate': n_learn,
-                      'percentile': percentile_range,
-                      'n_components': n_components_range
-                      }
+        estimator_name = self.settings.get('estim_path') + pcol
+        #estimator = NormalizedMLP(path=estimator_name)
         weights = np.array(datecol.apply(self.dist_to_now).values[:])
         x = np.array(df.values[:])
         y = np.array(df[pcol].values[:])  # make a deep copy to prevent data loss in future iterations
-        weights = weights[1:]
-        y = y[1:]  # drop first line
-        x = x[:-1, :]  # drop the last line
+        parameters = {
+            'learning_rate': [0.01],
+            'n_estimators': [500],
+            'subsample': [1.0],
+            'min_samples_split': [2],
+            'max_depth': [3],
+            'max_features': [None, 5],
+            'max_leaf_nodes': [None]
+        }
+        weights = weights[self.num_samples:]
+        y = y[self.num_samples:]  # drop first line
+        x = x[:-self.num_samples, :]  # drop the last line
         i = 0
         while i < y.shape[0]:
             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
@@ -802,14 +805,28 @@ class Controller(object):
                 x = np.delete(x, i, axis=0)
             else:
                 i += 1
+        # training data enhancement
+#        x_enhance = []
+#        y_enhance = []
+#        for i in range(y.shape[0]):
+            # add variations in target by +/- 1%
+#            y_new = y[i]*1.01
+#            x_new = x[i, :]
+#            y_enhance.append(y_new)
+#            x_enhance.append(x_new)
+#            y_new = y[i] * 0.99
+#            x_new = x[i, :]
+#            y_enhance.append(y_new)
+#            x_enhance.append(x_new)
+        #x = np.append(x, x_enhance, axis=1)
+        #y = np.append(y, y_enhance, axis=1)
+        is_cla = False
         if '_close' in pcol:
-            base_estimator = EstimatorPipeline(classifier=True)
-            y = np.array(y, dtype=int).round()
-        else:
-            base_estimator = EstimatorPipeline()
+            is_cla = True
+        base_estimator = GradientBoostingRegressor() #EstimatorPipeline(input_dimension=x.shape[1])
         score_str = 'neg_mean_absolute_error'
         gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score=-999999,
-                                     scoring=score_str)
+                                     scoring=score_str, verbose=1)
         try:
             x = np.nan_to_num(x)
             gridsearch_cv.fit(x, y, sample_weight=weights)
@@ -824,11 +841,12 @@ class Controller(object):
                 self.n_components_array.append(gridsearch_cv.best_params_.get('n_components'))
             print('Improving Estimator for ' + pcol + ' ' + str(gridsearch_cv.best_params_) + ' score: ' + str(
                 gridsearch_cv.best_score_))
-        gridsearch_cv.best_estimator_.write_to_disk(estimator_name)
+        #gridsearch_cv.best_estimator_.write_to_disk(estimator_name)
+        pickle.dump(gridsearch_cv.best_estimator_, open(estimator_name, 'wb'))
         estimator_score = {'name': pcol, 'score': gridsearch_cv.best_score_}
         self.estimtable.upsert(estimator_score, ['name'])
 
-    def predict_column(self, predict_column, df, new_estimator=False):
+    def predict_column(self, predict_column, df):
         # Predict the next outcome for a given column
         # predict_column: Columns to predict
         # df: Data Frame containing the column itself as well as any features
@@ -837,28 +855,9 @@ class Controller(object):
         x = np.array(df.values[:])
         y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
         vprev = y[-1]
-        y = y[1:]  # drop first line
         xlast = x[-1, :]
-        x = np.nan_to_num(x[:-1, :])  # drop the last line
-        if new_estimator:
-            #if '_close' in predict_column:
-            #    estimator = EstimatorPipeline(classifier=True)  # GradientBoostingRegressor()
-            #else:
-            estimator = EstimatorPipeline()  # GradientBoostingRegressor()
-            i = 0
-            while i < y.shape[0]:
-                if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
-                    y = np.delete(y, i)
-                    x = np.delete(x, i, axis=0)
-                else:
-                    i += 1
-            x = np.nan_to_num(x)  # drop the last line
-            estimator.fit(x, y)
-            estimator_name = self.settings.get('estim_path') + predict_column
-            estimator.write_to_disk(estimator_name)
-        else:
-            estimator_name = self.settings.get('estim_path') + predict_column
-            estimator = EstimatorPipeline(path=estimator_name)
+        estimator_name = self.settings.get('estim_path') + predict_column
+        estimator = pickle.load(open(estimator_name ,'rb'))# EstimatorPipeline(path=estimator_name)
         yp = estimator.predict(xlast.reshape(1, -1))
         return yp[0], vprev
 
@@ -987,10 +986,8 @@ class Controller(object):
             return
         if cl > 0:
             step = 2 * abs(low_score)
-            sl = lo - step
-            entry = bid
-            if bid > lo:
-                return
+            sl = lo - step - spread
+            entry = min(lo, bid)
             sldist = entry - sl + spread
             tp2 = hi
             tpstep = (tp2 - price) / 3
@@ -998,10 +995,8 @@ class Controller(object):
             tp3 = hi - tpstep
         else:
             step = 2 * abs(high_score)
-            sl = hi + step
-            entry = ask
-            if ask < hi:
-                return
+            sl = hi + step + spread
+            entry = max(hi, ask)
             sldist = sl - entry + spread
             tp2 = lo
             tpstep = (price - tp2) / 3
@@ -1040,7 +1035,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(minutes=10)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=18)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
