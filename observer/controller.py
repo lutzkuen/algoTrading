@@ -31,7 +31,10 @@ except ImportError:
     v20present = False
 
 # import code
-
+from skopt.space import Real, Integer
+from skopt import gp_minimize
+from skopt.utils import use_named_args
+from sklearn.model_selection import cross_val_score
 import progressbar
 import configparser
 import math
@@ -76,7 +79,6 @@ def merge_dicts(dict1, dict2, suffix):
             raise ValueError('duplicate key {0} while merging'.format(key_name))
         dict1[key_name] = dict2[key]
     return dict1
-
 
 def get_range_int(_val, change, lower=-math.inf, upper=math.inf):
     # Returns a range including a decremented and incremented integer value within the range
@@ -311,10 +313,12 @@ class Controller(object):
             self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
+        self.optimization_db = dataset.connect(config.get('data', 'optimization_path'))
         self.calendar = self.calendar_db['calendar']
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
+        self.opt_table = self.optimization_db['function_values']
         # the following arrays are used to collect aggregate information in estimator improvement
         self.accuracy_array = []
         self.n_components_array = []
@@ -628,7 +632,9 @@ class Controller(object):
         # improve_model: Perform Hyper parameter improvement for the estimators
         # maxdate: Maximum data to use in the prediction. If None use all.
         # new_estim: Build new estimators with new Hyper parameters
-
+        self.num_samples = 1
+        if improve_model:
+            self.num_samples = 4
         raw_name = '../data/cexport.csv'
         if read_raw:
             df = pd.read_csv(raw_name)
@@ -665,9 +671,6 @@ class Controller(object):
                                               widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
                 bar.start()
             index = 0
-            self.num_samples = 1
-            if improve_model:
-                self.num_samples = 4
             for date in dates:
                 if self.verbose > 0:
                     bar.update(index)
@@ -785,13 +788,19 @@ class Controller(object):
         weights = np.array(datecol.apply(self.dist_to_now).values[:])
         x = np.array(df.values[:])
         y = np.array(df[pcol].values[:])  # make a deep copy to prevent data loss in future iterations
+        space = [Integer(1, 5, name='max_depth'),
+                 Real(10 ** -5, 10 ** 0, "log-uniform", name='learning_rate'),
+                 Real(0.1, 1, "log-uniform", name='subsample'),
+                 Integer(1, x.shape[1], name='max_features'),
+                 Integer(2, 100, name='min_samples_split'),
+                 Integer(1, 100, name='min_samples_leaf')]
         parameters = {
             'learning_rate': [0.01],
             'n_estimators': [500],
-            'subsample': [1.0],
-            'min_samples_split': [2],
+            'subsample': [0.8],
+            'min_samples_split': [2, 4],
             'max_depth': [3],
-            'max_features': [None, 5],
+            'max_features': [None],
             'max_leaf_nodes': [None]
         }
         weights = weights[self.num_samples:]
@@ -823,28 +832,99 @@ class Controller(object):
         is_cla = False
         if '_close' in pcol:
             is_cla = True
-        base_estimator = GradientBoostingRegressor() #EstimatorPipeline(input_dimension=x.shape[1])
+            base_estimator = GradientBoostingClassifier(n_estimators=500)  # EstimatorPipeline(input_dimension=x.shape[1])
+        else:
+            is_cla = False
+            base_estimator = GradientBoostingRegressor(n_estimators=500) #EstimatorPipeline(input_dimension=x.shape[1])
+
+        @use_named_args(space)
+        def improve_objective(**params):
+            base_estimator.set_params(**params)
+
+            return -np.mean(cross_val_score(base_estimator, x, y, cv=3, n_jobs=1,
+                                            scoring="neg_mean_absolute_error"))
         score_str = 'neg_mean_absolute_error'
-        gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score=-999999,
-                                     scoring=score_str, verbose=1)
-        try:
-            x = np.nan_to_num(x)
-            gridsearch_cv.fit(x, y, sample_weight=weights)
-        except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
-            print('FATAL: failed to compute ' + pcol + ' ' + str(e))
-            return
+        #gridsearch_cv = GridSearchCV(base_estimator, parameters, cv=3, iid=False, error_score=-999999,
+                                     #scoring=score_str, verbose=1)
+        # look for function values from previous runs
+        x0 = []
+        y0 = []
+        for opt_result in self.opt_table.find(colname=pcol):
+            xs = [int(opt_result['max_depth']),
+                          float(opt_result['learning_rate']),
+                          float(opt_result['subsample']),
+                          int(opt_result['max_features']),
+                          int(opt_result['min_samples_split']),
+                          int(opt_result['min_samples_leaf'])]
+            ys = opt_result['function_value']
+            x0.append(xs)
+            y0.append(ys)
+        if len(y0) > 0:
+            print('Using ' + str(len(y0)) + ' data points from previous runs')
+            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True, x0=x0, y0=y0)
+        else:
+            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True)
+        print("Best score=%.4f" % res_gp.fun)
+        print("""Best parameters:
+        - max_depth=%d
+        - learning_rate=%.6f
+        - subsample=%.6f
+        - max_features=%d
+        - min_samples_split=%d
+        - min_samples_leaf=%d""" % (res_gp.x[0], res_gp.x[1], res_gp.x[2],
+                                    res_gp.x[3], res_gp.x[4],
+                                    res_gp.x[5]))
+        #try:
+         #   x = np.nan_to_num(x)
+          #  gridsearch_cv.fit(x, y, sample_weight=weights)
+        #except Exception as e:  # TODO narrow exception. It can fail due to too few dimensions
+#            print('FATAL: failed to compute ' + pcol + ' ' + str(e))
+#            return
         if self.verbose > 1:
             if '_close' in pcol:
-                self.accuracy_array.append(gridsearch_cv.best_score_)
+                self.accuracy_array.append(res_gp.fun)
                 print('Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
                     np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
-                self.n_components_array.append(gridsearch_cv.best_params_.get('n_components'))
-            print('Improving Estimator for ' + pcol + ' ' + str(gridsearch_cv.best_params_) + ' score: ' + str(
-                gridsearch_cv.best_score_))
+                self.n_components_array.append(res_gp.x[0])
+            #print('Improving Estimator for ' + pcol + ' ' + str(gridsearch_cv.best_params_) + ' score: ' + str(
+             #   res_gp.fun))
         #gridsearch_cv.best_estimator_.write_to_disk(estimator_name)
-        pickle.dump(gridsearch_cv.best_estimator_, open(estimator_name, 'wb'))
-        estimator_score = {'name': pcol, 'score': gridsearch_cv.best_score_}
+        # refit on best stuff
+        if '_close' in pcol:
+            is_cla = True
+            base_estimator = GradientBoostingClassifier(n_estimators=500,
+                                                        max_depth=res_gp.x[0],
+                                                        learning_rate=res_gp.x[1],
+                                                        subsample=res_gp.x[2],
+                                                        max_features=res_gp.x[3],
+                                                        min_samples_split=res_gp.x[4],
+                                                        min_samples_leaf=res_gp.x[5]
+                                                        )  # EstimatorPipeline(input_dimension=x.shape[1])
+        else:
+            base_estimator = GradientBoostingRegressor(n_estimators=500,
+                                                        max_depth=res_gp.x[0],
+                                                        learning_rate=res_gp.x[1],
+                                                        subsample=res_gp.x[2],
+                                                        max_features=res_gp.x[3],
+                                                        min_samples_split=res_gp.x[4],
+                                                        min_samples_leaf=res_gp.x[5]
+                                                       ) #EstimatorPipeline(input_dimension=x.shape[1])
+        base_estimator.fit(x, y, sample_weight=weights)
+        pickle.dump(base_estimator, open(estimator_name, 'wb'))
+        estimator_score = {'name': pcol, 'score': res_gp.fun}
         self.estimtable.upsert(estimator_score, ['name'])
+        # now save the function evaluations to disk for later use
+        for xs, ys in zip(res_gp.x_iters, res_gp.func_vals):
+            opt_result = {'max_depth': str(xs[0]),
+                          'learning_rate': str(xs[1]),
+                          'subsample': str(xs[2]),
+                          'max_features': str(xs[3]),
+                          'min_samples_split': str(xs[4]),
+                          'min_samples_leaf': str(xs[5]),
+                          'function_value': str(ys),
+                          #'classifier': is_cla,
+                          'colname': str(pcol)}
+            self.opt_table.upsert(opt_result,['max_depth', 'learning_rate', 'subsample', 'max_features', 'min_samples_split', 'min_samples_leaf', 'colname'])
 
     def predict_column(self, predict_column, df):
         # Predict the next outcome for a given column
@@ -858,7 +938,12 @@ class Controller(object):
         xlast = x[-1, :]
         estimator_name = self.settings.get('estim_path') + predict_column
         estimator = pickle.load(open(estimator_name ,'rb'))# EstimatorPipeline(path=estimator_name)
-        yp = estimator.predict(xlast.reshape(1, -1))
+        if '_close' in predict_column:
+            y_proba = estimator.predict_proba(xlast.reshape(1, -1))
+            y_compare = estimator.predict(xlast.reshape(1, -1))
+            yp = [y_proba[0][1] - y_proba[0][0]]
+        else:
+            yp = estimator.predict(xlast.reshape(1, -1))
         return yp[0], vprev
 
     def get_units(self, dist, ins):
