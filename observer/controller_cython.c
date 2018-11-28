@@ -17284,7 +17284,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
  *             index = 0
  *             self.num_samples = 1             # <<<<<<<<<<<<<<
  *             if improve_model:
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  */
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num_samples, __pyx_int_1) < 0) __PYX_ERR(0, 668, __pyx_L1_error)
 
@@ -17292,7 +17292,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
  *             index = 0
  *             self.num_samples = 1
  *             if improve_model:             # <<<<<<<<<<<<<<
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:
  */
     __pyx_t_15 = __Pyx_PyObject_IsTrue(__pyx_v_improve_model); if (unlikely(__pyx_t_15 < 0)) __PYX_ERR(0, 669, __pyx_L1_error)
@@ -17301,24 +17301,24 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
       /* "controller_cython.pyx":670
  *             self.num_samples = 1
  *             if improve_model:
- *                 self.num_samples = 2             # <<<<<<<<<<<<<<
+ *                 self.num_samples = 4             # <<<<<<<<<<<<<<
  *             for date in dates:
  *                 if self.verbose > 0:
  */
-      if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num_samples, __pyx_int_2) < 0) __PYX_ERR(0, 670, __pyx_L1_error)
+      if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_num_samples, __pyx_int_4) < 0) __PYX_ERR(0, 670, __pyx_L1_error)
 
       /* "controller_cython.pyx":669
  *             index = 0
  *             self.num_samples = 1
  *             if improve_model:             # <<<<<<<<<<<<<<
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:
  */
     }
 
     /* "controller_cython.pyx":671
  *             if improve_model:
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:             # <<<<<<<<<<<<<<
  *                 if self.verbose > 0:
  *                     bar.update(index)
@@ -17336,7 +17336,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
       __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":672
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:
  *                 if self.verbose > 0:             # <<<<<<<<<<<<<<
  *                     bar.update(index)
@@ -17377,7 +17377,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
         /* "controller_cython.pyx":672
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:
  *                 if self.verbose > 0:             # <<<<<<<<<<<<<<
  *                     bar.update(index)
@@ -17523,7 +17523,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_24data2sheet(CYTHON_U
 
       /* "controller_cython.pyx":671
  *             if improve_model:
- *                 self.num_samples = 2
+ *                 self.num_samples = 4
  *             for date in dates:             # <<<<<<<<<<<<<<
  *                 if self.verbose > 0:
  *                     bar.update(index)
@@ -20820,7 +20820,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_30improve_estimator(C
  *             'subsample': [1.0],
  *             'min_samples_split': [2],             # <<<<<<<<<<<<<<
  *             'max_depth': [3],
- *             'max_features': [None],
+ *             'max_features': [None, 5],
  */
   __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 792, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -20834,7 +20834,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_30improve_estimator(C
  *             'subsample': [1.0],
  *             'min_samples_split': [2],
  *             'max_depth': [3],             # <<<<<<<<<<<<<<
- *             'max_features': [None],
+ *             'max_features': [None, 5],
  *             'max_leaf_nodes': [None]
  */
   __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 793, __pyx_L1_error)
@@ -20848,21 +20848,24 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_30improve_estimator(C
   /* "controller_cython.pyx":794
  *             'min_samples_split': [2],
  *             'max_depth': [3],
- *             'max_features': [None],             # <<<<<<<<<<<<<<
+ *             'max_features': [None, 5],             # <<<<<<<<<<<<<<
  *             'max_leaf_nodes': [None]
  *         }
  */
-  __pyx_t_4 = PyList_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 794, __pyx_L1_error)
+  __pyx_t_4 = PyList_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 794, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(Py_None);
   __Pyx_GIVEREF(Py_None);
   PyList_SET_ITEM(__pyx_t_4, 0, Py_None);
+  __Pyx_INCREF(__pyx_int_5);
+  __Pyx_GIVEREF(__pyx_int_5);
+  PyList_SET_ITEM(__pyx_t_4, 1, __pyx_int_5);
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_u_max_features, __pyx_t_4) < 0) __PYX_ERR(0, 789, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
   /* "controller_cython.pyx":795
  *             'max_depth': [3],
- *             'max_features': [None],
+ *             'max_features': [None, 5],
  *             'max_leaf_nodes': [None]             # <<<<<<<<<<<<<<
  *         }
  *         weights = weights[self.num_samples:]

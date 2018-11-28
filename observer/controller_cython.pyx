@@ -667,7 +667,7 @@ class Controller(object):
             index = 0
             self.num_samples = 1
             if improve_model:
-                self.num_samples = 2
+                self.num_samples = 4
             for date in dates:
                 if self.verbose > 0:
                     bar.update(index)
@@ -791,7 +791,7 @@ class Controller(object):
             'subsample': [1.0],
             'min_samples_split': [2],
             'max_depth': [3],
-            'max_features': [None],
+            'max_features': [None, 5],
             'max_leaf_nodes': [None]
         }
         weights = weights[self.num_samples:]
