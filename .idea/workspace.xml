@@ -4,8 +4,6 @@
     <list default="true" id="906a7d8a-2caf-40bf-9f83-fd3047fcd9c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_df_struct.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_df_struct.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -17,7 +15,7 @@
     <session id="1656874603">
       <usages-collector id="statistics.lifecycle.project">
         <counts>
-          <entry key="project.closed" value="21" />
+          <entry key="project.closed" value="24" />
           <entry key="project.open.time.0" value="1" />
           <entry key="project.open.time.10" value="7" />
           <entry key="project.open.time.11" value="4" />
@@ -26,9 +24,9 @@
           <entry key="project.open.time.15" value="1" />
           <entry key="project.open.time.17" value="1" />
           <entry key="project.open.time.18" value="1" />
-          <entry key="project.open.time.8" value="1" />
-          <entry key="project.open.time.9" value="3" />
-          <entry key="project.opened" value="23" />
+          <entry key="project.open.time.8" value="2" />
+          <entry key="project.open.time.9" value="4" />
+          <entry key="project.opened" value="25" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
@@ -66,8 +64,8 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="442">
-              <caret line="756" column="30" selection-start-line="756" selection-start-column="30" selection-end-line="756" selection-end-column="30" />
+            <state relative-caret-position="241">
+              <caret line="577" column="92" lean-forward="true" selection-start-line="577" selection-start-column="92" selection-end-line="577" selection-end-column="92" />
             </state>
           </provider>
         </entry>
@@ -169,6 +167,8 @@
       <find>NormalizedMLP</find>
       <find>Normal</find>
       <find>EstimatorPipeline</find>
+      <find>weight</find>
+      <find>weekday</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -359,7 +359,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1616" height="886" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Favorites" order="0" side_tool="true" />
       <window_info content_ui="combo" id="Project" order="1" weight="0.21546261" />
@@ -483,10 +482,24 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/observer/controller.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="241">
+          <caret line="577" column="92" lean-forward="true" selection-start-line="577" selection-start-column="92" selection-end-line="577" selection-end-column="92" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/algoTrader/sentiment.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1105">
           <caret line="74" column="9" selection-start-line="74" selection-start-column="9" selection-end-line="74" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test_df_struct.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
         </state>
       </provider>
     </entry>
@@ -531,20 +544,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
           <caret line="4" selection-start-line="4" selection-end-line="4" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/test_df_struct.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="1" selection-start-line="7" selection-start-column="1" selection-end-line="7" selection-end-column="1" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/observer/controller.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="442">
-          <caret line="756" column="30" selection-start-line="756" selection-start-column="30" selection-end-line="756" selection-end-column="30" />
         </state>
       </provider>
     </entry>
