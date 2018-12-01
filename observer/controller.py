@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-from typing import Any, Callable
 
 __author__ = "Lutz Künneke"
 __copyright__ = ""
@@ -15,9 +14,21 @@ Candle logger and ML controller
 Use at own risk
 Author: Lutz Kuenneke, 26.07.2018
 """
+
+import configparser
+import datetime
 import json
-import code
+import math
+import re
+# import code
 import time
+
+import dataset
+import numpy as np
+import pandas as pd
+import progressbar
+
+from observer import estimator as estimator
 
 try:
     # noinspection PyUnresolvedReferences
@@ -29,50 +40,6 @@ try:
 except ImportError:
     print('WARNING: V20 library not present. Connection to broker not possible')
     v20present = False
-
-try:
-    import catboost as cb
-    cb_present = True
-except ImportError:
-    print('WARNING: Could not load catboost, falling back to sklearn')
-    cb_present = False
-cb_present = False
-
-# import code
-from skopt.space import Real, Integer
-from skopt import gp_minimize
-from skopt.utils import use_named_args
-from sklearn.model_selection import cross_val_score
-import progressbar
-import configparser
-import math
-import datetime
-import numpy as np
-import pandas as pd
-from sklearn import preprocessing
-from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.ensemble import GradientBoostingClassifier
-from sklearn.neural_network import MLPRegressor, MLPClassifier
-from sklearn.model_selection import GridSearchCV
-import dataset
-import pickle
-from sklearn.feature_selection import SelectPercentile
-from sklearn.pipeline import make_pipeline
-from sklearn.decomposition import PCA
-import re
-
-
-def prev_working_day(_day):
-    # Get the previous working day for this day. Since we work with NY candle alignment the week is sunday to thursday
-    # _day: String representing the day in Format 2018-11-23
-
-    date1 = datetime.datetime.strptime(_day, '%Y-%m-%d')
-    wd = date1.weekday()
-    if wd < 6:
-        date2 = date1 - datetime.timedelta(days=1)
-    else:
-        date2 = date1 - datetime.timedelta(days=3)  # skip to friday on weekends
-    return date2.strftime('%Y-%m-%d')
 
 
 def merge_dicts(dict1, dict2, suffix):
@@ -87,45 +54,6 @@ def merge_dicts(dict1, dict2, suffix):
             raise ValueError('duplicate key {0} while merging'.format(key_name))
         dict1[key_name] = dict2[key]
     return dict1
-
-def get_range_int(_val, change, lower=-math.inf, upper=math.inf):
-    # Returns a range including a decremented and incremented integer value within the range
-    # _val: Center value
-    # change: relative distance of range values from center
-    # lower: lower bound
-    # upper: upper bound
-
-    if _val > upper:
-        val = upper
-    else:
-        val = _val
-    lower_value = math.floor(val * (1 - change))
-    upper_value = math.ceil(val * (1 + change))
-    rang = []
-    if lower <= lower_value < val:
-        rang.append(lower_value)
-    rang.append(val)
-    if val < upper_value <= upper:
-        rang.append(upper_value)
-    return rang
-
-
-def get_range_flo(val, change, lower=-math.inf, upper=math.inf):
-    # Returns a range including a decremented and incremented floating value within the range
-    # _val: Center value
-    # change: relative distance of range values from center
-    # lower: lower bound
-    # upper: upper bound
-
-    lower_value = val * (1 - change)
-    upper_value = val * (1 + change)
-    rang = []
-    if lower <= lower_value < val:
-        rang.append(lower_value)
-    rang.append(val)
-    if val < upper_value <= upper:
-        rang.append(upper_value)
-    return rang
 
 
 class Controller(object):
@@ -213,8 +141,8 @@ class Controller(object):
                 time.sleep(1)
         price = json.loads(price_raw.raw_body)
         return (float(price.get('prices')[0].get('bids')[0].get('price'
-                                                                     )), float(price.get('prices')[0].get('asks'
-                                                                                                           )[0].get(
+                                                                )), float(price.get('prices')[0].get('asks'
+                                                                                                     )[0].get(
             'price')))
 
     def get_spread(self, ins):
@@ -445,7 +373,7 @@ class Controller(object):
             else:
                 spread = self.get_spread(ins)
                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
-                open = float(candle['open'])+spread*np.random.normal()*0.5 * bs_flag
+                open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
                 high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
                 low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -473,8 +401,6 @@ class Controller(object):
         df_row = self.get_calendar_data(date)
         df_row['weekday'] = weekday
         today_df = self.get_market_df(date, inst, complete, bootstrap=bootstrap)
-        # yest_df = self.get_market_df(prev_working_day(date), inst, complete)
-        # yest_df.pop('date')  # remove the date key from prev day
         return merge_dicts(df_row, today_df, '')
 
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
@@ -517,7 +443,7 @@ class Controller(object):
             df_dict = []
             if (not improve_model):  # if we want to read only it is enough to take the last days
                 dates = dates[-3:]
-            #dates = dates[-100:] # use this line to decrease computation time for development
+            # dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
             if self.verbose > 0:
                 print('INFO: Starting data frame preparation')
@@ -565,7 +491,7 @@ class Controller(object):
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
-                self.improve_estimator(col, df, date_column)
+                self.improve_estimator(col, df)
             prediction_value, previous_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
@@ -593,6 +519,16 @@ class Controller(object):
                     prediction[instr].get('close')) + '\n')
             outfile.close()
 
+    def improve_estimator(self, col, df):
+        estim = estimator.Estimator(col)
+        score = estim.improve_estimator(df, opt_table=self.opt_table, num_samples=self.num_samples,
+                                        estimpath=self.settings.get('estim_path'))
+        if estim.iscla:
+            self.accuracy_array.append(score)
+            if self.verbose > 0:
+                print('Accuracy -- Mean: ' + str(np.mean(self.accuracy_array)) + ', Min: ' + str(
+                    np.min(self.accuracy_array)) + ', Max: ' + str(np.max(self.accuracy_array)))
+
     def get_feature_importances(self):
         # Writes feature importances for all trained estimators to sqlite for further inspection
 
@@ -618,17 +554,13 @@ class Controller(object):
         for row in self.db.query(sql):
             pcol = row.get('name')
             try:
-                if cb_present:
-                    estimator_path = self.settings.get('estim_path') + pcol + '.cb'
-                else:
-                    estimator_path = self.settings.get('estim_path') + pcol
-                estimator = pickle.load(open(estimator_path ,'rb')) # EstimatorPipeline(path=estimator_path)
+                estim = estimator.Estimator(pcol, self.settings.get('estim_path'))
             except FileNotFoundError:
                 print('Failed to load model for ' + pcol)
                 continue
             if self.verbose > 1:
                 print(pcol)
-            for name, importance in zip(feature_names, estimator.get_feature_importances()):
+            for name, importance in zip(feature_names, estim.get_feature_importances()):
                 feature_importance = {'name': pcol, 'feature': name, 'importance': importance}
                 self.importances.upsert(feature_importance, ['name', 'feature'])
 
@@ -638,167 +570,6 @@ class Controller(object):
         ida = datetime.datetime.strptime(input_date, '%Y-%m-%d')
         delta = now - ida
         return math.exp(-delta.days / 365.25)  # exponentially decaying weight decay
-
-    def improve_estimator(self, pcol, df, datecol):
-        if cb_present:
-            estimator_name = self.settings.get('estim_path') + pcol + '.cb'
-        else:
-            estimator_name = self.settings.get('estim_path') + pcol
-        #estimator = NormalizedMLP(path=estimator_name)
-        weights = np.array(datecol.apply(self.dist_to_now).values[:])
-        x = np.array(df.values[:])
-        y = np.array(df[pcol].values[:])  # make a deep copy to prevent data loss in future iterations
-        if cb_present:
-            space = [Real(0.001,1,'log-uniform',name='learning_rate'),
-                     Integer(2,3,name='depth'),
-                     Integer(2,4,name='l2_leaf_reg')]
-        else:
-            space = [Integer(1, 8, name='max_depth'),
-                     Real(0.0001, 1, "log-uniform", name='learning_rate'),
-                     Real(0.5, 1, "log-uniform", name='subsample'),
-                     Integer(1, x.shape[1], name='max_features'),
-                     Integer(2, 100, name='min_samples_split'),
-                     Integer(1, 100, name='min_samples_leaf')]
-        weights = weights[self.num_samples:]
-        y = y[self.num_samples:]  # drop first line
-        x = x[:-self.num_samples, :]  # drop the last line
-        i = 0
-        while i < y.shape[0]:
-            if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
-                weights = np.delete(weights, i)
-                y = np.delete(y, i)
-                x = np.delete(x, i, axis=0)
-            else:
-                i += 1
-        is_cla = False
-        if '_close' in pcol:
-            is_cla = True
-            if cb_present:
-                base_estimator = cb.CatBoostClassifier(iterations=500, verbose=False)
-                libname = 'catboost'
-            else:
-                libname = 'sklearn'
-                base_estimator = GradientBoostingClassifier(n_estimators=500)  # EstimatorPipeline(input_dimension=x.shape[1])
-        else:
-            is_cla = False
-            if cb_present:
-                base_estimator = cb.CatBoostRegressor(iterations=500, verbose=False)
-                libname = 'catboost'
-            else:
-                libname = 'sklearn'
-                base_estimator = GradientBoostingRegressor(n_estimators=500) #EstimatorPipeline(input_dimension=x.shape[1])
-
-        @use_named_args(space)
-        def improve_objective(**params):
-            print(params)
-            base_estimator.set_params(**params)
-
-            return -np.mean(cross_val_score(base_estimator, x, y, cv=2, n_jobs=1,
-                                            scoring="neg_mean_absolute_error"))
-        score_str = 'neg_mean_absolute_error'
-        x0 = []
-        y0 = []
-        for opt_result in self.opt_table.find(colname=pcol, library=libname):
-            if cb_present:
-                xs = [float(opt_result['learning_rate']),
-                      int(opt_result['depth']),
-                      int(opt_result['l2_leaf_reg'])]
-            else:
-                xs = [int(opt_result['max_depth']),
-                              float(opt_result['learning_rate']),
-                              float(opt_result['subsample']),
-                              int(opt_result['max_features']),
-                              int(opt_result['min_samples_split']),
-                              int(opt_result['min_samples_leaf'])]
-            ys = float(opt_result['function_value'])
-            x0.append(xs)
-            y0.append(ys)
-        if len(y0) > 0:
-            print('Using ' + str(len(y0)) + ' data points from previous runs')
-            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True, x0=x0, y0=y0)
-        else:
-            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True)
-        print("Best score=%.4f" % res_gp.fun)
-        if cb_present:
-            print("""Best parameters:
-                  - learning_rate=%.6f
-                  - max_depth=%d
-                  - l2_leaf_reg=%.6f
-                  """ % (res_gp.x[0], res_gp.x[1], res_gp.x[2]))
-        else:
-            print("""Best parameters:
-            - max_depth=%d
-            - learning_rate=%.6f
-            - subsample=%.6f
-            - max_features=%d
-            - min_samples_split=%d
-            - min_samples_leaf=%d""" % (res_gp.x[0], res_gp.x[1], res_gp.x[2],
-                                        res_gp.x[3], res_gp.x[4],
-                                        res_gp.x[5]))
-        if self.verbose > 1:
-            if '_close' in pcol:
-                self.accuracy_array.append(res_gp.fun)
-                print('Mean: ' + str(np.mean(self.accuracy_array)) + ' Min: ' + str(
-                    np.min(self.accuracy_array)) + ' Max: ' + str(np.max(self.accuracy_array)))
-                self.n_components_array.append(res_gp.x[0])
-        if '_close' in pcol:
-            is_cla = True
-            if cb_present:
-                base_estimator = cb.CatBoostClassifier(iterations=500,
-                                                       learning_rate=res_gp.x[0],
-                                                       depth=res_gp.x[1],
-                                                       l2_leaf_reg=res_gp.x[2], verbose=False)
-            else:
-                base_estimator = GradientBoostingClassifier(n_estimators=500,
-                                                            max_depth=res_gp.x[0],
-                                                            learning_rate=res_gp.x[1],
-                                                            subsample=res_gp.x[2],
-                                                            max_features=res_gp.x[3],
-                                                            min_samples_split=res_gp.x[4],
-                                                            min_samples_leaf=res_gp.x[5])
-        else:
-            if cb_present:
-                base_estimator = cb.CatBoostRegressor(iterations=500,
-                                                       learning_rate=res_gp.x[0],
-                                                       depth=res_gp.x[1],
-                                                       l2_leaf_reg=res_gp.x[2], verbose=False)
-            else:
-                base_estimator = GradientBoostingRegressor(n_estimators=500,
-                                                        max_depth=res_gp.x[0],
-                                                        learning_rate=res_gp.x[1],
-                                                        subsample=res_gp.x[2],
-                                                        max_features=res_gp.x[3],
-                                                        min_samples_split=res_gp.x[4],
-                                                        min_samples_leaf=res_gp.x[5]
-                                                       ) #EstimatorPipeline(input_dimension=x.shape[1])
-        base_estimator.fit(x, y)#, sample_weight=weights)
-        pickle.dump(base_estimator, open(estimator_name, 'wb'))
-        estimator_score = {'name': pcol, 'score': -abs(res_gp.fun)}
-        self.estimtable.upsert(estimator_score, ['name'])
-        # now save the function evaluations to disk for later use
-        for xs, ys in zip(res_gp.x_iters, res_gp.func_vals):
-            if cb_present:
-                opt_result = {'learning_rate': str(xs[0]),
-                              'colname': str(pcol),
-                              'depth': str(xs[1]),
-                              'l2_leaf_reg': str(xs[2]),
-                              'library': 'catboost',
-                              'function_value': str(ys),
-                              'timestamp': datetime.datetime.now()}
-                self.opt_table.upsert(opt_result, ['learning_rate', 'depth', 'l2_leaf_reg', 'library', 'colname'])
-            else:
-                opt_result = {'max_depth': str(xs[0]),
-                              'learning_rate': str(xs[1]),
-                              'subsample': str(xs[2]),
-                              'max_features': str(xs[3]),
-                              'min_samples_split': str(xs[4]),
-                              'min_samples_leaf': str(xs[5]),
-                              'function_value': str(ys),
-                              #'classifier': is_cla,
-                              'colname': str(pcol),
-                              'library': 'sklearn',
-                              'timestamp': datetime.datetime.now()}
-                self.opt_table.upsert(opt_result,['max_depth', 'learning_rate', 'subsample', 'max_features', 'min_samples_split', 'min_samples_leaf', 'colname', 'library'])
 
     def predict_column(self, predict_column, df):
         # Predict the next outcome for a given column
@@ -810,22 +581,9 @@ class Controller(object):
         y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
         vprev = y[-1]
         xlast = x[-1, :]
-        if cb_present:
-            estimator_name = self.settings.get('estim_path') + predict_column + '.cb'
-        else:
-            estimator_name = self.settings.get('estim_path') + predict_column
-        estimator = pickle.load(open(estimator_name ,'rb'))# EstimatorPipeline(path=estimator_name)
-        if '_close' in predict_column:
-            try: # we need to catch that some are classifiers and some not
-                y_proba = estimator.predict_proba(xlast.reshape(1, -1))
-                y_compare = estimator.predict(xlast.reshape(1, -1))
-                yp = [y_proba[0][1] - y_proba[0][0]]
-            except:
-                print(predict_column + ' : Expected Classifier and found Regressor')
-                yp = estimator.predict(xlast.reshape(1, -1))
-        else:
-            yp = estimator.predict(xlast.reshape(1, -1))
-        return yp[0], vprev
+        estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+        yp = estim.predict(xlast.reshape(1, -1))
+        return yp, vprev
 
     def get_units(self, dist, ins):
         # get the number of units to trade for a given pair
@@ -985,9 +743,9 @@ class Controller(object):
             return None  # oops, risk threshold too small
         if tp2 < sl:
             units *= -1
-        relative_cost = spread/abs(tp2 - entry)
+        relative_cost = spread / abs(tp2 - entry)
         if abs(cl) <= relative_cost:
-            return None # edge too small to cover cost
+            return None  # edge too small to cover cost
         pip_location = self.get_pip_size(ins)
         pip_size = 10 ** (-pip_location + 1)
         if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
@@ -1015,7 +773,7 @@ class Controller(object):
                 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
                 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                #'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
             if self.verbose > 1:
                 print(args)
