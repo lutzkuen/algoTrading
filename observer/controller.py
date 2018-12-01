@@ -1095,7 +1095,7 @@ class Controller(object):
         # if you made it here its fine, lets open a limit order
         # r2sum is used to scale down the units risked to accomodate the estimator quality
         units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                           1.0) * (1 + close_score)
+                                                           1.0) * (1 - close_score)
         if units > 0:
             units = math.floor(units)
         if units < 0:
