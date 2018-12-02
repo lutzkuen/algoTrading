@@ -28,7 +28,7 @@ import numpy as np
 import pandas as pd
 import progressbar
 
-from observer import estimator as estimator
+from observer import estimator_cython as estimator
 
 try:
     # noinspection PyUnresolvedReferences
