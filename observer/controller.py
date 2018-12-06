@@ -790,3 +790,16 @@ class Controller(object):
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
             if self.verbose > 1:
                 print(ticket.raw_body)
+    def reduce_risk(self):
+        now = datetime.datetime.now()
+        for trade in self.trades:
+            initial_units = float(trade.initialUnits)
+            current_units = float(trade.currentUnits)
+            open_time = datetime.datetime.strptime(trade.openTime.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+            elapsed = now - open_time
+            if current_units / initial_units > (1 - elapsed.hours/24):
+                close _units = math.floor(abs(current_units - initial_units*max(1 - 0/24.0, 0)))
+                self.oanda.trade.close(self.settings.get('account_id'), trade.id, units = close_units)
+            print(initial_units)
+            print(current_units)
+            print(open_time)
