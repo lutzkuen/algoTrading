@@ -57,6 +57,7 @@ class Estimator(object):
         y = y[num_samples:]  # drop first line
         x = x[:-num_samples, :]  # drop the last line
         i = 0
+        print(y.shape)
         while i < y.shape[0]:
             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
                 y = np.delete(y, i)
@@ -84,11 +85,12 @@ class Estimator(object):
             ys = float(opt_result['function_value'])
             x0.append(xs)
             y0.append(ys)
+        x0 = [x0[np.argmin(y0)]]
         if len(y0) > 0:
             print('Using ' + str(len(y0)) + ' data points from previous runs')
-            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True, x0=x0, y0=y0)
+            res_gp = gp_minimize(improve_objective, space, n_calls=3, n_random_starts=1, verbose=True, x0=x0)
         else:
-            res_gp = gp_minimize(improve_objective, space, n_calls=10, n_random_starts=5, verbose=True)
+            res_gp = gp_minimize(improve_objective, space, n_calls=2, n_random_starts=1, verbose=True)
         print("Best score=%.4f" % res_gp.fun)
         print("""Best parameters:
         - max_depth=%d

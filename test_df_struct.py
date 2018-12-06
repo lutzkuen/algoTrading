@@ -6,4 +6,4 @@ except ImportError:
 
 cont = controller.Controller('../settings_triangle.conf', None, verbose=2)
 #cont.data2sheet(improve_model=True, write_predict=False, write_raw=True, read_raw=False)
-cont.data2sheet(improve_model=True, write_predict=False, write_raw=False, read_raw=True)
+cont.data2sheet(improve_model=True, write_predict=False, write_raw=True, read_raw=False, append_raw=True)
