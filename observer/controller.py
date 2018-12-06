@@ -27,8 +27,10 @@ import dataset
 import numpy as np
 import pandas as pd
 import progressbar
-
-from observer import estimator_cython as estimator
+try:
+    from observer import estimator_cython as estimator
+except ImportError:
+    from observer import estimator as estimator
 
 try:
     # noinspection PyUnresolvedReferences
@@ -404,7 +406,7 @@ class Controller(object):
         return merge_dicts(df_row, today_df, '')
 
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
-                   complete=True, read_raw=False, close_only=False):
+                   complete=True, read_raw=False, close_only=False, append_raw=False):
         # This method will take the input collected from oanda and forexfactory and merge in a Data Frame
         # write_raw: Write data frame used for training to disk
         # read_raw: Read data frame used for training from disk
@@ -432,16 +434,21 @@ class Controller(object):
                 statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
             else:
                 statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+            if append_raw:
+                df_prev = pd.read_csv(raw_name)
             for row in self.db.query(statement):
                 # if row['date'][:4] == year:
                 date = row['date']
+                if append_raw:
+                    if np.any(date == df_prev['date']):
+                        continue
                 date_split = date.split('-')
                 weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
                 if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
                     continue
                 dates.append(row['date'])
             df_dict = []
-            if (not improve_model):  # if we want to read only it is enough to take the last days
+            if not improve_model:  # if we want to read only it is enough to take the last days
                 dates = dates[-3:]
             # dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
@@ -452,6 +459,7 @@ class Controller(object):
                 bar.start()
             index = 0
             for date in dates:
+                print('Calculating ' + str(date))
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
@@ -461,6 +469,8 @@ class Controller(object):
                     if df_row:
                         df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
+            if append_raw:
+                df = pd.concat([df_prev, df], axis=0)
             if self.verbose > 0:
                 bar.finish()
         if write_raw:
