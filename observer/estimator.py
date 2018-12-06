@@ -85,10 +85,9 @@ class Estimator(object):
             ys = float(opt_result['function_value'])
             x0.append(xs)
             y0.append(ys)
-        x0 = [x0[np.argmin(y0)]]
         if len(y0) > 0:
             print('Using ' + str(len(y0)) + ' data points from previous runs')
-            res_gp = gp_minimize(improve_objective, space, n_calls=3, n_random_starts=1, verbose=True, x0=x0)
+            res_gp = gp_minimize(improve_objective, space, n_calls=2, n_random_starts=1, verbose=True, x0=x0, y0=y0)
         else:
             res_gp = gp_minimize(improve_objective, space, n_calls=2, n_random_starts=1, verbose=True)
         print("Best score=%.4f" % res_gp.fun)

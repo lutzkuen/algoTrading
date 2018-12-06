@@ -501,7 +501,15 @@ class Controller(object):
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
-                self.improve_estimator(col, df)
+                for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
+                    min_anz = int(row.get('min_anz'))
+                this_anz = 0
+                for row in self.optimization_db.query(
+                        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
+                    this_anz = row.get('anz')
+                if this_anz <= min_anz:
+                    self.improve_estimator(col, df)
+                    improve_model = False # improve just once
             prediction_value, previous_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
@@ -591,7 +599,11 @@ class Controller(object):
         y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
         vprev = y[-1]
         xlast = x[-1, :]
-        estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+        try:
+            estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+        except:
+            print('Could not load estimator for ' + str(predict_column))
+            return None, vprev
         yp = estim.predict(xlast.reshape(1, -1))
         return yp, vprev
 

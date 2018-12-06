@@ -3,9 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="906a7d8a-2caf-40bf-9f83-fd3047fcd9c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/lutz_kuenneke.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/lutz_kuenneke.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/observer/estimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/test_df_struct.py" beforeDir="false" afterPath="$PROJECT_DIR$/test_df_struct.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,41 +50,42 @@
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
           <entry key="dummy" value="7" />
-          <entry key="py" value="17676" />
+          <entry key="py" value="18098" />
           <entry key="txt" value="221" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
           <entry key="PLAIN_TEXT" value="228" />
-          <entry key="Python" value="17676" />
+          <entry key="Python" value="18098" />
         </counts>
       </usages-collector>
     </session>
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="391">
-              <caret line="95" column="106" lean-forward="true" selection-start-line="95" selection-start-column="106" selection-end-line="95" selection-end-column="106" />
+            <state relative-caret-position="530">
+              <caret line="609" column="35" lean-forward="true" selection-start-line="609" selection-start-column="35" selection-end-line="609" selection-end-column="35" />
               <folding>
                 <element signature="e#336#355#0" expanded="true" />
-                <marker date="1544098440672" expanded="true" signature="24651:25179" ph="..." />
+                <marker date="1544110587395" expanded="true" signature="25233:25761" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/estimator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
+            <state relative-caret-position="365">
+              <caret line="86" column="25" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1544104409511" expanded="true" signature="346:347" ph="..." />
-                <marker date="1544104409511" expanded="true" signature="1316:1373" ph="..." />
+                <marker date="1544111044311" expanded="true" signature="346:347" ph="..." />
+                <marker date="1544111044311" expanded="true" signature="1316:1373" ph="..." />
               </folding>
             </state>
           </provider>
@@ -485,24 +487,25 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/observer/estimator.py">
+    <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state>
+        <state relative-caret-position="530">
+          <caret line="609" column="35" lean-forward="true" selection-start-line="609" selection-start-column="35" selection-end-line="609" selection-end-column="35" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1544104409511" expanded="true" signature="346:347" ph="..." />
-            <marker date="1544104409511" expanded="true" signature="1316:1373" ph="..." />
+            <element signature="e#336#355#0" expanded="true" />
+            <marker date="1544110587395" expanded="true" signature="25233:25761" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/observer/controller.py">
+    <entry file="file://$PROJECT_DIR$/observer/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="391">
-          <caret line="95" column="106" lean-forward="true" selection-start-line="95" selection-start-column="106" selection-end-line="95" selection-end-column="106" />
+        <state relative-caret-position="365">
+          <caret line="86" column="25" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
           <folding>
-            <element signature="e#336#355#0" expanded="true" />
-            <marker date="1544098440672" expanded="true" signature="24651:25179" ph="..." />
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1544111044311" expanded="true" signature="346:347" ph="..." />
+            <marker date="1544111044311" expanded="true" signature="1316:1373" ph="..." />
           </folding>
         </state>
       </provider>
