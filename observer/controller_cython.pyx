@@ -783,13 +783,20 @@ class Controller(object):
     def reduce_risk(self):
         now = datetime.datetime.now()
         for trade in self.trades:
+            print(trade)
             initial_units = float(trade.initialUnits)
             current_units = float(trade.currentUnits)
             open_time = datetime.datetime.strptime(trade.openTime.split('.')[0], '%Y-%m-%dT%H:%M:%S')
             elapsed = now - open_time
-            if current_units / initial_units > (1 - elapsed.hours/24):
-                close _units = math.floor(abs(current_units - initial_units*max(1 - 0/24.0, 0)))
-                self.oanda.trade.close(self.settings.get('account_id'), trade.id, units = close_units)
-            print(initial_units)
-            print(current_units)
-            print(open_time)
+            if elapsed.total_seconds() < (60*60):
+                continue # 1st hour is protected
+            if current_units / initial_units > (1 - elapsed.total_seconds()/(24.0*60.0*60.0)):
+                close_units = -int(current_units - initial_units*max(1.0 - elapsed.total_seconds()/(24.0*60.0*60.0), 0))
+                if abs(close_units) > 0:
+                    print(str(trade.instrument) + ' - closing ' + str(close_units) + ' of  ' + str(current_units))
+                    args = {'order': {
+                        'instrument': trade.instrument,
+                        'units': close_units,
+                        'type': 'MARKET'}}
+                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                #print(response)
