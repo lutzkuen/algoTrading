@@ -27,8 +27,10 @@ import dataset
 import numpy as np
 import pandas as pd
 import progressbar
-
-from observer import estimator_cython as estimator
+try:
+    from observer import estimator_cython as estimator
+except ImportError:
+    from observer import estimator as estimator
 
 try:
     # noinspection PyUnresolvedReferences
@@ -404,7 +406,7 @@ class Controller(object):
         return merge_dicts(df_row, today_df, '')
 
     def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
-                   complete=True, read_raw=False, close_only=False):
+                   complete=True, read_raw=False, close_only=False, append_raw=False):
         # This method will take the input collected from oanda and forexfactory and merge in a Data Frame
         # write_raw: Write data frame used for training to disk
         # read_raw: Read data frame used for training from disk
@@ -415,7 +417,8 @@ class Controller(object):
         self.num_samples = 1
         if improve_model:
             self.num_samples = 4
-        raw_name = '../data/cexport.csv'
+        raw_name = '/home/ubuntu/data/cexport.csv'
+        has_contributed = False
         if read_raw:
             df = pd.read_csv(raw_name)
         else:
@@ -432,16 +435,21 @@ class Controller(object):
                 statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
             else:
                 statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+            if append_raw:
+                df_prev = pd.read_csv(raw_name)
             for row in self.db.query(statement):
                 # if row['date'][:4] == year:
                 date = row['date']
+                if append_raw:
+                    if np.any(date == df_prev['date']):
+                        continue
                 date_split = date.split('-')
                 weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
                 if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
                     continue
                 dates.append(row['date'])
             df_dict = []
-            if (not improve_model):  # if we want to read only it is enough to take the last days
+            if not improve_model:  # if we want to read only it is enough to take the last days
                 dates = dates[-3:]
             # dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
@@ -452,6 +460,7 @@ class Controller(object):
                 bar.start()
             index = 0
             for date in dates:
+                print('Calculating ' + str(date))
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
@@ -459,13 +468,17 @@ class Controller(object):
                     df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
+                        has_contributed = True
                         df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
+            if append_raw:
+                df = pd.concat([df_prev, df], axis=0)
             if self.verbose > 0:
                 bar.finish()
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
-            df.to_csv(raw_name, index=False)
+            if has_contributed:
+                df.to_csv(raw_name, index=False)
         date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
@@ -491,7 +504,15 @@ class Controller(object):
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
-                self.improve_estimator(col, df)
+                for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
+                    min_anz = int(row.get('min_anz'))
+                this_anz = 0
+                for row in self.optimization_db.query(
+                        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
+                    this_anz = row.get('anz')
+                if this_anz <= min_anz:
+                    self.improve_estimator(col, df)
+                    improve_model = False # improve just once
             prediction_value, previous_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
@@ -581,7 +602,11 @@ class Controller(object):
         y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
         vprev = y[-1]
         xlast = x[-1, :]
-        estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+        try:
+            estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+        except:
+            print('Could not load estimator for ' + str(predict_column))
+            return None, vprev
         yp = estim.predict(xlast.reshape(1, -1))
         return yp, vprev
 
@@ -695,13 +720,24 @@ class Controller(object):
                 trades.append(tr)
         if len(trades) > 0:
             is_open = True
-            if close_score < -1:  # if we do not trust the estimator we should not move forward
-                for trade in trades:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-            for trade in trades:
-                if trade.currentUnits * cl < 0:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                    is_open = False
+            #if close_score < -1:  # if we do not trust the estimator we should not move forward
+            #    for trade in trades:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #for trade in trades:
+            #    if trade.takeProfitOrder:
+            #        sl = trade.stopLossOrder.price
+            #    else:
+            #        sl = price - trade.trailingStopLossOrder.distance * trade.currentUnits/abs(trade.currentUnits)
+            #    tp = trade.takeProfitOrder.price
+            #    if trade.currentUnits * cl < 0:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits > 0 and lo < sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits < 0 and hi > sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
             if is_open:
                 return
         if close_only:
@@ -759,7 +795,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=18)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
@@ -772,8 +808,8 @@ class Controller(object):
                 'timeInForce': 'GTD',
                 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
             if self.verbose > 1:
                 print(args)

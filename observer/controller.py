@@ -417,7 +417,8 @@ class Controller(object):
         self.num_samples = 1
         if improve_model:
             self.num_samples = 4
-        raw_name = '../data/cexport.csv'
+        raw_name = '/home/ubuntu/data/cexport.csv'
+        has_contributed = False
         if read_raw:
             df = pd.read_csv(raw_name)
         else:
@@ -467,6 +468,7 @@ class Controller(object):
                     df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
+                        has_contributed = True
                         df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
             if append_raw:
@@ -475,7 +477,8 @@ class Controller(object):
                 bar.finish()
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
-            df.to_csv(raw_name, index=False)
+            if has_contributed:
+                df.to_csv(raw_name, index=False)
         date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
@@ -717,13 +720,24 @@ class Controller(object):
                 trades.append(tr)
         if len(trades) > 0:
             is_open = True
-            if close_score < -1:  # if we do not trust the estimator we should not move forward
-                for trade in trades:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-            for trade in trades:
-                if trade.currentUnits * cl < 0:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                    is_open = False
+            #if close_score < -1:  # if we do not trust the estimator we should not move forward
+            #    for trade in trades:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #for trade in trades:
+            #    if trade.takeProfitOrder:
+            #        sl = trade.stopLossOrder.price
+            #    else:
+            #        sl = price - trade.trailingStopLossOrder.distance * trade.currentUnits/abs(trade.currentUnits)
+            #    tp = trade.takeProfitOrder.price
+            #    if trade.currentUnits * cl < 0:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits > 0 and lo < sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits < 0 and hi > sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
             if is_open:
                 return
         if close_only:
@@ -781,7 +795,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=18)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
@@ -794,8 +808,8 @@ class Controller(object):
                 'timeInForce': 'GTD',
                 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
             if self.verbose > 1:
                 print(args)
