@@ -1,10 +1,11 @@
 import boto3
+import code
 import datetime
 #ec2 = boto3.resource('ec2')
 #instances = ec2.instances.filter(Filters=[{'Name': 'instance-state-name', 'Values': ['running']}])
 #for instance in instances:
 #    print(instance.report_status())
-def get_current_credits():
+def get_current_credits(instance_id):
     client = boto3.client('cloudwatch')
     metrics = client.list_metrics()
     
@@ -28,4 +29,8 @@ def get_current_credits():
         ],
         StartTime=(datetime.datetime.now() - datetime.timedelta(minutes = 10)),
         EndTime=datetime.datetime.now())
-    return response['MetricDataResults'][0]['Values'][0]
+    try:
+        return response['MetricDataResults'][0]['Values'][0]
+    except Exception as e:
+        print(str(e))
+        return None
