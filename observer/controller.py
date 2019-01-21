@@ -417,7 +417,7 @@ class Controller(object):
         self.num_samples = 1
         if improve_model:
             self.num_samples = 4
-        raw_name = '/home/ubuntu/data/cexport.csv'
+        raw_name = '/home/tubuntu/data/cexport.csv'
         has_contributed = False
         if read_raw:
             df = pd.read_csv(raw_name)
@@ -576,7 +576,7 @@ class Controller(object):
             pcol = row.get('name')
             try:
                 estim = estimator.Estimator(pcol, self.settings.get('estim_path'))
-            except FileNotFoundError:
+            except:
                 print('Failed to load model for ' + pcol)
                 continue
             if self.verbose > 1:

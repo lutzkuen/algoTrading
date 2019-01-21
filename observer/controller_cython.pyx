@@ -576,7 +576,7 @@ class Controller(object):
             pcol = row.get('name')
             try:
                 estim = estimator.Estimator(pcol, self.settings.get('estim_path'))
-            except FileNotFoundError:
+            except:
                 print('Failed to load model for ' + pcol)
                 continue
             if self.verbose > 1:
