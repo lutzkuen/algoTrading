@@ -65,12 +65,18 @@ class Controller(object):
     # - actual training and prediction of required models
     # - acting in the market based on the prediction
 
-    def __init__(self, config_name, _type, verbose=2):
+    def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1):
         # class init
         # config_name: Path to config file
         # _type: which section of the config file to use for broker connection
         # verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
-
+        self.multiplier = multiplier
+        self.write_trades = write_trades
+        if write_trades:
+            trades_path = '/home/tubuntu/data/trades.csv'
+            self.trades_file = open(trades_path, 'w')
+            #self.trades_file.write('INS,UNITS,TP,SL,ENTRY,EXPIRY;')
+        
         config = configparser.ConfigParser()
         config.read(config_name)
         self.verbose = verbose
@@ -738,8 +744,8 @@ class Controller(object):
             #    elif trade.currentUnits < 0 and hi > sl:
             #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
             #        is_open = False
-            if is_open:
-                return
+            #if is_open:
+            #    return
         if close_only:
             return
         if close_score < -1:
@@ -772,9 +778,9 @@ class Controller(object):
         units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
                                                            1.0) * (1 - close_score)
         if units > 0:
-            units = math.floor(units)
+            units = math.floor(units*self.multiplier)
         if units < 0:
-            units = math.ceil(units)
+            units = math.ceil(units*self.multiplier)
         if abs(units) < 1:
             return None  # oops, risk threshold too small
         if tp2 < sl:
@@ -811,6 +817,8 @@ class Controller(object):
                 #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
                  'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
+            if self.write_trades:
+                self.trades_file.write(str(ins)+','+str(units)+','+str(tp)+','+str(sl)+','+str(entry)+','+expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ')+';')
             if self.verbose > 1:
                 print(args)
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)

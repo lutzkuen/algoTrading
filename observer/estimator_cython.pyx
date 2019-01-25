@@ -85,13 +85,18 @@ class Estimator(object):
             ys = float(opt_result['function_value'])
             x0.append(xs)
             y0.append(ys)
+        print('Improving ' + self.name)
+        if verbose > 1:
+            gp_verbose = True
+        else:
+            gp_verbose = False
         if len(y0) > 0:
             x0 = [x0[np.argmin(y0)]]
             if verbose > 0:
                 print('Using ' + str(len(y0)) + ' data points from previous runs')
-            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=True, x0=x0)#, y0=y0)
+            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=gp_verbose, x0=x0)#, y0=y0)
         else:
-            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=True)
+            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=gp_verbose)
         if verbose > 0:
             print("Best score=%.4f" % res_gp.fun)
             print("""Best parameters:
