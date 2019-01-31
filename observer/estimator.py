@@ -45,7 +45,7 @@ class Estimator(object):
     def set_params(self, **params):
         return self.estimator.set_params(**params)
 
-    def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None):
+    def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
         x = np.array(df.values[:])
         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
         space = [Integer(1, 8, name='max_depth'),
@@ -67,7 +67,7 @@ class Estimator(object):
 
         @use_named_args(space)
         def improve_objective(**params):
-            print(params)
+            #print(params)
             self.estimator.set_params(**params)
 
             return -np.mean(cross_val_score(self.estimator, x, y, cv=3, n_jobs=1,
@@ -85,21 +85,29 @@ class Estimator(object):
             ys = float(opt_result['function_value'])
             x0.append(xs)
             y0.append(ys)
-        if len(y0) > 0:
-            print('Using ' + str(len(y0)) + ' data points from previous runs')
-            res_gp = gp_minimize(improve_objective, space, n_calls=2, n_random_starts=1, verbose=True, x0=x0, y0=y0)
+        print('Improving ' + self.name)
+        if verbose > 1:
+            gp_verbose = True
         else:
-            res_gp = gp_minimize(improve_objective, space, n_calls=2, n_random_starts=1, verbose=True)
-        print("Best score=%.4f" % res_gp.fun)
-        print("""Best parameters:
-        - max_depth=%d
-        - learning_rate=%.6f
-        - subsample=%.6f
-        - max_features=%d
-        - min_samples_split=%d
-        - min_samples_leaf=%d""" % (res_gp.x[0], res_gp.x[1], res_gp.x[2],
-                                    res_gp.x[3], res_gp.x[4],
-                                    res_gp.x[5]))
+            gp_verbose = False
+        if len(y0) > 0:
+            x0 = [x0[np.argmin(y0)]]
+            if verbose > 0:
+                print('Using ' + str(len(y0)) + ' data points from previous runs')
+            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=gp_verbose, x0=x0)#, y0=y0)
+        else:
+            res_gp = gp_minimize(improve_objective, space, n_calls=4, n_random_starts=2, verbose=gp_verbose)
+        if verbose > 0:
+            print("Best score=%.4f" % res_gp.fun)
+            print("""Best parameters:
+            - max_depth=%d
+            - learning_rate=%.6f
+            - subsample=%.6f
+            - max_features=%d
+            - min_samples_split=%d
+            - min_samples_leaf=%d""" % (res_gp.x[0], res_gp.x[1], res_gp.x[2],
+                                        res_gp.x[3], res_gp.x[4],
+                                        res_gp.x[5]))
         self.estimator.set_params(n_estimators=500,
                                   max_depth=res_gp.x[0],
                                   learning_rate=res_gp.x[1],

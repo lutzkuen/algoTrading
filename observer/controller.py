@@ -65,12 +65,18 @@ class Controller(object):
     # - actual training and prediction of required models
     # - acting in the market based on the prediction
 
-    def __init__(self, config_name, _type, verbose=2):
+    def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1):
         # class init
         # config_name: Path to config file
         # _type: which section of the config file to use for broker connection
         # verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
-
+        self.multiplier = multiplier
+        self.write_trades = write_trades
+        if write_trades:
+            trades_path = '/home/tubuntu/data/trades.csv'
+            self.trades_file = open(trades_path, 'w')
+            #self.trades_file.write('INS,UNITS,TP,SL,ENTRY,EXPIRY;')
+        
         config = configparser.ConfigParser()
         config.read(config_name)
         self.verbose = verbose
@@ -417,7 +423,8 @@ class Controller(object):
         self.num_samples = 1
         if improve_model:
             self.num_samples = 4
-        raw_name = '../data/cexport.csv'
+        raw_name = '/home/tubuntu/data/cexport.csv'
+        has_contributed = False
         if read_raw:
             df = pd.read_csv(raw_name)
         else:
@@ -467,6 +474,7 @@ class Controller(object):
                     df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
+                        has_contributed = True
                         df_dict.append(df_row)
             df = pd.DataFrame(df_dict)
             if append_raw:
@@ -475,7 +483,8 @@ class Controller(object):
                 bar.finish()
         if write_raw:
             print('Constructed DF with shape ' + str(df.shape))
-            df.to_csv(raw_name, index=False)
+            if has_contributed:
+                df.to_csv(raw_name, index=False)
         date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
         prediction = {}
@@ -573,7 +582,7 @@ class Controller(object):
             pcol = row.get('name')
             try:
                 estim = estimator.Estimator(pcol, self.settings.get('estim_path'))
-            except FileNotFoundError:
+            except:
                 print('Failed to load model for ' + pcol)
                 continue
             if self.verbose > 1:
@@ -717,15 +726,26 @@ class Controller(object):
                 trades.append(tr)
         if len(trades) > 0:
             is_open = True
-            if close_score < -1:  # if we do not trust the estimator we should not move forward
-                for trade in trades:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-            for trade in trades:
-                if trade.currentUnits * cl < 0:
-                    self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                    is_open = False
-            if is_open:
-                return
+            #if close_score < -1:  # if we do not trust the estimator we should not move forward
+            #    for trade in trades:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #for trade in trades:
+            #    if trade.takeProfitOrder:
+            #        sl = trade.stopLossOrder.price
+            #    else:
+            #        sl = price - trade.trailingStopLossOrder.distance * trade.currentUnits/abs(trade.currentUnits)
+            #    tp = trade.takeProfitOrder.price
+            #    if trade.currentUnits * cl < 0:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits > 0 and lo < sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #    elif trade.currentUnits < 0 and hi > sl:
+            #        self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            #        is_open = False
+            #if is_open:
+            #    return
         if close_only:
             return
         if close_score < -1:
@@ -758,9 +778,9 @@ class Controller(object):
         units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
                                                            1.0) * (1 - close_score)
         if units > 0:
-            units = math.floor(units)
+            units = math.floor(units*self.multiplier)
         if units < 0:
-            units = math.ceil(units)
+            units = math.ceil(units*self.multiplier)
         if abs(units) < 1:
             return None  # oops, risk threshold too small
         if tp2 < sl:
@@ -781,7 +801,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=18)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return
@@ -794,11 +814,33 @@ class Controller(object):
                 'timeInForce': 'GTD',
                 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
+            if self.write_trades:
+                self.trades_file.write(str(ins)+','+str(units)+','+str(tp)+','+str(sl)+','+str(entry)+','+expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ')+';')
             if self.verbose > 1:
                 print(args)
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
             if self.verbose > 1:
                 print(ticket.raw_body)
+    def reduce_risk(self):
+        now = datetime.datetime.now()
+        for trade in self.trades:
+            print(trade)
+            initial_units = float(trade.initialUnits)
+            current_units = float(trade.currentUnits)
+            open_time = datetime.datetime.strptime(trade.openTime.split('.')[0], '%Y-%m-%dT%H:%M:%S')
+            elapsed = now - open_time
+            if elapsed.total_seconds() < (60*60):
+                continue # 1st hour is protected
+            if current_units / initial_units > (1 - elapsed.total_seconds()/(24.0*60.0*60.0)):
+                close_units = -int(current_units - initial_units*max(1.0 - elapsed.total_seconds()/(24.0*60.0*60.0), 0))
+                if abs(close_units) > 0:
+                    print(str(trade.instrument) + ' - closing ' + str(close_units) + ' of  ' + str(current_units))
+                    args = {'order': {
+                        'instrument': trade.instrument,
+                        'units': close_units,
+                        'type': 'MARKET'}}
+                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                #print(response)
