@@ -3,10 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="906a7d8a-2caf-40bf-9f83-fd3047fcd9c2" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" beforeDir="false" afterPath="$PROJECT_DIR$/../ML_Examples/digit-recognizer/digits_keras.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dictionaries/lutz_kuenneke.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dictionaries/lutz_kuenneke.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/estimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/algoTrading.iml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/algoTrading.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/pip_upgrade_all.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/pip_upgrade_all.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -14,78 +14,28 @@
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
-  <component name="FUSProjectUsageTrigger">
-    <session id="1656874603">
-      <usages-collector id="statistics.lifecycle.project">
-        <counts>
-          <entry key="project.closed" value="28" />
-          <entry key="project.open.time.0" value="1" />
-          <entry key="project.open.time.10" value="7" />
-          <entry key="project.open.time.11" value="4" />
-          <entry key="project.open.time.12" value="3" />
-          <entry key="project.open.time.13" value="2" />
-          <entry key="project.open.time.15" value="2" />
-          <entry key="project.open.time.17" value="1" />
-          <entry key="project.open.time.18" value="1" />
-          <entry key="project.open.time.8" value="3" />
-          <entry key="project.open.time.9" value="6" />
-          <entry key="project.opened" value="30" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.open">
-        <counts>
-          <entry key="c" value="1" />
-          <entry key="py" value="25" />
-          <entry key="sh" value="2" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.open">
-        <counts>
-          <entry key="Bash" value="1" />
-          <entry key="C++" value="1" />
-          <entry key="PLAIN_TEXT" value="1" />
-          <entry key="Python" value="25" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.extensions.edit">
-        <counts>
-          <entry key="dummy" value="7" />
-          <entry key="py" value="18098" />
-          <entry key="txt" value="221" />
-        </counts>
-      </usages-collector>
-      <usages-collector id="statistics.file.types.edit">
-        <counts>
-          <entry key="PLAIN_TEXT" value="228" />
-          <entry key="Python" value="18098" />
-        </counts>
-      </usages-collector>
-    </session>
-  </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="530">
-              <caret line="609" column="35" lean-forward="true" selection-start-line="609" selection-start-column="35" selection-end-line="609" selection-end-column="35" />
+            <state relative-caret-position="272">
+              <caret line="226" column="20" selection-start-line="226" selection-start-column="20" selection-end-line="226" selection-end-column="20" />
               <folding>
                 <element signature="e#336#355#0" expanded="true" />
-                <marker date="1544110587395" expanded="true" signature="25233:25761" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/observer/estimator.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="365">
-              <caret line="86" column="25" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
+            <state>
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
-                <marker date="1544111044311" expanded="true" signature="346:347" ph="..." />
-                <marker date="1544111044311" expanded="true" signature="1316:1373" ph="..." />
+                <marker date="1548964366377" expanded="true" signature="346:347" ph="..." />
+                <marker date="1548964366377" expanded="true" signature="1316:1373" ph="..." />
               </folding>
             </state>
           </provider>
@@ -351,9 +301,6 @@
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
     </layout-to-restore>
   </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Added digit gridsearch" />
     <MESSAGE value="Added keras digit recon" />
@@ -487,25 +434,23 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/observer/controller.py">
+    <entry file="file://$PROJECT_DIR$/observer/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="530">
-          <caret line="609" column="35" lean-forward="true" selection-start-line="609" selection-start-column="35" selection-end-line="609" selection-end-column="35" />
+        <state>
           <folding>
-            <element signature="e#336#355#0" expanded="true" />
-            <marker date="1544110587395" expanded="true" signature="25233:25761" ph="..." />
+            <element signature="e#0#15#0" expanded="true" />
+            <marker date="1548964366377" expanded="true" signature="346:347" ph="..." />
+            <marker date="1548964366377" expanded="true" signature="1316:1373" ph="..." />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/observer/estimator.py">
+    <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="365">
-          <caret line="86" column="25" selection-start-line="86" selection-start-column="25" selection-end-line="86" selection-end-column="25" />
+        <state relative-caret-position="272">
+          <caret line="226" column="20" selection-start-line="226" selection-start-column="20" selection-end-line="226" selection-end-column="20" />
           <folding>
-            <element signature="e#0#15#0" expanded="true" />
-            <marker date="1544111044311" expanded="true" signature="346:347" ph="..." />
-            <marker date="1544111044311" expanded="true" signature="1316:1373" ph="..." />
+            <element signature="e#336#355#0" expanded="true" />
           </folding>
         </state>
       </provider>
