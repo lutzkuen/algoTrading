@@ -275,10 +275,10 @@
       <method v="2" />
     </configuration>
     <list>
-      <item itemvalue="Python.new_estimators" />
-      <item itemvalue="Python.simulation" />
-      <item itemvalue="Python.pip_upgrade_all" />
       <item itemvalue="Python.calc" />
+      <item itemvalue="Python.new_estimators" />
+      <item itemvalue="Python.pip_upgrade_all" />
+      <item itemvalue="Python.simulation" />
     </list>
     <recent_temporary>
       <list>
