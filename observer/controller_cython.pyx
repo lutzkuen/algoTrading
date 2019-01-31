@@ -688,7 +688,7 @@ class Controller(object):
                 print('WARNING: Unscored estimator - ' + column_name)
             return None
 
-    def open_limit(self, ins, close_only=False, complete=True):
+    def open_limit(self, ins, close_only=False, complete=True, duration=8):
         # Open orders and close trades using the predicted market movements
         # close_only: Set to true to close only without checking for opening Orders
         # complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
@@ -801,7 +801,7 @@ class Controller(object):
         sl = format(sl, format_string).strip()
         sldist = format(sldist, format_string).strip()
         entry = format(entry, format_string).strip()
-        expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
+        expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
         # units = int(units/3) # open three trades to spread out the risk
         if abs(units) < 1:
             return

@@ -11,6 +11,7 @@ while True:
     try:
         cont = controller.Controller('/home/tubuntu/settings_triangle.conf', 'live', verbose=0)
         cont.data2sheet(improve_model=True, write_predict=False, write_raw=True, read_raw=False, append_raw=True)
+        del cont
     except Exception as e:
         print(e)
     time.sleep(sleep_time)
