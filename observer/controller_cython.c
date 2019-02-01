@@ -1542,6 +1542,7 @@ static const char __pyx_k_copysign[] = "copysign";
 static const char __pyx_k_currency[] = "currency";
 static const char __pyx_k_datetime[] = "datetime";
 static const char __pyx_k_distance[] = "distance";
+static const char __pyx_k_duration[] = "duration";
 static const char __pyx_k_find_one[] = "find_one";
 static const char __pyx_k_forecast[] = "forecast";
 static const char __pyx_k_hostname[] = "hostname";
@@ -1976,6 +1977,7 @@ static PyObject *__pyx_n_u_domain;
 static PyObject *__pyx_n_s_drop;
 static PyObject *__pyx_n_s_dt;
 static PyObject *__pyx_kp_u_duplicate_key_0_while_merging;
+static PyObject *__pyx_n_s_duration;
 static PyObject *__pyx_n_s_e;
 static PyObject *__pyx_n_s_elapsed;
 static PyObject *__pyx_n_s_email;
@@ -2296,7 +2298,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_32predict_column(CYTH
 static PyObject *__pyx_pf_17controller_cython_10Controller_34get_units(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_dist, PyObject *__pyx_v_ins); /* proto */
 static PyObject *__pyx_pf_17controller_cython_10Controller_36get_conversion(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_leading_currency); /* proto */
 static PyObject *__pyx_pf_17controller_cython_10Controller_38get_score(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_column_name); /* proto */
-static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_ins, PyObject *__pyx_v_close_only, PyObject *__pyx_v_complete); /* proto */
+static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_ins, PyObject *__pyx_v_close_only, PyObject *__pyx_v_complete, PyObject *__pyx_v_duration); /* proto */
 static PyObject *__pyx_pf_17controller_cython_10Controller_42reduce_risk(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static __Pyx_CachedCFunction __pyx_umethod_PyDict_Type_keys = {0, &__pyx_n_s_keys, 0, 0, 0};
 static PyObject *__pyx_float_0_5;
@@ -19818,7 +19820,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_38get_score(CYTHON_UN
  *                 print('WARNING: Unscored estimator - ' + column_name)
  *             return None             # <<<<<<<<<<<<<<
  * 
- *     def open_limit(self, ins, close_only=False, complete=True):
+ *     def open_limit(self, ins, close_only=False, complete=True, duration=8):
  */
     __Pyx_XDECREF(__pyx_r);
     __Pyx_INCREF(Py_None);
@@ -19851,7 +19853,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_38get_score(CYTHON_UN
 /* "controller_cython.pyx":691
  *             return None
  * 
- *     def open_limit(self, ins, close_only=False, complete=True):             # <<<<<<<<<<<<<<
+ *     def open_limit(self, ins, close_only=False, complete=True, duration=8):             # <<<<<<<<<<<<<<
  *         # Open orders and close trades using the predicted market movements
  *         # close_only: Set to true to close only without checking for opening Orders
  */
@@ -19864,18 +19866,22 @@ static PyObject *__pyx_pw_17controller_cython_10Controller_41open_limit(PyObject
   PyObject *__pyx_v_ins = 0;
   PyObject *__pyx_v_close_only = 0;
   PyObject *__pyx_v_complete = 0;
+  PyObject *__pyx_v_duration = 0;
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("open_limit (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_ins,&__pyx_n_s_close_only,&__pyx_n_s_complete,0};
-    PyObject* values[4] = {0,0,0,0};
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_ins,&__pyx_n_s_close_only,&__pyx_n_s_complete,&__pyx_n_s_duration,0};
+    PyObject* values[5] = {0,0,0,0,0};
     values[2] = ((PyObject *)((PyObject *)Py_False));
     values[3] = ((PyObject *)((PyObject *)Py_True));
+    values[4] = ((PyObject *)((PyObject *)__pyx_int_8));
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        CYTHON_FALLTHROUGH;
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         CYTHON_FALLTHROUGH;
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
@@ -19896,7 +19902,7 @@ static PyObject *__pyx_pw_17controller_cython_10Controller_41open_limit(PyObject
         case  1:
         if (likely((values[1] = PyDict_GetItem(__pyx_kwds, __pyx_n_s_ins)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("open_limit", 0, 2, 4, 1); __PYX_ERR(0, 691, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("open_limit", 0, 2, 5, 1); __PYX_ERR(0, 691, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -19910,12 +19916,20 @@ static PyObject *__pyx_pw_17controller_cython_10Controller_41open_limit(PyObject
           PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_complete);
           if (value) { values[3] = value; kw_args--; }
         }
+        CYTHON_FALLTHROUGH;
+        case  4:
+        if (kw_args > 0) {
+          PyObject* value = PyDict_GetItem(__pyx_kwds, __pyx_n_s_duration);
+          if (value) { values[4] = value; kw_args--; }
+        }
       }
       if (unlikely(kw_args > 0)) {
         if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_pyargnames, 0, values, pos_args, "open_limit") < 0)) __PYX_ERR(0, 691, __pyx_L3_error)
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
+        case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
+        CYTHON_FALLTHROUGH;
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         CYTHON_FALLTHROUGH;
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
@@ -19930,23 +19944,24 @@ static PyObject *__pyx_pw_17controller_cython_10Controller_41open_limit(PyObject
     __pyx_v_ins = values[1];
     __pyx_v_close_only = values[2];
     __pyx_v_complete = values[3];
+    __pyx_v_duration = values[4];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("open_limit", 0, 2, 4, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 691, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("open_limit", 0, 2, 5, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 691, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("controller_cython.Controller.open_limit", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_17controller_cython_10Controller_40open_limit(__pyx_self, __pyx_v_self, __pyx_v_ins, __pyx_v_close_only, __pyx_v_complete);
+  __pyx_r = __pyx_pf_17controller_cython_10Controller_40open_limit(__pyx_self, __pyx_v_self, __pyx_v_ins, __pyx_v_close_only, __pyx_v_complete, __pyx_v_duration);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_ins, PyObject *__pyx_v_close_only, PyObject *__pyx_v_complete) {
+static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_ins, PyObject *__pyx_v_close_only, PyObject *__pyx_v_complete, PyObject *__pyx_v_duration) {
   PyObject *__pyx_v_df = NULL;
   PyObject *__pyx_v_candles = NULL;
   PyObject *__pyx_v_candle = NULL;
@@ -22282,7 +22297,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
  *         sl = format(sl, format_string).strip()
  *         sldist = format(sldist, format_string).strip()             # <<<<<<<<<<<<<<
  *         entry = format(entry, format_string).strip()
- *         expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
+ *         expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  */
   __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 802, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -22323,7 +22338,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
  *         sl = format(sl, format_string).strip()
  *         sldist = format(sldist, format_string).strip()
  *         entry = format(entry, format_string).strip()             # <<<<<<<<<<<<<<
- *         expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
+ *         expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *         # units = int(units/3) # open three trades to spread out the risk
  */
   __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 803, __pyx_L1_error)
@@ -22364,7 +22379,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
   /* "controller_cython.pyx":804
  *         sldist = format(sldist, format_string).strip()
  *         entry = format(entry, format_string).strip()
- *         expiry = datetime.datetime.now() + datetime.timedelta(hours=8)             # <<<<<<<<<<<<<<
+ *         expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)             # <<<<<<<<<<<<<<
  *         # units = int(units/3) # open three trades to spread out the risk
  *         if abs(units) < 1:
  */
@@ -22401,7 +22416,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = PyDict_New(); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 804, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_hours, __pyx_int_8) < 0) __PYX_ERR(0, 804, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_hours, __pyx_v_duration) < 0) __PYX_ERR(0, 804, __pyx_L1_error)
   __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_8, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 804, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
@@ -22414,7 +22429,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
   __pyx_t_4 = 0;
 
   /* "controller_cython.pyx":806
- *         expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
+ *         expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *         # units = int(units/3) # open three trades to spread out the risk
  *         if abs(units) < 1:             # <<<<<<<<<<<<<<
  *             return
@@ -22440,7 +22455,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
     goto __pyx_L0;
 
     /* "controller_cython.pyx":806
- *         expiry = datetime.datetime.now() + datetime.timedelta(hours=8)
+ *         expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *         # units = int(units/3) # open three trades to spread out the risk
  *         if abs(units) < 1:             # <<<<<<<<<<<<<<
  *             return
@@ -22866,7 +22881,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_40open_limit(CYTHON_U
   /* "controller_cython.pyx":691
  *             return None
  * 
- *     def open_limit(self, ins, close_only=False, complete=True):             # <<<<<<<<<<<<<<
+ *     def open_limit(self, ins, close_only=False, complete=True, duration=8):             # <<<<<<<<<<<<<<
  *         # Open orders and close trades using the predicted market movements
  *         # close_only: Set to true to close only without checking for opening Orders
  */
@@ -23812,6 +23827,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_drop, __pyx_k_drop, sizeof(__pyx_k_drop), 0, 0, 1, 1},
   {&__pyx_n_s_dt, __pyx_k_dt, sizeof(__pyx_k_dt), 0, 0, 1, 1},
   {&__pyx_kp_u_duplicate_key_0_while_merging, __pyx_k_duplicate_key_0_while_merging, sizeof(__pyx_k_duplicate_key_0_while_merging), 0, 1, 0, 0},
+  {&__pyx_n_s_duration, __pyx_k_duration, sizeof(__pyx_k_duration), 0, 0, 1, 1},
   {&__pyx_n_s_e, __pyx_k_e, sizeof(__pyx_k_e), 0, 0, 1, 1},
   {&__pyx_n_s_elapsed, __pyx_k_elapsed, sizeof(__pyx_k_elapsed), 0, 0, 1, 1},
   {&__pyx_n_s_email, __pyx_k_email, sizeof(__pyx_k_email), 0, 0, 1, 1},
@@ -25407,15 +25423,15 @@ static int __Pyx_InitCachedConstants(void) {
   /* "controller_cython.pyx":691
  *             return None
  * 
- *     def open_limit(self, ins, close_only=False, complete=True):             # <<<<<<<<<<<<<<
+ *     def open_limit(self, ins, close_only=False, complete=True, duration=8):             # <<<<<<<<<<<<<<
  *         # Open orders and close trades using the predicted market movements
  *         # close_only: Set to true to close only without checking for opening Orders
  */
-  __pyx_tuple__167 = PyTuple_Pack(42, __pyx_n_s_self, __pyx_n_s_ins, __pyx_n_s_close_only, __pyx_n_s_complete, __pyx_n_s_df, __pyx_n_s_candles, __pyx_n_s_candle, __pyx_n_s_op, __pyx_n_s_cl, __pyx_n_s_hi, __pyx_n_s_lo, __pyx_n_s_price, __pyx_n_s_column_name, __pyx_n_s_close_score, __pyx_n_s_high_score, __pyx_n_s_low_score, __pyx_n_s_spread, __pyx_n_s_bid, __pyx_n_s_ask, __pyx_n_s_trades, __pyx_n_s_current_units, __pyx_n_s_tr, __pyx_n_s_is_open, __pyx_n_s_step, __pyx_n_s_sl, __pyx_n_s_entry, __pyx_n_s_sldist, __pyx_n_s_tp2, __pyx_n_s_tpstep, __pyx_n_s_tp1, __pyx_n_s_tp3, __pyx_n_s_rr, __pyx_n_s_units, __pyx_n_s_relative_cost, __pyx_n_s_pip_location, __pyx_n_s_pip_size, __pyx_n_s_otype, __pyx_n_s_format_string, __pyx_n_s_expiry, __pyx_n_s_tp, __pyx_n_s_args, __pyx_n_s_ticket); if (unlikely(!__pyx_tuple__167)) __PYX_ERR(0, 691, __pyx_L1_error)
+  __pyx_tuple__167 = PyTuple_Pack(43, __pyx_n_s_self, __pyx_n_s_ins, __pyx_n_s_close_only, __pyx_n_s_complete, __pyx_n_s_duration, __pyx_n_s_df, __pyx_n_s_candles, __pyx_n_s_candle, __pyx_n_s_op, __pyx_n_s_cl, __pyx_n_s_hi, __pyx_n_s_lo, __pyx_n_s_price, __pyx_n_s_column_name, __pyx_n_s_close_score, __pyx_n_s_high_score, __pyx_n_s_low_score, __pyx_n_s_spread, __pyx_n_s_bid, __pyx_n_s_ask, __pyx_n_s_trades, __pyx_n_s_current_units, __pyx_n_s_tr, __pyx_n_s_is_open, __pyx_n_s_step, __pyx_n_s_sl, __pyx_n_s_entry, __pyx_n_s_sldist, __pyx_n_s_tp2, __pyx_n_s_tpstep, __pyx_n_s_tp1, __pyx_n_s_tp3, __pyx_n_s_rr, __pyx_n_s_units, __pyx_n_s_relative_cost, __pyx_n_s_pip_location, __pyx_n_s_pip_size, __pyx_n_s_otype, __pyx_n_s_format_string, __pyx_n_s_expiry, __pyx_n_s_tp, __pyx_n_s_args, __pyx_n_s_ticket); if (unlikely(!__pyx_tuple__167)) __PYX_ERR(0, 691, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__167);
   __Pyx_GIVEREF(__pyx_tuple__167);
-  __pyx_codeobj__168 = (PyObject*)__Pyx_PyCode_New(4, 0, 42, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__167, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_open_limit, 691, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__168)) __PYX_ERR(0, 691, __pyx_L1_error)
-  __pyx_tuple__169 = PyTuple_Pack(2, ((PyObject *)Py_False), ((PyObject *)Py_True)); if (unlikely(!__pyx_tuple__169)) __PYX_ERR(0, 691, __pyx_L1_error)
+  __pyx_codeobj__168 = (PyObject*)__Pyx_PyCode_New(5, 0, 43, 0, 0, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__167, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_open_limit, 691, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__168)) __PYX_ERR(0, 691, __pyx_L1_error)
+  __pyx_tuple__169 = PyTuple_Pack(3, ((PyObject *)Py_False), ((PyObject *)Py_True), ((PyObject *)__pyx_int_8)); if (unlikely(!__pyx_tuple__169)) __PYX_ERR(0, 691, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__169);
   __Pyx_GIVEREF(__pyx_tuple__169);
 
@@ -26315,7 +26331,7 @@ PyMODINIT_FUNC PyInit_controller_cython(void)
   /* "controller_cython.pyx":691
  *             return None
  * 
- *     def open_limit(self, ins, close_only=False, complete=True):             # <<<<<<<<<<<<<<
+ *     def open_limit(self, ins, close_only=False, complete=True, duration=8):             # <<<<<<<<<<<<<<
  *         # Open orders and close trades using the predicted market movements
  *         # close_only: Set to true to close only without checking for opening Orders
  */
