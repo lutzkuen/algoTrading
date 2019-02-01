@@ -28,6 +28,7 @@ import numpy as np
 import pandas as pd
 import progressbar
 try:
+    #from observer import estimator as estimator
     from observer import estimator_cython as estimator
 except ImportError:
     from observer import estimator as estimator
@@ -217,7 +218,7 @@ class Controller(object):
         # the date is taken from oanda NY open alignment. Hence if we use only complete candles this date
         # will be the day before yesterday
         df = {}
-        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'ALL']
+        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD'] #, 'ALL']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
             # calculate how actual and forecast numbers compare. If no forecast available just use the previous number
@@ -466,12 +467,11 @@ class Controller(object):
                 bar.start()
             index = 0
             for date in dates:
-                print('Calculating ' + str(date))
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
                 for i in range(self.num_samples):  # 2 fold over sampling
-                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=improve_model)
+                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=False) #improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
                         has_contributed = True
@@ -510,15 +510,16 @@ class Controller(object):
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
-                for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
-                    min_anz = int(row.get('min_anz'))
-                this_anz = 0
-                for row in self.optimization_db.query(
-                        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
-                    this_anz = row.get('anz')
-                if this_anz <= min_anz:
-                    self.improve_estimator(col, df)
-                    improve_model = False # improve just once
+                self.improve_estimator(col, df)
+                #for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
+                #    min_anz = int(row.get('min_anz'))
+                #this_anz = 0
+                #for row in self.optimization_db.query(
+                #        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
+                #    this_anz = row.get('anz')
+                #if this_anz <= min_anz:
+                #    self.improve_estimator(col, df)
+                #    improve_model = False # improve just once
             prediction_value, previous_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]

@@ -19,6 +19,7 @@ class Estimator(object):
         self.name = name
         self.library = 'catboost'
         self.iscla = False
+        print('Loading ' + self.name)
         if estimpath:
             estimator_path = estimpath + name
             self.estimator = pickle.load(open(estimator_path, 'rb'))
@@ -57,6 +58,8 @@ class Estimator(object):
         y = y[num_samples:]  # drop first line
         x = x[:-num_samples, :]  # drop the last line
         i = 0
+        print(x.shape)
+        print(y.shape[0])
         while i < y.shape[0]:
             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
                 y = np.delete(y, i)
@@ -69,21 +72,20 @@ class Estimator(object):
                   'objective': 'regression',
                   'metric': 'mae',
                   'max_depth': 10, 
-                  'num_leaves': 60,
-                  'learning_rate': 0.005,
-                  'verbose': 0, 
-                  'min_data_in_leaf': 4
-                  #'early_stopping_round': 20
-                  }
-        n_estimators = 300
+                  'learning_rate': 0.01,
+                  'verbose': 1, 
+                  'early_stopping_round': 20}
+        n_estimators = 1000
 
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
         d_train = lgb.Dataset(x_train, label=y_train)
         d_valid = lgb.Dataset(x_valid, label=y_valid)
         watchlist = [d_valid]
 
-        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
-        ypred = self.estimator.predict(x)
+        print('start fit')
+        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=1)
+        print('fit done')
+        ypred = self.estimator.predict(y)
         mae = np.mean(np.abs(ypred-y))
         print(self.name + ' -> ' + str(mae))
         if estimpath:
