@@ -56,6 +56,7 @@ class Estimator(object):
         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
         y = y[num_samples:]  # drop first line
         x = x[:-num_samples, :]  # drop the last line
+        print(y.shape)
         i = 0
         while i < y.shape[0]:
             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
@@ -70,7 +71,7 @@ class Estimator(object):
                   'metric': 'mae',
                   'max_depth': 10, 
                   'num_leaves': 60,
-                  'learning_rate': 0.005,
+                  'learning_rate': 0.006,
                   'verbose': 0, 
                   'min_data_in_leaf': 4
                   #'early_stopping_round': 20
