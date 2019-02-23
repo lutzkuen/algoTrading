@@ -20,7 +20,7 @@ import datetime
 import json
 import math
 import re
-# import code
+import code
 import time
 
 import dataset
@@ -110,6 +110,8 @@ class Controller(object):
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
         self.opt_table = self.optimization_db['function_values']
+        self.spread_db = dataset.connect(config.get('data', 'spreads_path'))
+        self.spread_table = self.spread_db['spreads']
         # the following arrays are used to collect aggregate information in estimator improvement
         self.accuracy_array = []
         self.n_components_array = []
@@ -154,9 +156,45 @@ class Controller(object):
                                                                                                      )[0].get(
             'price')))
 
-    def get_spread(self, ins):
-        # Returns spread for a instrument
-        # ins: Instrument, e.g. EUR_USD
+    def save_spreads(self):
+        """
+        This function will save the spreads as seen in the market right now
+        """
+        for ins in self.allowed_ins:
+            spread = self.get_spread(ins.name, spread_type='current')
+            now = datetime.datetime.now()
+            spread_object = { 'timestamp': now, 'instrument': ins.name, 'weekday': now.weekday(), 'hour': now.hour, 'spread': spread }
+            print(spread_object)
+            self.spread_table.insert(spread_object)
+
+    def get_spread(self, ins, spread_type='current'):
+        """
+        this function is a dispatcher the spread calculators
+        current: Get the spread for the instrument at market
+        worst: Get the worst ever recorded spread.
+        weekend: Get the weekend spread
+        mean: Get the mean spread for the given instrument the indicated hour and day
+        """
+        if spread_type == 'current':
+            return self.get_current_spread(ins)
+        elif spread_type == 'worst':
+            return self.get_worst_spread(ins)
+
+    def get_worst_spread(self, ins):
+        """
+        Return the worst ever recorded spread for the given instrument
+        """
+        max_spread = self.spread_db.query("select max(spread) as ms from spreads where instrument = '{ins}';".format(ins=ins))
+        for ms in max_spread:
+            return float(ms['ms'])
+        print('WARNING: Fall back to current spread')
+        return self.get_current_spread(ins)
+
+    def get_current_spread(self, ins):
+        """
+        Returns spread for a instrument
+        ins: Instrument, e.g. EUR_USD
+        """
 
         if not v20present:
             return 0.00001
@@ -169,7 +207,7 @@ class Controller(object):
                 price_raw = self.oanda.pricing.get(self.settings.get('account_id'), **args)
                 success = True
             except Exception as e:
-                print(str(e))
+                print('Failed to get price ' + str(e))
                 time.sleep(1)
         price = json.loads(price_raw.raw_body)
         spread = abs(float(price.get('prices')[0].get('bids')[0].get('price'
@@ -180,8 +218,10 @@ class Controller(object):
         return spread
 
     def get_price(self, ins):
-        # Returns price for a instrument
-        # ins: Instrument, e.g. EUR_USD
+        """
+        Returns price for a instrument
+        ins: Instrument, e.g. EUR_USD
+        """
 
         args = {'instruments': ins}
         if ins in self.prices.keys():
@@ -681,10 +721,35 @@ class Controller(object):
                 print('WARNING: Unscored estimator - ' + column_name)
             return None
 
+    def check_end_of_day(self):
+        """
+        check all open trades and check whether one of them would possible fall victim to spread widening
+        """
+        min_distance = 2.0 # every trade who is less than this times its worst spread from SL away will be closed
+        for trade in self.trades:
+            worst_spread = self.get_spread(trade.instrument, spread_type='worst')
+            smallest_distance = 2 * min_distance * worst_spread
+            # first check for trailing Stop
+            if trade.trailingStopLossOrder:
+                smallest_distance = min(float(trade.trailingStopLossOrder.distance), smallest_distance)
+
+            # then check for the normal stop loss order
+            if trade.stopLossOrder:
+                smallest_distance = min(float(trade.stopLossOrder.distance), smallest_distance)
+            
+            print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance), thresh=str(min_distance*worst_spread)))
+
+            if smallest_distance < min_distance * worst_spread:
+                # close the trade
+                response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+                print(response.raw_body)
+
     def open_limit(self, ins, close_only=False, complete=True, duration=8):
-        # Open orders and close trades using the predicted market movements
-        # close_only: Set to true to close only without checking for opening Orders
-        # complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
+        """
+        Open orders and close trades using the predicted market movements
+        close_only: Set to true to close only without checking for opening Orders
+        complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
+        """
 
         try:
             if complete:
