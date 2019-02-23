@@ -731,7 +731,7 @@ class Controller(object):
                 sldist = entry - sl + spread
                 tp2 = hi
                 tpstep = (tp2 - price) / 3
-                tp1 = hi - 2 * tpstep
+                tp1 = hi - step
                 tp3 = hi - tpstep
             else:
                 step = 2 * abs(high_score)
@@ -740,10 +740,10 @@ class Controller(object):
                 sldist = sl - entry + spread
                 tp2 = lo
                 tpstep = (price - tp2) / 3
-                tp1 = lo + 2 * tpstep
+                tp1 = lo + step
                 tp3 = lo + tpstep
             rr = abs((tp2 - entry) / (sl - entry))
-            if rr < 1.5:  # Risk-reward too low
+            if rr < 2:  # Risk-reward too low
                 if self.verbose > 1:
                     print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
                 return None
@@ -764,8 +764,8 @@ class Controller(object):
                 return None  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
-            if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
-                return None
+            #if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
+            #    return None
             # otype = 'MARKET'
             otype = 'LIMIT'
             format_string = '30.' + str(pip_location) + 'f'
@@ -776,10 +776,10 @@ class Controller(object):
             sldist = format(sldist, format_string).strip()
             entry = format(entry, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
-            # units = int(units/3) # open three trades to spread out the risk
+            units = int(units/2) # open three trades to spread out the risk
             if abs(units) < 1:
                 return
-            for tp in [tp2]:
+            for tp in [tp1, tp2]:
                 args = {'order': {
                     'instrument': ins,
                     'units': units,

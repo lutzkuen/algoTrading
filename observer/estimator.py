@@ -76,7 +76,7 @@ class Estimator(object):
                   'min_data_in_leaf': 4
                   #'early_stopping_round': 20
                   }
-        n_estimators = 300
+        n_estimators = 1000
 
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
         d_train = lgb.Dataset(x_train, label=y_train)
