@@ -4,7 +4,7 @@ import pickle
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import GradientBoostingRegressor
-#import catboost as cb
+# import catboost as cb
 import lightgbm as lgb
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
@@ -22,14 +22,14 @@ class Estimator(object):
         if estimpath:
             estimator_path = estimpath + name
             self.estimator = pickle.load(open(estimator_path, 'rb'))
-        #else:
+        # else:
         #    self.estimator = cb.CatBoostRegressor(loss_function='MAE')
         #    self.iscla = False
-        #if '_close' in name:
+        # if '_close' in name:
         #    self.iscla = True
         #    if not estimpath:
         #        self.estimator = cb.CatBoostClassifier(iterations=1000)
-        #else:
+        # else:
         #    self.iscla = False
         #    if not estimpath:
 
@@ -40,7 +40,7 @@ class Estimator(object):
         if self.iscla:
             y_proba = self.estimator.predict_proba(x.reshape(1, -1))
             yp = [y_proba[0][1] - y_proba[0][0]][0]
-            yp = max(min(1.0,yp),-1.0)
+            yp = max(min(1.0, yp), -1.0)
         else:
             yp = self.estimator.predict(x.reshape(1, -1))[0]
         return yp
@@ -51,7 +51,7 @@ class Estimator(object):
     def set_params(self, **params):
         return self.estimator.set_params(**params)
 
-    def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
+    def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
         x = np.array(df.values[:])
         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
         y = y[num_samples:]  # drop first line
@@ -66,16 +66,16 @@ class Estimator(object):
                 i += 1
 
         params = {
-                  'boosting_type': 'gbdt',
-                  'objective': 'regression',
-                  'metric': 'mae',
-                  'max_depth': 10, 
-                  'num_leaves': 60,
-                  'learning_rate': 0.006,
-                  'verbose': 0, 
-                  'min_data_in_leaf': 4
-                  #'early_stopping_round': 20
-                  }
+            'boosting_type': 'gbdt',
+            'objective': 'regression',
+            'metric': 'mae',
+            'max_depth': 10,
+            'num_leaves': 60,
+            'learning_rate': 0.006,
+            'verbose': 0,
+            'min_data_in_leaf': 4
+            # 'early_stopping_round': 20
+        }
         n_estimators = 1000
 
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
@@ -85,7 +85,7 @@ class Estimator(object):
 
         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
         ypred = self.estimator.predict(x)
-        mae = np.mean(np.abs(ypred-y))
+        mae = np.mean(np.abs(ypred - y))
         print(self.name + ' -> ' + str(mae))
         if estimpath:
             self.save_estimator(estimpath)

@@ -5,10 +5,10 @@ __author__ = "Lutz Künneke"
 __copyright__ = ""
 __credits__ = []
 __license__ = ""
-__version__ = "0.1"
+__version__ = "1.0"
 __maintainer__ = "Lutz Künneke"
 __email__ = "lutz.kuenneke89@gmail.com"
-__status__ = "Prototype"
+__status__ = "Working Prototype"
 """
 Candle logger and ML controller
 Use at own risk
@@ -27,8 +27,9 @@ import dataset
 import numpy as np
 import pandas as pd
 import progressbar
+
 try:
-    #from observer import estimator as estimator
+    # from observer import estimator as estimator
     from observer import estimator_cython as estimator
 except ImportError:
     from observer import estimator as estimator
@@ -46,10 +47,12 @@ except ImportError:
 
 
 def merge_dicts(dict1, dict2, suffix):
-    # Merge two dicts
-    # dict1: this dict will keep all the key names as are
-    # dict2: The keys of this dict will receive the suffix
-    # suffix: suffix to append to the keys of dict2
+    """
+    :param dict1: this dict will keep all the key names as are
+    :param dict2: The keys of this dict will receive the suffix
+    :param suffix: suffix to append to the keys of dict2
+    :return: dict containing all fields of dict1 and dict2
+    """
 
     for key in dict2.keys():
         key_name = key + suffix
@@ -60,11 +63,13 @@ def merge_dicts(dict1, dict2, suffix):
 
 
 class Controller(object):
-    # This class controls most of the program flow for:
-    # - getting the data
-    # - constructing the data frame for training and prediction
-    # - actual training and prediction of required models
-    # - acting in the market based on the prediction
+    """
+    This class controls most of the program flow for:
+    - getting the data
+    - constructing the data frame for training and prediction
+    - actual training and prediction of required models
+    - acting in the market based on the prediction
+    """
 
     def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1):
         # class init
@@ -76,8 +81,8 @@ class Controller(object):
         if write_trades:
             trades_path = '/home/tubuntu/data/trades.csv'
             self.trades_file = open(trades_path, 'w')
-            #self.trades_file.write('INS,UNITS,TP,SL,ENTRY,EXPIRY;')
-        
+            # self.trades_file.write('INS,UNITS,TP,SL,ENTRY,EXPIRY;')
+
         config = configparser.ConfigParser()
         config.read(config_name)
         self.verbose = verbose
@@ -163,7 +168,8 @@ class Controller(object):
         for ins in self.allowed_ins:
             spread = self.get_spread(ins.name, spread_type='current')
             now = datetime.datetime.now()
-            spread_object = { 'timestamp': now, 'instrument': ins.name, 'weekday': now.weekday(), 'hour': now.hour, 'spread': spread }
+            spread_object = {'timestamp': now, 'instrument': ins.name, 'weekday': now.weekday(), 'hour': now.hour,
+                             'spread': spread}
             print(spread_object)
             self.spread_table.insert(spread_object)
 
@@ -184,7 +190,8 @@ class Controller(object):
         """
         Return the worst ever recorded spread for the given instrument
         """
-        max_spread = self.spread_db.query("select max(spread) as ms from spreads where instrument = '{ins}';".format(ins=ins))
+        max_spread = self.spread_db.query(
+            "select max(spread) as ms from spreads where instrument = '{ins}';".format(ins=ins))
         for ms in max_spread:
             return float(ms['ms'])
         print('WARNING: Fall back to current spread')
@@ -258,7 +265,7 @@ class Controller(object):
         # the date is taken from oanda NY open alignment. Hence if we use only complete candles this date
         # will be the day before yesterday
         df = {}
-        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD'] #, 'ALL']
+        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD']  # , 'ALL']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
             # calculate how actual and forecast numbers compare. If no forecast available just use the previous number
@@ -484,6 +491,8 @@ class Controller(object):
                 statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
             if append_raw:
                 df_prev = pd.read_csv(raw_name)
+            else:
+                df_prev = None
             for row in self.db.query(statement):
                 # if row['date'][:4] == year:
                 date = row['date']
@@ -511,7 +520,7 @@ class Controller(object):
                     bar.update(index)
                 index += 1
                 for i in range(self.num_samples):  # 2 fold over sampling
-                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=False) #improve_model)
+                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=False)  # improve_model)
                     # df_row = merge_dicts(df_row, yest_df, '_yester')
                     if df_row:
                         has_contributed = True
@@ -551,13 +560,13 @@ class Controller(object):
                 continue
             if improve_model:
                 self.improve_estimator(col, df)
-                #for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
+                # for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
                 #    min_anz = int(row.get('min_anz'))
-                #this_anz = 0
-                #for row in self.optimization_db.query(
+                # this_anz = 0
+                # for row in self.optimization_db.query(
                 #        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
                 #    this_anz = row.get('anz')
-                #if this_anz <= min_anz:
+                # if this_anz <= min_anz:
                 #    self.improve_estimator(col, df)
                 #    improve_model = False # improve just once
             prediction_value, previous_value = self.predict_column(col, df)
@@ -725,7 +734,7 @@ class Controller(object):
         """
         check all open trades and check whether one of them would possible fall victim to spread widening
         """
-        min_distance = 2.0 # every trade who is less than this times its worst spread from SL away will be closed
+        min_distance = 2.0  # every trade who is less than this times its worst spread from SL away will be closed
         for trade in self.trades:
             worst_spread = self.get_spread(trade.instrument, spread_type='worst')
             smallest_distance = 2 * min_distance * worst_spread
@@ -736,8 +745,9 @@ class Controller(object):
             # then check for the normal stop loss order
             if trade.stopLossOrder:
                 smallest_distance = min(float(trade.stopLossOrder.distance), smallest_distance)
-            
-            print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance), thresh=str(min_distance*worst_spread)))
+
+            print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance),
+                                                       thresh=str(min_distance * worst_spread)))
 
             if smallest_distance < min_distance * worst_spread:
                 # close the trade
@@ -817,9 +827,9 @@ class Controller(object):
             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
                                                                1.0) * (1 - close_score)
             if units > 0:
-                units = math.floor(units*self.multiplier)
+                units = math.floor(units * self.multiplier)
             if units < 0:
-                units = math.ceil(units*self.multiplier)
+                units = math.ceil(units * self.multiplier)
             if abs(units) < 1:
                 return None  # oops, risk threshold too small
             if tp2 < sl:
@@ -829,7 +839,7 @@ class Controller(object):
                 return None  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
-            #if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
+            # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
             #    return None
             # otype = 'MARKET'
             otype = 'LIMIT'
@@ -841,7 +851,7 @@ class Controller(object):
             sldist = format(sldist, format_string).strip()
             entry = format(entry, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
-            units = int(units/2) # open three trades to spread out the risk
+            units = int(units / 2)  # open three trades to spread out the risk
             if abs(units) < 1:
                 return
             for tp in [tp1, tp2]:
@@ -853,11 +863,12 @@ class Controller(object):
                     'timeInForce': 'GTD',
                     'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                    #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                     'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                    # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                    'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
                 }}
                 if self.write_trades:
-                    self.trades_file.write(str(ins)+','+str(units)+','+str(tp)+','+str(sl)+','+str(entry)+','+expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ')+';')
+                    self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
+                        entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
                 if self.verbose > 1:
                     print(args)
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
