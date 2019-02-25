@@ -84,8 +84,8 @@ class Estimator(object):
         watchlist = [d_valid]
 
         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
-        ypred = self.estimator.predict(x)
-        mae = np.mean(np.abs(ypred - y))
+        ypred = self.estimator.predict(x_valid)
+        mae = np.mean(np.abs(ypred - y_valid))
         print(self.name + ' -> ' + str(mae))
         if estimpath:
             self.save_estimator(estimpath)

@@ -1629,7 +1629,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  *         if estimpath:
  *             estimator_path = estimpath + name             # <<<<<<<<<<<<<<
  *             self.estimator = pickle.load(open(estimator_path, 'rb'))
- *         #else:
+ *         # else:
  */
     __pyx_t_2 = PyNumber_Add(__pyx_v_estimpath, __pyx_v_name); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 23, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
@@ -1640,7 +1640,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  *         if estimpath:
  *             estimator_path = estimpath + name
  *             self.estimator = pickle.load(open(estimator_path, 'rb'))             # <<<<<<<<<<<<<<
- *         #else:
+ *         # else:
  *         #    self.estimator = cb.CatBoostRegressor(loss_function='MAE')
  */
     __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_pickle); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 24, __pyx_L1_error)
@@ -1989,7 +1989,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
  *         if self.iscla:
  *             y_proba = self.estimator.predict_proba(x.reshape(1, -1))             # <<<<<<<<<<<<<<
  *             yp = [y_proba[0][1] - y_proba[0][0]][0]
- *             yp = max(min(1.0,yp),-1.0)
+ *             yp = max(min(1.0, yp), -1.0)
  */
     __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_estimator); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 41, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
@@ -2024,7 +2024,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
  *         if self.iscla:
  *             y_proba = self.estimator.predict_proba(x.reshape(1, -1))
  *             yp = [y_proba[0][1] - y_proba[0][0]][0]             # <<<<<<<<<<<<<<
- *             yp = max(min(1.0,yp),-1.0)
+ *             yp = max(min(1.0, yp), -1.0)
  *         else:
  */
     __pyx_t_1 = __Pyx_GetItemInt(__pyx_v_y_proba, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 42, __pyx_L1_error)
@@ -2055,7 +2055,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
     /* "estimator_cython.pyx":43
  *             y_proba = self.estimator.predict_proba(x.reshape(1, -1))
  *             yp = [y_proba[0][1] - y_proba[0][0]][0]
- *             yp = max(min(1.0,yp),-1.0)             # <<<<<<<<<<<<<<
+ *             yp = max(min(1.0, yp), -1.0)             # <<<<<<<<<<<<<<
  *         else:
  *             yp = self.estimator.predict(x.reshape(1, -1))[0]
  */
@@ -2115,7 +2115,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
   }
 
   /* "estimator_cython.pyx":45
- *             yp = max(min(1.0,yp),-1.0)
+ *             yp = max(min(1.0, yp), -1.0)
  *         else:
  *             yp = self.estimator.predict(x.reshape(1, -1))[0]             # <<<<<<<<<<<<<<
  *         return yp
@@ -2334,7 +2334,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
  *     def set_params(self, **params):
  *         return self.estimator.set_params(**params)             # <<<<<<<<<<<<<<
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_estimator); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 52, __pyx_L1_error)
@@ -2372,7 +2372,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
 /* "estimator_cython.pyx":54
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
@@ -2536,7 +2536,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
 
   /* "estimator_cython.pyx":55
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line
@@ -2571,7 +2571,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_1 = 0;
 
   /* "estimator_cython.pyx":56
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations             # <<<<<<<<<<<<<<
  *         y = y[num_samples:]  # drop first line
@@ -2860,9 +2860,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   /* "estimator_cython.pyx":69
  * 
  *         params = {
- *                   'boosting_type': 'gbdt',             # <<<<<<<<<<<<<<
- *                   'objective': 'regression',
- *                   'metric': 'mae',
+ *             'boosting_type': 'gbdt',             # <<<<<<<<<<<<<<
+ *             'objective': 'regression',
+ *             'metric': 'mae',
  */
   __pyx_t_2 = __Pyx_PyDict_NewPresized(8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 69, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -2878,8 +2878,8 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_2 = 0;
 
   /* "estimator_cython.pyx":79
- *                   #'early_stopping_round': 20
- *                   }
+ *             # 'early_stopping_round': 20
+ *         }
  *         n_estimators = 1000             # <<<<<<<<<<<<<<
  * 
  *         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
@@ -3055,8 +3055,8 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
  *         watchlist = [d_valid]
  * 
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)             # <<<<<<<<<<<<<<
- *         ypred = self.estimator.predict(x)
- *         mae = np.mean(np.abs(ypred-y))
+ *         ypred = self.estimator.predict(x_valid)
+ *         mae = np.mean(np.abs(ypred - y_valid))
  */
   __Pyx_GetModuleGlobalName(__pyx_t_8, __pyx_n_s_lgb); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 86, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_8);
@@ -3093,8 +3093,8 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   /* "estimator_cython.pyx":87
  * 
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
- *         ypred = self.estimator.predict(x)             # <<<<<<<<<<<<<<
- *         mae = np.mean(np.abs(ypred-y))
+ *         ypred = self.estimator.predict(x_valid)             # <<<<<<<<<<<<<<
+ *         mae = np.mean(np.abs(ypred - y_valid))
  *         print(self.name + ' -> ' + str(mae))
  */
   __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_estimator); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 87, __pyx_L1_error)
@@ -3112,7 +3112,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
       __Pyx_DECREF_SET(__pyx_t_3, function);
     }
   }
-  __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_8, __pyx_v_x) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_x);
+  __pyx_t_2 = (__pyx_t_8) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_8, __pyx_v_x_valid) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_v_x_valid);
   __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
   if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 87, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
@@ -3122,8 +3122,8 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
 
   /* "estimator_cython.pyx":88
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
- *         ypred = self.estimator.predict(x)
- *         mae = np.mean(np.abs(ypred-y))             # <<<<<<<<<<<<<<
+ *         ypred = self.estimator.predict(x_valid)
+ *         mae = np.mean(np.abs(ypred - y_valid))             # <<<<<<<<<<<<<<
  *         print(self.name + ' -> ' + str(mae))
  *         if estimpath:
  */
@@ -3137,7 +3137,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_abs); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyNumber_Subtract(__pyx_v_ypred, __pyx_v_y); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
+  __pyx_t_1 = PyNumber_Subtract(__pyx_v_ypred, __pyx_v_y_valid); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 88, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_t_9 = NULL;
   if (CYTHON_UNPACK_METHODS && unlikely(PyMethod_Check(__pyx_t_4))) {
@@ -3175,8 +3175,8 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_2 = 0;
 
   /* "estimator_cython.pyx":89
- *         ypred = self.estimator.predict(x)
- *         mae = np.mean(np.abs(ypred-y))
+ *         ypred = self.estimator.predict(x_valid)
+ *         mae = np.mean(np.abs(ypred - y_valid))
  *         print(self.name + ' -> ' + str(mae))             # <<<<<<<<<<<<<<
  *         if estimpath:
  *             self.save_estimator(estimpath)
@@ -3198,7 +3198,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
   /* "estimator_cython.pyx":90
- *         mae = np.mean(np.abs(ypred-y))
+ *         mae = np.mean(np.abs(ypred - y_valid))
  *         print(self.name + ' -> ' + str(mae))
  *         if estimpath:             # <<<<<<<<<<<<<<
  *             self.save_estimator(estimpath)
@@ -3234,7 +3234,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
     /* "estimator_cython.pyx":90
- *         mae = np.mean(np.abs(ypred-y))
+ *         mae = np.mean(np.abs(ypred - y_valid))
  *         print(self.name + ' -> ' + str(mae))
  *         if estimpath:             # <<<<<<<<<<<<<<
  *             self.save_estimator(estimpath)
@@ -3356,7 +3356,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   /* "estimator_cython.pyx":54
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
@@ -3772,7 +3772,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         if self.iscla:
  *             y_proba = self.estimator.predict_proba(x.reshape(1, -1))             # <<<<<<<<<<<<<<
  *             yp = [y_proba[0][1] - y_proba[0][0]][0]
- *             yp = max(min(1.0,yp),-1.0)
+ *             yp = max(min(1.0, yp), -1.0)
  */
   __pyx_tuple_ = PyTuple_Pack(2, __pyx_int_1, __pyx_int_neg_1); if (unlikely(!__pyx_tuple_)) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple_);
@@ -3780,7 +3780,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
   /* "estimator_cython.pyx":55
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line
@@ -3866,7 +3866,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "estimator_cython.pyx":54
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
@@ -4215,7 +4215,7 @@ if (!__Pyx_RefNanny) {
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier             # <<<<<<<<<<<<<<
  * from sklearn.ensemble import GradientBoostingRegressor
- * #import catboost as cb
+ * # import catboost as cb
  */
   __pyx_t_1 = PyList_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 5, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -4235,7 +4235,7 @@ if (!__Pyx_RefNanny) {
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier
  * from sklearn.ensemble import GradientBoostingRegressor             # <<<<<<<<<<<<<<
- * #import catboost as cb
+ * # import catboost as cb
  * import lightgbm as lgb
  */
   __pyx_t_2 = PyList_New(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 6, __pyx_L1_error)
@@ -4254,7 +4254,7 @@ if (!__Pyx_RefNanny) {
 
   /* "estimator_cython.pyx":8
  * from sklearn.ensemble import GradientBoostingRegressor
- * #import catboost as cb
+ * # import catboost as cb
  * import lightgbm as lgb             # <<<<<<<<<<<<<<
  * from sklearn.model_selection import train_test_split
  * from sklearn.model_selection import cross_val_score
@@ -4265,7 +4265,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
   /* "estimator_cython.pyx":9
- * #import catboost as cb
+ * # import catboost as cb
  * import lightgbm as lgb
  * from sklearn.model_selection import train_test_split             # <<<<<<<<<<<<<<
  * from sklearn.model_selection import cross_val_score
@@ -4452,7 +4452,7 @@ if (!__Pyx_RefNanny) {
   /* "estimator_cython.pyx":54
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose = 1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */

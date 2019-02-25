@@ -766,7 +766,7 @@ class Controller(object):
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
 
-    def open_limit(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False):
+    def open_limit(self, ins, close_only=False, complete=True, duration=8):
         """
         Open orders and close trades using the predicted market movements
         close_only: Set to true to close only without checking for opening Orders
@@ -774,7 +774,6 @@ class Controller(object):
         """
 
         try:
-            rr_target = 2
             if complete:
                 df = pd.read_csv(self.settings['prices_path'])
             else:
@@ -830,19 +829,11 @@ class Controller(object):
                 tpstep = (price - tp2) / 3
                 tp1 = lo + step
                 tp3 = lo + tpstep
-            rr = abs((tp2 - entry) / sldist )
-            if adjust_rr:
-                if cl > 0:
-                    entry = sl + (tp2 - sl)/(rr_target+1.0)
-                    sldist = entry - sl + spread
-                else:
-                    entry = sl - (sl - tp2)/(rr_target+1.0)
-                    sldist = sl - entry + spread
-            else:
-                if rr < rr_target:  # Risk-reward too low
-                    if self.verbose > 1:
-                        print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
-                    return None
+            rr = abs((tp2 - entry) / (sl - entry))
+            if rr < 2:  # Risk-reward too low
+                if self.verbose > 1:
+                    print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
+                return None
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
@@ -872,14 +863,10 @@ class Controller(object):
             sldist = format(sldist, format_string).strip()
             entry = format(entry, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
-            if split_position:
-                units = int(units / 2)  # open three trades to spread out the risk
-                tp_array = [tp1, tp2]
-                if abs(units) < 1:
-                    return
-            else:
-                tp_array = [tp2]
-            for tp in tp_array:
+            units = int(units / 2)  # open three trades to spread out the risk
+            if abs(units) < 1:
+                return
+            for tp in [tp1, tp2]:
                 args = {'order': {
                     'instrument': ins,
                     'units': units,
