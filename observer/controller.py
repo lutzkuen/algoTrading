@@ -187,6 +187,8 @@ class Controller(object):
             return self.get_current_spread(ins)
         elif spread_type == 'worst':
             return self.get_worst_spread(ins)
+        elif spread_type == 'trading':
+            return self.get_trading_spread(ins)
 
     def get_worst_spread(self, ins):
         """
@@ -194,6 +196,17 @@ class Controller(object):
         """
         max_spread = self.spread_db.query(
             "select max(spread) as ms from spreads where instrument = '{ins}';".format(ins=ins))
+        for ms in max_spread:
+            return float(ms['ms'])
+        print('WARNING: Fall back to current spread')
+        return self.get_current_spread(ins)
+
+    def get_trading_spread(self, ins):
+        """
+        Returns the mean spread as observed during normal business hours
+        """
+        max_spread = self.spread_db.query(
+            "select avg(spread) as ms from spreads where instrument = '{ins}' and weekday in (0, 1, 2, 3, 4) and hour > 6 and hour < 20;".format(ins=ins))
         for ms in max_spread:
             return float(ms['ms'])
         print('WARNING: Fall back to current spread')
@@ -799,7 +812,7 @@ class Controller(object):
             low_score = self.get_score(column_name)
             if not low_score:
                 return
-            spread = self.get_spread(ins)
+            spread = self.get_spread(ins, spread_type='trading')
             bid, ask = self.get_bidask(ins)
             trades = []
             current_units = 0

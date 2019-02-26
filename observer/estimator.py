@@ -68,7 +68,7 @@ class Estimator(object):
         params = {
             'boosting_type': 'gbdt',
             'objective': 'regression',
-            'metric': 'mae',
+            'metric': 'mse',
             'max_depth': 10,
             'num_leaves': 60,
             'learning_rate': 0.006,
@@ -85,15 +85,15 @@ class Estimator(object):
 
         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
         ypred = self.estimator.predict(x_valid)
-        mae = np.mean(np.abs(ypred - y_valid))
-        print(self.name + ' -> ' + str(mae))
+        mse = np.sqrt(np.mean((ypred - y_valid)**2))
+        print(self.name + ' -> ' + str(mse))
         if estimpath:
             self.save_estimator(estimpath)
         # now save the function evaluations to disk for later use
-        estimator_score = {'name': self.name, 'score': mae}
+        estimator_score = {'name': self.name, 'score': mse}
         if estimtable:
             estimtable.upsert(estimator_score, ['name'])
-        return mae
+        return mse
 
     def save_estimator(self, estim_path):
         estimator_name = estim_path + self.name
