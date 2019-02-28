@@ -442,7 +442,7 @@ class Controller(object):
                 data_frame[ins + '_high'] = -999999
                 data_frame[ins + '_low'] = -999999
             else:
-                spread = self.get_spread(ins)
+                spread = self.get_spread(ins, spread_type='trading')
                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
                 open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -823,7 +823,7 @@ class Controller(object):
                 is_open = True
             if close_only:
                 return
-            if close_score < -1:
+            if close_score > 1:
                 return
             if cl > 0:
                 step = 2 * abs(low_score)
@@ -845,12 +845,13 @@ class Controller(object):
                 tp3 = lo + tpstep
             rr = abs((tp2 - entry) / sldist )
             if adjust_rr:
-                if cl > 0:
-                    entry = sl + (tp2 - sl)/(rr_target+1.0)
-                    sldist = entry - sl + spread
-                else:
-                    entry = sl - (sl - tp2)/(rr_target+1.0)
-                    sldist = sl - entry + spread
+                if rr < rr_target:  # Risk-reward too low
+                    if cl > 0:
+                        entry = sl + (tp2 - sl)/(rr_target+1.0)
+                        sldist = entry - sl + spread
+                    else:
+                        entry = sl - (sl - tp2)/(rr_target+1.0)
+                        sldist = sl - entry + spread
             else:
                 if rr < rr_target:  # Risk-reward too low
                     if self.verbose > 1:

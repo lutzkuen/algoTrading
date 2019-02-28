@@ -4,8 +4,8 @@ import pickle
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import GradientBoostingRegressor
-# import catboost as cb
 import lightgbm as lgb
+import code
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
 from skopt import gp_minimize
@@ -64,6 +64,7 @@ class Estimator(object):
                 x = np.delete(x, i, axis=0)
             else:
                 i += 1
+        idx = [i for i in range(int(y.shape[0]/num_samples))]
 
         params = {
             'boosting_type': 'gbdt',
@@ -71,14 +72,31 @@ class Estimator(object):
             'metric': 'mse',
             'max_depth': 10,
             'num_leaves': 60,
-            'learning_rate': 0.006,
+            'learning_rate': 0.01,
             'verbose': 0,
-            'min_data_in_leaf': 4
+            'min_data_in_leaf': 10
             # 'early_stopping_round': 20
         }
-        n_estimators = 1000
+        n_estimators = 200
 
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
+        #x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.10, random_state=i)
+        #x_train = np.zeros((len(x_train_idx)*num_samples, x.shape[1]))
+        #x_valid = np.zeros((len(x_valid_idx)*num_samples, x.shape[1]))
+        #y_train = np.zeros((len(y_train_idx)*num_samples, ))
+        #y_valid = np.zeros((len(y_valid_idx)*num_samples, ))
+        #train_idx = 0
+        #for i in x_train_idx:
+        #    for j in range(num_samples):
+        #        x_train[train_idx, :] = x[i*num_samples+j, :]
+        #        y_train[train_idx] = y[i*num_samples+j]
+        #        train_idx += 1
+        #valid_idx = 0
+        #for i in x_valid_idx:
+        #    for j in range(num_samples):
+        #        x_valid[valid_idx, :] = x[i*num_samples+j]
+        #        y_valid[valid_idx] = y[i+num_samples+j]
+        #        valid_idx += 1
         d_train = lgb.Dataset(x_train, label=y_train)
         d_valid = lgb.Dataset(x_valid, label=y_valid)
         watchlist = [d_valid]

@@ -12098,7 +12098,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 data_frame[ins + '_high'] = -999999
  *                 data_frame[ins + '_low'] = -999999             # <<<<<<<<<<<<<<
  *             else:
- *                 spread = self.get_spread(ins)
+ *                 spread = self.get_spread(ins, spread_type='trading')
  */
       __pyx_t_7 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_low_2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 443, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
@@ -12118,132 +12118,130 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
     /* "controller_cython.pyx":445
  *                 data_frame[ins + '_low'] = -999999
  *             else:
- *                 spread = self.get_spread(ins)             # <<<<<<<<<<<<<<
+ *                 spread = self.get_spread(ins, spread_type='trading')             # <<<<<<<<<<<<<<
  *                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
  *                 open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
  */
     /*else*/ {
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_spread); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 445, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-        __pyx_t_6 = PyMethod_GET_SELF(__pyx_t_5);
-        if (likely(__pyx_t_6)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-          __Pyx_INCREF(__pyx_t_6);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_5, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_6) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_6, __pyx_v_ins) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_v_ins);
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_spread); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 445, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
+      __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_INCREF(__pyx_v_ins);
+      __Pyx_GIVEREF(__pyx_v_ins);
+      PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_ins);
+      __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_spread_type, __pyx_n_u_trading) < 0) __PYX_ERR(0, 445, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 445, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_spread, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_spread, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":446
  *             else:
- *                 spread = self.get_spread(ins)
+ *                 spread = self.get_spread(ins, spread_type='trading')
  *                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation             # <<<<<<<<<<<<<<
  *                 open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
  *                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
  */
-      __pyx_t_7 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_volume); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_volume); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 446, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_normal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyNumber_Float(__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Multiply(__pyx_t_7, __pyx_float_0_001); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_6, __pyx_v_bs_flag); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyInt_AddCObj(__pyx_int_1, __pyx_t_7, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 446, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 446, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_7 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_5);
+        if (likely(__pyx_t_7)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_5, function);
+        }
+      }
+      __pyx_t_9 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_9, __pyx_float_0_001); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_5, __pyx_v_bs_flag); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = __Pyx_PyInt_AddCObj(__pyx_int_1, __pyx_t_9, 1, 0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 446, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_volume, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_volume, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":447
- *                 spread = self.get_spread(ins)
+ *                 spread = self.get_spread(ins, spread_type='trading')
  *                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
  *                 open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag             # <<<<<<<<<<<<<<
  *                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
  *                 high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
  */
-      __pyx_t_7 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_open); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = __Pyx_PyNumber_Float(__pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_open); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_5);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_5, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_5, __pyx_float_0_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_bs_flag); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 447, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 447, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_normal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_7 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_6);
+        if (likely(__pyx_t_7)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_6, function);
+        }
+      }
+      __pyx_t_9 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_6, __pyx_float_0_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = PyNumber_Multiply(__pyx_t_9, __pyx_v_bs_flag); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 447, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_open, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_open, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":448
  *                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
@@ -12252,49 +12250,49 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
  *                 low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
  */
-      __pyx_t_7 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_close); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_close); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 448, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_normal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyNumber_Float(__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 448, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_6, __pyx_float_0_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Multiply(__pyx_t_7, __pyx_v_bs_flag); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 448, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 448, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_7 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_5);
+        if (likely(__pyx_t_7)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_5, function);
+        }
+      }
+      __pyx_t_9 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_5, __pyx_float_0_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_9, __pyx_v_bs_flag); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 448, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_close, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_close, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":449
  *                 open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -12303,49 +12301,49 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
  *                 data_frame[ins + '_vol'] = int(volume)
  */
-      __pyx_t_7 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_high); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = __Pyx_PyNumber_Float(__pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_high); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 449, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 449, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_5);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_5, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_5, __pyx_float_0_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_5 = PyNumber_Multiply(__pyx_t_7, __pyx_v_bs_flag); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 449, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 449, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_normal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_7 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_6);
+        if (likely(__pyx_t_7)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_6, function);
+        }
+      }
+      __pyx_t_9 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_6, __pyx_float_0_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = PyNumber_Multiply(__pyx_t_9, __pyx_v_bs_flag); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 449, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_high, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_high, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":450
  *                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -12354,49 +12352,49 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 data_frame[ins + '_vol'] = int(volume)
  *                 data_frame[ins + '_open'] = float(open)
  */
-      __pyx_t_7 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_low); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_7); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_5);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_random); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_Dict_GetItem(__pyx_v_candle, __pyx_n_u_low); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 450, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_9);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_normal); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __pyx_t_6 = __Pyx_PyNumber_Float(__pyx_t_9); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 450, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-      __pyx_t_9 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_9 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_9)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_9);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_9) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-      if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_6, __pyx_float_0_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Multiply(__pyx_t_7, __pyx_v_bs_flag); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 450, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-      __pyx_t_7 = PyNumber_Add(__pyx_t_5, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_random); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 450, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_normal); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_7 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
+        __pyx_t_7 = PyMethod_GET_SELF(__pyx_t_5);
+        if (likely(__pyx_t_7)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_5);
+          __Pyx_INCREF(__pyx_t_7);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_5, function);
+        }
+      }
+      __pyx_t_9 = (__pyx_t_7) ? __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_t_7) : __Pyx_PyObject_CallNoArg(__pyx_t_5);
+      __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
+      if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = PyNumber_Multiply(__pyx_v_spread, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Multiply(__pyx_t_5, __pyx_float_0_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __pyx_t_5 = PyNumber_Multiply(__pyx_t_9, __pyx_v_bs_flag); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_9 = PyNumber_Add(__pyx_t_6, __pyx_t_5); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 450, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_XDECREF_SET(__pyx_v_low, __pyx_t_7);
-      __pyx_t_7 = 0;
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_XDECREF_SET(__pyx_v_low, __pyx_t_9);
+      __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":451
  *                 high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -12405,13 +12403,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 data_frame[ins + '_open'] = float(open)
  *                 if float(close) > float(open):
  */
-      __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_v_volume); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 451, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_vol); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 451, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 451, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_9 = __Pyx_PyNumber_Int(__pyx_v_volume); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 451, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_vol); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 451, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 451, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":452
  *                 low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
@@ -12420,13 +12418,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 if float(close) > float(open):
  *                     data_frame[ins + '_close'] = int(1)
  */
-      __pyx_t_7 = __Pyx_PyNumber_Float(__pyx_v_open); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 452, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_open_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 452, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 452, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_9 = __Pyx_PyNumber_Float(__pyx_v_open); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 452, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_open_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 452, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 452, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":453
  *                 data_frame[ins + '_vol'] = int(volume)
@@ -12447,13 +12445,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 else:
  *                     data_frame[ins + '_close'] = int(-1)
  */
-        __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_int_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 454, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_close_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 454, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 454, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __pyx_t_9 = __Pyx_PyNumber_Int(__pyx_int_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 454, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_close_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 454, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 454, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
         /* "controller_cython.pyx":453
  *                 data_frame[ins + '_vol'] = int(volume)
@@ -12473,13 +12471,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  *                 data_frame[ins + '_low'] = float(low) - float(open)
  */
       /*else*/ {
-        __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_int_neg_1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 456, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_close_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 456, __pyx_L1_error)
-        __Pyx_GOTREF(__pyx_t_6);
-        if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 456, __pyx_L1_error)
-        __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+        __pyx_t_9 = __Pyx_PyNumber_Int(__pyx_int_neg_1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 456, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_9);
+        __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_close_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 456, __pyx_L1_error)
+        __Pyx_GOTREF(__pyx_t_5);
+        if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 456, __pyx_L1_error)
+        __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+        __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       }
       __pyx_L9:;
 
@@ -12492,13 +12490,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  */
       __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_v_high); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 457, __pyx_L1_error)
       __pyx_t_10 = __Pyx_PyObject_AsDouble(__pyx_v_open); if (unlikely(__pyx_t_10 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 457, __pyx_L1_error)
-      __pyx_t_7 = PyFloat_FromDouble((__pyx_t_11 - __pyx_t_10)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 457, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_high_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 457, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 457, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_9 = PyFloat_FromDouble((__pyx_t_11 - __pyx_t_10)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 457, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_high_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 457, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 457, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
       /* "controller_cython.pyx":458
  *                     data_frame[ins + '_close'] = int(-1)
@@ -12509,13 +12507,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_28get_market_df(CYTHO
  */
       __pyx_t_10 = __Pyx_PyObject_AsDouble(__pyx_v_low); if (unlikely(__pyx_t_10 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L1_error)
       __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_v_open); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 458, __pyx_L1_error)
-      __pyx_t_7 = PyFloat_FromDouble((__pyx_t_10 - __pyx_t_11)); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 458, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_low_2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 458, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_6, __pyx_t_7) < 0)) __PYX_ERR(0, 458, __pyx_L1_error)
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+      __pyx_t_9 = PyFloat_FromDouble((__pyx_t_10 - __pyx_t_11)); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 458, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_n_u_low_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 458, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_5);
+      if (unlikely(PyDict_SetItem(__pyx_v_data_frame, __pyx_t_5, __pyx_t_9) < 0)) __PYX_ERR(0, 458, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
     }
     __pyx_L7:;
 
@@ -21371,7 +21369,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 is_open = True
  *             if close_only:             # <<<<<<<<<<<<<<
  *                 return
- *             if close_score < -1:
+ *             if close_score > 1:
  */
       __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_v_close_only); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 824, __pyx_L3_error)
       if (__pyx_t_13) {
@@ -21380,7 +21378,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 is_open = True
  *             if close_only:
  *                 return             # <<<<<<<<<<<<<<
- *             if close_score < -1:
+ *             if close_score > 1:
  *                 return
  */
         __Pyx_XDECREF(__pyx_r);
@@ -21392,25 +21390,25 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 is_open = True
  *             if close_only:             # <<<<<<<<<<<<<<
  *                 return
- *             if close_score < -1:
+ *             if close_score > 1:
  */
       }
 
       /* "controller_cython.pyx":826
  *             if close_only:
  *                 return
- *             if close_score < -1:             # <<<<<<<<<<<<<<
+ *             if close_score > 1:             # <<<<<<<<<<<<<<
  *                 return
  *             if cl > 0:
  */
-      __pyx_t_8 = PyObject_RichCompare(__pyx_v_close_score, __pyx_int_neg_1, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 826, __pyx_L3_error)
+      __pyx_t_8 = PyObject_RichCompare(__pyx_v_close_score, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 826, __pyx_L3_error)
       __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 826, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_13) {
 
         /* "controller_cython.pyx":827
  *                 return
- *             if close_score < -1:
+ *             if close_score > 1:
  *                 return             # <<<<<<<<<<<<<<
  *             if cl > 0:
  *                 step = 2 * abs(low_score)
@@ -21422,14 +21420,14 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         /* "controller_cython.pyx":826
  *             if close_only:
  *                 return
- *             if close_score < -1:             # <<<<<<<<<<<<<<
+ *             if close_score > 1:             # <<<<<<<<<<<<<<
  *                 return
  *             if cl > 0:
  */
       }
 
       /* "controller_cython.pyx":828
- *             if close_score < -1:
+ *             if close_score > 1:
  *                 return
  *             if cl > 0:             # <<<<<<<<<<<<<<
  *                 step = 2 * abs(low_score)
@@ -21564,7 +21562,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_t_8 = 0;
 
         /* "controller_cython.pyx":828
- *             if close_score < -1:
+ *             if close_score > 1:
  *                 return
  *             if cl > 0:             # <<<<<<<<<<<<<<
  *                 step = 2 * abs(low_score)
@@ -21704,7 +21702,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 tp3 = lo + tpstep
  *             rr = abs((tp2 - entry) / sldist )             # <<<<<<<<<<<<<<
  *             if adjust_rr:
- *                 if cl > 0:
+ *                 if rr < rr_target:  # Risk-reward too low
  */
       __pyx_t_8 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_entry); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 846, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
@@ -21721,8 +21719,8 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 tp3 = lo + tpstep
  *             rr = abs((tp2 - entry) / sldist )
  *             if adjust_rr:             # <<<<<<<<<<<<<<
- *                 if cl > 0:
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)
+ *                 if rr < rr_target:  # Risk-reward too low
+ *                     if cl > 0:
  */
       __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_v_adjust_rr); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 847, __pyx_L3_error)
       if (__pyx_t_13) {
@@ -21730,186 +21728,207 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         /* "controller_cython.pyx":848
  *             rr = abs((tp2 - entry) / sldist )
  *             if adjust_rr:
- *                 if cl > 0:             # <<<<<<<<<<<<<<
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)
- *                     sldist = entry - sl + spread
+ *                 if rr < rr_target:  # Risk-reward too low             # <<<<<<<<<<<<<<
+ *                     if cl > 0:
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)
  */
-        __pyx_t_8 = PyObject_RichCompare(__pyx_v_cl, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 848, __pyx_L3_error)
+        __pyx_t_8 = PyObject_RichCompare(__pyx_v_rr, __pyx_v_rr_target, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 848, __pyx_L3_error)
         __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 848, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         if (__pyx_t_13) {
 
           /* "controller_cython.pyx":849
  *             if adjust_rr:
- *                 if cl > 0:
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)             # <<<<<<<<<<<<<<
- *                     sldist = entry - sl + spread
- *                 else:
+ *                 if rr < rr_target:  # Risk-reward too low
+ *                     if cl > 0:             # <<<<<<<<<<<<<<
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)
+ *                         sldist = entry - sl + spread
  */
-          __pyx_t_8 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_sl); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 849, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_6 = __Pyx_PyFloat_AddObjC(__pyx_v_rr_target, __pyx_float_1_0, 1.0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 849, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_7 = __Pyx_PyNumber_Divide(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 849, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_7);
+          __pyx_t_8 = PyObject_RichCompare(__pyx_v_cl, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 849, __pyx_L3_error)
+          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 849, __pyx_L3_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_6 = PyNumber_Add(__pyx_v_sl, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 849, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_6);
-          __pyx_t_6 = 0;
+          if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":850
- *                 if cl > 0:
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)
- *                     sldist = entry - sl + spread             # <<<<<<<<<<<<<<
- *                 else:
- *                     entry = sl - (sl - tp2)/(rr_target+1.0)
+            /* "controller_cython.pyx":850
+ *                 if rr < rr_target:  # Risk-reward too low
+ *                     if cl > 0:
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)             # <<<<<<<<<<<<<<
+ *                         sldist = entry - sl + spread
+ *                     else:
  */
-          __pyx_t_6 = PyNumber_Subtract(__pyx_v_entry, __pyx_v_sl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 850, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_v_spread); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 850, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_7);
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_7);
-          __pyx_t_7 = 0;
+            __pyx_t_8 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_sl); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 850, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __pyx_t_6 = __Pyx_PyFloat_AddObjC(__pyx_v_rr_target, __pyx_float_1_0, 1.0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 850, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_7 = __Pyx_PyNumber_Divide(__pyx_t_8, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 850, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_7);
+            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __pyx_t_6 = PyNumber_Add(__pyx_v_sl, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 850, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+            __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_6);
+            __pyx_t_6 = 0;
+
+            /* "controller_cython.pyx":851
+ *                     if cl > 0:
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)
+ *                         sldist = entry - sl + spread             # <<<<<<<<<<<<<<
+ *                     else:
+ *                         entry = sl - (sl - tp2)/(rr_target+1.0)
+ */
+            __pyx_t_6 = PyNumber_Subtract(__pyx_v_entry, __pyx_v_sl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 851, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_v_spread); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 851, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_7);
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_7);
+            __pyx_t_7 = 0;
+
+            /* "controller_cython.pyx":849
+ *             if adjust_rr:
+ *                 if rr < rr_target:  # Risk-reward too low
+ *                     if cl > 0:             # <<<<<<<<<<<<<<
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)
+ *                         sldist = entry - sl + spread
+ */
+            goto __pyx_L24;
+          }
+
+          /* "controller_cython.pyx":853
+ *                         sldist = entry - sl + spread
+ *                     else:
+ *                         entry = sl - (sl - tp2)/(rr_target+1.0)             # <<<<<<<<<<<<<<
+ *                         sldist = sl - entry + spread
+ *             else:
+ */
+          /*else*/ {
+            __pyx_t_7 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_tp2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 853, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_7);
+            __pyx_t_6 = __Pyx_PyFloat_AddObjC(__pyx_v_rr_target, __pyx_float_1_0, 1.0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 853, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 853, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 853, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+            __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_6);
+            __pyx_t_6 = 0;
+
+            /* "controller_cython.pyx":854
+ *                     else:
+ *                         entry = sl - (sl - tp2)/(rr_target+1.0)
+ *                         sldist = sl - entry + spread             # <<<<<<<<<<<<<<
+ *             else:
+ *                 if rr < rr_target:  # Risk-reward too low
+ */
+            __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 854, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_v_spread); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 854, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_8);
+            __pyx_t_8 = 0;
+          }
+          __pyx_L24:;
 
           /* "controller_cython.pyx":848
  *             rr = abs((tp2 - entry) / sldist )
  *             if adjust_rr:
- *                 if cl > 0:             # <<<<<<<<<<<<<<
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)
- *                     sldist = entry - sl + spread
+ *                 if rr < rr_target:  # Risk-reward too low             # <<<<<<<<<<<<<<
+ *                     if cl > 0:
+ *                         entry = sl + (tp2 - sl)/(rr_target+1.0)
  */
-          goto __pyx_L23;
         }
-
-        /* "controller_cython.pyx":852
- *                     sldist = entry - sl + spread
- *                 else:
- *                     entry = sl - (sl - tp2)/(rr_target+1.0)             # <<<<<<<<<<<<<<
- *                     sldist = sl - entry + spread
- *             else:
- */
-        /*else*/ {
-          __pyx_t_7 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_tp2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 852, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_7);
-          __pyx_t_6 = __Pyx_PyFloat_AddObjC(__pyx_v_rr_target, __pyx_float_1_0, 1.0, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 852, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_8 = __Pyx_PyNumber_Divide(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 852, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 852, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_6);
-          __pyx_t_6 = 0;
-
-          /* "controller_cython.pyx":853
- *                 else:
- *                     entry = sl - (sl - tp2)/(rr_target+1.0)
- *                     sldist = sl - entry + spread             # <<<<<<<<<<<<<<
- *             else:
- *                 if rr < rr_target:  # Risk-reward too low
- */
-          __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 853, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_8 = PyNumber_Add(__pyx_t_6, __pyx_v_spread); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 853, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_8);
-          __pyx_t_8 = 0;
-        }
-        __pyx_L23:;
 
         /* "controller_cython.pyx":847
  *                 tp3 = lo + tpstep
  *             rr = abs((tp2 - entry) / sldist )
  *             if adjust_rr:             # <<<<<<<<<<<<<<
- *                 if cl > 0:
- *                     entry = sl + (tp2 - sl)/(rr_target+1.0)
+ *                 if rr < rr_target:  # Risk-reward too low
+ *                     if cl > 0:
  */
         goto __pyx_L22;
       }
 
-      /* "controller_cython.pyx":855
- *                     sldist = sl - entry + spread
+      /* "controller_cython.pyx":856
+ *                         sldist = sl - entry + spread
  *             else:
  *                 if rr < rr_target:  # Risk-reward too low             # <<<<<<<<<<<<<<
  *                     if self.verbose > 1:
  *                         print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
  */
       /*else*/ {
-        __pyx_t_8 = PyObject_RichCompare(__pyx_v_rr, __pyx_v_rr_target, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 855, __pyx_L3_error)
-        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 855, __pyx_L3_error)
+        __pyx_t_8 = PyObject_RichCompare(__pyx_v_rr, __pyx_v_rr_target, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 856, __pyx_L3_error)
+        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 856, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":856
+          /* "controller_cython.pyx":857
  *             else:
  *                 if rr < rr_target:  # Risk-reward too low
  *                     if self.verbose > 1:             # <<<<<<<<<<<<<<
  *                         print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
  *                     return None
  */
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 856, __pyx_L3_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_6 = PyObject_RichCompare(__pyx_t_8, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 856, __pyx_L3_error)
+          __pyx_t_6 = PyObject_RichCompare(__pyx_t_8, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 857, __pyx_L3_error)
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 856, __pyx_L3_error)
+          __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 857, __pyx_L3_error)
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           if (__pyx_t_13) {
 
-            /* "controller_cython.pyx":857
+            /* "controller_cython.pyx":858
  *                 if rr < rr_target:  # Risk-reward too low
  *                     if self.verbose > 1:
  *                         print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))             # <<<<<<<<<<<<<<
  *                     return None
  *             # if you made it here its fine, lets open a limit order
  */
-            __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_kp_u_RR); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_6 = PyNumber_Add(__pyx_v_ins, __pyx_kp_u_RR); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_6);
-            __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_rr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_rr); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_7);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_kp_u__32); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
-            __Pyx_GOTREF(__pyx_t_8);
-            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-            __pyx_t_7 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_entry); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 857, __pyx_L3_error)
-            __Pyx_GOTREF(__pyx_t_7);
-            __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 857, __pyx_L3_error)
-            __Pyx_GOTREF(__pyx_t_6);
-            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_kp_u__33); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 857, __pyx_L3_error)
-            __Pyx_GOTREF(__pyx_t_7);
-            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-            __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_sl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 857, __pyx_L3_error)
-            __Pyx_GOTREF(__pyx_t_6);
-            __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_kp_u__32); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_8);
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-            __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_kp_u__33); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_7 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_entry); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 858, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_7);
+            __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_tp2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_kp_u__33); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 858, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_7);
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __pyx_t_6 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_sl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 858, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __pyx_t_8 = PyNumber_Add(__pyx_t_7, __pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_8);
-            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+            __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+            __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_kp_u__33); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 858, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_6);
+            __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+            __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_tp2); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 858, __pyx_L3_error)
+            __Pyx_GOTREF(__pyx_t_8);
+            __pyx_t_7 = PyNumber_Add(__pyx_t_6, __pyx_t_8); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_7);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-            __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 857, __pyx_L3_error)
+            __pyx_t_8 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_7); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 858, __pyx_L3_error)
             __Pyx_GOTREF(__pyx_t_8);
             __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
             __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
 
-            /* "controller_cython.pyx":856
+            /* "controller_cython.pyx":857
  *             else:
  *                 if rr < rr_target:  # Risk-reward too low
  *                     if self.verbose > 1:             # <<<<<<<<<<<<<<
@@ -21918,7 +21937,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
           }
 
-          /* "controller_cython.pyx":858
+          /* "controller_cython.pyx":859
  *                     if self.verbose > 1:
  *                         print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
  *                     return None             # <<<<<<<<<<<<<<
@@ -21929,8 +21948,8 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
           __pyx_r = Py_None; __Pyx_INCREF(Py_None);
           goto __pyx_L7_try_return;
 
-          /* "controller_cython.pyx":855
- *                     sldist = sl - entry + spread
+          /* "controller_cython.pyx":856
+ *                         sldist = sl - entry + spread
  *             else:
  *                 if rr < rr_target:  # Risk-reward too low             # <<<<<<<<<<<<<<
  *                     if self.verbose > 1:
@@ -21940,18 +21959,18 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       }
       __pyx_L22:;
 
-      /* "controller_cython.pyx":861
+      /* "controller_cython.pyx":862
  *             # if you made it here its fine, lets open a limit order
  *             # r2sum is used to scale down the units risked to accomodate the estimator quality
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),             # <<<<<<<<<<<<<<
  *                                                                1.0) * (1 - close_score)
  *             if units > 0:
  */
-      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_units); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 861, __pyx_L3_error)
+      __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_units); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 862, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 861, __pyx_L3_error)
+      __pyx_t_6 = PyNumber_Subtract(__pyx_v_sl, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 862, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_5 = __Pyx_PyNumber_Absolute(__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 861, __pyx_L3_error)
+      __pyx_t_5 = __Pyx_PyNumber_Absolute(__pyx_t_6); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 862, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_t_6 = NULL;
@@ -21969,7 +21988,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_t_5, __pyx_v_ins};
-        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 861, __pyx_L3_error)
+        __pyx_t_8 = __Pyx_PyFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 862, __pyx_L3_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -21978,14 +21997,14 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_7)) {
         PyObject *__pyx_temp[3] = {__pyx_t_6, __pyx_t_5, __pyx_v_ins};
-        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 861, __pyx_L3_error)
+        __pyx_t_8 = __Pyx_PyCFunction_FastCall(__pyx_t_7, __pyx_temp+1-__pyx_t_11, 2+__pyx_t_11); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 862, __pyx_L3_error)
         __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else
       #endif
       {
-        __pyx_t_10 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 861, __pyx_L3_error)
+        __pyx_t_10 = PyTuple_New(2+__pyx_t_11); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 862, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
         if (__pyx_t_6) {
           __Pyx_GIVEREF(__pyx_t_6); PyTuple_SET_ITEM(__pyx_t_10, 0, __pyx_t_6); __pyx_t_6 = NULL;
@@ -21996,30 +22015,30 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __Pyx_GIVEREF(__pyx_v_ins);
         PyTuple_SET_ITEM(__pyx_t_10, 1+__pyx_t_11, __pyx_v_ins);
         __pyx_t_5 = 0;
-        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 861, __pyx_L3_error)
+        __pyx_t_8 = __Pyx_PyObject_Call(__pyx_t_7, __pyx_t_10, NULL); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 862, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_t_12 = 1.0;
-      __pyx_t_7 = __Pyx_PyNumber_Absolute(__pyx_v_cl); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 861, __pyx_L3_error)
+      __pyx_t_7 = __Pyx_PyNumber_Absolute(__pyx_v_cl); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 862, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_7);
 
-      /* "controller_cython.pyx":862
+      /* "controller_cython.pyx":863
  *             # r2sum is used to scale down the units risked to accomodate the estimator quality
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
  *                                                                1.0) * (1 - close_score)             # <<<<<<<<<<<<<<
  *             if units > 0:
  *                 units = math.floor(units * self.multiplier)
  */
-      __pyx_t_5 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 862, __pyx_L3_error)
+      __pyx_t_5 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 863, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_6 = PyObject_RichCompare(__pyx_t_5, __pyx_t_7, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 862, __pyx_L3_error)
+      __pyx_t_6 = PyObject_RichCompare(__pyx_t_5, __pyx_t_7, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 863, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 862, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 863, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_13) {
-        __pyx_t_6 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 862, __pyx_L3_error)
+        __pyx_t_6 = PyFloat_FromDouble(__pyx_t_12); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 863, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __pyx_t_10 = __pyx_t_6;
         __pyx_t_6 = 0;
@@ -22029,61 +22048,61 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       }
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-      /* "controller_cython.pyx":861
+      /* "controller_cython.pyx":862
  *             # if you made it here its fine, lets open a limit order
  *             # r2sum is used to scale down the units risked to accomodate the estimator quality
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),             # <<<<<<<<<<<<<<
  *                                                                1.0) * (1 - close_score)
  *             if units > 0:
  */
-      __pyx_t_7 = PyNumber_Multiply(__pyx_t_8, __pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 861, __pyx_L3_error)
+      __pyx_t_7 = PyNumber_Multiply(__pyx_t_8, __pyx_t_10); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 862, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-      /* "controller_cython.pyx":862
+      /* "controller_cython.pyx":863
  *             # r2sum is used to scale down the units risked to accomodate the estimator quality
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
  *                                                                1.0) * (1 - close_score)             # <<<<<<<<<<<<<<
  *             if units > 0:
  *                 units = math.floor(units * self.multiplier)
  */
-      __pyx_t_10 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_v_close_score, 1, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 862, __pyx_L3_error)
+      __pyx_t_10 = __Pyx_PyInt_SubtractCObj(__pyx_int_1, __pyx_v_close_score, 1, 0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 863, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_10);
-      __pyx_t_8 = PyNumber_Multiply(__pyx_t_7, __pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 862, __pyx_L3_error)
+      __pyx_t_8 = PyNumber_Multiply(__pyx_t_7, __pyx_t_10); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 863, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_v_units = __pyx_t_8;
       __pyx_t_8 = 0;
 
-      /* "controller_cython.pyx":863
+      /* "controller_cython.pyx":864
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
  *                                                                1.0) * (1 - close_score)
  *             if units > 0:             # <<<<<<<<<<<<<<
  *                 units = math.floor(units * self.multiplier)
  *             if units < 0:
  */
-      __pyx_t_8 = PyObject_RichCompare(__pyx_v_units, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 863, __pyx_L3_error)
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 863, __pyx_L3_error)
+      __pyx_t_8 = PyObject_RichCompare(__pyx_v_units, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 864, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 864, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":864
+        /* "controller_cython.pyx":865
  *                                                                1.0) * (1 - close_score)
  *             if units > 0:
  *                 units = math.floor(units * self.multiplier)             # <<<<<<<<<<<<<<
  *             if units < 0:
  *                 units = math.ceil(units * self.multiplier)
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_math); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 864, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_10, __pyx_n_s_math); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 865, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_floor); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 864, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_floor); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 865, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_multiplier); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 864, __pyx_L3_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_multiplier); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 865, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_6 = PyNumber_Multiply(__pyx_v_units, __pyx_t_10); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 864, __pyx_L3_error)
+        __pyx_t_6 = PyNumber_Multiply(__pyx_v_units, __pyx_t_10); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 865, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __pyx_t_10 = NULL;
@@ -22099,13 +22118,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_t_8 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_7, __pyx_t_10, __pyx_t_6) : __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_6);
         __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 864, __pyx_L3_error)
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 865, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF_SET(__pyx_v_units, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "controller_cython.pyx":863
+        /* "controller_cython.pyx":864
  *             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
  *                                                                1.0) * (1 - close_score)
  *             if units > 0:             # <<<<<<<<<<<<<<
@@ -22114,33 +22133,33 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
       }
 
-      /* "controller_cython.pyx":865
+      /* "controller_cython.pyx":866
  *             if units > 0:
  *                 units = math.floor(units * self.multiplier)
  *             if units < 0:             # <<<<<<<<<<<<<<
  *                 units = math.ceil(units * self.multiplier)
  *             if abs(units) < 1:
  */
-      __pyx_t_8 = PyObject_RichCompare(__pyx_v_units, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 865, __pyx_L3_error)
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 865, __pyx_L3_error)
+      __pyx_t_8 = PyObject_RichCompare(__pyx_v_units, __pyx_int_0, Py_LT); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 866, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 866, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":866
+        /* "controller_cython.pyx":867
  *                 units = math.floor(units * self.multiplier)
  *             if units < 0:
  *                 units = math.ceil(units * self.multiplier)             # <<<<<<<<<<<<<<
  *             if abs(units) < 1:
  *                 return None  # oops, risk threshold too small
  */
-        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 866, __pyx_L3_error)
+        __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_math); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 867, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ceil); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 866, __pyx_L3_error)
+        __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_ceil); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 867, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_multiplier); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 866, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_multiplier); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 867, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_10 = PyNumber_Multiply(__pyx_v_units, __pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 866, __pyx_L3_error)
+        __pyx_t_10 = PyNumber_Multiply(__pyx_v_units, __pyx_t_7); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 867, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         __pyx_t_7 = NULL;
@@ -22156,13 +22175,13 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_t_8 = (__pyx_t_7) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_7, __pyx_t_10) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_10);
         __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 866, __pyx_L3_error)
+        if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 867, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF_SET(__pyx_v_units, __pyx_t_8);
         __pyx_t_8 = 0;
 
-        /* "controller_cython.pyx":865
+        /* "controller_cython.pyx":866
  *             if units > 0:
  *                 units = math.floor(units * self.multiplier)
  *             if units < 0:             # <<<<<<<<<<<<<<
@@ -22171,22 +22190,22 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
       }
 
-      /* "controller_cython.pyx":867
+      /* "controller_cython.pyx":868
  *             if units < 0:
  *                 units = math.ceil(units * self.multiplier)
  *             if abs(units) < 1:             # <<<<<<<<<<<<<<
  *                 return None  # oops, risk threshold too small
  *             if tp2 < sl:
  */
-      __pyx_t_8 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 867, __pyx_L3_error)
+      __pyx_t_8 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 868, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_6 = PyObject_RichCompare(__pyx_t_8, __pyx_int_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 867, __pyx_L3_error)
+      __pyx_t_6 = PyObject_RichCompare(__pyx_t_8, __pyx_int_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 868, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 867, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 868, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":868
+        /* "controller_cython.pyx":869
  *                 units = math.ceil(units * self.multiplier)
  *             if abs(units) < 1:
  *                 return None  # oops, risk threshold too small             # <<<<<<<<<<<<<<
@@ -22197,7 +22216,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_r = Py_None; __Pyx_INCREF(Py_None);
         goto __pyx_L7_try_return;
 
-        /* "controller_cython.pyx":867
+        /* "controller_cython.pyx":868
  *             if units < 0:
  *                 units = math.ceil(units * self.multiplier)
  *             if abs(units) < 1:             # <<<<<<<<<<<<<<
@@ -22206,31 +22225,31 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
       }
 
-      /* "controller_cython.pyx":869
+      /* "controller_cython.pyx":870
  *             if abs(units) < 1:
  *                 return None  # oops, risk threshold too small
  *             if tp2 < sl:             # <<<<<<<<<<<<<<
  *                 units *= -1
  *             relative_cost = spread / abs(tp2 - entry)
  */
-      __pyx_t_6 = PyObject_RichCompare(__pyx_v_tp2, __pyx_v_sl, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 869, __pyx_L3_error)
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 869, __pyx_L3_error)
+      __pyx_t_6 = PyObject_RichCompare(__pyx_v_tp2, __pyx_v_sl, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 870, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 870, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":870
+        /* "controller_cython.pyx":871
  *                 return None  # oops, risk threshold too small
  *             if tp2 < sl:
  *                 units *= -1             # <<<<<<<<<<<<<<
  *             relative_cost = spread / abs(tp2 - entry)
  *             if abs(cl) <= relative_cost:
  */
-        __pyx_t_6 = PyNumber_InPlaceMultiply(__pyx_v_units, __pyx_int_neg_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 870, __pyx_L3_error)
+        __pyx_t_6 = PyNumber_InPlaceMultiply(__pyx_v_units, __pyx_int_neg_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 871, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_DECREF_SET(__pyx_v_units, __pyx_t_6);
         __pyx_t_6 = 0;
 
-        /* "controller_cython.pyx":869
+        /* "controller_cython.pyx":870
  *             if abs(units) < 1:
  *                 return None  # oops, risk threshold too small
  *             if tp2 < sl:             # <<<<<<<<<<<<<<
@@ -22239,40 +22258,40 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
       }
 
-      /* "controller_cython.pyx":871
+      /* "controller_cython.pyx":872
  *             if tp2 < sl:
  *                 units *= -1
  *             relative_cost = spread / abs(tp2 - entry)             # <<<<<<<<<<<<<<
  *             if abs(cl) <= relative_cost:
  *                 return None  # edge too small to cover cost
  */
-      __pyx_t_6 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 871, __pyx_L3_error)
+      __pyx_t_6 = PyNumber_Subtract(__pyx_v_tp2, __pyx_v_entry); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 872, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_8 = __Pyx_PyNumber_Absolute(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 871, __pyx_L3_error)
+      __pyx_t_8 = __Pyx_PyNumber_Absolute(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 872, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_v_spread, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 871, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyNumber_Divide(__pyx_v_spread, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 872, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __pyx_v_relative_cost = __pyx_t_6;
       __pyx_t_6 = 0;
 
-      /* "controller_cython.pyx":872
+      /* "controller_cython.pyx":873
  *                 units *= -1
  *             relative_cost = spread / abs(tp2 - entry)
  *             if abs(cl) <= relative_cost:             # <<<<<<<<<<<<<<
  *                 return None  # edge too small to cover cost
  *             pip_location = self.get_pip_size(ins)
  */
-      __pyx_t_6 = __Pyx_PyNumber_Absolute(__pyx_v_cl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 872, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyNumber_Absolute(__pyx_v_cl); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 873, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_8 = PyObject_RichCompare(__pyx_t_6, __pyx_v_relative_cost, Py_LE); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 872, __pyx_L3_error)
+      __pyx_t_8 = PyObject_RichCompare(__pyx_t_6, __pyx_v_relative_cost, Py_LE); __Pyx_XGOTREF(__pyx_t_8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 873, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 872, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_8); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 873, __pyx_L3_error)
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":873
+        /* "controller_cython.pyx":874
  *             relative_cost = spread / abs(tp2 - entry)
  *             if abs(cl) <= relative_cost:
  *                 return None  # edge too small to cover cost             # <<<<<<<<<<<<<<
@@ -22283,7 +22302,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_r = Py_None; __Pyx_INCREF(Py_None);
         goto __pyx_L7_try_return;
 
-        /* "controller_cython.pyx":872
+        /* "controller_cython.pyx":873
  *                 units *= -1
  *             relative_cost = spread / abs(tp2 - entry)
  *             if abs(cl) <= relative_cost:             # <<<<<<<<<<<<<<
@@ -22292,14 +22311,14 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
       }
 
-      /* "controller_cython.pyx":874
+      /* "controller_cython.pyx":875
  *             if abs(cl) <= relative_cost:
  *                 return None  # edge too small to cover cost
  *             pip_location = self.get_pip_size(ins)             # <<<<<<<<<<<<<<
  *             pip_size = 10 ** (-pip_location + 1)
  *             # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
  */
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_pip_size); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 874, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_get_pip_size); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 875, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __pyx_t_10 = NULL;
       if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
@@ -22313,31 +22332,31 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       }
       __pyx_t_8 = (__pyx_t_10) ? __Pyx_PyObject_Call2Args(__pyx_t_6, __pyx_t_10, __pyx_v_ins) : __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_v_ins);
       __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 874, __pyx_L3_error)
+      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 875, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_pip_location = __pyx_t_8;
       __pyx_t_8 = 0;
 
-      /* "controller_cython.pyx":875
+      /* "controller_cython.pyx":876
  *                 return None  # edge too small to cover cost
  *             pip_location = self.get_pip_size(ins)
  *             pip_size = 10 ** (-pip_location + 1)             # <<<<<<<<<<<<<<
  *             # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
  *             #    return None
  */
-      __pyx_t_8 = PyNumber_Negative(__pyx_v_pip_location); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 875, __pyx_L3_error)
+      __pyx_t_8 = PyNumber_Negative(__pyx_v_pip_location); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 876, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_8, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 875, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyInt_AddObjC(__pyx_t_8, __pyx_int_1, 1, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 876, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = PyNumber_Power(__pyx_int_10, __pyx_t_6, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 875, __pyx_L3_error)
+      __pyx_t_8 = PyNumber_Power(__pyx_int_10, __pyx_t_6, Py_None); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 876, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_pip_size = __pyx_t_8;
       __pyx_t_8 = 0;
 
-      /* "controller_cython.pyx":879
+      /* "controller_cython.pyx":880
  *             #    return None
  *             # otype = 'MARKET'
  *             otype = 'LIMIT'             # <<<<<<<<<<<<<<
@@ -22347,75 +22366,36 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       __Pyx_INCREF(__pyx_n_u_LIMIT);
       __pyx_v_otype = __pyx_n_u_LIMIT;
 
-      /* "controller_cython.pyx":880
+      /* "controller_cython.pyx":881
  *             # otype = 'MARKET'
  *             otype = 'LIMIT'
  *             format_string = '30.' + str(pip_location) + 'f'             # <<<<<<<<<<<<<<
  *             tp1 = format(tp1, format_string).strip()
  *             tp2 = format(tp2, format_string).strip()
  */
-      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_pip_location); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 880, __pyx_L3_error)
+      __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_pip_location); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 881, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
-      __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_kp_u_30, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 880, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_kp_u_30, __pyx_t_8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 881, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-      __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_n_u_f); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 880, __pyx_L3_error)
+      __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_6, __pyx_n_u_f); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 881, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_format_string = __pyx_t_8;
       __pyx_t_8 = 0;
 
-      /* "controller_cython.pyx":881
+      /* "controller_cython.pyx":882
  *             otype = 'LIMIT'
  *             format_string = '30.' + str(pip_location) + 'f'
  *             tp1 = format(tp1, format_string).strip()             # <<<<<<<<<<<<<<
  *             tp2 = format(tp2, format_string).strip()
  *             tp3 = format(tp3, format_string).strip()
  */
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 881, __pyx_L3_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 882, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_INCREF(__pyx_v_tp1);
       __Pyx_GIVEREF(__pyx_v_tp1);
       PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_tp1);
-      __Pyx_INCREF(__pyx_v_format_string);
-      __Pyx_GIVEREF(__pyx_v_format_string);
-      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
-      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_format, __pyx_t_6, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 881, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_10);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_strip); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 881, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-      __pyx_t_10 = NULL;
-      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
-        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_6);
-        if (likely(__pyx_t_10)) {
-          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
-          __Pyx_INCREF(__pyx_t_10);
-          __Pyx_INCREF(function);
-          __Pyx_DECREF_SET(__pyx_t_6, function);
-        }
-      }
-      __pyx_t_8 = (__pyx_t_10) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_10) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
-      __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
-      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 881, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_8);
-      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_tp1, __pyx_t_8);
-      __pyx_t_8 = 0;
-
-      /* "controller_cython.pyx":882
- *             format_string = '30.' + str(pip_location) + 'f'
- *             tp1 = format(tp1, format_string).strip()
- *             tp2 = format(tp2, format_string).strip()             # <<<<<<<<<<<<<<
- *             tp3 = format(tp3, format_string).strip()
- *             sl = format(sl, format_string).strip()
- */
-      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 882, __pyx_L3_error)
-      __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_v_tp2);
-      __Pyx_GIVEREF(__pyx_v_tp2);
-      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_tp2);
       __Pyx_INCREF(__pyx_v_format_string);
       __Pyx_GIVEREF(__pyx_v_format_string);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
@@ -22440,21 +22420,21 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 882, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_tp2, __pyx_t_8);
+      __Pyx_DECREF_SET(__pyx_v_tp1, __pyx_t_8);
       __pyx_t_8 = 0;
 
       /* "controller_cython.pyx":883
+ *             format_string = '30.' + str(pip_location) + 'f'
  *             tp1 = format(tp1, format_string).strip()
- *             tp2 = format(tp2, format_string).strip()
- *             tp3 = format(tp3, format_string).strip()             # <<<<<<<<<<<<<<
+ *             tp2 = format(tp2, format_string).strip()             # <<<<<<<<<<<<<<
+ *             tp3 = format(tp3, format_string).strip()
  *             sl = format(sl, format_string).strip()
- *             sldist = format(sldist, format_string).strip()
  */
       __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 883, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_v_tp3);
-      __Pyx_GIVEREF(__pyx_v_tp3);
-      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_tp3);
+      __Pyx_INCREF(__pyx_v_tp2);
+      __Pyx_GIVEREF(__pyx_v_tp2);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_tp2);
       __Pyx_INCREF(__pyx_v_format_string);
       __Pyx_GIVEREF(__pyx_v_format_string);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
@@ -22479,21 +22459,21 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 883, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_tp3, __pyx_t_8);
+      __Pyx_DECREF_SET(__pyx_v_tp2, __pyx_t_8);
       __pyx_t_8 = 0;
 
       /* "controller_cython.pyx":884
+ *             tp1 = format(tp1, format_string).strip()
  *             tp2 = format(tp2, format_string).strip()
- *             tp3 = format(tp3, format_string).strip()
- *             sl = format(sl, format_string).strip()             # <<<<<<<<<<<<<<
+ *             tp3 = format(tp3, format_string).strip()             # <<<<<<<<<<<<<<
+ *             sl = format(sl, format_string).strip()
  *             sldist = format(sldist, format_string).strip()
- *             entry = format(entry, format_string).strip()
  */
       __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 884, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_v_sl);
-      __Pyx_GIVEREF(__pyx_v_sl);
-      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_sl);
+      __Pyx_INCREF(__pyx_v_tp3);
+      __Pyx_GIVEREF(__pyx_v_tp3);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_tp3);
       __Pyx_INCREF(__pyx_v_format_string);
       __Pyx_GIVEREF(__pyx_v_format_string);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
@@ -22518,21 +22498,21 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 884, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_sl, __pyx_t_8);
+      __Pyx_DECREF_SET(__pyx_v_tp3, __pyx_t_8);
       __pyx_t_8 = 0;
 
       /* "controller_cython.pyx":885
+ *             tp2 = format(tp2, format_string).strip()
  *             tp3 = format(tp3, format_string).strip()
- *             sl = format(sl, format_string).strip()
- *             sldist = format(sldist, format_string).strip()             # <<<<<<<<<<<<<<
+ *             sl = format(sl, format_string).strip()             # <<<<<<<<<<<<<<
+ *             sldist = format(sldist, format_string).strip()
  *             entry = format(entry, format_string).strip()
- *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  */
       __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 885, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_v_sldist);
-      __Pyx_GIVEREF(__pyx_v_sldist);
-      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_sldist);
+      __Pyx_INCREF(__pyx_v_sl);
+      __Pyx_GIVEREF(__pyx_v_sl);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_sl);
       __Pyx_INCREF(__pyx_v_format_string);
       __Pyx_GIVEREF(__pyx_v_format_string);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
@@ -22557,21 +22537,21 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 885, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_8);
+      __Pyx_DECREF_SET(__pyx_v_sl, __pyx_t_8);
       __pyx_t_8 = 0;
 
       /* "controller_cython.pyx":886
+ *             tp3 = format(tp3, format_string).strip()
  *             sl = format(sl, format_string).strip()
- *             sldist = format(sldist, format_string).strip()
- *             entry = format(entry, format_string).strip()             # <<<<<<<<<<<<<<
+ *             sldist = format(sldist, format_string).strip()             # <<<<<<<<<<<<<<
+ *             entry = format(entry, format_string).strip()
  *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
- *             if split_position:
  */
       __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 886, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __Pyx_INCREF(__pyx_v_entry);
-      __Pyx_GIVEREF(__pyx_v_entry);
-      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_entry);
+      __Pyx_INCREF(__pyx_v_sldist);
+      __Pyx_GIVEREF(__pyx_v_sldist);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_sldist);
       __Pyx_INCREF(__pyx_v_format_string);
       __Pyx_GIVEREF(__pyx_v_format_string);
       PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
@@ -22596,22 +22576,28 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 886, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_8);
+      __Pyx_DECREF_SET(__pyx_v_sldist, __pyx_t_8);
       __pyx_t_8 = 0;
 
       /* "controller_cython.pyx":887
+ *             sl = format(sl, format_string).strip()
  *             sldist = format(sldist, format_string).strip()
- *             entry = format(entry, format_string).strip()
- *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)             # <<<<<<<<<<<<<<
+ *             entry = format(entry, format_string).strip()             # <<<<<<<<<<<<<<
+ *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *             if split_position:
- *                 units = int(units / 2)  # open three trades to spread out the risk
  */
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __pyx_t_6 = PyTuple_New(2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __Pyx_INCREF(__pyx_v_entry);
+      __Pyx_GIVEREF(__pyx_v_entry);
+      PyTuple_SET_ITEM(__pyx_t_6, 0, __pyx_v_entry);
+      __Pyx_INCREF(__pyx_v_format_string);
+      __Pyx_GIVEREF(__pyx_v_format_string);
+      PyTuple_SET_ITEM(__pyx_t_6, 1, __pyx_v_format_string);
+      __pyx_t_10 = __Pyx_PyObject_Call(__pyx_builtin_format, __pyx_t_6, NULL); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 887, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_now); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_strip); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __pyx_t_10 = NULL;
@@ -22629,58 +22615,91 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 887, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_8);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __Pyx_DECREF_SET(__pyx_v_entry, __pyx_t_8);
+      __pyx_t_8 = 0;
+
+      /* "controller_cython.pyx":888
+ *             sldist = format(sldist, format_string).strip()
+ *             entry = format(entry, format_string).strip()
+ *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)             # <<<<<<<<<<<<<<
+ *             if split_position:
+ *                 units = int(units / 2)  # open three trades to spread out the risk
+ */
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 888, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_timedelta); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 888, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_10);
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_now); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 888, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
-      if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_hours, __pyx_v_duration) < 0) __PYX_ERR(0, 887, __pyx_L3_error)
-      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_empty_tuple, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+      __pyx_t_10 = NULL;
+      if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_6))) {
+        __pyx_t_10 = PyMethod_GET_SELF(__pyx_t_6);
+        if (likely(__pyx_t_10)) {
+          PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_6);
+          __Pyx_INCREF(__pyx_t_10);
+          __Pyx_INCREF(function);
+          __Pyx_DECREF_SET(__pyx_t_6, function);
+        }
+      }
+      __pyx_t_8 = (__pyx_t_10) ? __Pyx_PyObject_CallOneArg(__pyx_t_6, __pyx_t_10) : __Pyx_PyObject_CallNoArg(__pyx_t_6);
+      __Pyx_XDECREF(__pyx_t_10); __pyx_t_10 = 0;
+      if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 888, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_8);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_datetime); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 888, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_timedelta); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 888, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_10);
+      __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+      __pyx_t_6 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 888, __pyx_L3_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      if (PyDict_SetItem(__pyx_t_6, __pyx_n_s_hours, __pyx_v_duration) < 0) __PYX_ERR(0, 888, __pyx_L3_error)
+      __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_empty_tuple, __pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 888, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 887, __pyx_L3_error)
+      __pyx_t_6 = PyNumber_Add(__pyx_t_8, __pyx_t_7); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 888, __pyx_L3_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
       __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
       __pyx_v_expiry = __pyx_t_6;
       __pyx_t_6 = 0;
 
-      /* "controller_cython.pyx":888
+      /* "controller_cython.pyx":889
  *             entry = format(entry, format_string).strip()
  *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *             if split_position:             # <<<<<<<<<<<<<<
  *                 units = int(units / 2)  # open three trades to spread out the risk
  *                 tp_array = [tp1, tp2]
  */
-      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_v_split_position); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 888, __pyx_L3_error)
+      __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_v_split_position); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 889, __pyx_L3_error)
       if (__pyx_t_13) {
 
-        /* "controller_cython.pyx":889
+        /* "controller_cython.pyx":890
  *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *             if split_position:
  *                 units = int(units / 2)  # open three trades to spread out the risk             # <<<<<<<<<<<<<<
  *                 tp_array = [tp1, tp2]
  *                 if abs(units) < 1:
  */
-        __pyx_t_6 = __Pyx_PyInt_TrueDivideObjC(__pyx_v_units, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 889, __pyx_L3_error)
+        __pyx_t_6 = __Pyx_PyInt_TrueDivideObjC(__pyx_v_units, __pyx_int_2, 2, 0); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 890, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
-        __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 889, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyNumber_Int(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 890, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         __Pyx_DECREF_SET(__pyx_v_units, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "controller_cython.pyx":890
+        /* "controller_cython.pyx":891
  *             if split_position:
  *                 units = int(units / 2)  # open three trades to spread out the risk
  *                 tp_array = [tp1, tp2]             # <<<<<<<<<<<<<<
  *                 if abs(units) < 1:
  *                     return
  */
-        __pyx_t_7 = PyList_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 890, __pyx_L3_error)
+        __pyx_t_7 = PyList_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 891, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_INCREF(__pyx_v_tp1);
         __Pyx_GIVEREF(__pyx_v_tp1);
@@ -22691,22 +22710,22 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_v_tp_array = ((PyObject*)__pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "controller_cython.pyx":891
+        /* "controller_cython.pyx":892
  *                 units = int(units / 2)  # open three trades to spread out the risk
  *                 tp_array = [tp1, tp2]
  *                 if abs(units) < 1:             # <<<<<<<<<<<<<<
  *                     return
  *             else:
  */
-        __pyx_t_7 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 891, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 892, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 891, __pyx_L3_error)
+        __pyx_t_6 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_LT); __Pyx_XGOTREF(__pyx_t_6); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 892, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 891, __pyx_L3_error)
+        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_6); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 892, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
         if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":892
+          /* "controller_cython.pyx":893
  *                 tp_array = [tp1, tp2]
  *                 if abs(units) < 1:
  *                     return             # <<<<<<<<<<<<<<
@@ -22717,7 +22736,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
           __pyx_r = Py_None; __Pyx_INCREF(Py_None);
           goto __pyx_L7_try_return;
 
-          /* "controller_cython.pyx":891
+          /* "controller_cython.pyx":892
  *                 units = int(units / 2)  # open three trades to spread out the risk
  *                 tp_array = [tp1, tp2]
  *                 if abs(units) < 1:             # <<<<<<<<<<<<<<
@@ -22726,17 +22745,17 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
         }
 
-        /* "controller_cython.pyx":888
+        /* "controller_cython.pyx":889
  *             entry = format(entry, format_string).strip()
  *             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
  *             if split_position:             # <<<<<<<<<<<<<<
  *                 units = int(units / 2)  # open three trades to spread out the risk
  *                 tp_array = [tp1, tp2]
  */
-        goto __pyx_L31;
+        goto __pyx_L32;
       }
 
-      /* "controller_cython.pyx":894
+      /* "controller_cython.pyx":895
  *                     return
  *             else:
  *                 tp_array = [tp2]             # <<<<<<<<<<<<<<
@@ -22744,7 +22763,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  *                 args = {'order': {
  */
       /*else*/ {
-        __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 894, __pyx_L3_error)
+        __pyx_t_6 = PyList_New(1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 895, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_6);
         __Pyx_INCREF(__pyx_v_tp2);
         __Pyx_GIVEREF(__pyx_v_tp2);
@@ -22752,9 +22771,9 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         __pyx_v_tp_array = ((PyObject*)__pyx_t_6);
         __pyx_t_6 = 0;
       }
-      __pyx_L31:;
+      __pyx_L32:;
 
-      /* "controller_cython.pyx":895
+      /* "controller_cython.pyx":896
  *             else:
  *                 tp_array = [tp2]
  *             for tp in tp_array:             # <<<<<<<<<<<<<<
@@ -22765,71 +22784,71 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       for (;;) {
         if (__pyx_t_15 >= PyList_GET_SIZE(__pyx_t_6)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_7); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 895, __pyx_L3_error)
+        __pyx_t_7 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_15); __Pyx_INCREF(__pyx_t_7); __pyx_t_15++; if (unlikely(0 < 0)) __PYX_ERR(0, 896, __pyx_L3_error)
         #else
-        __pyx_t_7 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 895, __pyx_L3_error)
+        __pyx_t_7 = PySequence_ITEM(__pyx_t_6, __pyx_t_15); __pyx_t_15++; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 896, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_tp, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "controller_cython.pyx":896
+        /* "controller_cython.pyx":897
  *                 tp_array = [tp2]
  *             for tp in tp_array:
  *                 args = {'order': {             # <<<<<<<<<<<<<<
  *                     'instrument': ins,
  *                     'units': units,
  */
-        __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 896, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 897, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
 
-        /* "controller_cython.pyx":897
+        /* "controller_cython.pyx":898
  *             for tp in tp_array:
  *                 args = {'order': {
  *                     'instrument': ins,             # <<<<<<<<<<<<<<
  *                     'units': units,
  *                     'price': entry,
  */
-        __pyx_t_8 = __Pyx_PyDict_NewPresized(8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 897, __pyx_L3_error)
+        __pyx_t_8 = __Pyx_PyDict_NewPresized(8); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 898, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_8);
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_instrument, __pyx_v_ins) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_instrument, __pyx_v_ins) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
 
-        /* "controller_cython.pyx":898
+        /* "controller_cython.pyx":899
  *                 args = {'order': {
  *                     'instrument': ins,
  *                     'units': units,             # <<<<<<<<<<<<<<
  *                     'price': entry,
  *                     'type': otype,
  */
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_units, __pyx_v_units) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_units, __pyx_v_units) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
 
-        /* "controller_cython.pyx":899
+        /* "controller_cython.pyx":900
  *                     'instrument': ins,
  *                     'units': units,
  *                     'price': entry,             # <<<<<<<<<<<<<<
  *                     'type': otype,
  *                     'timeInForce': 'GTD',
  */
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_price, __pyx_v_entry) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_price, __pyx_v_entry) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
 
-        /* "controller_cython.pyx":900
+        /* "controller_cython.pyx":901
  *                     'units': units,
  *                     'price': entry,
  *                     'type': otype,             # <<<<<<<<<<<<<<
  *                     'timeInForce': 'GTD',
  *                     'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
  */
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_type_2, __pyx_v_otype) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_timeInForce, __pyx_n_u_GTD) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_type_2, __pyx_v_otype) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_timeInForce, __pyx_n_u_GTD) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
 
-        /* "controller_cython.pyx":902
+        /* "controller_cython.pyx":903
  *                     'type': otype,
  *                     'timeInForce': 'GTD',
  *                     'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),             # <<<<<<<<<<<<<<
  *                     'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
  *                     # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
  */
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_expiry, __pyx_n_s_strftime); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 902, __pyx_L3_error)
+        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_expiry, __pyx_n_s_strftime); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 903, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_5);
         __pyx_t_9 = NULL;
         if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -22843,135 +22862,135 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         }
         __pyx_t_10 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_9, __pyx_kp_u_Y_m_dT_H_M_S_fZ) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_kp_u_Y_m_dT_H_M_S_fZ);
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 902, __pyx_L3_error)
+        if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 903, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_gtdTime, __pyx_t_10) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_gtdTime, __pyx_t_10) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-        /* "controller_cython.pyx":903
+        /* "controller_cython.pyx":904
  *                     'timeInForce': 'GTD',
  *                     'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
  *                     'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},             # <<<<<<<<<<<<<<
  *                     # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
  *                     'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
  */
-        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 903, __pyx_L3_error)
+        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 904, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_price, __pyx_v_tp) < 0) __PYX_ERR(0, 903, __pyx_L3_error)
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_timeInForce, __pyx_n_u_GTC) < 0) __PYX_ERR(0, 903, __pyx_L3_error)
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_takeProfitOnFill, __pyx_t_10) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_price, __pyx_v_tp) < 0) __PYX_ERR(0, 904, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_timeInForce, __pyx_n_u_GTC) < 0) __PYX_ERR(0, 904, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_takeProfitOnFill, __pyx_t_10) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-        /* "controller_cython.pyx":905
+        /* "controller_cython.pyx":906
  *                     'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
  *                     # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
  *                     'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}             # <<<<<<<<<<<<<<
  *                 }}
  *                 if self.write_trades:
  */
-        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 905, __pyx_L3_error)
+        __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 906, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_distance, __pyx_v_sldist) < 0) __PYX_ERR(0, 905, __pyx_L3_error)
-        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_timeInForce, __pyx_n_u_GTC) < 0) __PYX_ERR(0, 905, __pyx_L3_error)
-        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_trailingStopLossOnFill, __pyx_t_10) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_distance, __pyx_v_sldist) < 0) __PYX_ERR(0, 906, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_10, __pyx_n_u_timeInForce, __pyx_n_u_GTC) < 0) __PYX_ERR(0, 906, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_8, __pyx_n_u_trailingStopLossOnFill, __pyx_t_10) < 0) __PYX_ERR(0, 898, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_order, __pyx_t_8) < 0) __PYX_ERR(0, 896, __pyx_L3_error)
+        if (PyDict_SetItem(__pyx_t_7, __pyx_n_u_order, __pyx_t_8) < 0) __PYX_ERR(0, 897, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
         __Pyx_XDECREF_SET(__pyx_v_args, ((PyObject*)__pyx_t_7));
         __pyx_t_7 = 0;
 
-        /* "controller_cython.pyx":907
+        /* "controller_cython.pyx":908
  *                     'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
  *                 }}
  *                 if self.write_trades:             # <<<<<<<<<<<<<<
  *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
  *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
  */
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_write_trades); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 907, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_write_trades); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 908, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 907, __pyx_L3_error)
+        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_7); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 908, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
         if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":908
+          /* "controller_cython.pyx":909
  *                 }}
  *                 if self.write_trades:
  *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(             # <<<<<<<<<<<<<<
  *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
  *                 if self.verbose > 1:
  */
-          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades_file); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_8 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades_file); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_write); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_8, __pyx_n_s_write); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_ins); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_ins); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_kp_u__27); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_kp_u__27); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_units); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_units); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_8);
-          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 908, __pyx_L3_error)
+          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_9, __pyx_kp_u__27); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __pyx_t_9 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_tp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_9);
-          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_kp_u__27); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_9);
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_sl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_9, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_kp_u__27); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_5);
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-
-          /* "controller_cython.pyx":909
- *                 if self.write_trades:
- *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
- *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')             # <<<<<<<<<<<<<<
- *                 if self.verbose > 1:
- *                     print(args)
- */
-          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_entry); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_8);
-
-          /* "controller_cython.pyx":908
- *                 }}
- *                 if self.write_trades:
- *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(             # <<<<<<<<<<<<<<
- *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
- *                 if self.verbose > 1:
- */
-          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 908, __pyx_L3_error)
-          __Pyx_GOTREF(__pyx_t_9);
-          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
-
-          /* "controller_cython.pyx":909
- *                 if self.write_trades:
- *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
- *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')             # <<<<<<<<<<<<<<
- *                 if self.verbose > 1:
- *                     print(args)
- */
           __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_9, __pyx_kp_u__27); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_8);
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_expiry, __pyx_n_s_strftime); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __pyx_t_9 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_tp); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_kp_u__27); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_sl); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_9, __pyx_t_5); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_8);
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __pyx_t_5 = __Pyx_PyUnicode_Concat(__pyx_t_8, __pyx_kp_u__27); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_5);
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+          /* "controller_cython.pyx":910
+ *                 if self.write_trades:
+ *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
+ *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')             # <<<<<<<<<<<<<<
+ *                 if self.verbose > 1:
+ *                     print(args)
+ */
+          __pyx_t_8 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_entry); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_8);
+
+          /* "controller_cython.pyx":909
+ *                 }}
+ *                 if self.write_trades:
+ *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(             # <<<<<<<<<<<<<<
+ *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
+ *                 if self.verbose > 1:
+ */
+          __pyx_t_9 = __Pyx_PyUnicode_Concat(__pyx_t_5, __pyx_t_8); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+          __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
+
+          /* "controller_cython.pyx":910
+ *                 if self.write_trades:
+ *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
+ *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')             # <<<<<<<<<<<<<<
+ *                 if self.verbose > 1:
+ *                     print(args)
+ */
+          __pyx_t_8 = __Pyx_PyUnicode_Concat(__pyx_t_9, __pyx_kp_u__27); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 910, __pyx_L3_error)
+          __Pyx_GOTREF(__pyx_t_8);
+          __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_expiry, __pyx_n_s_strftime); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 910, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_5);
           __pyx_t_18 = NULL;
           if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_5))) {
@@ -22985,14 +23004,14 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
           }
           __pyx_t_9 = (__pyx_t_18) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_18, __pyx_kp_u_Y_m_dT_M_M_S_fZ) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_kp_u_Y_m_dT_M_M_S_fZ);
           __Pyx_XDECREF(__pyx_t_18); __pyx_t_18 = 0;
-          if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
+          if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 910, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-          __pyx_t_5 = PyNumber_Add(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __pyx_t_5 = PyNumber_Add(__pyx_t_8, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 910, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          __pyx_t_9 = PyNumber_Add(__pyx_t_5, __pyx_kp_u__34); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 909, __pyx_L3_error)
+          __pyx_t_9 = PyNumber_Add(__pyx_t_5, __pyx_kp_u__34); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 910, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_9);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_5 = NULL;
@@ -23008,12 +23027,12 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
           __pyx_t_7 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_10, __pyx_t_5, __pyx_t_9) : __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_9);
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 908, __pyx_L3_error)
+          if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 909, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-          /* "controller_cython.pyx":907
+          /* "controller_cython.pyx":908
  *                     'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
  *                 }}
  *                 if self.write_trades:             # <<<<<<<<<<<<<<
@@ -23022,33 +23041,33 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
         }
 
-        /* "controller_cython.pyx":910
+        /* "controller_cython.pyx":911
  *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
  *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
  *                 if self.verbose > 1:             # <<<<<<<<<<<<<<
  *                     print(args)
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  */
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 910, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 911, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_10 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 910, __pyx_L3_error)
+        __pyx_t_10 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_10); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 911, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 910, __pyx_L3_error)
+        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_10); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 911, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":911
+          /* "controller_cython.pyx":912
  *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
  *                 if self.verbose > 1:
  *                     print(args)             # <<<<<<<<<<<<<<
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  *                 if self.verbose > 1:
  */
-          __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_args); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 911, __pyx_L3_error)
+          __pyx_t_10 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_args); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 912, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_10);
           __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
 
-          /* "controller_cython.pyx":910
+          /* "controller_cython.pyx":911
  *                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
  *                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
  *                 if self.verbose > 1:             # <<<<<<<<<<<<<<
@@ -23057,24 +23076,24 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
         }
 
-        /* "controller_cython.pyx":912
+        /* "controller_cython.pyx":913
  *                 if self.verbose > 1:
  *                     print(args)
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)             # <<<<<<<<<<<<<<
  *                 if self.verbose > 1:
  *                     print(ticket.raw_body)
  */
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_order); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_10, __pyx_n_s_order); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_create); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_create); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_10);
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_9);
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_get); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_get); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
         __pyx_t_9 = NULL;
@@ -23089,51 +23108,51 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         }
         __pyx_t_7 = (__pyx_t_9) ? __Pyx_PyObject_Call2Args(__pyx_t_5, __pyx_t_9, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_5, __pyx_n_u_account_id);
         __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
-        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 912, __pyx_L3_error)
+        if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_GIVEREF(__pyx_t_7);
         PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_7);
         __pyx_t_7 = 0;
-        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_5, __pyx_v_args); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 912, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_Call(__pyx_t_10, __pyx_t_5, __pyx_v_args); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 913, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         __Pyx_XDECREF_SET(__pyx_v_ticket, __pyx_t_7);
         __pyx_t_7 = 0;
 
-        /* "controller_cython.pyx":913
+        /* "controller_cython.pyx":914
  *                     print(args)
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  *                 if self.verbose > 1:             # <<<<<<<<<<<<<<
  *                     print(ticket.raw_body)
  *         except Exception as e:
  */
-        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 913, __pyx_L3_error)
+        __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_verbose); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 914, __pyx_L3_error)
         __Pyx_GOTREF(__pyx_t_7);
-        __pyx_t_5 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 913, __pyx_L3_error)
+        __pyx_t_5 = PyObject_RichCompare(__pyx_t_7, __pyx_int_1, Py_GT); __Pyx_XGOTREF(__pyx_t_5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 914, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 913, __pyx_L3_error)
+        __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_5); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 914, __pyx_L3_error)
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         if (__pyx_t_13) {
 
-          /* "controller_cython.pyx":914
+          /* "controller_cython.pyx":915
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  *                 if self.verbose > 1:
  *                     print(ticket.raw_body)             # <<<<<<<<<<<<<<
  *         except Exception as e:
  *             print('failed to open for ' + ins)
  */
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_ticket, __pyx_n_s_raw_body); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 914, __pyx_L3_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_ticket, __pyx_n_s_raw_body); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 915, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 914, __pyx_L3_error)
+          __pyx_t_7 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 915, __pyx_L3_error)
           __Pyx_GOTREF(__pyx_t_7);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
 
-          /* "controller_cython.pyx":913
+          /* "controller_cython.pyx":914
  *                     print(args)
  *                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  *                 if self.verbose > 1:             # <<<<<<<<<<<<<<
@@ -23142,7 +23161,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
  */
         }
 
-        /* "controller_cython.pyx":895
+        /* "controller_cython.pyx":896
  *             else:
  *                 tp_array = [tp2]
  *             for tp in tp_array:             # <<<<<<<<<<<<<<
@@ -23173,7 +23192,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
     __Pyx_XDECREF(__pyx_t_8); __pyx_t_8 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "controller_cython.pyx":915
+    /* "controller_cython.pyx":916
  *                 if self.verbose > 1:
  *                     print(ticket.raw_body)
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -23183,7 +23202,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
     __pyx_t_11 = __Pyx_PyErr_ExceptionMatches(((PyObject *)(&((PyTypeObject*)PyExc_Exception)[0])));
     if (__pyx_t_11) {
       __Pyx_AddTraceback("controller_cython.Controller.open_limit", __pyx_clineno, __pyx_lineno, __pyx_filename);
-      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_7, &__pyx_t_5) < 0) __PYX_ERR(0, 915, __pyx_L5_except_error)
+      if (__Pyx_GetException(&__pyx_t_6, &__pyx_t_7, &__pyx_t_5) < 0) __PYX_ERR(0, 916, __pyx_L5_except_error)
       __Pyx_GOTREF(__pyx_t_6);
       __Pyx_GOTREF(__pyx_t_7);
       __Pyx_GOTREF(__pyx_t_5);
@@ -23191,30 +23210,30 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
       __pyx_v_e = __pyx_t_7;
       /*try:*/ {
 
-        /* "controller_cython.pyx":916
+        /* "controller_cython.pyx":917
  *                     print(ticket.raw_body)
  *         except Exception as e:
  *             print('failed to open for ' + ins)             # <<<<<<<<<<<<<<
  *             print(e)
  */
-        __pyx_t_10 = PyNumber_Add(__pyx_kp_u_failed_to_open_for, __pyx_v_ins); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 916, __pyx_L43_error)
+        __pyx_t_10 = PyNumber_Add(__pyx_kp_u_failed_to_open_for, __pyx_v_ins); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 917, __pyx_L44_error)
         __Pyx_GOTREF(__pyx_t_10);
-        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 916, __pyx_L43_error)
+        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 917, __pyx_L44_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-        /* "controller_cython.pyx":917
+        /* "controller_cython.pyx":918
  *         except Exception as e:
  *             print('failed to open for ' + ins)
  *             print(e)             # <<<<<<<<<<<<<<
  */
-        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_e); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 917, __pyx_L43_error)
+        __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_e); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 918, __pyx_L44_error)
         __Pyx_GOTREF(__pyx_t_9);
         __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
       }
 
-      /* "controller_cython.pyx":915
+      /* "controller_cython.pyx":916
  *                 if self.verbose > 1:
  *                     print(ticket.raw_body)
  *         except Exception as e:             # <<<<<<<<<<<<<<
@@ -23225,9 +23244,9 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
         /*normal exit:*/{
           __Pyx_DECREF(__pyx_v_e);
           __pyx_v_e = NULL;
-          goto __pyx_L44;
+          goto __pyx_L45;
         }
-        __pyx_L43_error:;
+        __pyx_L44_error:;
         /*exception exit:*/{
           __Pyx_PyThreadState_declare
           __Pyx_PyThreadState_assign
@@ -23263,7 +23282,7 @@ static PyObject *__pyx_pf_17controller_cython_10Controller_52open_limit(CYTHON_U
           __pyx_lineno = __pyx_t_11; __pyx_clineno = __pyx_t_19; __pyx_filename = __pyx_t_20;
           goto __pyx_L5_except_error;
         }
-        __pyx_L44:;
+        __pyx_L45:;
       }
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_XDECREF(__pyx_t_7); __pyx_t_7 = 0;
@@ -23958,7 +23977,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 83, __pyx_L1_error)
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 539, __pyx_L1_error)
   __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 657, __pyx_L1_error)
-  __pyx_builtin_format = __Pyx_GetBuiltinName(__pyx_n_s_format); if (!__pyx_builtin_format) __PYX_ERR(0, 881, __pyx_L1_error)
+  __pyx_builtin_format = __Pyx_GetBuiltinName(__pyx_n_s_format); if (!__pyx_builtin_format) __PYX_ERR(0, 882, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
