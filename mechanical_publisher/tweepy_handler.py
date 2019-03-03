@@ -53,6 +53,6 @@ if __name__ == '__main__':
             sent = 'bearish'
         else:
             sent = 'bullish'
-        twitter_text = 'Daily Forecast ' + major + ' High: ' + str(shorten(high)) + ' / Low: ' + str(shorten(low)) + ' Sentiment ' + sent + ' (' + str(round(100*abs(close),2)) + ' %)  -- powered by themechnicalgerman.com #forex #' + major
+        twitter_text = 'Daily Forecast ' + major + ' High: ' + str(shorten(high)) + ' / Low: ' + str(shorten(low)) + ' Sentiment ' + sent + ' (' + str(round(100*abs(close),2)) + ' %)  - powered by themechnicalgerman.com #forex #' + major
         print(twitter_text)
         api.update_status(twitter_text)

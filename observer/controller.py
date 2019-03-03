@@ -774,7 +774,7 @@ class Controller(object):
             print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance),
                                                        thresh=str(min_distance * worst_spread)))
 
-            if smallest_distance < min_distance * worst_spread:
+            if True: # smallest_distance < min_distance * worst_spread:
                 # close the trade
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
