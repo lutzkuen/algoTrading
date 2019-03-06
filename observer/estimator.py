@@ -74,7 +74,7 @@ class Estimator(object):
             'num_leaves': 60,
             'learning_rate': 0.01,
             'verbose': 0,
-            'min_data_in_leaf': 10
+            'min_data_in_leaf': 2
             # 'early_stopping_round': 20
         }
         n_estimators = 200
