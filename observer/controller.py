@@ -34,6 +34,12 @@ try:
 except ImportError:
     from observer import estimator as estimator
 
+#try:
+#    # from observer import estimator as estimator
+#    from observer import estimator_keras_cython as estimator_keras
+#except ImportError:
+#    from observer import estimator_keras as estimator_keras
+
 try:
     # noinspection PyUnresolvedReferences
     import v20
@@ -71,11 +77,12 @@ class Controller(object):
     - acting in the market based on the prediction
     """
 
-    def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1):
+    def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1, estimator_type = 'gbdt'):
         # class init
         # config_name: Path to config file
         # _type: which section of the config file to use for broker connection
         # verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
+        self.estimator_type = estimator_type
         self.multiplier = multiplier
         self.write_trades = write_trades
         if write_trades:
@@ -444,18 +451,26 @@ class Controller(object):
             else:
                 spread = self.get_spread(ins, spread_type='trading')
                 volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
-                open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
+                _open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
                 close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
                 high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
                 low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
                 data_frame[ins + '_vol'] = int(volume)
-                data_frame[ins + '_open'] = float(open)
-                if float(close) > float(open):
-                    data_frame[ins + '_close'] = int(1)
+                data_frame[ins + '_open'] = float(_open)
+                if float(close) > float(_open):
+                    div = float(high) - float(_open)
+                    if div > 0.000001:
+                        data_frame[ins + '_close'] = (float(close) - float(_open))/div
+                    else:
+                        data_frame[ins + '_close'] = 0
                 else:
-                    data_frame[ins + '_close'] = int(-1)
-                data_frame[ins + '_high'] = float(high) - float(open)
-                data_frame[ins + '_low'] = float(low) - float(open)
+                    div = float(_open) - float(low)
+                    if div > 0.000001:
+                        data_frame[ins + '_close'] = (float(close) - float(_open))/div
+                    else:
+                        data_frame[ins + '_close'] = 0
+                data_frame[ins + '_high'] = float(high) - float(_open)
+                data_frame[ins + '_low'] = float(low) - float(_open)
         return data_frame
 
     def get_df_for_date(self, date, inst, complete, bootstrap=False):
@@ -487,7 +502,7 @@ class Controller(object):
         """
         self.num_samples = 1
         if improve_model:
-            self.num_samples = 4
+            self.num_samples = 5
         raw_name = '/home/tubuntu/data/cexport.csv'
         has_contributed = False
         if read_raw:
@@ -619,8 +634,12 @@ class Controller(object):
         
 
     def improve_estimator(self, col, df):
-        estim = estimator.Estimator(col)
-        score = estim.improve_estimator(df, opt_table=self.opt_table, num_samples=self.num_samples,
+        if self.estimator_type == 'gbdt':
+            estim = estimator.Estimator(col)
+        #elif self.estimator_type == 'keras':
+        #    estim = estimator_keras.Estimator(col, df.shape[1])
+
+        score = estim.improve_estimator(df, opt_table=self.opt_table, estimtable=self.estimtable, num_samples=self.num_samples,
                                         estimpath=self.settings.get('estim_path'))
 
     def get_feature_importances(self):
@@ -665,6 +684,11 @@ class Controller(object):
         delta = now - ida
         return math.exp(-delta.days / 365.25)  # exponentially decaying weight decay
 
+    def load_keras(self, df):
+        if not self.keras_model:
+            self.keras_model = self.estimator_keras('', df)
+        return self.keras_model
+
     def predict_column(self, predict_column, df):
         # Predict the next outcome for a given column
         # predict_column: Columns to predict
@@ -676,7 +700,10 @@ class Controller(object):
         vprev = y[-1]
         xlast = x[-1, :]
         try:
-            estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+            if self.estimator_type == 'gbdt':
+                estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
+            else:
+                estim = self.load_keras(df)
         except:
             print('Could not load estimator for ' + str(predict_column))
             return None, vprev
@@ -823,7 +850,7 @@ class Controller(object):
                 is_open = True
             if close_only:
                 return
-            if close_score > 1:
+            if abs(close_score) > 1 or abs(close_score) < 0.5:
                 return
             if cl > 0:
                 step = 2 * abs(low_score)
@@ -860,7 +887,7 @@ class Controller(object):
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                               1.0) * (1 - close_score)
+                                                               1.0) * (1 - abs(close_score))*100
             if units > 0:
                 units = math.floor(units * self.multiplier)
             if units < 0:
