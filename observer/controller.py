@@ -788,20 +788,20 @@ class Controller(object):
         """
         min_distance = 2.0  # every trade who is less than this times its worst spread from SL away will be closed
         for trade in self.trades:
-            worst_spread = self.get_spread(trade.instrument, spread_type='worst')
-            smallest_distance = 2 * min_distance * worst_spread
-            # first check for trailing Stop
-            if trade.trailingStopLossOrder:
-                smallest_distance = min(float(trade.trailingStopLossOrder.distance), smallest_distance)
+            #worst_spread = self.get_spread(trade.instrument, spread_type='worst')
+            #smallest_distance = 2 * min_distance * worst_spread
+            ## first check for trailing Stop
+            #if trade.trailingStopLossOrder:
+            #    smallest_distance = min(float(trade.trailingStopLossOrder.distance), smallest_distance)
 
-            # then check for the normal stop loss order
-            if trade.stopLossOrder:
-                smallest_distance = min(float(trade.stopLossOrder.distance), smallest_distance)
+            ## then check for the normal stop loss order
+            #if trade.stopLossOrder:
+            #    smallest_distance = min(float(trade.stopLossOrder.distance), smallest_distance)
 
-            print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance),
-                                                       thresh=str(min_distance * worst_spread)))
+            #print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance),
+            #                                           thresh=str(min_distance * worst_spread)))
 
-            if smallest_distance < min_distance * worst_spread:
+            if True: #smallest_distance < min_distance * worst_spread:
                 # close the trade
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
@@ -850,10 +850,10 @@ class Controller(object):
                 is_open = True
             if close_only:
                 return
-            if abs(close_score) > 1 or abs(close_score) < 0.5:
+            if abs(close_score) > 1:
                 return
             if cl > 0:
-                step = 2 * abs(low_score)
+                step = 4 * abs(low_score)
                 sl = lo - step - spread
                 entry = min(lo, bid)
                 sldist = entry - sl + spread
@@ -862,7 +862,7 @@ class Controller(object):
                 tp1 = hi - step
                 tp3 = hi - tpstep
             else:
-                step = 2 * abs(high_score)
+                step = 4 * abs(high_score)
                 sl = hi + step + spread
                 entry = max(hi, ask)
                 sldist = sl - entry + spread
@@ -887,7 +887,7 @@ class Controller(object):
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                               1.0) * (1 - abs(close_score))*100
+                                                               1.0) * (1 - abs(close_score))
             if units > 0:
                 units = math.floor(units * self.multiplier)
             if units < 0:
@@ -935,11 +935,105 @@ class Controller(object):
                 if self.write_trades:
                     self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
                         entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
-                if self.verbose > 1:
-                    print(args)
+                #if self.verbose > 1:
+                #    print(args)
+                print(ins + ' - ' + str(cl) + ' - ' + str(units))
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-                if self.verbose > 1:
-                    print(ticket.raw_body)
+                #if self.verbose > 1:
+                #    print(ticket.raw_body)
+        except Exception as e:
+            print('failed to open for ' + ins)
+            print(e)
+
+    def simplified_trader(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False):
+        """
+        Open orders and close trades using the predicted market movements
+        close_only: Set to true to close only without checking for opening Orders
+        complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
+        """
+
+        try:
+            rr_target = 2
+            if complete:
+                df = pd.read_csv(self.settings['prices_path'])
+            else:
+                df = pd.read_csv('{0}.partial'.format(self.settings['prices_path']))
+            candles = self.get_candles(ins, 'D', 1)
+            candle = candles[0]
+            op = float(candle.get('mid').get('o'))
+            cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
+            hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
+            lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+            price = self.get_price(ins)
+            # get the R2 of the consisting estimators
+            column_name = ins + '_close'
+            close_score = self.get_score(column_name)
+            if not close_score:
+                return
+            column_name = ins + '_high'
+            high_score = self.get_score(column_name)
+            if not high_score:
+                return
+            column_name = ins + '_low'
+            low_score = self.get_score(column_name)
+            if not low_score:
+                return
+            spread = self.get_spread(ins, spread_type='trading')
+            bid, ask = self.get_bidask(ins)
+            trades = []
+            current_units = 0
+            for tr in self.trades:
+                if tr.instrument == ins:
+                    trades.append(tr)
+            if len(trades) > 0:
+                is_open = True
+            if close_only:
+                return
+            if abs(close_score) > 1:
+                return
+            if cl > 0:
+                sl = lo
+                tp = hi
+            else:
+                sl = hi
+                tp = lo
+            # if you made it here its fine, lets open a limit order
+            # r2sum is used to scale down the units risked to accomodate the estimator quality
+            units = self.get_units(abs(sl - op), ins) * min(abs(cl),
+                                                               1.0) * (1 - abs(close_score))
+            if abs(units) < 1:
+                return None  # oops, risk threshold too small
+            if tp < sl:
+                units *= -1
+            relative_cost = spread / abs(tp - op)
+            if abs(cl) <= relative_cost:
+                return None  # edge too small to cover cost
+            pip_location = self.get_pip_size(ins)
+            pip_size = 10 ** (-pip_location + 1)
+            # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
+            #    return None
+            # otype = 'MARKET'
+            otype = 'MARKET'
+            format_string = '30.' + str(pip_location) + 'f'
+            tp = format(tp, format_string).strip()
+            sl = format(sl, format_string).strip()
+            units = str(int(units))
+            args = {'order': {
+                'instrument': ins,
+                'units': units,
+                'type': otype,
+                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+            }}
+            #if self.write_trades:
+            #    self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
+            #        entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
+            if self.verbose > 1:
+                print(args)
+            #print(ins + ' - ' + str(cl) + ' - ' + str(units))
+            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            if self.verbose > 1:
+                print(ticket.raw_body)
         except Exception as e:
             print('failed to open for ' + ins)
             print(e)

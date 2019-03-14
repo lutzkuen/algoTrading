@@ -37,13 +37,7 @@ class Estimator(object):
         return self.estimator.fit(x, y)
 
     def predict(self, x):
-        if self.iscla:
-            y_proba = self.estimator.predict_proba(x.reshape(1, -1))
-            yp = [y_proba[0][1] - y_proba[0][0]][0]
-            yp = max(min(1.0, yp), -1.0)
-        else:
-            yp = self.estimator.predict(x.reshape(1, -1))[0]
-        return yp
+        return self.estimator.predict(x.reshape(1, -1))[0]
 
     def get_feature_importances(self):
         return self.estimator.feature_importances_
@@ -67,41 +61,44 @@ class Estimator(object):
         idx = [i for i in range(int(y.shape[0]/num_samples))]
 
         params = {
-            'boosting_type': 'dart', #'gbdt',
+            'boosting_type': 'gbdt',
             'objective': 'regression',
             'metric': 'mse',
             'max_depth': 10,
-            'num_leaves': 60,
-            'learning_rate': 0.0005,
+            'num_leaves': 10,
+            'learning_rate': 0.1,
             'verbose': 0,
-            'min_data_in_leaf': 2
+            'max_bin': 10000,
+            'bagging_fraction': 0.2,
+            'bagging_freq': 10
+            #'min_data_in_leaf': 2
             # 'early_stopping_round': 20
         }
-        n_estimators = 2000
+        n_estimators = 200
 
-        #x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.10, random_state=i)
-        x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.10, random_state=i)
-        x_train = np.zeros((len(x_train_idx)*num_samples, x.shape[1]))
-        x_valid = np.zeros((len(x_valid_idx)*num_samples, x.shape[1]))
-        y_train = np.zeros((len(y_train_idx)*num_samples, ))
-        y_valid = np.zeros((len(y_valid_idx)*num_samples, ))
-        train_idx = 0
-        for i in x_train_idx:
-            for j in range(num_samples):
-                x_train[train_idx, :] = x[i*num_samples+j, :]
-                y_train[train_idx] = y[i*num_samples+j]
-                train_idx += 1
-        valid_idx = 0
-        for i in x_valid_idx:
-            for j in range(num_samples):
-                x_valid[valid_idx, :] = x[i*num_samples+j]
-                y_valid[valid_idx] = y[i+num_samples+j]
-                valid_idx += 1
+        x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)
+        #x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.15, random_state=i)
+        #x_train = np.zeros((len(x_train_idx)*num_samples, x.shape[1]))
+        #x_valid = np.zeros((len(x_valid_idx)*num_samples, x.shape[1]))
+        #y_train = np.zeros((len(y_train_idx)*num_samples, ))
+        #y_valid = np.zeros((len(y_valid_idx)*num_samples, ))
+        #train_idx = 0
+        #for i in x_train_idx:
+        #    for j in range(num_samples):
+        #        x_train[train_idx, :] = x[i*num_samples+j, :]
+        #        y_train[train_idx] = y[i*num_samples+j]
+        #        train_idx += 1
+        #valid_idx = 0
+        #for i in x_valid_idx:
+        #    for j in range(num_samples):
+        #        x_valid[valid_idx, :] = x[i*num_samples+j]
+        #        y_valid[valid_idx] = y[i+num_samples+j]
+        #        valid_idx += 1
         d_train = lgb.Dataset(x_train, label=y_train)
         d_valid = lgb.Dataset(x_valid, label=y_valid)
         watchlist = [d_valid]
 
-        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100)
+        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=10)
         ypred = self.estimator.predict(x_valid)
         mse = np.sqrt(np.mean((ypred - y_valid)**2))
         print(self.name + ' -> ' + str(mse))
