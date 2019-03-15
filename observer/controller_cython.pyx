@@ -999,8 +999,9 @@ class Controller(object):
                 tp = lo
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
-            units = self.get_units(abs(sl - op), ins) * min(abs(cl),
-                                                               1.0) * (1 - abs(close_score))
+            # units = self.get_units(abs(sl - op), ins) * min(abs(cl),
+            #                                                   1.0) * (1 - abs(close_score))
+            units = 1000
             if abs(units) < 1:
                 return None  # oops, risk threshold too small
             if tp < sl:
