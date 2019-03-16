@@ -95,7 +95,8 @@ class Controller(object):
         self.verbose = verbose
 
         self.settings = {'estim_path': config.get('data', 'estim_path'),
-                         'prices_path': config.get('data', 'prices_path')}
+                         'prices_path': config.get('data', 'prices_path'),
+                         'keras_path': config.get('data', 'keras_path')}
         if _type and v20present:
             self.settings['domain'] = config.get(_type,
                                                  'streaming_hostname')
@@ -806,7 +807,7 @@ class Controller(object):
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
 
-    def open_limit(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False):
+    def open_limit(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False, use_keras=False):
         """
         Open orders and close trades using the predicted market movements
         close_only: Set to true to close only without checking for opening Orders
@@ -815,10 +816,14 @@ class Controller(object):
 
         try:
             rr_target = 2
-            if complete:
-                df = pd.read_csv(self.settings['prices_path'])
+            if use_keras:
+                price_path = self.settings['keras_path']
             else:
-                df = pd.read_csv('{0}.partial'.format(self.settings['prices_path']))
+                price_path = self.settings['prices_path']
+            if complete:
+                df = pd.read_csv(price_path)
+            else:
+                df = pd.read_csv('{0}.partial'.format(price_path))
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
             op = float(candle.get('mid').get('o'))

@@ -28,17 +28,12 @@ import numpy as np
 import pandas as pd
 import progressbar
 
+
 try:
     # from observer import estimator as estimator
-    from observer import estimator_cython as estimator
+    from observer_keras import estimator_keras_cython as estimator
 except ImportError:
-    from observer import estimator as estimator
-
-#try:
-#    # from observer import estimator as estimator
-#    from observer import estimator_keras_cython as estimator_keras
-#except ImportError:
-#    from observer import estimator_keras as estimator_keras
+    from observer_keras import estimator_keras as estimator
 
 try:
     # noinspection PyUnresolvedReferences
@@ -95,7 +90,7 @@ class Controller(object):
         self.verbose = verbose
 
         self.settings = {'estim_path': config.get('data', 'estim_path'),
-                         'prices_path': config.get('data', 'prices_path')}
+                         'prices_path': config.get('data', 'keras_path')}
         if _type and v20present:
             self.settings['domain'] = config.get(_type,
                                                  'streaming_hostname')
@@ -119,7 +114,7 @@ class Controller(object):
         self.optimization_db = dataset.connect(config.get('data', 'optimization_path'))
         self.calendar = self.calendar_db['calendar']
         self.table = self.db['dailycandles']
-        self.estimtable = self.db['estimators']
+        self.estimtable = self.db['keras_errors']
         self.importances = self.db['feature_importances']
         self.opt_table = self.optimization_db['function_values']
         self.spread_db = dataset.connect(config.get('data', 'spreads_path'))
@@ -299,21 +294,21 @@ class Controller(object):
                         continue
                     forecast = self.strip_number(row.get('forecast'))
                     if forecast:
-                        sentiment += math.copysign(1,
-                                                   actual - forecast)
+                        sentiment += (1+math.copysign(1,
+                                                   actual - forecast))/2
                         # (actual - forecast)/(abs(actual)+abs(forecast)+0.01)
                         continue
                     previous = self.strip_number(row.get('previous'))
                     if previous:
-                        sentiment += math.copysign(1,
-                                                   actual - previous)
+                        sentiment += (1+math.copysign(1,
+                                                   actual - previous))/2
                         # (actual-previous)/(abs(actual)+abs(previous)+0.01)
                 column_name = curr + '_sentiment_' + impact
-                df[column_name] = sentiment
+                df[column_name] = sentiment / 10
             for impact in impacts:
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
-                df[column_name] = self.calendar.count(date=date, currency=curr, impact=impact)
+                df[column_name] = self.calendar.count(date=date, currency=curr, impact=impact) / 10
         dt = datetime.datetime.strptime(date, '%Y-%m-%d')
 
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached yesterday
@@ -332,21 +327,21 @@ class Controller(object):
                         continue
                     forecast = self.strip_number(row.get('forecast'))
                     if forecast:
-                        sentiment += math.copysign(1,
-                                                   actual - forecast)
+                        sentiment += (1+math.copysign(1,
+                                                   actual - forecast))/2
                         # (actual - forecast) / (abs(actual) + abs(forecast) + 0.01)
                         continue
                     previous = self.strip_number(row.get('previous'))
                     if previous:
-                        sentiment += math.copysign(1,
-                                                   actual - previous)
+                        sentiment += (1+math.copysign(1,
+                                                   actual - previous))/2
                         # (actual - previous) / (abs(actual) + abs(previous) + 0.01)
                 column_name = curr + '_sentiment_' + impact + '_next'
-                df[column_name] = sentiment
+                df[column_name] = sentiment / 10
             for impact in impacts:
                 column_name = curr + impact + '_next'
                 column_name = column_name.replace(' ', '')
-                df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact) / 10
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached today
         if dt.weekday() == 4:
             dt += datetime.timedelta(days=3)
@@ -364,15 +359,15 @@ class Controller(object):
                         continue
                     previous = self.strip_number(row.get('previous'))
                     if previous:
-                        sentiment += math.copysign(1,
-                                                   forecast - previous)
+                        sentiment += (1+math.copysign(1,
+                                                   forecast - previous))/2
                         # (forecast-previous)/(abs(forecast)+abs(previous)+0.01)
                 column_name = curr + '_sentiment_' + impact + '_next2'
-                df[column_name] = sentiment
+                df[column_name] = sentiment / 10
             for impact in impacts:
                 column_name = curr + impact + '_next2'
                 column_name = column_name.replace(' ', '')
-                df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact) / 10
         return df
 
     def candles_to_db(self, candles, ins, completed=True, upsert=False):
@@ -434,7 +429,7 @@ class Controller(object):
             bs_flag = 1
         else:
             bs_flag = 0
-        data_frame = {'date': date}
+        data_frame = {} #'date': date}
         for ins in inst:
             if complete:
                 candle = self.table.find_one(date=date, ins=ins, complete=1)
@@ -443,36 +438,46 @@ class Controller(object):
             if not candle:
                 if self.verbose > 2:
                     print('Candle does not exist ' + ins + ' ' + str(date))
-                data_frame[ins + '_vol'] = -999999
-                data_frame[ins + '_open'] = -999999
-                data_frame[ins + '_close'] = -999999
-                data_frame[ins + '_high'] = -999999
-                data_frame[ins + '_low'] = -999999
+                data_frame[ins + '_vol'] = 1
+                data_frame[ins + '_open'] = 1
+                data_frame[ins + '_close_down'] = 0
+                data_frame[ins + '_close_up'] = 0
+                data_frame[ins + '_high'] = 0
+                data_frame[ins + '_low'] = 0
             else:
+                meanvol = 1
+                meanopen = 1
+                for meancandle in self.db.query(
+                        'select avg(volume) as vol, avg(open) as open from dailycandles where ins ="' + ins + '"'):
+                    meanvol = meancandle['vol']
+                    meanopen = meancandle['open']
+                if meanvol == 1 and meanopen == 1:
+                    print(ins  + ' did not find a mean open and volume')
                 spread = self.get_spread(ins, spread_type='trading')
-                volume = float(candle['volume']) * (1 + np.random.normal() * 0.001 * bs_flag)  # 0.1% deviation
-                _open = float(candle['open']) + spread * np.random.normal() * 0.5 * bs_flag
-                close = float(candle['close']) + spread * np.random.normal() * 0.5 * bs_flag
-                high = float(candle['high']) + spread * np.random.normal() * 0.5 * bs_flag
-                low = float(candle['low']) + spread * np.random.normal() * 0.5 * bs_flag
-                data_frame[ins + '_vol'] = int(volume)
-                data_frame[ins + '_open'] = float(_open)
+                volume = float(candle['volume']) * (1 + np.random.normal() * 0.1 * bs_flag) / meanvol # 10% deviation
+                _open = (float(candle['open']) + spread * np.random.normal() * bs_flag) / meanopen
+                close = (float(candle['close']) + spread * np.random.normal() * bs_flag) / meanopen
+                high = (float(candle['high']) + spread * np.random.normal() * bs_flag) / meanopen
+                low = (float(candle['low']) + spread * np.random.normal() * bs_flag) / meanopen
+                data_frame[ins + '_vol'] = volume
+                data_frame[ins + '_open'] = _open
                 if float(close) > float(_open):
                     div = float(high) - float(_open)
                     if div > 0.000001:
-                        data_frame[ins + '_close'] = (float(close) - float(_open))/div
+                        data_frame[ins + '_close_up'] = (float(close) - float(_open))/div
                     else:
-                        data_frame[ins + '_close'] = 0
+                        data_frame[ins + '_close_up'] = 0
+                    data_frame[ins + '_close_down'] = 0
                 else:
                     div = float(_open) - float(low)
                     if div > 0.000001:
-                        data_frame[ins + '_close'] = (float(close) - float(_open))/div
+                        data_frame[ins + '_close_down'] = (float(_open) - float(close))/div
                     else:
-                        data_frame[ins + '_close'] = 0
-                data_frame[ins + '_high'] = float(high) - float(_open)
-                data_frame[ins + '_low'] = float(low) - float(_open)
+                        data_frame[ins + '_close_down'] = 0
+                    data_frame[ins + '_close_up'] = 0
+                data_frame[ins + '_high'] = 100*(float(high) - float(_open))
+                data_frame[ins + '_low'] = 100*(float(_open) - float(low))
         return data_frame
-
     def get_df_for_date(self, date, inst, complete, bootstrap=False):
         # Creates a dict containing all fields for the given date
         # date: Date to use in format 'YYYY-MM-DD'
@@ -489,141 +494,158 @@ class Controller(object):
         today_df = self.get_market_df(date, inst, complete, bootstrap=bootstrap)
         return merge_dicts(df_row, today_df, '')
 
-    def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
-                   complete=True, read_raw=False, close_only=False, append_raw=False):
-        """
-        This method will take the input collected from oanda and forexfactory and merge in a Data Frame
-        write_raw: Write data frame used for training to disk
-        read_raw: Read data frame used for training from disk
-        write_predict: Write prediction file to disk to use it for trading later on
-        improve_model: Perform Hyper parameter improvement for the estimators
-        maxdate: Maximum data to use in the prediction. If None use all.
-        new_estim: Build new estimators with new Hyper parameters
-        """
-        self.num_samples = 1
-        if improve_model:
-            self.num_samples = 5
-        raw_name = '/home/tubuntu/data/cexport.csv'
-        has_contributed = False
-        if read_raw:
-            df = pd.read_csv(raw_name)
-        else:
-            inst = []
-            if complete:
-                c_cond = ' complete = 1'
+    def get_latest_prediction(self):
+        # get the latest known date
+        estim = estimator.Estimator()
+        n_samples = 10
+        x_vec = []
+        for i in range(n_samples):
+            print(i)
+            x = self.get_latest_input()
+            x_vec.append(x)
+        x_vec = pd.DataFrame(x_vec)
+        pred = estim.predict(x_vec)
+        df_pred = pd.DataFrame(pred, columns = x_vec.columns)
+        df_pred.to_csv('/home/tubuntu/prediction_frame.csv', index=False)
+        df_out = dict()
+        for col in df_pred.columns:
+            if not ( '_close' in col or '_high' in col or '_low' in col):
+                continue
+
+            ins = col.split('_')
+            ins = ins[0] + '_' + ins[1]
+            if not ins in df_out.keys():
+                df_out[ins] = dict()
+            meanvol = 1
+            meanopen = 1
+            for meancandle in self.db.query(
+                    'select avg(volume) as vol, avg(open) as open from dailycandles where ins ="' + ins + '"'):
+                meanvol = meancandle['vol']
+                meanopen = meancandle['open']
+            line = {}
+            #line['name'] = col
+            if '_high' in col or '_low' in col:
+                line['mean'] = df_pred[col].mean()*meanopen/100
+                line['std'] = df_pred[col].std()*meanopen/100
+                ident = col.split('_')[2].upper()
+                df_out[ins][ident] = max([df_pred[col].mean()*meanopen/100, 0])
             else:
-                c_cond = ' complete in (0,1)'
+                line['mean'] = df_pred[col].mean()
+                line['std'] = df_pred[col].std()
+                ident = col.split('_')
+                ident = ident[2].upper()
+                kind = ident[3]
+                ident = ident.upper()
+                if not ident in df_out[ins].keys():
+                    df_out[ins][ident] = 0
+                if kind == 'up':
+                    df_out[ins][ident] += df_pred[col].mean()
+                else:
+                    df_out[ins][ident] -= df_pred[col].mean()
+
+            if 'EUR_USD' in  col:
+                print(line)
+            #df_out.append(line)
+        #df_out = pd.DataFrame(df_out)
+        #print('EURUSD ' + str(df_pred['EUR_USD_open']) + ' ' + str(df_pred['EUR_USD_close']) + ' ' + str(df_pred['EUR_USD_high']) + ' ' + str(df_pred['EUR_USD_low']))
+        #df_out.to_csv('/home/tubuntu/data/prices_keras.csv', index=False, columns=['name','mean','std'])
+        price_outfile = open('/home/tubuntu/data/prices_keras.csv', 'w')
+        price_outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
+        for key in df_out.keys():
+            price_outfile.write(key + ',' + str(df_out[key]['HIGH']) + ',' + str(df_out[key]['LOW']) + ',' + str(df_out[key]['CLOSE']) + '\n')
+        price_outfile.close()
+
+    def get_keras_errors(self, maxdate=None):
+        c_cond = ' complete = 1'
+        complete = True
+        inst = []
+        estim = estimator.Estimator()
+        statement = 'select distinct ins from dailycandles order by ins;'
+        for row in self.db.query(statement):
+            inst.append(row['ins'])
+        if maxdate:
+            statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+        else:
+            statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+        df_row = None
+        isfirst = True
+        errors = dict()
+        num_errors = 0
+        for row in self.db.query(statement):
+            date = row['date']
+            print('Getting Error for ' + str(date))
+            date_split = date.split('-')
+            weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
+            if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
+                continue
+            prev_df = df_row
+            df_row = pd.DataFrame([self.get_df_for_date(date, inst, complete, bootstrap=True)])  # improve_model)
+            # df_row = merge_dicts(df_row, yest_df, '_yester')
+            if not isfirst:
+                #yield [prev_df, ], [df_row, ]
+                num_errors += 1
+                pred = estim.predict(prev_df)
+                for i, col in enumerate(prev_df.columns):
+                    if 'high' in col or 'low' in col or 'close' in col:
+                        colsplit = col.split('_')
+                        colname = colsplit[0] + '_' + colsplit[1] + '_' + colsplit[2]
+                        if not colname in errors.keys():
+                            errors[colname] = 0
+                        errors[colname] += (pred[0][i] - df_row[col].values[0])**2
+
+            else:
+                isfirst = False
+        for key in errors.keys():
+            self.estimtable.upsert({'name': key, 'score': np.sqrt(errors[key] / num_errors)})
+
+    def training_generator(self, maxdate=None):
+        c_cond = ' complete = 1'
+        complete = True
+        while True:
+            inst = []
             statement = 'select distinct ins from dailycandles order by ins;'
             for row in self.db.query(statement):
                 inst.append(row['ins'])
-            dates = []
             if maxdate:
                 statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
             else:
                 statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
-            if append_raw:
-                df_prev = pd.read_csv(raw_name)
-            else:
-                df_prev = None
+            df_row = None
+            isfirst = True
             for row in self.db.query(statement):
-                # if row['date'][:4] == year:
                 date = row['date']
-                if append_raw:
-                    if np.any(date == df_prev['date']):
-                        continue
                 date_split = date.split('-')
                 weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
                 if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
                     continue
-                dates.append(row['date'])
-            df_dict = []
-            if not improve_model:  # if we want to read only it is enough to take the last days
-                dates = dates[-3:]
-            # dates = dates[-100:] # use this line to decrease computation time for development
-            bar = None
-            if self.verbose > 0:
-                print('INFO: Starting data frame preparation')
-                bar = progressbar.ProgressBar(maxval=len(dates),
-                                              widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
-                bar.start()
-            index = 0
-            for date in dates:
-                if self.verbose > 0:
-                    bar.update(index)
-                index += 1
-                for i in range(self.num_samples):  # 2 fold over sampling
-                    df_row = self.get_df_for_date(date, inst, complete, bootstrap=False)  # improve_model)
-                    # df_row = merge_dicts(df_row, yest_df, '_yester')
-                    if df_row:
-                        has_contributed = True
-                        df_dict.append(df_row)
-            df = pd.DataFrame(df_dict)
-            if append_raw:
-                df = pd.concat([df_prev, df], axis=0)
-            if self.verbose > 0:
-                bar.finish()
-        if write_raw:
-            print('Constructed DF with shape ' + str(df.shape))
-            if has_contributed:
-                df.to_csv(raw_name, index=False)
-        date_column = df['date'].copy()  # copy for usage in improveEstim
-        df.drop(['date'], 1, inplace=True)
-        prediction = {}
-        bar = progressbar.ProgressBar(maxval=len(df.columns),
-                                      widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
-        if self.verbose > 0:
-            print('INFO: Starting prediction')
-            bar.start()
-        index = 0
-        for col in df.columns:
-            if self.verbose > 0:
-                bar.update(index)
-            index += 1
-            parts = col.split('_')
-            if len(parts) < 3:
-                if self.verbose > 2:
-                    print('WARNING: Unexpected column ' + col)
+                prev_df = df_row
+                df_row = pd.DataFrame([self.get_df_for_date(date, inst, complete, bootstrap=True)])  # improve_model)
+                # df_row = merge_dicts(df_row, yest_df, '_yester')
+                if not isfirst:
+                    yield [prev_df, ], [df_row, ]
+                else:
+                    isfirst = False
+
+    def get_latest_input(self, maxdate=None):
+        inst = []
+        c_cond = ' complete = 1 '
+        complete = True
+        statement = 'select distinct ins from dailycandles order by ins;'
+        for row in self.db.query(statement):
+            inst.append(row['ins'])
+        if maxdate:
+            statement = 'select max(date) as date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+        else:
+            statement = 'select max(date) as date from dailycandles where ' + c_cond + ' order by date;'
+        for row in self.db.query(statement):
+            date = row.get('date')
+            print('Latest data frame is ' + str(date))
+            date_split = date.split('-')
+            weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
+            if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
                 continue
-            if not ('_high' in col or '_low' in col or '_close' in col):
-                continue
-            if close_only and not ('_close' in col):
-                continue
-            if '_yester' in col:  # skip yesterday stuff for prediction
-                continue
-            if improve_model:
-                self.improve_estimator(col, df)
-                # for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
-                #    min_anz = int(row.get('min_anz'))
-                # this_anz = 0
-                # for row in self.optimization_db.query(
-                #        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
-                #    this_anz = row.get('anz')
-                # if this_anz <= min_anz:
-                #    self.improve_estimator(col, df)
-                #    improve_model = False # improve just once
-            prediction_value, previous_value = self.predict_column(col, df)
-            instrument = parts[0] + '_' + parts[1]
-            typ = parts[2]
-            if instrument in prediction.keys():
-                prediction[instrument][typ] = prediction_value  # store diff to prev day
-            else:
-                prediction[instrument] = {typ: prediction_value}
-            if self.verbose > 1:
-                print(col + ' ' + str(prediction_value))
-        if self.verbose > 0:
-            bar.finish()
-        if write_predict:
-            if complete:
-                outfile = open(self.settings['prices_path'], 'w')
-            else:
-                outfile = open('{0}.partial'.format(self.settings['prices_path']),
-                               'w')  # seperate file for partial estimates
-            outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
-            for instr in prediction.keys():
-                outfile.write(str(instr) + ',' + str(prediction[instr].get('high')) + ',' + str(
-                    prediction[instr].get('low')) + ',' + str(
-                    prediction[instr].get('close')) + '\n')
-            outfile.close()
+            df_row = self.get_df_for_date(date, inst, complete, bootstrap=True)  # improve_model)
+            return df_row
 
     def save_prediction_to_db(self, date):
         prediction_df = pd.read_csv(self.settings['prices_path'])
@@ -633,49 +655,10 @@ class Controller(object):
             self.prediction_table.upsert(prediction_object, ['instrument', 'date'])
         
 
-    def improve_estimator(self, col, df):
-        if self.estimator_type == 'gbdt':
-            estim = estimator.Estimator(col)
-        #elif self.estimator_type == 'keras':
-        #    estim = estimator_keras.Estimator(col, df.shape[1])
+    def improve_estimator(self):
+        estim = estimator.Estimator()
+        estim.improve_estimator(self.training_generator())
 
-        score = estim.improve_estimator(df, opt_table=self.opt_table, estimtable=self.estimtable, num_samples=self.num_samples,
-                                        estimpath=self.settings.get('estim_path'))
-
-    def get_feature_importances(self):
-        # Writes feature importances for all trained estimators to sqlite for further inspection
-
-        inst = []
-        dates = []
-        statement = 'select distinct ins from dailycandles order by ins;'
-        for row in self.db.query(statement):
-            inst.append(row['ins'])
-        statement = 'select distinct date from dailycandles where complete = 1 order by date;'
-        for row in self.db.query(statement):
-            # if row['date'][:4] == year:
-            dates.append(row['date'])
-        dates = dates[-10:]
-        df_all = []
-        for date in dates:
-            df_dict = self.get_df_for_date(date, inst, True)
-            if not df_dict:
-                continue
-            df_all.append(df_dict)
-        df = pd.DataFrame(df_all)
-        feature_names = df.columns
-        sql = 'select distinct name from estimators;'
-        for row in self.db.query(sql):
-            pcol = row.get('name')
-            try:
-                estim = estimator.Estimator(pcol, self.settings.get('estim_path'))
-            except:
-                print('Failed to load model for ' + pcol)
-                continue
-            if self.verbose > 1:
-                print(pcol)
-            for name, importance in zip(feature_names, estim.get_feature_importances()):
-                feature_importance = {'name': pcol, 'feature': name, 'importance': importance}
-                self.importances.upsert(feature_importance, ['name', 'feature'])
 
     @staticmethod
     def dist_to_now(input_date):
@@ -683,11 +666,6 @@ class Controller(object):
         ida = datetime.datetime.strptime(input_date, '%Y-%m-%d')
         delta = now - ida
         return math.exp(-delta.days / 365.25)  # exponentially decaying weight decay
-
-    def load_keras(self, df):
-        if not self.keras_model:
-            self.keras_model = self.estimator_keras('', df)
-        return self.keras_model
 
     def predict_column(self, predict_column, df):
         # Predict the next outcome for a given column
@@ -722,18 +700,17 @@ class Controller(object):
         price = self.get_price(ins)
         # each trade should risk 1% of NAV at SL at most. Usually it will range
         # around 0.1 % - 1 % depending on expectation value
-        target_exposure = self.settings.get('account_risk') * 0.01
+        target_exposure = self.settings.get('account_risk')*0.01
         conversion = self.get_conversion(leading_currency)
         if not conversion:
             trailing_currency = ins.split('_')[1]
             conversion = self.get_conversion(trailing_currency)
             if conversion:
                 conversion = conversion / price
-        multiplier = min(price / dist, 100)  # no single trade can be larger than the account NAV
         if not conversion:
             print('CRITICAL: Could not convert ' + leading_currency + '_' + trailing_currency + ' to EUR')
             return 0  # do not place a trade if conversion fails
-        raw_units = multiplier * target_exposure * conversion
+        raw_units = target_exposure * conversion * min(100, price / dist)
         if raw_units > 0:
             return math.floor(raw_units)
         else:

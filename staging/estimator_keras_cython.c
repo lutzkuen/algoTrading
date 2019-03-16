@@ -815,7 +815,7 @@ static const char *__pyx_filename;
 
 
 static const char *__pyx_f[] = {
-  "estimator_keras_cython.pyx",
+  "estimator_keras_cython.pyx",
 };
 
 /*--- Type declarations ---*/
@@ -1369,7 +1369,7 @@ static const char __pyx_k_Estimator_save_estimator[] = "Estimator.save_estimator
 static const char __pyx_k_GradientBoostingRegressor[] = "GradientBoostingRegressor";
 static const char __pyx_k_PlotLosses_on_train_begin[] = "PlotLosses.on_train_begin";
 static const char __pyx_k_GradientBoostingClassifier[] = "GradientBoostingClassifier";
-static const char __pyx_k_estimator_keras_cython_pyx[] = "estimator_keras_cython.pyx";
+static const char __pyx_k_estimator_keras_cython_pyx[] = "estimator_keras_cython.pyx\r";
 static const char __pyx_k_Estimator_improve_estimator[] = "Estimator.improve_estimator";
 static const char __pyx_k_home_tubuntu_algoTrading_loss_p[] = "/home/tubuntu/algoTrading/loss.png";
 static PyObject *__pyx_n_s_Activation;
@@ -1519,7 +1519,7 @@ static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
 static PyObject *__pyx_int_3;
 static PyObject *__pyx_int_20;
-static PyObject *__pyx_int_200;
+static PyObject *__pyx_int_100;
 static PyObject *__pyx_int_961;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
@@ -1544,7 +1544,7 @@ static PyObject *__pyx_codeobj__18;
 static PyObject *__pyx_codeobj__21;
 /* Late includes */
 
-/* "estimator_keras_cython.pyx":24
+/* "estimator_keras_cython.pyx":24
  * 
  * class PlotLosses(keras.callbacks.Callback):
  *     def on_train_begin(self, logs={}):             # <<<<<<<<<<<<<<
@@ -1663,7 +1663,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("on_train_begin", 0);
 
-  /* "estimator_keras_cython.pyx":25
+  /* "estimator_keras_cython.pyx":25
  * class PlotLosses(keras.callbacks.Callback):
  *     def on_train_begin(self, logs={}):
  *         self.i = 0             # <<<<<<<<<<<<<<
@@ -1672,7 +1672,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_i, __pyx_int_0) < 0) __PYX_ERR(0, 25, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":26
+  /* "estimator_keras_cython.pyx":26
  *     def on_train_begin(self, logs={}):
  *         self.i = 0
  *         self.x = []             # <<<<<<<<<<<<<<
@@ -1684,7 +1684,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_x, __pyx_t_1) < 0) __PYX_ERR(0, 26, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":27
+  /* "estimator_keras_cython.pyx":27
  *         self.i = 0
  *         self.x = []
  *         self.losses = []             # <<<<<<<<<<<<<<
@@ -1696,7 +1696,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_losses, __pyx_t_1) < 0) __PYX_ERR(0, 27, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":28
+  /* "estimator_keras_cython.pyx":28
  *         self.x = []
  *         self.losses = []
  *         self.val_losses = []             # <<<<<<<<<<<<<<
@@ -1708,7 +1708,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_val_losses, __pyx_t_1) < 0) __PYX_ERR(0, 28, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":30
+  /* "estimator_keras_cython.pyx":30
  *         self.val_losses = []
  * 
  *         self.fig = plt.figure()             # <<<<<<<<<<<<<<
@@ -1738,7 +1738,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_fig, __pyx_t_1) < 0) __PYX_ERR(0, 30, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":32
+  /* "estimator_keras_cython.pyx":32
  *         self.fig = plt.figure()
  * 
  *         self.logs = []             # <<<<<<<<<<<<<<
@@ -1750,7 +1750,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_logs, __pyx_t_1) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":24
+  /* "estimator_keras_cython.pyx":24
  * 
  * class PlotLosses(keras.callbacks.Callback):
  *     def on_train_begin(self, logs={}):             # <<<<<<<<<<<<<<
@@ -1773,7 +1773,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_on_train_begin(C
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":34
+/* "estimator_keras_cython.pyx":34
  *         self.logs = []
  * 
  *     def on_epoch_end(self, epoch, logs={}):             # <<<<<<<<<<<<<<
@@ -1908,7 +1908,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   PyObject *__pyx_t_8 = NULL;
   __Pyx_RefNannySetupContext("on_epoch_end", 0);
 
-  /* "estimator_keras_cython.pyx":35
+  /* "estimator_keras_cython.pyx":35
  * 
  *     def on_epoch_end(self, epoch, logs={}):
  *         self.logs.append(logs)             # <<<<<<<<<<<<<<
@@ -1920,7 +1920,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __pyx_t_2 = __Pyx_PyObject_Append(__pyx_t_1, __pyx_v_logs); if (unlikely(__pyx_t_2 == ((int)-1))) __PYX_ERR(0, 35, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":36
+  /* "estimator_keras_cython.pyx":36
  *     def on_epoch_end(self, epoch, logs={}):
  *         self.logs.append(logs)
  *         self.x.append(self.i)             # <<<<<<<<<<<<<<
@@ -1935,7 +1935,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":37
+  /* "estimator_keras_cython.pyx":37
  *         self.logs.append(logs)
  *         self.x.append(self.i)
  *         self.losses.append(logs.get('loss'))             # <<<<<<<<<<<<<<
@@ -1965,7 +1965,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":38
+  /* "estimator_keras_cython.pyx":38
  *         self.x.append(self.i)
  *         self.losses.append(logs.get('loss'))
  *         self.val_losses.append(logs.get('val_loss'))             # <<<<<<<<<<<<<<
@@ -1995,7 +1995,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":39
+  /* "estimator_keras_cython.pyx":39
  *         self.losses.append(logs.get('loss'))
  *         self.val_losses.append(logs.get('val_loss'))
  *         self.i += 1             # <<<<<<<<<<<<<<
@@ -2010,7 +2010,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_i, __pyx_t_1) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":40
+  /* "estimator_keras_cython.pyx":40
  *         self.val_losses.append(logs.get('val_loss'))
  *         self.i += 1
  *         plt.semilogy(self.x, self.losses) #, label="loss")             # <<<<<<<<<<<<<<
@@ -2077,7 +2077,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":41
+  /* "estimator_keras_cython.pyx":41
  *         self.i += 1
  *         plt.semilogy(self.x, self.losses) #, label="loss")
  *         plt.savefig('/home/tubuntu/algoTrading/loss.png')             # <<<<<<<<<<<<<<
@@ -2106,7 +2106,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   __Pyx_DECREF(__pyx_t_8); __pyx_t_8 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":34
+  /* "estimator_keras_cython.pyx":34
  *         self.logs = []
  * 
  *     def on_epoch_end(self, epoch, logs={}):             # <<<<<<<<<<<<<<
@@ -2132,7 +2132,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_10PlotLosses_2on_epoch_end(CY
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":45
+/* "estimator_keras_cython.pyx":45
  * class Estimator(object):
  * 
  *     def __init__(self, input_size=None):             # <<<<<<<<<<<<<<
@@ -2214,7 +2214,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator___init__(CYTHON_UN
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "estimator_keras_cython.pyx":46
+  /* "estimator_keras_cython.pyx":46
  * 
  *     def __init__(self, input_size=None):
  *         self.library = 'keras'             # <<<<<<<<<<<<<<
@@ -2223,7 +2223,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator___init__(CYTHON_UN
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_library, __pyx_n_u_keras) < 0) __PYX_ERR(0, 46, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":47
+  /* "estimator_keras_cython.pyx":47
  *     def __init__(self, input_size=None):
  *         self.library = 'keras'
  *         self.weights_file = '/home/tubuntu/keras.h5'             # <<<<<<<<<<<<<<
@@ -2232,7 +2232,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator___init__(CYTHON_UN
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_weights_file, __pyx_kp_u_home_tubuntu_keras_h5) < 0) __PYX_ERR(0, 47, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":48
+  /* "estimator_keras_cython.pyx":48
  *         self.library = 'keras'
  *         self.weights_file = '/home/tubuntu/keras.h5'
  *         self.model = self.create_network()             # <<<<<<<<<<<<<<
@@ -2259,7 +2259,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator___init__(CYTHON_UN
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_model, __pyx_t_1) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":45
+  /* "estimator_keras_cython.pyx":45
  * class Estimator(object):
  * 
  *     def __init__(self, input_size=None):             # <<<<<<<<<<<<<<
@@ -2282,7 +2282,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator___init__(CYTHON_UN
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":50
+/* "estimator_keras_cython.pyx":50
  *         self.model = self.create_network()
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -2360,7 +2360,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_2predict(CYTHON_UN
   PyObject *__pyx_t_3 = NULL;
   __Pyx_RefNannySetupContext("predict", 0);
 
-  /* "estimator_keras_cython.pyx":51
+  /* "estimator_keras_cython.pyx":51
  * 
  *     def predict(self, x):
  *         return self.model.predict(x)             # <<<<<<<<<<<<<<
@@ -2392,7 +2392,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_2predict(CYTHON_UN
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "estimator_keras_cython.pyx":50
+  /* "estimator_keras_cython.pyx":50
  *         self.model = self.create_network()
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -2413,7 +2413,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_2predict(CYTHON_UN
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":53
+/* "estimator_keras_cython.pyx":53
  *         return self.model.predict(x)
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -2484,7 +2484,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_4set_params(CYTHON
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("set_params", 0);
 
-  /* "estimator_keras_cython.pyx":54
+  /* "estimator_keras_cython.pyx":54
  * 
  *     def set_params(self, **params):
  *         return self.estimator.set_params(**params)             # <<<<<<<<<<<<<<
@@ -2504,7 +2504,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_4set_params(CYTHON
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "estimator_keras_cython.pyx":53
+  /* "estimator_keras_cython.pyx":53
  *         return self.model.predict(x)
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -2524,7 +2524,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_4set_params(CYTHON
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":56
+/* "estimator_keras_cython.pyx":56
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
@@ -2644,7 +2644,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   PyObject *__pyx_t_12 = NULL;
   __Pyx_RefNannySetupContext("create_network", 0);
 
-  /* "estimator_keras_cython.pyx":57
+  /* "estimator_keras_cython.pyx":57
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):
  *         initializer = keras.initializers.Identity()             # <<<<<<<<<<<<<<
@@ -2677,7 +2677,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __pyx_v_initializer = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":58
+  /* "estimator_keras_cython.pyx":58
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):
  *         initializer = keras.initializers.Identity()
  *         model = Sequential()             # <<<<<<<<<<<<<<
@@ -2704,7 +2704,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __pyx_v_model = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":59
+  /* "estimator_keras_cython.pyx":59
  *         initializer = keras.initializers.Identity()
  *         model = Sequential()
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))             # <<<<<<<<<<<<<<
@@ -2754,7 +2754,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":60
+  /* "estimator_keras_cython.pyx":60
  *         model = Sequential()
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
  *         for i in range(num_layers):             # <<<<<<<<<<<<<<
@@ -2806,7 +2806,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     __Pyx_XDECREF_SET(__pyx_v_i, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "estimator_keras_cython.pyx":61
+    /* "estimator_keras_cython.pyx":61
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
  *         for i in range(num_layers):
  *             model.add(Dense(hidden_size*kernel_len, activation='tanh', kernel_initializer=initializer))             # <<<<<<<<<<<<<<
@@ -2851,7 +2851,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-    /* "estimator_keras_cython.pyx":60
+    /* "estimator_keras_cython.pyx":60
  *         model = Sequential()
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
  *         for i in range(num_layers):             # <<<<<<<<<<<<<<
@@ -2861,7 +2861,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":62
+  /* "estimator_keras_cython.pyx":62
  *         for i in range(num_layers):
  *             model.add(Dense(hidden_size*kernel_len, activation='tanh', kernel_initializer=initializer))
  *         model.add(Dense(kernel_len, activation='linear', kernel_initializer=initializer))             # <<<<<<<<<<<<<<
@@ -2904,7 +2904,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":63
+  /* "estimator_keras_cython.pyx":63
  *             model.add(Dense(hidden_size*kernel_len, activation='tanh', kernel_initializer=initializer))
  *         model.add(Dense(kernel_len, activation='linear', kernel_initializer=initializer))
  *         model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error', 'mean_squared_error'])             # <<<<<<<<<<<<<<
@@ -2933,7 +2933,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":64
+  /* "estimator_keras_cython.pyx":64
  *         model.add(Dense(kernel_len, activation='linear', kernel_initializer=initializer))
  *         model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error', 'mean_squared_error'])
  *         print(model.summary())             # <<<<<<<<<<<<<<
@@ -2962,7 +2962,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":65
+  /* "estimator_keras_cython.pyx":65
  *         model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error', 'mean_squared_error'])
  *         print(model.summary())
  *         try:             # <<<<<<<<<<<<<<
@@ -2978,7 +2978,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     __Pyx_XGOTREF(__pyx_t_12);
     /*try:*/ {
 
-      /* "estimator_keras_cython.pyx":66
+      /* "estimator_keras_cython.pyx":66
  *         print(model.summary())
  *         try:
  *             model.load_weights(self.weights_file)             # <<<<<<<<<<<<<<
@@ -3007,7 +3007,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-      /* "estimator_keras_cython.pyx":65
+      /* "estimator_keras_cython.pyx":65
  *         model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error', 'mean_squared_error'])
  *         print(model.summary())
  *         try:             # <<<<<<<<<<<<<<
@@ -3028,7 +3028,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_XDECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-    /* "estimator_keras_cython.pyx":67
+    /* "estimator_keras_cython.pyx":67
  *         try:
  *             model.load_weights(self.weights_file)
  *         except:             # <<<<<<<<<<<<<<
@@ -3042,7 +3042,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_GOTREF(__pyx_t_2);
 
-      /* "estimator_keras_cython.pyx":68
+      /* "estimator_keras_cython.pyx":68
  *             model.load_weights(self.weights_file)
  *         except:
  *             print('could not load weights')             # <<<<<<<<<<<<<<
@@ -3059,7 +3059,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     }
     __pyx_L7_except_error:;
 
-    /* "estimator_keras_cython.pyx":65
+    /* "estimator_keras_cython.pyx":65
  *         model.compile(loss='mean_squared_error', optimizer='adam', metrics=['mean_absolute_error', 'mean_squared_error'])
  *         print(model.summary())
  *         try:             # <<<<<<<<<<<<<<
@@ -3079,7 +3079,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
     __pyx_L10_try_end:;
   }
 
-  /* "estimator_keras_cython.pyx":69
+  /* "estimator_keras_cython.pyx":69
  *         except:
  *             print('could not load weights')
  *         return model             # <<<<<<<<<<<<<<
@@ -3091,7 +3091,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __pyx_r = __pyx_v_model;
   goto __pyx_L0;
 
-  /* "estimator_keras_cython.pyx":56
+  /* "estimator_keras_cython.pyx":56
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
@@ -3119,7 +3119,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":71
+/* "estimator_keras_cython.pyx":71
  *         return model
  * 
  *     def improve_estimator(self, generator, verbose=1):             # <<<<<<<<<<<<<<
@@ -3215,12 +3215,12 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("improve_estimator", 0);
 
-  /* "estimator_keras_cython.pyx":72
+  /* "estimator_keras_cython.pyx":72
  * 
  *     def improve_estimator(self, generator, verbose=1):
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')             # <<<<<<<<<<<<<<
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=100, callbacks=[plot_losses, checkpoint])
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_keras); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3251,11 +3251,11 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   __pyx_v_checkpoint = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "estimator_keras_cython.pyx":73
+  /* "estimator_keras_cython.pyx":73
  *     def improve_estimator(self, generator, verbose=1):
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')
  *         plot_losses = PlotLosses()             # <<<<<<<<<<<<<<
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=100, callbacks=[plot_losses, checkpoint])
  *         self.save_estimator(self.weights_file)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_PlotLosses); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
@@ -3278,10 +3278,10 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   __pyx_v_plot_losses = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "estimator_keras_cython.pyx":74
+  /* "estimator_keras_cython.pyx":74
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])             # <<<<<<<<<<<<<<
+ *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=100, callbacks=[plot_losses, checkpoint])             # <<<<<<<<<<<<<<
  *         self.save_estimator(self.weights_file)
  * 
  */
@@ -3298,7 +3298,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_steps_per_epoch, __pyx_int_20) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_epochs, __pyx_int_200) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_epochs, __pyx_int_100) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_plot_losses);
@@ -3316,9 +3316,9 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":75
+  /* "estimator_keras_cython.pyx":75
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=100, callbacks=[plot_losses, checkpoint])
  *         self.save_estimator(self.weights_file)             # <<<<<<<<<<<<<<
  * 
  *     def save_estimator(self, estim_path):
@@ -3345,7 +3345,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":71
+  /* "estimator_keras_cython.pyx":71
  *         return model
  * 
  *     def improve_estimator(self, generator, verbose=1):             # <<<<<<<<<<<<<<
@@ -3371,7 +3371,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   return __pyx_r;
 }
 
-/* "estimator_keras_cython.pyx":77
+/* "estimator_keras_cython.pyx":77
  *         self.save_estimator(self.weights_file)
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -3449,7 +3449,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_10save_estimator(C
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("save_estimator", 0);
 
-  /* "estimator_keras_cython.pyx":78
+  /* "estimator_keras_cython.pyx":78
  * 
  *     def save_estimator(self, estim_path):
  *         self.model.save_weights(self.weights_file)             # <<<<<<<<<<<<<<
@@ -3479,7 +3479,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_10save_estimator(C
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":77
+  /* "estimator_keras_cython.pyx":77
  *         self.save_estimator(self.weights_file)
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -3695,7 +3695,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "estimator_keras_cython.pyx":68
+  /* "estimator_keras_cython.pyx":68
  *             model.load_weights(self.weights_file)
  *         except:
  *             print('could not load weights')             # <<<<<<<<<<<<<<
@@ -3706,7 +3706,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "estimator_keras_cython.pyx":24
+  /* "estimator_keras_cython.pyx":24
  * 
  * class PlotLosses(keras.callbacks.Callback):
  *     def on_train_begin(self, logs={}):             # <<<<<<<<<<<<<<
@@ -3718,7 +3718,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__2);
   __pyx_codeobj__3 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__2, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_keras_cython_pyx, __pyx_n_s_on_train_begin, 24, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__3)) __PYX_ERR(0, 24, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":34
+  /* "estimator_keras_cython.pyx":34
  *         self.logs = []
  * 
  *     def on_epoch_end(self, epoch, logs={}):             # <<<<<<<<<<<<<<
@@ -3730,7 +3730,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__4);
   __pyx_codeobj__5 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__4, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_keras_cython_pyx, __pyx_n_s_on_epoch_end, 34, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__5)) __PYX_ERR(0, 34, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":43
+  /* "estimator_keras_cython.pyx":43
  *         plt.savefig('/home/tubuntu/algoTrading/loss.png')
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -3741,7 +3741,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "estimator_keras_cython.pyx":45
+  /* "estimator_keras_cython.pyx":45
  * class Estimator(object):
  * 
  *     def __init__(self, input_size=None):             # <<<<<<<<<<<<<<
@@ -3756,7 +3756,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__9);
   __Pyx_GIVEREF(__pyx_tuple__9);
 
-  /* "estimator_keras_cython.pyx":50
+  /* "estimator_keras_cython.pyx":50
  *         self.model = self.create_network()
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -3768,7 +3768,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__10);
   __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_keras_cython_pyx, __pyx_n_s_predict, 50, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 50, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":53
+  /* "estimator_keras_cython.pyx":53
  *         return self.model.predict(x)
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -3780,7 +3780,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__12);
   __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_keras_cython_pyx, __pyx_n_s_set_params, 53, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 53, __pyx_L1_error)
 
-  /* "estimator_keras_cython.pyx":56
+  /* "estimator_keras_cython.pyx":56
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
@@ -3795,7 +3795,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
 
-  /* "estimator_keras_cython.pyx":71
+  /* "estimator_keras_cython.pyx":71
  *         return model
  * 
  *     def improve_estimator(self, generator, verbose=1):             # <<<<<<<<<<<<<<
@@ -3810,7 +3810,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
 
-  /* "estimator_keras_cython.pyx":77
+  /* "estimator_keras_cython.pyx":77
  *         self.save_estimator(self.weights_file)
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -3834,7 +3834,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_20 = PyInt_FromLong(20); if (unlikely(!__pyx_int_20)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_200 = PyInt_FromLong(200); if (unlikely(!__pyx_int_200)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_100 = PyInt_FromLong(100); if (unlikely(!__pyx_int_100)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_961 = PyInt_FromLong(961); if (unlikely(!__pyx_int_961)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
@@ -4107,7 +4107,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "estimator_keras_cython.pyx":1
+  /* "estimator_keras_cython.pyx":1
  * import datetime             # <<<<<<<<<<<<<<
  * import pickle
  * 
@@ -4117,7 +4117,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_datetime, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":2
+  /* "estimator_keras_cython.pyx":2
  * import datetime
  * import pickle             # <<<<<<<<<<<<<<
  * 
@@ -4128,7 +4128,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":4
+  /* "estimator_keras_cython.pyx":4
  * import pickle
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -4140,7 +4140,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":5
+  /* "estimator_keras_cython.pyx":5
  * 
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier             # <<<<<<<<<<<<<<
@@ -4161,7 +4161,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":6
+  /* "estimator_keras_cython.pyx":6
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier
  * from sklearn.ensemble import GradientBoostingRegressor             # <<<<<<<<<<<<<<
@@ -4182,7 +4182,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":8
+  /* "estimator_keras_cython.pyx":8
  * from sklearn.ensemble import GradientBoostingRegressor
  * 
  * from keras.activations import relu             # <<<<<<<<<<<<<<
@@ -4203,7 +4203,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":9
+  /* "estimator_keras_cython.pyx":9
  * 
  * from keras.activations import relu
  * from keras.layers import Activation             # <<<<<<<<<<<<<<
@@ -4224,7 +4224,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":10
+  /* "estimator_keras_cython.pyx":10
  * from keras.activations import relu
  * from keras.layers import Activation
  * from keras.models import Sequential             # <<<<<<<<<<<<<<
@@ -4245,7 +4245,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":11
+  /* "estimator_keras_cython.pyx":11
  * from keras.layers import Activation
  * from keras.models import Sequential
  * from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Reshape, MaxPooling3D             # <<<<<<<<<<<<<<
@@ -4301,7 +4301,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":12
+  /* "estimator_keras_cython.pyx":12
  * from keras.models import Sequential
  * from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Reshape, MaxPooling3D
  * from keras.utils import np_utils             # <<<<<<<<<<<<<<
@@ -4322,7 +4322,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":13
+  /* "estimator_keras_cython.pyx":13
  * from keras.layers import Dense, Flatten, Conv2D, MaxPooling2D, Reshape, MaxPooling3D
  * from keras.utils import np_utils
  * from keras import regularizers             # <<<<<<<<<<<<<<
@@ -4343,7 +4343,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":14
+  /* "estimator_keras_cython.pyx":14
  * from keras.utils import np_utils
  * from keras import regularizers
  * import keras             # <<<<<<<<<<<<<<
@@ -4355,7 +4355,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_keras, __pyx_t_1) < 0) __PYX_ERR(0, 14, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":15
+  /* "estimator_keras_cython.pyx":15
  * from keras import regularizers
  * import keras
  * import code             # <<<<<<<<<<<<<<
@@ -4367,7 +4367,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_code, __pyx_t_1) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":16
+  /* "estimator_keras_cython.pyx":16
  * import keras
  * import code
  * from sklearn.model_selection import train_test_split             # <<<<<<<<<<<<<<
@@ -4388,7 +4388,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":17
+  /* "estimator_keras_cython.pyx":17
  * import code
  * from sklearn.model_selection import train_test_split
  * from sklearn.model_selection import cross_val_score             # <<<<<<<<<<<<<<
@@ -4409,7 +4409,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":18
+  /* "estimator_keras_cython.pyx":18
  * from sklearn.model_selection import train_test_split
  * from sklearn.model_selection import cross_val_score
  * from skopt import gp_minimize             # <<<<<<<<<<<<<<
@@ -4430,7 +4430,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":19
+  /* "estimator_keras_cython.pyx":19
  * from sklearn.model_selection import cross_val_score
  * from skopt import gp_minimize
  * from skopt.space import Real, Integer             # <<<<<<<<<<<<<<
@@ -4458,7 +4458,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":20
+  /* "estimator_keras_cython.pyx":20
  * from skopt import gp_minimize
  * from skopt.space import Real, Integer
  * from skopt.utils import use_named_args             # <<<<<<<<<<<<<<
@@ -4479,7 +4479,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":21
+  /* "estimator_keras_cython.pyx":21
  * from skopt.space import Real, Integer
  * from skopt.utils import use_named_args
  * from matplotlib import pyplot as plt             # <<<<<<<<<<<<<<
@@ -4500,7 +4500,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_keras_cython.pyx":23
+  /* "estimator_keras_cython.pyx":23
  * from matplotlib import pyplot as plt
  * 
  * class PlotLosses(keras.callbacks.Callback):             # <<<<<<<<<<<<<<
@@ -4525,7 +4525,7 @@ if (!__Pyx_RefNanny) {
   __pyx_t_3 = __Pyx_Py3MetaclassPrepare(__pyx_t_1, __pyx_t_2, __pyx_n_s_PlotLosses, __pyx_n_s_PlotLosses, (PyObject *) NULL, __pyx_n_s_estimator_keras_cython, (PyObject *) NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 23, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
 
-  /* "estimator_keras_cython.pyx":24
+  /* "estimator_keras_cython.pyx":24
  * 
  * class PlotLosses(keras.callbacks.Callback):
  *     def on_train_begin(self, logs={}):             # <<<<<<<<<<<<<<
@@ -4544,7 +4544,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_on_train_begin, __pyx_t_4) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "estimator_keras_cython.pyx":34
+  /* "estimator_keras_cython.pyx":34
  *         self.logs = []
  * 
  *     def on_epoch_end(self, epoch, logs={}):             # <<<<<<<<<<<<<<
@@ -4563,7 +4563,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_3, __pyx_n_s_on_epoch_end, __pyx_t_4) < 0) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "estimator_keras_cython.pyx":23
+  /* "estimator_keras_cython.pyx":23
  * from matplotlib import pyplot as plt
  * 
  * class PlotLosses(keras.callbacks.Callback):             # <<<<<<<<<<<<<<
@@ -4578,7 +4578,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":43
+  /* "estimator_keras_cython.pyx":43
  *         plt.savefig('/home/tubuntu/algoTrading/loss.png')
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -4590,7 +4590,7 @@ if (!__Pyx_RefNanny) {
   __pyx_t_1 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_tuple__6, __pyx_n_s_Estimator, __pyx_n_s_Estimator, (PyObject *) NULL, __pyx_n_s_estimator_keras_cython, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 43, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "estimator_keras_cython.pyx":45
+  /* "estimator_keras_cython.pyx":45
  * class Estimator(object):
  * 
  *     def __init__(self, input_size=None):             # <<<<<<<<<<<<<<
@@ -4603,7 +4603,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":50
+  /* "estimator_keras_cython.pyx":50
  *         self.model = self.create_network()
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -4615,7 +4615,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_predict, __pyx_t_3) < 0) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":53
+  /* "estimator_keras_cython.pyx":53
  *         return self.model.predict(x)
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -4627,7 +4627,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_set_params, __pyx_t_3) < 0) __PYX_ERR(0, 53, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":56
+  /* "estimator_keras_cython.pyx":56
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
@@ -4640,7 +4640,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_create_network, __pyx_t_3) < 0) __PYX_ERR(0, 56, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":71
+  /* "estimator_keras_cython.pyx":71
  *         return model
  * 
  *     def improve_estimator(self, generator, verbose=1):             # <<<<<<<<<<<<<<
@@ -4653,7 +4653,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_improve_estimator, __pyx_t_3) < 0) __PYX_ERR(0, 71, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":77
+  /* "estimator_keras_cython.pyx":77
  *         self.save_estimator(self.weights_file)
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -4664,7 +4664,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_save_estimator, __pyx_t_3) < 0) __PYX_ERR(0, 77, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_keras_cython.pyx":43
+  /* "estimator_keras_cython.pyx":43
  *         plt.savefig('/home/tubuntu/algoTrading/loss.png')
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -4678,7 +4678,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_keras_cython.pyx":1
+  /* "estimator_keras_cython.pyx":1
  * import datetime             # <<<<<<<<<<<<<<
  * import pickle
  * 
