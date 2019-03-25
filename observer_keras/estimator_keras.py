@@ -71,7 +71,7 @@ class Estimator(object):
     def improve_estimator(self, generator, verbose=1):
         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')
         plot_losses = PlotLosses()
-        self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+        self.model.fit_generator(generator, steps_per_epoch=32, epochs=80, callbacks=[plot_losses, checkpoint])
         self.save_estimator(self.weights_file)
 
     def save_estimator(self, estim_path):

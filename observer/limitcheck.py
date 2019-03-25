@@ -17,29 +17,28 @@ def checkaccount(settings_path, acctype):
     settings['account_risk'] = float(config.get('triangle', 'account_risk'))
     settings['account_target'] = float(config.get('triangle', 'account_target'))
     threshold = settings['account_risk'] * settings['account_target']
-    if acctype == 'demo':
-        threshold *= 10
     oanda = v20.Context(settings.get('host'), port=settings.get('port'), token=settings.get('access_token'))
-    trades = oanda.trade.list_open(settings.get('account_id')).get('trades', '200')
     unrealizedPL = 0
-    for trade in trades:
-        unrealizedPL += float(trade.unrealizedPL)
-    print(str(datetime.datetime.now()) + ': ' + acctype + ' uPL: ' + str(unrealizedPL) + ' limit ' + str(threshold))
-    if abs(unrealizedPL) >= threshold:
-        # close all trades and orders
+    try:
+        now = str(datetime.datetime.now())
+        trades = oanda.trade.list_open(settings.get('account_id')).get('trades', '200')
         for trade in trades:
-            response = oanda.trade.close(settings.get('account_id'), trade.id)
-            print(response.raw_body)
-        # close the orders too
-        #orders = oanda.order.list(settings.get('account_id')).get('orders', '200')
-        #for order in orders:
-        #    response = oanda.order.close(settings.get('account_od'), order.id)
-        #    print(response.raw_body)
+            unrealizedPL += float(trade.unrealizedPL)
+        treshold = -1
+        if unrealizedPL > threshold:
+            for trade in trades:
+                response = oanda.trade.close(settings.get('account_id'), trade.id)
+            print(response)
+            orders = oanda.order.list_pending(settings.get('account_id')).get('orders', '200')
+            for order in orders:
+                response = oanda.order.cancel(settings.get('account_id'), order.id)
+        else:
+            print(now +' '+str(unrealizedPL) + ' - ' + str(threshold))
+
+    except Exception as e:
+        print(str(e))
+        time.sleep(5)
 
 if __name__ == '__main__':
     while True:
-        try:
-            checkaccount('/home/tubuntu/settings_triangle.conf', 'demo')
-        except Exception as e:
-            print(str(e))
-        time.sleep(60*15)
+        checkaccount('/home/tubuntu/settings_triangle.conf', 'demo')

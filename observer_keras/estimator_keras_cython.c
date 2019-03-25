@@ -1518,8 +1518,8 @@ static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
 static PyObject *__pyx_int_3;
-static PyObject *__pyx_int_20;
-static PyObject *__pyx_int_200;
+static PyObject *__pyx_int_32;
+static PyObject *__pyx_int_80;
 static PyObject *__pyx_int_961;
 static PyObject *__pyx_tuple_;
 static PyObject *__pyx_tuple__2;
@@ -3220,7 +3220,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
  *     def improve_estimator(self, generator, verbose=1):
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')             # <<<<<<<<<<<<<<
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=32, epochs=80, callbacks=[plot_losses, checkpoint])
  */
   __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_keras); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 72, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
@@ -3255,7 +3255,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
  *     def improve_estimator(self, generator, verbose=1):
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')
  *         plot_losses = PlotLosses()             # <<<<<<<<<<<<<<
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=32, epochs=80, callbacks=[plot_losses, checkpoint])
  *         self.save_estimator(self.weights_file)
  */
   __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_PlotLosses); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 73, __pyx_L1_error)
@@ -3281,7 +3281,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   /* "estimator_keras_cython.pyx":74
  *         checkpoint = keras.callbacks.ModelCheckpoint(self.weights_file, monitor='mean_squared_error', verbose=1, save_best_only=False, mode='min')
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])             # <<<<<<<<<<<<<<
+ *         self.model.fit_generator(generator, steps_per_epoch=32, epochs=80, callbacks=[plot_losses, checkpoint])             # <<<<<<<<<<<<<<
  *         self.save_estimator(self.weights_file)
  * 
  */
@@ -3297,8 +3297,8 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_generator);
   __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_steps_per_epoch, __pyx_int_20) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_epochs, __pyx_int_200) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_steps_per_epoch, __pyx_int_32) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_epochs, __pyx_int_80) < 0) __PYX_ERR(0, 74, __pyx_L1_error)
   __pyx_t_1 = PyList_New(2); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 74, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_INCREF(__pyx_v_plot_losses);
@@ -3318,7 +3318,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_8improve_estimator
 
   /* "estimator_keras_cython.pyx":75
  *         plot_losses = PlotLosses()
- *         self.model.fit_generator(generator, steps_per_epoch=20, epochs=200, callbacks=[plot_losses, checkpoint])
+ *         self.model.fit_generator(generator, steps_per_epoch=32, epochs=80, callbacks=[plot_losses, checkpoint])
  *         self.save_estimator(self.weights_file)             # <<<<<<<<<<<<<<
  * 
  *     def save_estimator(self, estim_path):
@@ -3833,8 +3833,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_3 = PyInt_FromLong(3); if (unlikely(!__pyx_int_3)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_20 = PyInt_FromLong(20); if (unlikely(!__pyx_int_20)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_int_200 = PyInt_FromLong(200); if (unlikely(!__pyx_int_200)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_32 = PyInt_FromLong(32); if (unlikely(!__pyx_int_32)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_int_80 = PyInt_FromLong(80); if (unlikely(!__pyx_int_80)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_961 = PyInt_FromLong(961); if (unlikely(!__pyx_int_961)) __PYX_ERR(0, 1, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;

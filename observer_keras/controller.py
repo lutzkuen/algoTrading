@@ -454,7 +454,7 @@ class Controller(object):
                 if meanvol == 1 and meanopen == 1:
                     print(ins  + ' did not find a mean open and volume')
                 spread = self.get_spread(ins, spread_type='trading')
-                volume = float(candle['volume']) * (1 + np.random.normal() * 0.1 * bs_flag) / meanvol # 10% deviation
+                volume = float(candle['volume']) * (1 + np.random.normal() * 0.01 * bs_flag) / meanvol # 1% deviation
                 _open = (float(candle['open']) + spread * np.random.normal() * bs_flag) / meanopen
                 close = (float(candle['close']) + spread * np.random.normal() * bs_flag) / meanopen
                 high = (float(candle['high']) + spread * np.random.normal() * bs_flag) / meanopen
@@ -596,35 +596,57 @@ class Controller(object):
             else:
                 isfirst = False
         for key in errors.keys():
-            self.estimtable.upsert({'name': key, 'score': np.sqrt(errors[key] / num_errors)})
+            if 'close' in key:
+                # close gets counted twice, so we have to double the denominator
+                self.estimtable.upsert({'name': key, 'score': np.sqrt(errors[key] / (2.0* num_errors))}, ['name'])
+            else:
+                meanopen = 1
+                ins = key.split('_')
+                ins = ins[0] + '_' + ins[1]
+                for meancandle in self.db.query(
+                        'select avg(volume) as vol, avg(open) as open from dailycandles where ins ="' + ins + '"'):
+                    meanopen = meancandle['open']
+                    print(ins + ' ' + key + ' ' + str(meancandle))
+                self.estimtable.upsert({'name': key, 'score': np.sqrt(errors[key] / num_errors)*meanopen/100}, ['name'])
 
     def training_generator(self, maxdate=None):
         c_cond = ' complete = 1'
         complete = True
-        while True:
-            inst = []
-            statement = 'select distinct ins from dailycandles order by ins;'
-            for row in self.db.query(statement):
-                inst.append(row['ins'])
-            if maxdate:
-                statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+        batch_size = 32
+        #while True:
+        prev_df_lst = []
+        df_row_lst = []
+        inst = []
+        statement = 'select distinct ins from dailycandles order by ins;'
+        for row in self.db.query(statement):
+            inst.append(row['ins'])
+        if maxdate:
+            statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+        else:
+            statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+        df_row = None
+        isfirst = True
+        for row in self.db.query(statement):
+            date = row['date']
+            date_split = date.split('-')
+            weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
+            if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
+                continue
+            if not isfirst:
+                prev_df = df_row.copy()
+            df_row = self.get_df_for_date(date, inst, complete, bootstrap=True)  # improve_model)
+            # df_row = merge_dicts(df_row, yest_df, '_yester')
+            if not isfirst:
+                prev_df_lst.append(prev_df)
+                df_row_lst.append(df_row)
+                if len(prev_df_lst) >= batch_size:
+                    yield pd.DataFrame(prev_df_lst), pd.DataFrame(df_row_lst)
+                    prev_df_lst.pop(0)
+                    df_row_lst.pop(0)
             else:
-                statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
-            df_row = None
-            isfirst = True
-            for row in self.db.query(statement):
-                date = row['date']
-                date_split = date.split('-')
-                weekday = int(datetime.datetime(int(date_split[0]), int(date_split[1]), int(date_split[2])).weekday())
-                if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
-                    continue
-                prev_df = df_row
-                df_row = pd.DataFrame([self.get_df_for_date(date, inst, complete, bootstrap=True)])  # improve_model)
-                # df_row = merge_dicts(df_row, yest_df, '_yester')
-                if not isfirst:
-                    yield [prev_df, ], [df_row, ]
-                else:
-                    isfirst = False
+                isfirst = False
+        if len(prev_df_lst) > 0:
+            yield pd.DataFrame(prev_df_lst), pd.DataFrame(df_row_lst)
 
     def get_latest_input(self, maxdate=None):
         inst = []
@@ -800,8 +822,8 @@ class Controller(object):
             candle = candles[0]
             op = float(candle.get('mid').get('o'))
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
-            hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
-            lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+            hi = op + abs(df[df['INSTRUMENT'] == ins]['HIGH'].values[0])
+            lo = op -  abs(df[df['INSTRUMENT'] == ins]['LOW'].values[0])
             price = self.get_price(ins)
             # get the R2 of the consisting estimators
             column_name = ins + '_close'
@@ -864,7 +886,7 @@ class Controller(object):
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
             units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                               1.0) * (1 - abs(close_score))*100
+                                                               1.0) * (1 - abs(close_score))
             if units > 0:
                 units = math.floor(units * self.multiplier)
             if units < 0:

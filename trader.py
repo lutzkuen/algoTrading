@@ -6,4 +6,4 @@ returns = [cont.open_limit(ins, duration=12, split_position=False, adjust_rr=Tru
 cont_demo = controller_keras.Controller('/home/tubuntu/settings_triangle.conf', 'demo')
 #returns = [cont_demo.simplified_trader(ins) for ins in allowed_ins]
 returns = [cont_demo.open_limit(ins, duration=12, split_position=False, adjust_rr=True) for ins in allowed_ins]
-returns = [cont_demo.simplified_trader(ins) for ins in ['USD_JPY', 'USD_CHF', 'EUR_USD', 'GBP_USD']]
+#returns = [cont_demo.simplified_trader(ins) for ins in ['USD_JPY', 'USD_CHF', 'EUR_USD', 'GBP_USD']]
