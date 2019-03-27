@@ -605,8 +605,8 @@ static CYTHON_INLINE float __PYX_NAN() {
   #endif
 #endif
 
-#define __PYX_HAVE__estimator_cython
-#define __PYX_HAVE_API__estimator_cython
+#define __PYX_HAVE__observer__estimator_cython
+#define __PYX_HAVE_API__observer__estimator_cython
 /* Early includes */
 #ifdef _OPENMP
 #include <omp.h>
@@ -1230,12 +1230,12 @@ static int __Pyx_check_binary_version(void);
 static int __Pyx_InitStrings(__Pyx_StringTabEntry *t);
 
 
-/* Module declarations from 'estimator_cython' */
-#define __Pyx_MODULE_NAME "estimator_cython"
-extern int __pyx_module_is_main_estimator_cython;
-int __pyx_module_is_main_estimator_cython = 0;
+/* Module declarations from 'observer.estimator_cython' */
+#define __Pyx_MODULE_NAME "observer.estimator_cython"
+extern int __pyx_module_is_main_observer__estimator_cython;
+int __pyx_module_is_main_observer__estimator_cython = 0;
 
-/* Implementation of 'estimator_cython' */
+/* Implementation of 'observer.estimator_cython' */
 static PyObject *__pyx_builtin_object;
 static PyObject *__pyx_builtin_open;
 static PyObject *__pyx_builtin_print;
@@ -1340,7 +1340,6 @@ static const char __pyx_k_cross_val_score[] = "cross_val_score";
 static const char __pyx_k_estimator_score[] = "estimator_score";
 static const char __pyx_k_Estimator___init[] = "Estimator.__init__";
 static const char __pyx_k_bagging_fraction[] = "bagging_fraction";
-static const char __pyx_k_estimator_cython[] = "estimator_cython";
 static const char __pyx_k_sklearn_ensemble[] = "sklearn.ensemble";
 static const char __pyx_k_train_test_split[] = "train_test_split";
 static const char __pyx_k_Estimator_predict[] = "Estimator.predict";
@@ -1354,6 +1353,7 @@ static const char __pyx_k_get_feature_importances[] = "get_feature_importances";
 static const char __pyx_k_sklearn_model_selection[] = "sklearn.model_selection";
 static const char __pyx_k_Estimator_save_estimator[] = "Estimator.save_estimator";
 static const char __pyx_k_GradientBoostingRegressor[] = "GradientBoostingRegressor";
+static const char __pyx_k_observer_estimator_cython[] = "observer.estimator_cython";
 static const char __pyx_k_GradientBoostingClassifier[] = "GradientBoostingClassifier";
 static const char __pyx_k_Estimator_improve_estimator[] = "Estimator.improve_estimator";
 static const char __pyx_k_Estimator_get_feature_importance[] = "Estimator.get_feature_importances";
@@ -1390,7 +1390,6 @@ static PyObject *__pyx_n_s_dump;
 static PyObject *__pyx_n_s_early_stopping_rounds;
 static PyObject *__pyx_n_s_estim_path;
 static PyObject *__pyx_n_s_estimator;
-static PyObject *__pyx_n_s_estimator_cython;
 static PyObject *__pyx_kp_s_estimator_cython_pyx;
 static PyObject *__pyx_n_s_estimator_name;
 static PyObject *__pyx_n_s_estimator_path;
@@ -1434,6 +1433,7 @@ static PyObject *__pyx_n_s_num_samples;
 static PyObject *__pyx_n_s_numpy;
 static PyObject *__pyx_n_s_object;
 static PyObject *__pyx_n_u_objective;
+static PyObject *__pyx_n_s_observer_estimator_cython;
 static PyObject *__pyx_n_s_open;
 static PyObject *__pyx_n_s_opt_table;
 static PyObject *__pyx_n_s_params;
@@ -1477,13 +1477,13 @@ static PyObject *__pyx_n_s_y;
 static PyObject *__pyx_n_s_y_train;
 static PyObject *__pyx_n_s_y_valid;
 static PyObject *__pyx_n_s_ypred;
-static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_estimpath); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_params); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose); /* proto */
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_estimpath); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_6get_feature_importances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_params); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path); /* proto */
 static PyObject *__pyx_float_0_1;
 static PyObject *__pyx_float_0_2;
 static PyObject *__pyx_float_0_20;
@@ -1516,7 +1516,7 @@ static PyObject *__pyx_codeobj__17;
 static PyObject *__pyx_codeobj__20;
 /* Late includes */
 
-/* "estimator_cython.pyx":18
+/* "observer/estimator_cython.pyx":18
  * class Estimator(object):
  * 
  *     def __init__(self, name, estimpath=None):             # <<<<<<<<<<<<<<
@@ -1525,9 +1525,9 @@ static PyObject *__pyx_codeobj__20;
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_1__init__ = {"__init__", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_1__init__ = {"__init__", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_1__init__, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_1__init__(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_name = 0;
   PyObject *__pyx_v_estimpath = 0;
@@ -1590,18 +1590,18 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_1__init__(PyObject *__py
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("__init__", 0, 2, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 18, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("estimator_cython.Estimator.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator___init__(__pyx_self, __pyx_v_self, __pyx_v_name, __pyx_v_estimpath);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator___init__(__pyx_self, __pyx_v_self, __pyx_v_name, __pyx_v_estimpath);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_estimpath) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator___init__(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_name, PyObject *__pyx_v_estimpath) {
   PyObject *__pyx_v_estimator_path = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -1612,7 +1612,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("__init__", 0);
 
-  /* "estimator_cython.pyx":19
+  /* "observer/estimator_cython.pyx":19
  * 
  *     def __init__(self, name, estimpath=None):
  *         self.name = name             # <<<<<<<<<<<<<<
@@ -1621,7 +1621,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_name, __pyx_v_name) < 0) __PYX_ERR(0, 19, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":20
+  /* "observer/estimator_cython.pyx":20
  *     def __init__(self, name, estimpath=None):
  *         self.name = name
  *         self.library = 'catboost'             # <<<<<<<<<<<<<<
@@ -1630,7 +1630,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_library, __pyx_n_u_catboost) < 0) __PYX_ERR(0, 20, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":21
+  /* "observer/estimator_cython.pyx":21
  *         self.name = name
  *         self.library = 'catboost'
  *         self.iscla = False             # <<<<<<<<<<<<<<
@@ -1639,7 +1639,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  */
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_iscla, Py_False) < 0) __PYX_ERR(0, 21, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":22
+  /* "observer/estimator_cython.pyx":22
  *         self.library = 'catboost'
  *         self.iscla = False
  *         if estimpath:             # <<<<<<<<<<<<<<
@@ -1649,7 +1649,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
   __pyx_t_1 = __Pyx_PyObject_IsTrue(__pyx_v_estimpath); if (unlikely(__pyx_t_1 < 0)) __PYX_ERR(0, 22, __pyx_L1_error)
   if (__pyx_t_1) {
 
-    /* "estimator_cython.pyx":23
+    /* "observer/estimator_cython.pyx":23
  *         self.iscla = False
  *         if estimpath:
  *             estimator_path = estimpath + name             # <<<<<<<<<<<<<<
@@ -1661,7 +1661,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
     __pyx_v_estimator_path = __pyx_t_2;
     __pyx_t_2 = 0;
 
-    /* "estimator_cython.pyx":24
+    /* "observer/estimator_cython.pyx":24
  *         if estimpath:
  *             estimator_path = estimpath + name
  *             self.estimator = pickle.load(open(estimator_path, 'rb'))             # <<<<<<<<<<<<<<
@@ -1703,7 +1703,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
     if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_estimator, __pyx_t_2) < 0) __PYX_ERR(0, 24, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "estimator_cython.pyx":22
+    /* "observer/estimator_cython.pyx":22
  *         self.library = 'catboost'
  *         self.iscla = False
  *         if estimpath:             # <<<<<<<<<<<<<<
@@ -1712,7 +1712,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  */
   }
 
-  /* "estimator_cython.pyx":18
+  /* "observer/estimator_cython.pyx":18
  * class Estimator(object):
  * 
  *     def __init__(self, name, estimpath=None):             # <<<<<<<<<<<<<<
@@ -1728,7 +1728,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("estimator_cython.Estimator.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.__init__", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_estimator_path);
@@ -1737,7 +1737,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":36
+/* "observer/estimator_cython.pyx":36
  *         #    if not estimpath:
  * 
  *     def fit(self, x, y):             # <<<<<<<<<<<<<<
@@ -1746,9 +1746,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator___init__(CYTHON_UNUSED P
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_3fit(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_3fit = {"fit", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_3fit, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_3fit(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_3fit(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_3fit = {"fit", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_3fit, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_3fit(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_x = 0;
   PyObject *__pyx_v_y = 0;
@@ -1807,18 +1807,18 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_3fit(PyObject *__pyx_sel
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("fit", 1, 3, 3, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 36, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("estimator_cython.Estimator.fit", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.fit", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_2fit(__pyx_self, __pyx_v_self, __pyx_v_x, __pyx_v_y);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_2fit(__pyx_self, __pyx_v_self, __pyx_v_x, __pyx_v_y);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x, PyObject *__pyx_v_y) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1828,7 +1828,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObj
   PyObject *__pyx_t_5 = NULL;
   __Pyx_RefNannySetupContext("fit", 0);
 
-  /* "estimator_cython.pyx":37
+  /* "observer/estimator_cython.pyx":37
  * 
  *     def fit(self, x, y):
  *         return self.estimator.fit(x, y)             # <<<<<<<<<<<<<<
@@ -1890,7 +1890,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObj
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "estimator_cython.pyx":36
+  /* "observer/estimator_cython.pyx":36
  *         #    if not estimpath:
  * 
  *     def fit(self, x, y):             # <<<<<<<<<<<<<<
@@ -1904,7 +1904,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObj
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_5);
-  __Pyx_AddTraceback("estimator_cython.Estimator.fit", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.fit", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -1912,7 +1912,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObj
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":39
+/* "observer/estimator_cython.pyx":39
  *         return self.estimator.fit(x, y)
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -1921,9 +1921,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_2fit(CYTHON_UNUSED PyObj
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_5predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_5predict = {"predict", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_5predict, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_5predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_5predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_5predict = {"predict", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_5predict, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_5predict(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_x = 0;
   PyObject *__pyx_r = 0;
@@ -1971,18 +1971,18 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_5predict(PyObject *__pyx
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("predict", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 39, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("estimator_cython.Estimator.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_4predict(__pyx_self, __pyx_v_self, __pyx_v_x);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_4predict(__pyx_self, __pyx_v_self, __pyx_v_x);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
@@ -1991,7 +1991,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
   PyObject *__pyx_t_4 = NULL;
   __Pyx_RefNannySetupContext("predict", 0);
 
-  /* "estimator_cython.pyx":40
+  /* "observer/estimator_cython.pyx":40
  * 
  *     def predict(self, x):
  *         return self.estimator.predict(x.reshape(1, -1))[0]             # <<<<<<<<<<<<<<
@@ -2032,7 +2032,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
   __pyx_t_3 = 0;
   goto __pyx_L0;
 
-  /* "estimator_cython.pyx":39
+  /* "observer/estimator_cython.pyx":39
  *         return self.estimator.fit(x, y)
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -2046,7 +2046,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
   __Pyx_XDECREF(__pyx_t_2);
   __Pyx_XDECREF(__pyx_t_3);
   __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_AddTraceback("estimator_cython.Estimator.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.predict", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2054,7 +2054,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":42
+/* "observer/estimator_cython.pyx":42
  *         return self.estimator.predict(x.reshape(1, -1))[0]
  * 
  *     def get_feature_importances(self):             # <<<<<<<<<<<<<<
@@ -2063,27 +2063,27 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED P
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_7get_feature_importances(PyObject *__pyx_self, PyObject *__pyx_v_self); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_7get_feature_importances = {"get_feature_importances", (PyCFunction)__pyx_pw_16estimator_cython_9Estimator_7get_feature_importances, METH_O, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_7get_feature_importances(PyObject *__pyx_self, PyObject *__pyx_v_self) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_7get_feature_importances(PyObject *__pyx_self, PyObject *__pyx_v_self); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_7get_feature_importances = {"get_feature_importances", (PyCFunction)__pyx_pw_8observer_16estimator_cython_9Estimator_7get_feature_importances, METH_O, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_7get_feature_importances(PyObject *__pyx_self, PyObject *__pyx_v_self) {
   PyObject *__pyx_r = 0;
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("get_feature_importances (wrapper)", 0);
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_6get_feature_importances(__pyx_self, ((PyObject *)__pyx_v_self));
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_6get_feature_importances(__pyx_self, ((PyObject *)__pyx_v_self));
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_6get_feature_importances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("get_feature_importances", 0);
 
-  /* "estimator_cython.pyx":43
+  /* "observer/estimator_cython.pyx":43
  * 
  *     def get_feature_importances(self):
  *         return self.estimator.feature_importances_             # <<<<<<<<<<<<<<
@@ -2100,7 +2100,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances
   __pyx_t_2 = 0;
   goto __pyx_L0;
 
-  /* "estimator_cython.pyx":42
+  /* "observer/estimator_cython.pyx":42
  *         return self.estimator.predict(x.reshape(1, -1))[0]
  * 
  *     def get_feature_importances(self):             # <<<<<<<<<<<<<<
@@ -2112,7 +2112,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("estimator_cython.Estimator.get_feature_importances", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.get_feature_importances", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2120,7 +2120,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":45
+/* "observer/estimator_cython.pyx":45
  *         return self.estimator.feature_importances_
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -2129,9 +2129,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_6get_feature_importances
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_9set_params(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_9set_params = {"set_params", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_9set_params, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_9set_params(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_9set_params(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_9set_params = {"set_params", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_9set_params, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_9set_params(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_params = 0;
   PyObject *__pyx_r = 0;
@@ -2172,11 +2172,11 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_9set_params(PyObject *__
   __Pyx_RaiseArgtupleInvalid("set_params", 1, 1, 1, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 45, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_DECREF(__pyx_v_params); __pyx_v_params = 0;
-  __Pyx_AddTraceback("estimator_cython.Estimator.set_params", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.set_params", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_8set_params(__pyx_self, __pyx_v_self, __pyx_v_params);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(__pyx_self, __pyx_v_self, __pyx_v_params);
 
   /* function exit code */
   __Pyx_XDECREF(__pyx_v_params);
@@ -2184,14 +2184,14 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_9set_params(PyObject *__
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_params) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_params) {
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
   PyObject *__pyx_t_1 = NULL;
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("set_params", 0);
 
-  /* "estimator_cython.pyx":46
+  /* "observer/estimator_cython.pyx":46
  * 
  *     def set_params(self, **params):
  *         return self.estimator.set_params(**params)             # <<<<<<<<<<<<<<
@@ -2211,7 +2211,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "estimator_cython.pyx":45
+  /* "observer/estimator_cython.pyx":45
  *         return self.estimator.feature_importances_
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -2223,7 +2223,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
   __pyx_L1_error:;
   __Pyx_XDECREF(__pyx_t_1);
   __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_AddTraceback("estimator_cython.Estimator.set_params", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.set_params", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XGIVEREF(__pyx_r);
@@ -2231,7 +2231,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":48
+/* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
@@ -2240,9 +2240,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSE
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_11improve_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_11improve_estimator = {"improve_estimator", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_11improve_estimator, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_11improve_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_11improve_estimator = {"improve_estimator", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_estimator, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_df = 0;
   CYTHON_UNUSED PyObject *__pyx_v_opt_table = 0;
@@ -2355,18 +2355,18 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_11improve_estimator(PyOb
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 3, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 48, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("estimator_cython.Estimator.improve_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.improve_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_10improve_estimator(__pyx_self, __pyx_v_self, __pyx_v_df, __pyx_v_opt_table, __pyx_v_estimtable, __pyx_v_num_samples, __pyx_v_estimpath, __pyx_v_verbose);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(__pyx_self, __pyx_v_self, __pyx_v_df, __pyx_v_opt_table, __pyx_v_estimtable, __pyx_v_num_samples, __pyx_v_estimpath, __pyx_v_verbose);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose) {
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_v_y = NULL;
   PyObject *__pyx_v_i = NULL;
@@ -2400,7 +2400,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   PyObject *(*__pyx_t_12)(PyObject *);
   __Pyx_RefNannySetupContext("improve_estimator", 0);
 
-  /* "estimator_cython.pyx":49
+  /* "observer/estimator_cython.pyx":49
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
@@ -2436,7 +2436,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_x = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":50
+  /* "observer/estimator_cython.pyx":50
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations             # <<<<<<<<<<<<<<
@@ -2478,7 +2478,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_y = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":51
+  /* "observer/estimator_cython.pyx":51
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line             # <<<<<<<<<<<<<<
@@ -2490,7 +2490,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_DECREF_SET(__pyx_v_y, __pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":52
+  /* "observer/estimator_cython.pyx":52
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line
  *         x = x[:-num_samples, :]  # drop the last line             # <<<<<<<<<<<<<<
@@ -2516,7 +2516,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_DECREF_SET(__pyx_v_x, __pyx_t_4);
   __pyx_t_4 = 0;
 
-  /* "estimator_cython.pyx":53
+  /* "observer/estimator_cython.pyx":53
  *         y = y[num_samples:]  # drop first line
  *         x = x[:-num_samples, :]  # drop the last line
  *         print(y.shape)             # <<<<<<<<<<<<<<
@@ -2530,7 +2530,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":54
+  /* "observer/estimator_cython.pyx":54
  *         x = x[:-num_samples, :]  # drop the last line
  *         print(y.shape)
  *         i = 0             # <<<<<<<<<<<<<<
@@ -2540,7 +2540,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_i = __pyx_int_0;
 
-  /* "estimator_cython.pyx":55
+  /* "observer/estimator_cython.pyx":55
  *         print(y.shape)
  *         i = 0
  *         while i < y.shape[0]:             # <<<<<<<<<<<<<<
@@ -2559,7 +2559,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (!__pyx_t_5) break;
 
-    /* "estimator_cython.pyx":56
+    /* "observer/estimator_cython.pyx":56
  *         i = 0
  *         while i < y.shape[0]:
  *             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999             # <<<<<<<<<<<<<<
@@ -2606,7 +2606,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_5) {
 
-      /* "estimator_cython.pyx":57
+      /* "observer/estimator_cython.pyx":57
  *         while i < y.shape[0]:
  *             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
  *                 y = np.delete(y, i)             # <<<<<<<<<<<<<<
@@ -2666,7 +2666,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
       __Pyx_DECREF_SET(__pyx_v_y, __pyx_t_4);
       __pyx_t_4 = 0;
 
-      /* "estimator_cython.pyx":58
+      /* "observer/estimator_cython.pyx":58
  *             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
  *                 y = np.delete(y, i)
  *                 x = np.delete(x, i, axis=0)             # <<<<<<<<<<<<<<
@@ -2697,7 +2697,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
       __Pyx_DECREF_SET(__pyx_v_x, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "estimator_cython.pyx":56
+      /* "observer/estimator_cython.pyx":56
  *         i = 0
  *         while i < y.shape[0]:
  *             if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999             # <<<<<<<<<<<<<<
@@ -2707,7 +2707,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
       goto __pyx_L5;
     }
 
-    /* "estimator_cython.pyx":60
+    /* "observer/estimator_cython.pyx":60
  *                 x = np.delete(x, i, axis=0)
  *             else:
  *                 i += 1             # <<<<<<<<<<<<<<
@@ -2723,7 +2723,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __pyx_L5:;
   }
 
-  /* "estimator_cython.pyx":61
+  /* "observer/estimator_cython.pyx":61
  *             else:
  *                 i += 1
  *         idx = [i for i in range(int(y.shape[0]/num_samples))]             # <<<<<<<<<<<<<<
@@ -2802,7 +2802,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_idx = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":64
+  /* "observer/estimator_cython.pyx":64
  * 
  *         params = {
  *             'boosting_type': 'gbdt',             # <<<<<<<<<<<<<<
@@ -2824,7 +2824,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_params = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":77
+  /* "observer/estimator_cython.pyx":77
  *             # 'early_stopping_round': 20
  *         }
  *         n_estimators = 200             # <<<<<<<<<<<<<<
@@ -2833,7 +2833,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
  */
   __pyx_v_n_estimators = 0xC8;
 
-  /* "estimator_cython.pyx":79
+  /* "observer/estimator_cython.pyx":79
  *         n_estimators = 200
  * 
  *         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)             # <<<<<<<<<<<<<<
@@ -2927,7 +2927,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_y_valid = __pyx_t_10;
   __pyx_t_10 = 0;
 
-  /* "estimator_cython.pyx":97
+  /* "observer/estimator_cython.pyx":97
  *         #        y_valid[valid_idx] = y[i+num_samples+j]
  *         #        valid_idx += 1
  *         d_train = lgb.Dataset(x_train, label=y_train)             # <<<<<<<<<<<<<<
@@ -2955,7 +2955,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_d_train = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "estimator_cython.pyx":98
+  /* "observer/estimator_cython.pyx":98
  *         #        valid_idx += 1
  *         d_train = lgb.Dataset(x_train, label=y_train)
  *         d_valid = lgb.Dataset(x_valid, label=y_valid)             # <<<<<<<<<<<<<<
@@ -2983,7 +2983,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_d_valid = __pyx_t_10;
   __pyx_t_10 = 0;
 
-  /* "estimator_cython.pyx":99
+  /* "observer/estimator_cython.pyx":99
  *         d_train = lgb.Dataset(x_train, label=y_train)
  *         d_valid = lgb.Dataset(x_valid, label=y_valid)
  *         watchlist = [d_valid]             # <<<<<<<<<<<<<<
@@ -2998,7 +2998,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_watchlist = ((PyObject*)__pyx_t_10);
   __pyx_t_10 = 0;
 
-  /* "estimator_cython.pyx":101
+  /* "observer/estimator_cython.pyx":101
  *         watchlist = [d_valid]
  * 
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=10)             # <<<<<<<<<<<<<<
@@ -3038,7 +3038,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   if (__Pyx_PyObject_SetAttrStr(__pyx_v_self, __pyx_n_s_estimator, __pyx_t_2) < 0) __PYX_ERR(0, 101, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":102
+  /* "observer/estimator_cython.pyx":102
  * 
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=10)
  *         ypred = self.estimator.predict(x_valid)             # <<<<<<<<<<<<<<
@@ -3068,7 +3068,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_ypred = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":103
+  /* "observer/estimator_cython.pyx":103
  *         self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=10)
  *         ypred = self.estimator.predict(x_valid)
  *         mse = np.sqrt(np.mean((ypred - y_valid)**2))             # <<<<<<<<<<<<<<
@@ -3125,7 +3125,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_mse = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":104
+  /* "observer/estimator_cython.pyx":104
  *         ypred = self.estimator.predict(x_valid)
  *         mse = np.sqrt(np.mean((ypred - y_valid)**2))
  *         print(self.name + ' -> ' + str(mse))             # <<<<<<<<<<<<<<
@@ -3148,7 +3148,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":105
+  /* "observer/estimator_cython.pyx":105
  *         mse = np.sqrt(np.mean((ypred - y_valid)**2))
  *         print(self.name + ' -> ' + str(mse))
  *         if estimpath:             # <<<<<<<<<<<<<<
@@ -3158,7 +3158,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_estimpath); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 105, __pyx_L1_error)
   if (__pyx_t_5) {
 
-    /* "estimator_cython.pyx":106
+    /* "observer/estimator_cython.pyx":106
  *         print(self.name + ' -> ' + str(mse))
  *         if estimpath:
  *             self.save_estimator(estimpath)             # <<<<<<<<<<<<<<
@@ -3184,7 +3184,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "estimator_cython.pyx":105
+    /* "observer/estimator_cython.pyx":105
  *         mse = np.sqrt(np.mean((ypred - y_valid)**2))
  *         print(self.name + ' -> ' + str(mse))
  *         if estimpath:             # <<<<<<<<<<<<<<
@@ -3193,7 +3193,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
  */
   }
 
-  /* "estimator_cython.pyx":108
+  /* "observer/estimator_cython.pyx":108
  *             self.save_estimator(estimpath)
  *         # now save the function evaluations to disk for later use
  *         estimator_score = {'name': self.name, 'score': mse}             # <<<<<<<<<<<<<<
@@ -3210,7 +3210,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_v_estimator_score = ((PyObject*)__pyx_t_2);
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":109
+  /* "observer/estimator_cython.pyx":109
  *         # now save the function evaluations to disk for later use
  *         estimator_score = {'name': self.name, 'score': mse}
  *         if estimtable:             # <<<<<<<<<<<<<<
@@ -3220,7 +3220,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_t_5 = __Pyx_PyObject_IsTrue(__pyx_v_estimtable); if (unlikely(__pyx_t_5 < 0)) __PYX_ERR(0, 109, __pyx_L1_error)
   if (__pyx_t_5) {
 
-    /* "estimator_cython.pyx":110
+    /* "observer/estimator_cython.pyx":110
  *         estimator_score = {'name': self.name, 'score': mse}
  *         if estimtable:
  *             estimtable.upsert(estimator_score, ['name'])             # <<<<<<<<<<<<<<
@@ -3283,7 +3283,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "estimator_cython.pyx":109
+    /* "observer/estimator_cython.pyx":109
  *         # now save the function evaluations to disk for later use
  *         estimator_score = {'name': self.name, 'score': mse}
  *         if estimtable:             # <<<<<<<<<<<<<<
@@ -3292,7 +3292,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
  */
   }
 
-  /* "estimator_cython.pyx":111
+  /* "observer/estimator_cython.pyx":111
  *         if estimtable:
  *             estimtable.upsert(estimator_score, ['name'])
  *         return mse             # <<<<<<<<<<<<<<
@@ -3304,7 +3304,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __pyx_r = __pyx_v_mse;
   goto __pyx_L0;
 
-  /* "estimator_cython.pyx":48
+  /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
@@ -3320,7 +3320,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_10);
   __Pyx_XDECREF(__pyx_t_11);
-  __Pyx_AddTraceback("estimator_cython.Estimator.improve_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.improve_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_x);
@@ -3344,7 +3344,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
   return __pyx_r;
 }
 
-/* "estimator_cython.pyx":113
+/* "observer/estimator_cython.pyx":113
  *         return mse
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -3353,9 +3353,9 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_10improve_estimator(CYTH
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_13save_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
-static PyMethodDef __pyx_mdef_16estimator_cython_9Estimator_13save_estimator = {"save_estimator", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_16estimator_cython_9Estimator_13save_estimator, METH_VARARGS|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_16estimator_cython_9Estimator_13save_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_13save_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds); /*proto*/
+static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_13save_estimator = {"save_estimator", (PyCFunction)(void*)(PyCFunctionWithKeywords)__pyx_pw_8observer_16estimator_cython_9Estimator_13save_estimator, METH_VARARGS|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_13save_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_estim_path = 0;
   PyObject *__pyx_r = 0;
@@ -3403,18 +3403,18 @@ static PyObject *__pyx_pw_16estimator_cython_9Estimator_13save_estimator(PyObjec
   __pyx_L5_argtuple_error:;
   __Pyx_RaiseArgtupleInvalid("save_estimator", 1, 2, 2, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 113, __pyx_L3_error)
   __pyx_L3_error:;
-  __Pyx_AddTraceback("estimator_cython.Estimator.save_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.save_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_16estimator_cython_9Estimator_12save_estimator(__pyx_self, __pyx_v_self, __pyx_v_estim_path);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_12save_estimator(__pyx_self, __pyx_v_self, __pyx_v_estim_path);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path) {
   PyObject *__pyx_v_estimator_name = NULL;
   PyObject *__pyx_r = NULL;
   __Pyx_RefNannyDeclarations
@@ -3427,7 +3427,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_
   PyObject *__pyx_t_7 = NULL;
   __Pyx_RefNannySetupContext("save_estimator", 0);
 
-  /* "estimator_cython.pyx":114
+  /* "observer/estimator_cython.pyx":114
  * 
  *     def save_estimator(self, estim_path):
  *         estimator_name = estim_path + self.name             # <<<<<<<<<<<<<<
@@ -3441,7 +3441,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_
   __pyx_v_estimator_name = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":115
+  /* "observer/estimator_cython.pyx":115
  *     def save_estimator(self, estim_path):
  *         estimator_name = estim_path + self.name
  *         pickle.dump(self.estimator, open(estimator_name, 'wb'))             # <<<<<<<<<<<<<<
@@ -3515,7 +3515,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":113
+  /* "observer/estimator_cython.pyx":113
  *         return mse
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -3533,7 +3533,7 @@ static PyObject *__pyx_pf_16estimator_cython_9Estimator_12save_estimator(CYTHON_
   __Pyx_XDECREF(__pyx_t_4);
   __Pyx_XDECREF(__pyx_t_5);
   __Pyx_XDECREF(__pyx_t_7);
-  __Pyx_AddTraceback("estimator_cython.Estimator.save_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_AddTraceback("observer.estimator_cython.Estimator.save_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __pyx_r = NULL;
   __pyx_L0:;
   __Pyx_XDECREF(__pyx_v_estimator_name);
@@ -3621,7 +3621,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_early_stopping_rounds, __pyx_k_early_stopping_rounds, sizeof(__pyx_k_early_stopping_rounds), 0, 0, 1, 1},
   {&__pyx_n_s_estim_path, __pyx_k_estim_path, sizeof(__pyx_k_estim_path), 0, 0, 1, 1},
   {&__pyx_n_s_estimator, __pyx_k_estimator, sizeof(__pyx_k_estimator), 0, 0, 1, 1},
-  {&__pyx_n_s_estimator_cython, __pyx_k_estimator_cython, sizeof(__pyx_k_estimator_cython), 0, 0, 1, 1},
   {&__pyx_kp_s_estimator_cython_pyx, __pyx_k_estimator_cython_pyx, sizeof(__pyx_k_estimator_cython_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_estimator_name, __pyx_k_estimator_name, sizeof(__pyx_k_estimator_name), 0, 0, 1, 1},
   {&__pyx_n_s_estimator_path, __pyx_k_estimator_path, sizeof(__pyx_k_estimator_path), 0, 0, 1, 1},
@@ -3665,6 +3664,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_numpy, __pyx_k_numpy, sizeof(__pyx_k_numpy), 0, 0, 1, 1},
   {&__pyx_n_s_object, __pyx_k_object, sizeof(__pyx_k_object), 0, 0, 1, 1},
   {&__pyx_n_u_objective, __pyx_k_objective, sizeof(__pyx_k_objective), 0, 1, 0, 1},
+  {&__pyx_n_s_observer_estimator_cython, __pyx_k_observer_estimator_cython, sizeof(__pyx_k_observer_estimator_cython), 0, 0, 1, 1},
   {&__pyx_n_s_open, __pyx_k_open, sizeof(__pyx_k_open), 0, 0, 1, 1},
   {&__pyx_n_s_opt_table, __pyx_k_opt_table, sizeof(__pyx_k_opt_table), 0, 0, 1, 1},
   {&__pyx_n_s_params, __pyx_k_params, sizeof(__pyx_k_params), 0, 0, 1, 1},
@@ -3724,7 +3724,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("__Pyx_InitCachedConstants", 0);
 
-  /* "estimator_cython.pyx":40
+  /* "observer/estimator_cython.pyx":40
  * 
  *     def predict(self, x):
  *         return self.estimator.predict(x.reshape(1, -1))[0]             # <<<<<<<<<<<<<<
@@ -3735,7 +3735,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple_);
   __Pyx_GIVEREF(__pyx_tuple_);
 
-  /* "estimator_cython.pyx":49
+  /* "observer/estimator_cython.pyx":49
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
@@ -3746,7 +3746,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_slice__2);
   __Pyx_GIVEREF(__pyx_slice__2);
 
-  /* "estimator_cython.pyx":16
+  /* "observer/estimator_cython.pyx":16
  * 
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -3757,7 +3757,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__4);
   __Pyx_GIVEREF(__pyx_tuple__4);
 
-  /* "estimator_cython.pyx":18
+  /* "observer/estimator_cython.pyx":18
  * class Estimator(object):
  * 
  *     def __init__(self, name, estimpath=None):             # <<<<<<<<<<<<<<
@@ -3772,7 +3772,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
-  /* "estimator_cython.pyx":36
+  /* "observer/estimator_cython.pyx":36
  *         #    if not estimpath:
  * 
  *     def fit(self, x, y):             # <<<<<<<<<<<<<<
@@ -3784,7 +3784,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__8);
   __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(3, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__8, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_fit, 36, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 36, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":39
+  /* "observer/estimator_cython.pyx":39
  *         return self.estimator.fit(x, y)
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
@@ -3796,7 +3796,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__10);
   __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__10, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_predict, 39, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 39, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":42
+  /* "observer/estimator_cython.pyx":42
  *         return self.estimator.predict(x.reshape(1, -1))[0]
  * 
  *     def get_feature_importances(self):             # <<<<<<<<<<<<<<
@@ -3808,7 +3808,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__12);
   __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 1, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__12, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_get_feature_importances, 42, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 42, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":45
+  /* "observer/estimator_cython.pyx":45
  *         return self.estimator.feature_importances_
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
@@ -3820,7 +3820,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GIVEREF(__pyx_tuple__14);
   __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(1, 0, 2, 0, CO_OPTIMIZED|CO_NEWLOCALS|CO_VARKEYWORDS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__14, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_set_params, 45, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 45, __pyx_L1_error)
 
-  /* "estimator_cython.pyx":48
+  /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
@@ -3835,7 +3835,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__18);
   __Pyx_GIVEREF(__pyx_tuple__18);
 
-  /* "estimator_cython.pyx":113
+  /* "observer/estimator_cython.pyx":113
  *         return mse
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
@@ -4107,14 +4107,14 @@ if (!__Pyx_RefNanny) {
   #if PY_MAJOR_VERSION < 3 && (__PYX_DEFAULT_STRING_ENCODING_IS_ASCII || __PYX_DEFAULT_STRING_ENCODING_IS_DEFAULT)
   if (__Pyx_init_sys_getdefaultencoding_params() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
-  if (__pyx_module_is_main_estimator_cython) {
+  if (__pyx_module_is_main_observer__estimator_cython) {
     if (PyObject_SetAttr(__pyx_m, __pyx_n_s_name_2, __pyx_n_s_main) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   }
   #if PY_MAJOR_VERSION >= 3
   {
     PyObject *modules = PyImport_GetModuleDict(); if (unlikely(!modules)) __PYX_ERR(0, 1, __pyx_L1_error)
-    if (!PyDict_GetItemString(modules, "estimator_cython")) {
-      if (unlikely(PyDict_SetItemString(modules, "estimator_cython", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
+    if (!PyDict_GetItemString(modules, "observer.estimator_cython")) {
+      if (unlikely(PyDict_SetItemString(modules, "observer.estimator_cython", __pyx_m) < 0)) __PYX_ERR(0, 1, __pyx_L1_error)
     }
   }
   #endif
@@ -4135,7 +4135,7 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_patch_abc() < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   #endif
 
-  /* "estimator_cython.pyx":1
+  /* "observer/estimator_cython.pyx":1
  * import datetime             # <<<<<<<<<<<<<<
  * import pickle
  * 
@@ -4145,7 +4145,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_datetime, __pyx_t_1) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":2
+  /* "observer/estimator_cython.pyx":2
  * import datetime
  * import pickle             # <<<<<<<<<<<<<<
  * 
@@ -4156,7 +4156,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_pickle, __pyx_t_1) < 0) __PYX_ERR(0, 2, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":4
+  /* "observer/estimator_cython.pyx":4
  * import pickle
  * 
  * import numpy as np             # <<<<<<<<<<<<<<
@@ -4168,7 +4168,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_np, __pyx_t_1) < 0) __PYX_ERR(0, 4, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":5
+  /* "observer/estimator_cython.pyx":5
  * 
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier             # <<<<<<<<<<<<<<
@@ -4189,7 +4189,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":6
+  /* "observer/estimator_cython.pyx":6
  * import numpy as np
  * from sklearn.ensemble import GradientBoostingClassifier
  * from sklearn.ensemble import GradientBoostingRegressor             # <<<<<<<<<<<<<<
@@ -4210,7 +4210,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":7
+  /* "observer/estimator_cython.pyx":7
  * from sklearn.ensemble import GradientBoostingClassifier
  * from sklearn.ensemble import GradientBoostingRegressor
  * import lightgbm as lgb             # <<<<<<<<<<<<<<
@@ -4222,7 +4222,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_lgb, __pyx_t_1) < 0) __PYX_ERR(0, 7, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":8
+  /* "observer/estimator_cython.pyx":8
  * from sklearn.ensemble import GradientBoostingRegressor
  * import lightgbm as lgb
  * import code             # <<<<<<<<<<<<<<
@@ -4234,7 +4234,7 @@ if (!__Pyx_RefNanny) {
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_code, __pyx_t_1) < 0) __PYX_ERR(0, 8, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":9
+  /* "observer/estimator_cython.pyx":9
  * import lightgbm as lgb
  * import code
  * from sklearn.model_selection import train_test_split             # <<<<<<<<<<<<<<
@@ -4255,7 +4255,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":10
+  /* "observer/estimator_cython.pyx":10
  * import code
  * from sklearn.model_selection import train_test_split
  * from sklearn.model_selection import cross_val_score             # <<<<<<<<<<<<<<
@@ -4276,7 +4276,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":11
+  /* "observer/estimator_cython.pyx":11
  * from sklearn.model_selection import train_test_split
  * from sklearn.model_selection import cross_val_score
  * from skopt import gp_minimize             # <<<<<<<<<<<<<<
@@ -4297,7 +4297,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":12
+  /* "observer/estimator_cython.pyx":12
  * from sklearn.model_selection import cross_val_score
  * from skopt import gp_minimize
  * from skopt.space import Real, Integer             # <<<<<<<<<<<<<<
@@ -4325,7 +4325,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "estimator_cython.pyx":13
+  /* "observer/estimator_cython.pyx":13
  * from skopt import gp_minimize
  * from skopt.space import Real, Integer
  * from skopt.utils import use_named_args             # <<<<<<<<<<<<<<
@@ -4346,7 +4346,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":16
+  /* "observer/estimator_cython.pyx":16
  * 
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -4355,96 +4355,96 @@ if (!__Pyx_RefNanny) {
  */
   __pyx_t_2 = __Pyx_CalculateMetaclass(NULL, __pyx_tuple__4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_1 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_tuple__4, __pyx_n_s_Estimator, __pyx_n_s_Estimator, (PyObject *) NULL, __pyx_n_s_estimator_cython, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_Py3MetaclassPrepare(__pyx_t_2, __pyx_tuple__4, __pyx_n_s_Estimator, __pyx_n_s_Estimator, (PyObject *) NULL, __pyx_n_s_observer_estimator_cython, (PyObject *) NULL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 16, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
 
-  /* "estimator_cython.pyx":18
+  /* "observer/estimator_cython.pyx":18
  * class Estimator(object):
  * 
  *     def __init__(self, name, estimpath=None):             # <<<<<<<<<<<<<<
  *         self.name = name
  *         self.library = 'catboost'
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_1__init__, 0, __pyx_n_s_Estimator___init, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_1__init__, 0, __pyx_n_s_Estimator___init, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_3, __pyx_tuple__7);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_init, __pyx_t_3) < 0) __PYX_ERR(0, 18, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":36
+  /* "observer/estimator_cython.pyx":36
  *         #    if not estimpath:
  * 
  *     def fit(self, x, y):             # <<<<<<<<<<<<<<
  *         return self.estimator.fit(x, y)
  * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_3fit, 0, __pyx_n_s_Estimator_fit, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_3fit, 0, __pyx_n_s_Estimator_fit, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_fit, __pyx_t_3) < 0) __PYX_ERR(0, 36, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":39
+  /* "observer/estimator_cython.pyx":39
  *         return self.estimator.fit(x, y)
  * 
  *     def predict(self, x):             # <<<<<<<<<<<<<<
  *         return self.estimator.predict(x.reshape(1, -1))[0]
  * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_5predict, 0, __pyx_n_s_Estimator_predict, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_5predict, 0, __pyx_n_s_Estimator_predict, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_predict, __pyx_t_3) < 0) __PYX_ERR(0, 39, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":42
+  /* "observer/estimator_cython.pyx":42
  *         return self.estimator.predict(x.reshape(1, -1))[0]
  * 
  *     def get_feature_importances(self):             # <<<<<<<<<<<<<<
  *         return self.estimator.feature_importances_
  * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_7get_feature_importances, 0, __pyx_n_s_Estimator_get_feature_importance, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_7get_feature_importances, 0, __pyx_n_s_Estimator_get_feature_importance, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_get_feature_importances, __pyx_t_3) < 0) __PYX_ERR(0, 42, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":45
+  /* "observer/estimator_cython.pyx":45
  *         return self.estimator.feature_importances_
  * 
  *     def set_params(self, **params):             # <<<<<<<<<<<<<<
  *         return self.estimator.set_params(**params)
  * 
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_9set_params, 0, __pyx_n_s_Estimator_set_params, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_9set_params, 0, __pyx_n_s_Estimator_set_params, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_set_params, __pyx_t_3) < 0) __PYX_ERR(0, 45, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":48
+  /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
  *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_11improve_estimator, 0, __pyx_n_s_Estimator_improve_estimator, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_11improve_estimator, 0, __pyx_n_s_Estimator_improve_estimator, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__17)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_CyFunction_SetDefaultsTuple(__pyx_t_3, __pyx_tuple__18);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_improve_estimator, __pyx_t_3) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":113
+  /* "observer/estimator_cython.pyx":113
  *         return mse
  * 
  *     def save_estimator(self, estim_path):             # <<<<<<<<<<<<<<
  *         estimator_name = estim_path + self.name
  *         pickle.dump(self.estimator, open(estimator_name, 'wb'))
  */
-  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_16estimator_cython_9Estimator_13save_estimator, 0, __pyx_n_s_Estimator_save_estimator, NULL, __pyx_n_s_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_8observer_16estimator_cython_9Estimator_13save_estimator, 0, __pyx_n_s_Estimator_save_estimator, NULL, __pyx_n_s_observer_estimator_cython, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_save_estimator, __pyx_t_3) < 0) __PYX_ERR(0, 113, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-  /* "estimator_cython.pyx":16
+  /* "observer/estimator_cython.pyx":16
  * 
  * 
  * class Estimator(object):             # <<<<<<<<<<<<<<
@@ -4458,7 +4458,7 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-  /* "estimator_cython.pyx":1
+  /* "observer/estimator_cython.pyx":1
  * import datetime             # <<<<<<<<<<<<<<
  * import pickle
  * 
@@ -4477,11 +4477,11 @@ if (!__Pyx_RefNanny) {
   __Pyx_XDECREF(__pyx_t_3);
   if (__pyx_m) {
     if (__pyx_d) {
-      __Pyx_AddTraceback("init estimator_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
+      __Pyx_AddTraceback("init observer.estimator_cython", __pyx_clineno, __pyx_lineno, __pyx_filename);
     }
     Py_CLEAR(__pyx_m);
   } else if (!PyErr_Occurred()) {
-    PyErr_SetString(PyExc_ImportError, "init estimator_cython");
+    PyErr_SetString(PyExc_ImportError, "init observer.estimator_cython");
   }
   __pyx_L0:;
   __Pyx_RefNannyFinishContext();

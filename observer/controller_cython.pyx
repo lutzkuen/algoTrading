@@ -858,7 +858,7 @@ class Controller(object):
             if abs(close_score) > 1:
                 return
             if cl > 0:
-                step = 4 * abs(low_score)
+                step = 6 * abs(low_score)
                 sl = lo - step - spread
                 entry = min(lo, bid)
                 sldist = entry - sl + spread
@@ -867,7 +867,7 @@ class Controller(object):
                 tp1 = hi - step
                 tp3 = hi - tpstep
             else:
-                step = 4 * abs(high_score)
+                step = 6 * abs(high_score)
                 sl = hi + step + spread
                 entry = max(hi, ask)
                 sldist = sl - entry + spread
@@ -950,7 +950,96 @@ class Controller(object):
             print('failed to open for ' + ins)
             print(e)
 
-    def simplified_trader(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False):
+    def get_new_symbol(self):
+        """
+        This Method will scan the available symbols and return the one with best RR
+        """
+        df = pd.read_csv(self.settings['prices_path'])
+        ratios = []
+        for ins in self.allowed_ins:
+            candles = self.get_candles(ins.name, 'D', 1)
+            candle = candles[0]
+            op = float(candle.get('mid').get('o'))
+            cl = df[df['INSTRUMENT'] == ins.name]['CLOSE'].values[0]
+            hi = df[df['INSTRUMENT'] == ins.name]['HIGH'].values[0] + op
+            lo = df[df['INSTRUMENT'] == ins.name]['LOW'].values[0] + op
+            price = self.get_price(ins.name)
+            if price < lo or price > hi:
+                ratio = 0
+            elif cl > 0:
+                ratio = cl * (hi - price)/(price - lo)
+            elif cl < 0:
+                ratio = abs(cl) * (price - lo)/(hi - price)
+            # print('{ins} - {ratio}'.format(ins=ins.displayName, ratio=str(ratio)))
+            if ratio > 0:
+                ratios.append({'ins': ins.name, 'ratio': ratio })
+        if len(ratios) == 0:
+            return None
+        ratios = sorted(ratios, key=lambda x: x.get('ratio'), reverse=True)
+        return ratios
+
+    def manage_portfolio(self):
+        target_ratio = 0.5
+        exposures = {}
+        for trade in self.trades:
+            leading_symbol, trailing_symbol = trade.instrument.split('_')
+            if not leading_symbol in exposures.keys():
+                exposures[leading_symbol] = 0
+            if not trailing_symbol in exposures.keys():
+                exposures[trailing_symbol] = 0
+            price = self.get_price(trade.instrument)
+            exposures[leading_symbol] += trade.currentUnits
+            exposures[trailing_symbol] -= trade.currentUnits * price
+            self.manage_trade(trade)
+        ratios = self.get_new_symbol()
+        # try to enter the 5 best opps as long
+        account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
+        margin_used = float(account.marginUsed)
+        margin_avail = float(account.marginAvailable)
+        print('Relative Margin used {ratio}'.format(ratio=str(margin_used/margin_avail)))
+        if margin_used / margin_avail > target_ratio:
+            return
+        for ratio in ratios:
+            if ratio['ratio'] > 1.5:
+                print('Opening new trade with {ins} / {ratio}'.format(ins=ratio.get('ins'), ratio=str(ratio.get('ratio'))))
+                if self.simplified_trader(ratio['ins'], exposures):
+                    break
+
+    def manage_trade(self, trade):
+        ins = trade.instrument
+        candles = self.get_candles(ins, 'D', 1)
+        candle = candles[0]
+        op = float(candle.get('mid').get('o'))
+        df = pd.read_csv(self.settings['prices_path'])
+        cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
+        hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
+        lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+        price = self.get_price(ins)
+        if cl * trade.currentUnits < 0:
+            print('Closing Trade {ins}'.format(ins=trade.instrument))
+            self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+            return
+        if abs(trade.currentUnits) > 0.6*abs(trade.initialUnits):
+            if cl > 0:
+                daily_target = abs(cl) * (hi - op) + op
+                if price > daily_target:
+                    args = {'order': {
+                        'instrument': trade.instrument,
+                        'units': str(-int(trade.currentUnits/2)),
+                        'type': 'MARKET'
+                    }}
+                    ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            elif cl < 0:
+                daily_target = op - abs(cl) * (op - lo)
+                if price < daily_target:
+                    args = {'order': {
+                        'instrument': trade.instrument,
+                        'units': str(-int(trade.currentUnits/2)),
+                        'type': 'MARKET'
+                    }}
+                    ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+
+    def simplified_trader(self, ins, exposures):
         """
         Open orders and close trades using the predicted market movements
         close_only: Set to true to close only without checking for opening Orders
@@ -958,11 +1047,7 @@ class Controller(object):
         """
 
         try:
-            rr_target = 2
-            if complete:
-                df = pd.read_csv(self.settings['prices_path'])
-            else:
-                df = pd.read_csv('{0}.partial'.format(self.settings['prices_path']))
+            df = pd.read_csv(self.settings['prices_path'])
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
             op = float(candle.get('mid').get('o'))
@@ -974,15 +1059,15 @@ class Controller(object):
             column_name = ins + '_close'
             close_score = self.get_score(column_name)
             if not close_score:
-                return
+                return False
             column_name = ins + '_high'
             high_score = self.get_score(column_name)
             if not high_score:
-                return
+                return False
             column_name = ins + '_low'
             low_score = self.get_score(column_name)
             if not low_score:
-                return
+                return False
             spread = self.get_spread(ins, spread_type='trading')
             bid, ask = self.get_bidask(ins)
             trades = []
@@ -990,30 +1075,36 @@ class Controller(object):
             for tr in self.trades:
                 if tr.instrument == ins:
                     trades.append(tr)
-            if len(trades) > 0:
-                is_open = True
-            if close_only:
-                return
+                    current_units += int(tr.currentUnits)
             if abs(close_score) > 1:
-                return
+                return False
             if cl > 0:
-                sl = lo
+                sl = min(lo, price - 4*abs(low_score))
                 tp = hi
             else:
-                sl = hi
+                sl = max(hi, price + 4*abs(high_score))
                 tp = lo
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
-            # units = self.get_units(abs(sl - op), ins) * min(abs(cl),
-            #                                                   1.0) * (1 - abs(close_score))
-            units = 1000
-            if abs(units) < 1:
-                return None  # oops, risk threshold too small
+            units = self.get_units(abs(sl - op), ins) * min(abs(cl),
+                                                              1.0) * (1 - abs(close_score))
             if tp < sl:
                 units *= -1
+            units -= current_units
+            if abs(units) < 1:
+                return False  # oops, risk threshold too small
+            leading_symbol, trailing_symbol = ins.split('_')
+            if leading_symbol in exposures.keys():
+                if exposures[leading_symbol] * units > 0:
+                    print('Cancel new trade since {symbol} exposure is already at {units} units'.format(symbol=leading_symbol, units=str(exposures[leading_symbol])))
+                    return False
+            if trailing_symbol in exposures.keys():
+                if exposures[trailing_symbol] * units < 0:
+                    print('Cancel new trade since {symbol} exposure is already at {units} units'.format(symbol=trailing_symbol, units=str(exposures[trailing_symbol])))
+                    return False
             relative_cost = spread / abs(tp - op)
             if abs(cl) <= relative_cost:
-                return None  # edge too small to cover cost
+                return False  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
             # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
@@ -1038,8 +1129,8 @@ class Controller(object):
                 print(args)
             #print(ins + ' - ' + str(cl) + ' - ' + str(units))
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-            if self.verbose > 1:
-                print(ticket.raw_body)
+            print(ticket.raw_body)
+            return True
         except Exception as e:
             print('failed to open for ' + ins)
             print(e)
