@@ -401,6 +401,7 @@ class Controller(object):
                 new_count += 1
                 if upsert:
                     update_count += 1
+                    print(candle_new)
                     self.table.upsert(candle_new, ['ins', 'date'])
                 continue
             if self.verbose > 1:
@@ -490,7 +491,62 @@ class Controller(object):
         today_df = self.get_market_df(date, inst, complete, bootstrap=bootstrap)
         return merge_dicts(df_row, today_df, '')
 
-    def data2sheet(self, write_raw=False, write_predict=True, improve_model=False, maxdate=None,
+    def predict_tomorrow(self):
+        # first step is to get the actual tomorrow day
+        now = datetime.datetime.now()
+        oneday = datetime.timedelta(hours=24)
+        twoday = datetime.timedelta(hours=48)
+        threeday = datetime.timedelta(hours=72)
+        weekday = now.weekday()
+        if ( weekday < 5 ):
+            prediction_day = now - oneday
+        elif ( weekday == 5 ):
+            prediction_day = now - twoday
+        elif ( weekday == 6 ):
+            prediction_day = now - threeday
+        else:
+            prediction_day = now - oneday
+            print('What a weird day ' + str(weekday))
+        prediction_day = prediction_day.strftime('%Y-%m-%d')
+        print('Starting prediction based on ' + prediction_day)
+        inst = []
+        statement = 'select distinct ins from dailycandles order by ins;'
+        for row in self.db.query(statement):
+            inst.append(row['ins'])
+        complete = False
+        df_row = self.get_df_for_date(prediction_day, inst, complete, bootstrap=False)  # improve_model)
+        df = pd.DataFrame([df_row])
+        date_column = df['date'].copy()  # copy for usage in improveEstim
+        df.drop(['date'], 1, inplace=True)
+        prediction = {}
+        for col in df.columns:
+            parts = col.split('_')
+            if len(parts) < 3:
+                if self.verbose > 2:
+                    print('WARNING: Unexpected column ' + col)
+                continue
+            if not ('_high' in col or '_low' in col or '_close' in col):
+                continue
+            if '_yester' in col:  # skip yesterday stuff for prediction
+                continue
+            prediction_value, previous_value = self.predict_column(col, df)
+            instrument = parts[0] + '_' + parts[1]
+            typ = parts[2]
+            if instrument in prediction.keys():
+                prediction[instrument][typ] = prediction_value  # store diff to prev day
+            else:
+                prediction[instrument] = {typ: prediction_value}
+            if self.verbose > 1:
+                print(col + ' ' + str(prediction_value))
+        outfile = open(self.settings['prices_path'], 'w')
+        outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
+        for instr in prediction.keys():
+            outfile.write(str(instr) + ',' + str(prediction[instr].get('high')) + ',' + str(
+                prediction[instr].get('low')) + ',' + str(
+                prediction[instr].get('close')) + '\n')
+        outfile.close()
+
+    def data2sheet(self, write_raw=False, improve_model=False, maxdate=None,
                    complete=True, read_raw=False, close_only=False, append_raw=False):
         """
         This method will take the input collected from oanda and forexfactory and merge in a Data Frame
@@ -537,9 +593,6 @@ class Controller(object):
                 if weekday == 4 or weekday == 5:  # saturday starts on friday and sunday on saturday
                     continue
                 dates.append(row['date'])
-            df_dict = []
-            if not improve_model:  # if we want to read only it is enough to take the last days
-                dates = dates[-3:]
             # dates = dates[-100:] # use this line to decrease computation time for development
             bar = None
             if self.verbose > 0:
@@ -548,6 +601,7 @@ class Controller(object):
                                               widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
                 bar.start()
             index = 0
+            df_dict = []
             for date in dates:
                 if self.verbose > 0:
                     bar.update(index)
@@ -602,29 +656,8 @@ class Controller(object):
                 # if this_anz <= min_anz:
                 #    self.improve_estimator(col, df)
                 #    improve_model = False # improve just once
-            prediction_value, previous_value = self.predict_column(col, df)
-            instrument = parts[0] + '_' + parts[1]
-            typ = parts[2]
-            if instrument in prediction.keys():
-                prediction[instrument][typ] = prediction_value  # store diff to prev day
-            else:
-                prediction[instrument] = {typ: prediction_value}
-            if self.verbose > 1:
-                print(col + ' ' + str(prediction_value))
         if self.verbose > 0:
             bar.finish()
-        if write_predict:
-            if complete:
-                outfile = open(self.settings['prices_path'], 'w')
-            else:
-                outfile = open('{0}.partial'.format(self.settings['prices_path']),
-                               'w')  # seperate file for partial estimates
-            outfile.write('INSTRUMENT,HIGH,LOW,CLOSE\n')
-            for instr in prediction.keys():
-                outfile.write(str(instr) + ',' + str(prediction[instr].get('high')) + ',' + str(
-                    prediction[instr].get('low')) + ',' + str(
-                    prediction[instr].get('close')) + '\n')
-            outfile.close()
 
     def save_prediction_to_db(self, date):
         prediction_df = pd.read_csv(self.settings['prices_path'])
@@ -730,7 +763,10 @@ class Controller(object):
             conversion = self.get_conversion(trailing_currency)
             if conversion:
                 conversion = conversion / price
-        multiplier = min(price / dist, 100)  # no single trade can be larger than the account NAV
+        if dist:
+            multiplier = min(price / dist, 100)  # no single trade can be larger than the account NAV
+        else:
+            multiplier = 100
         if not conversion:
             print('CRITICAL: Could not convert ' + leading_currency + '_' + trailing_currency + ' to EUR')
             return 0  # do not place a trade if conversion fails
@@ -978,7 +1014,7 @@ class Controller(object):
         ratios = sorted(ratios, key=lambda x: x.get('ratio'), reverse=True)
         return ratios
 
-    def manage_portfolio(self):
+    def manage_portfolio(self, close_only=False):
         target_ratio = 0.5
         exposures = {}
         for trade in self.trades:
@@ -991,6 +1027,8 @@ class Controller(object):
             exposures[leading_symbol] += trade.currentUnits
             exposures[trailing_symbol] -= trade.currentUnits * price
             self.manage_trade(trade)
+        if close_only:
+            return
         ratios = self.get_new_symbol()
         # try to enter the 5 best opps as long
         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
@@ -1025,7 +1063,7 @@ class Controller(object):
                 if price > daily_target:
                     args = {'order': {
                         'instrument': trade.instrument,
-                        'units': str(-int(trade.currentUnits/2)),
+                        'units': str(-int(math.ceil(float(trade.currentUnits)/2))),
                         'type': 'MARKET'
                     }}
                     ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
@@ -1047,6 +1085,7 @@ class Controller(object):
         """
 
         try:
+            min_ratio = 1.5
             df = pd.read_csv(self.settings['prices_path'])
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
@@ -1081,12 +1120,16 @@ class Controller(object):
             if cl > 0:
                 sl = min(lo, price - 4*abs(low_score))
                 tp = hi
+                ratio = (tp - price)/(price - sl)
             else:
                 sl = max(hi, price + 4*abs(high_score))
                 tp = lo
+                ratio = (price - tp)/(sl - price)
+            if ratio < min_ratio:
+                return False
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
-            units = self.get_units(abs(sl - op), ins) * min(abs(cl),
+            units = self.get_units(None, ins) * min(abs(cl),
                                                               1.0) * (1 - abs(close_score))
             if tp < sl:
                 units *= -1
