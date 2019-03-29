@@ -1014,6 +1014,13 @@ class Controller(object):
         ratios = sorted(ratios, key=lambda x: x.get('ratio'), reverse=True)
         return ratios
 
+    def get_margin_ratio(self):
+        account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
+        margin_used = float(account.marginUsed)
+        margin_avail = float(account.marginAvailable)
+        print('Relative Margin used {ratio}'.format(ratio=str(margin_used/margin_avail)))
+        return margin_used / margin_avail
+
     def manage_portfolio(self, close_only=False):
         target_ratio = 0.5
         exposures = {}
