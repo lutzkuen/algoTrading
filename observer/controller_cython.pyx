@@ -34,18 +34,11 @@ try:
 except ImportError:
     from observer import estimator as estimator
 
-#try:
-#    # from observer import estimator as estimator
-#    from observer import estimator_keras_cython as estimator_keras
-#except ImportError:
-#    from observer import estimator_keras as estimator_keras
-
 try:
     # noinspection PyUnresolvedReferences
     import v20
     # noinspection PyUnresolvedReferences
     from v20.request import Request
-
     v20present = True
 except ImportError:
     print('WARNING: V20 library not present. Connection to broker not possible')
@@ -77,18 +70,19 @@ class Controller(object):
     - acting in the market based on the prediction
     """
 
-    def __init__(self, config_name, _type, verbose=2, write_trades=False, multiplier=1, estimator_type = 'gbdt'):
-        # class init
-        # config_name: Path to config file
-        # _type: which section of the config file to use for broker connection
-        # verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
-        self.estimator_type = estimator_type
-        self.multiplier = multiplier
-        self.write_trades = write_trades
-        if write_trades:
-            trades_path = '/home/tubuntu/data/trades.csv'
-            self.trades_file = open(trades_path, 'w')
-            # self.trades_file.write('INS,UNITS,TP,SL,ENTRY,EXPIRY;')
+    def __init__(self, config_name, _type, verbose=2, write_trades=False):
+        """
+        class init
+
+        Parameters
+        ------
+        config_name: Path to config file
+        _type: which section of the config file to use for broker connection
+
+        Keyword Parameters
+        verbose: verbositiy. 0: Display FATAL only, 1: Display progress bars also, >=2: Display a lot of misc info
+        write_trades: Whether to write all performed trades to a file
+        """
 
         config = configparser.ConfigParser()
         config.read(config_name)
@@ -96,7 +90,13 @@ class Controller(object):
 
         self.settings = {'estim_path': config.get('data', 'estim_path'),
                          'prices_path': config.get('data', 'prices_path'),
+                         'raw_name': config.get('data', 'raw_name'),
                          'keras_path': config.get('data', 'keras_path')}
+        self.write_trades = write_trades
+        if write_trades:
+            trades_path = config.get('data', 'trades_path')
+            self.trades_file = open(trades_path, 'w')
+
         if _type and v20present:
             self.settings['domain'] = config.get(_type,
                                                  'streaming_hostname')
@@ -128,24 +128,41 @@ class Controller(object):
         self.prediction_db = dataset.connect(config.get('data', 'predictions_path'))
         self.prediction_table = self.prediction_db['prediction']
         # the following arrays are used to collect aggregate information in estimator improvement
-        self.accuracy_array = []
-        self.n_components_array = []
         self.spreads = {}
         self.prices = {}
 
     def retrieve_data(self, num_candles, completed=True, upsert=False):
-        # collect data for all available instrument from broker and store in database
-        # num_candles: Number of candles, max. 500
-        # completed: Whether to use only completed candles, in other words whether to ignore today
-        # upsert: Whether to update existing entries
+        """
+        collect data for all available instrument from broker and store in database
+        Parametes
+        ------
+        num_candles: Number of candles, max. 500
+
+        Keyword arguments
+        ------
+        completed: Whether to use only completed candles, in other words whether to ignore today
+        upsert: Whether to update existing entries
+
+        Returns
+        ------
+        None
+        """
 
         for ins in self.allowed_ins:
             candles = self.get_candles(ins.name, 'D', num_candles)
             self.candles_to_db(candles, ins.name, completed=completed, upsert=upsert)
 
     def get_pip_size(self, ins):
-        # Returns pip size for a given instrument
-        # ins: Instrument, e.g. EUR_USD
+        """
+        Returns pip size for a given instrument
+        Parameters
+        ------
+        ins: Instrument, e.g. EUR_USD
+
+        Returns
+        ------
+        int Location of the Pipsize after decimal point
+        """
 
         pip_loc = [_ins.pipLocation for _ins in self.allowed_ins if _ins.name == ins]
         if not len(pip_loc) == 1:
@@ -547,7 +564,7 @@ class Controller(object):
         outfile.close()
 
     def data2sheet(self, write_raw=False, improve_model=False, maxdate=None,
-                   complete=True, read_raw=False, close_only=False, append_raw=False):
+                   complete=True, read_raw=False, append_raw=False):
         """
         This method will take the input collected from oanda and forexfactory and merge in a Data Frame
         write_raw: Write data frame used for training to disk
@@ -560,7 +577,7 @@ class Controller(object):
         self.num_samples = 1
         if improve_model:
             self.num_samples = 5
-        raw_name = '/home/tubuntu/data/cexport.csv'
+        raw_name = self.settings.get('raw_name')
         has_contributed = False
         if read_raw:
             df = pd.read_csv(raw_name)
@@ -641,8 +658,6 @@ class Controller(object):
                 continue
             if not ('_high' in col or '_low' in col or '_close' in col):
                 continue
-            if close_only and not ('_close' in col):
-                continue
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             if improve_model:
@@ -668,11 +683,7 @@ class Controller(object):
         
 
     def improve_estimator(self, col, df):
-        if self.estimator_type == 'gbdt':
-            estim = estimator.Estimator(col)
-        #elif self.estimator_type == 'keras':
-        #    estim = estimator_keras.Estimator(col, df.shape[1])
-
+        estim = estimator.Estimator(col)
         score = estim.improve_estimator(df, opt_table=self.opt_table, estimtable=self.estimtable, num_samples=self.num_samples,
                                         estimpath=self.settings.get('estim_path'))
 
@@ -734,10 +745,7 @@ class Controller(object):
         vprev = y[-1]
         xlast = x[-1, :]
         try:
-            if self.estimator_type == 'gbdt':
-                estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
-            else:
-                estim = self.load_keras(df)
+            estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
         except:
             print('Could not load estimator for ' + str(predict_column))
             return None, vprev
@@ -843,11 +851,26 @@ class Controller(object):
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
 
-    def open_limit(self, ins, close_only=False, complete=True, duration=8, split_position=True, adjust_rr=False, use_keras=False):
+    def open_limit(self, ins, duration=8, use_keras=False):
         """
         Open orders and close trades using the predicted market movements
+
+        Parameters
+        ------
+        ins: Instrument to trade
+
+        Keyword Arguments
+        ------
         close_only: Set to true to close only without checking for opening Orders
         complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
+        duration: For how many hours should the limit order by placed
+        split_position: Whether to split the position in two parts, one has a smaller TP
+        adjust_rr: Whether to adjust the entry to meet the RR requirements. Results in more trades
+        use_keras: Whether to use the prediction produced by keras
+
+        Returns
+        ------
+        None
         """
 
         try:
@@ -856,10 +879,7 @@ class Controller(object):
                 price_path = self.settings['keras_path']
             else:
                 price_path = self.settings['prices_path']
-            if complete:
-                df = pd.read_csv(price_path)
-            else:
-                df = pd.read_csv('{0}.partial'.format(price_path))
+            df = pd.read_csv(price_path)
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
             op = float(candle.get('mid').get('o'))
@@ -888,8 +908,6 @@ class Controller(object):
                 if tr.instrument == ins:
                     trades.append(tr)
             if len(trades) > 0:
-                is_open = True
-            if close_only:
                 return
             if abs(close_score) > 1:
                 return
@@ -898,90 +916,58 @@ class Controller(object):
                 sl = lo - step - spread
                 entry = min(lo, bid)
                 sldist = entry - sl + spread
-                tp2 = hi
-                tpstep = (tp2 - price) / 3
-                tp1 = hi - step
-                tp3 = hi - tpstep
+                tp = hi
             else:
                 step = 6 * abs(high_score)
                 sl = hi + step + spread
                 entry = max(hi, ask)
                 sldist = sl - entry + spread
-                tp2 = lo
-                tpstep = (price - tp2) / 3
-                tp1 = lo + step
-                tp3 = lo + tpstep
-            rr = abs((tp2 - entry) / sldist )
-            if adjust_rr:
-                if rr < rr_target:  # Risk-reward too low
-                    if cl > 0:
-                        entry = sl + (tp2 - sl)/(rr_target+1.0)
-                        sldist = entry - sl + spread
-                    else:
-                        entry = sl - (sl - tp2)/(rr_target+1.0)
-                        sldist = sl - entry + spread
-            else:
-                if rr < rr_target:  # Risk-reward too low
-                    if self.verbose > 1:
-                        print(ins + ' RR: ' + str(rr) + ' | ' + str(entry) + '/' + str(sl) + '/' + str(tp2))
-                    return None
+                tp = lo
+            rr = abs((tp - entry) / sldist )
+            if rr < rr_target:  # Risk-reward too low
+                if cl > 0:
+                    entry = sl + (tp - sl)/(rr_target+1.0)
+                    sldist = entry - sl + spread
+                else:
+                    entry = sl - (sl - tp)/(rr_target+1.0)
+                    sldist = sl - entry + spread
             # if you made it here its fine, lets open a limit order
-            # r2sum is used to scale down the units risked to accomodate the estimator quality
-            units = self.get_units(abs(sl - entry), ins) * min(abs(cl),
-                                                               1.0) * (1 - abs(close_score))
-            if units > 0:
-                units = math.floor(units * self.multiplier)
-            if units < 0:
-                units = math.ceil(units * self.multiplier)
-            if abs(units) < 1:
+            units = math.floor(abs(self.get_units(abs(sl - entry), ins) * min(abs(cl), 1.0)))
+            if units < 1:
                 return None  # oops, risk threshold too small
-            if tp2 < sl:
+            if tp < sl:
                 units *= -1
-            relative_cost = spread / abs(tp2 - entry)
+            relative_cost = spread / abs(tp - entry)
             if abs(cl) <= relative_cost:
                 return None  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
-            # if abs(sl - entry) < 200 * 10 ** (-pip_location):  # sl too small
-            #    return None
-            # otype = 'MARKET'
-            otype = 'LIMIT'
             format_string = '30.' + str(pip_location) + 'f'
-            tp1 = format(tp1, format_string).strip()
-            tp2 = format(tp2, format_string).strip()
-            tp3 = format(tp3, format_string).strip()
+            tp = format(tp, format_string).strip()
             sl = format(sl, format_string).strip()
             sldist = format(sldist, format_string).strip()
             entry = format(entry, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
-            if split_position:
-                units = int(units / 2)  # open three trades to spread out the risk
-                tp_array = [tp1, tp2]
-                if abs(units) < 1:
-                    return
-            else:
-                tp_array = [tp2]
-            for tp in tp_array:
-                args = {'order': {
-                    'instrument': ins,
-                    'units': units,
-                    'price': entry,
-                    'type': otype,
-                    'timeInForce': 'GTD',
-                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-                    'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                    # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                    'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
-                }}
-                if self.write_trades:
-                    self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
-                        entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
-                #if self.verbose > 1:
-                #    print(args)
-                print(ins + ' - ' + str(cl) + ' - ' + str(units))
-                ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-                #if self.verbose > 1:
-                #    print(ticket.raw_body)
+            args = {'order': {
+                'instrument': ins,
+                'units': units,
+                'price': entry,
+                'type': 'LIMIT',
+                'timeInForce': 'GTD',
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+            }}
+            if self.write_trades:
+                self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
+                    entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
+            #if self.verbose > 1:
+            #    print(args)
+            print(ins + ' - ' + str(cl) + ' - ' + str(units))
+            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            #if self.verbose > 1:
+            #    print(ticket.raw_body)
         except Exception as e:
             print('failed to open for ' + ins)
             print(e)
@@ -989,6 +975,10 @@ class Controller(object):
     def get_new_symbol(self):
         """
         This Method will scan the available symbols and return the one with best RR
+
+        Returns
+        ------
+        string symbol that should be traded next
         """
         df = pd.read_csv(self.settings['prices_path'])
         ratios = []
