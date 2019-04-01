@@ -103,7 +103,8 @@ class Controller(object):
             if not loss_id:
                 # let the winner run
                 continue
-            if uPL > biggest_loss:
+            print(ins + ' ' + str(uPL) + ' ' + str(biggest_loss))
+            if abs(uPL) > abs(biggest_loss):
                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
                 for trade_id in winning_ids:
                     self.oanda.trade.close(self.settings.get('account_id'), trade_id)

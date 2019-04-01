@@ -851,7 +851,7 @@ class Controller(object):
                 response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
                 print(response.raw_body)
 
-    def open_limit(self, ins, duration=8, use_keras=False):
+    def open_limit(self, ins, duration=8, use_keras=False, use_stoploss=True):
         """
         Open orders and close trades using the predicted market movements
 
@@ -861,12 +861,9 @@ class Controller(object):
 
         Keyword Arguments
         ------
-        close_only: Set to true to close only without checking for opening Orders
-        complete: Whether to use only complete candles, which means to ignore the incomplete candle of today
         duration: For how many hours should the limit order by placed
-        split_position: Whether to split the position in two parts, one has a smaller TP
-        adjust_rr: Whether to adjust the entry to meet the RR requirements. Results in more trades
         use_keras: Whether to use the prediction produced by keras
+        use_stoploss: Whether to use a stop loss
 
         Returns
         ------
@@ -882,7 +879,10 @@ class Controller(object):
             df = pd.read_csv(price_path)
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
-            op = float(candle.get('mid').get('o'))
+            if int(candle.get('complete')):
+                op = float(candle.get('mid').get('o'))
+            else:
+                op = float(candle.get('mid').get('c'))
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
@@ -900,45 +900,55 @@ class Controller(object):
             low_score = self.get_score(column_name)
             if not low_score:
                 return
-            spread = self.get_spread(ins, spread_type='trading')
+            spread = self.get_spread(ins, spread_type='current')
             bid, ask = self.get_bidask(ins)
             trades = []
-            current_units = 0
+            currentUnits = 0
             for tr in self.trades:
                 if tr.instrument == ins:
+                    currentUnits += float(tr.currentUnits)
                     trades.append(tr)
-            if len(trades) > 0:
-                return
-            if abs(close_score) > 1:
-                return
+            if use_stoploss or len(trades) == 0:
+                # here we calculate am entry based on having 
+                if len(trades) > 0:
+                    return
+                if abs(close_score) > 1:
+                    return
+                #if float(candle.get('mid').get('h')) > hi:
+                #    return
+                #if float(candle.get('mid').get('l')) < lo:
+                #    return
             if cl > 0:
-                step = 6 * abs(low_score)
+                step = (hi - lo)/2
                 sl = lo - step - spread
                 entry = min(lo, bid)
-                sldist = entry - sl + spread
+                sldist = step
                 tp = hi
             else:
-                step = 6 * abs(high_score)
+                step = (hi - lo)/2
                 sl = hi + step + spread
                 entry = max(hi, ask)
-                sldist = sl - entry + spread
+                sldist = step
                 tp = lo
-            rr = abs((tp - entry) / sldist )
-            if rr < rr_target:  # Risk-reward too low
-                if cl > 0:
-                    entry = sl + (tp - sl)/(rr_target+1.0)
-                    sldist = entry - sl + spread
-                else:
-                    entry = sl - (sl - tp)/(rr_target+1.0)
-                    sldist = sl - entry + spread
+            #rr = abs((tp - entry) / sldist )
+            #if rr < rr_target:  # Risk-reward too low
+            #    if cl > 0:
+            #        entry = sl + (tp - sl)/(rr_target+1.0)
+            #        sldist = entry - sl + spread
+            #    else:
+            #        entry = sl - (sl - tp)/(rr_target+1.0)
+            #        sldist = sl - entry + spread
             # if you made it here its fine, lets open a limit order
-            units = math.floor(abs(self.get_units(abs(sl - entry), ins) * min(abs(cl), 1.0)))
-            if units < 1:
-                return None  # oops, risk threshold too small
+            units = math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
             if tp < sl:
                 units *= -1
-            relative_cost = spread / abs(tp - entry)
-            if abs(cl) <= relative_cost:
+            units -= currentUnits
+            if abs(units) < 1:
+                return None  # oops, risk threshold too small
+            relative_cost = spread / sldist
+            #print(ins + ' - ' + str(spread) + ' - ' + str(relative_cost) + ' - ' + str(tp) + ' ' + str(entry))
+            #return None
+            if 0.15 <= relative_cost:
                 return None  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
@@ -948,17 +958,30 @@ class Controller(object):
             sldist = format(sldist, format_string).strip()
             entry = format(entry, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
-            args = {'order': {
-                'instrument': ins,
-                'units': units,
-                'price': entry,
-                'type': 'LIMIT',
-                'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
-            }}
+            if use_stoploss:
+                args = {'order': {
+                    'instrument': ins,
+                    'units': units,
+                    'price': entry,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                    # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                    'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                }}
+            else:
+                args = {'order': {
+                    'instrument': ins,
+                    'units': units,
+                    'price': entry,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'}
+                    # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                    #'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                }}
             if self.write_trades:
                 self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
                     entry) + ',' + expiry.strftime('%Y-%m-%dT%M:%M:%S.%fZ') + ';')
