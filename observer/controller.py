@@ -831,27 +831,26 @@ class Controller(object):
         """
         check all open trades and check whether one of them would possible fall victim to spread widening
         """
-        min_distance = 2.0  # every trade who is less than this times its worst spread from SL away will be closed
-        for trade in self.trades:
-            #worst_spread = self.get_spread(trade.instrument, spread_type='worst')
-            #smallest_distance = 2 * min_distance * worst_spread
-            ## first check for trailing Stop
-            #if trade.trailingStopLossOrder:
-            #    smallest_distance = min(float(trade.trailingStopLossOrder.distance), smallest_distance)
+        pl_list = dict()
+        while len(self.trades) > 0:
+            try:
+                self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
+                for trade in self.trades:
+                    uPL = float(trade.unrealizedPL)
+                    if trade.id in pl_list.keys():
+                        print(trade.instrument + ' ' + str(uPL) + ' ' + str(pl_list[trade.id]))
+                        if pl_list[trade.id] > uPL:
+                            print('Closing trade ' + str(trade.instrument))
+                            response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
+                        else:
+                            print('Keeping trade ' + str(trade.instrument))
+                            # print(response.raw_body)
+                    pl_list[trade.id] = uPL
+            except Exception as e:
+                print(str(e))
+            time.sleep(60)
 
-            ## then check for the normal stop loss order
-            #if trade.stopLossOrder:
-            #    smallest_distance = min(float(trade.stopLossOrder.distance), smallest_distance)
-
-            #print('{ins} s/t: {small}/{thresh}'.format(ins=trade.instrument, small=str(smallest_distance),
-            #                                           thresh=str(min_distance * worst_spread)))
-
-            if True: #smallest_distance < min_distance * worst_spread:
-                # close the trade
-                response = self.oanda.trade.close(self.settings.get('account_id'), trade.id)
-                print(response.raw_body)
-
-    def open_limit(self, ins, duration=8, use_keras=False, use_stoploss=True):
+    def open_limit(self, ins, duration=8, use_keras=False, use_stoploss=True, close_only=False):
         """
         Open orders and close trades using the predicted market movements
 
@@ -879,7 +878,10 @@ class Controller(object):
             df = pd.read_csv(price_path)
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
-            if int(candle.get('complete')):
+            now_str = datetime.datetime.now().strftime('%Y-%m-%d')
+            #print(ins + ' ' + now_str + ' ' + candle['time'][:10])
+            if candle['time'][:10] == now_str:
+            #if int(candle.get('complete')):
                 op = float(candle.get('mid').get('o'))
             else:
                 op = float(candle.get('mid').get('c'))
@@ -906,8 +908,25 @@ class Controller(object):
             currentUnits = 0
             for tr in self.trades:
                 if tr.instrument == ins:
+                    #if float(tr.currentUnits) * cl < 0:
+                    #    print('Attempting to close ' + tr.instrument)
+                    #    response = self.oanda.trade.close(self.settings.get('account_id'), tr.id)
+                    #else:
                     currentUnits += float(tr.currentUnits)
+                    print('Keeping ' + tr.instrument + ' ' + str(tr.currentUnits) + ' ' + str(cl))
+                    if cl > 0:
+                        tp = hi
+                    else:
+                        tp = lo
+                    pip_location = self.get_pip_size(ins)
+                    pip_size = 10 ** (-pip_location + 1)
+                    format_string = '30.' + str(pip_location) + 'f'
+                    tp = format(tp, format_string).strip()
+                    response = self.oanda.order.take_profit_replace(self.settings.get('account_id'),  tr.takeProfitOrder.id, **{'tradeID': tr.id, 'price': tp})
+                    print(response.raw_body)
                     trades.append(tr)
+            if close_only:
+                return
             if use_stoploss or len(trades) == 0:
                 # here we calculate am entry based on having 
                 if len(trades) > 0:
@@ -942,7 +961,11 @@ class Controller(object):
             units = math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
             if tp < sl:
                 units *= -1
-            units -= currentUnits
+            if units * currentUnits > 0:
+                if abs(units) > abs(currentUnits):
+                    units -= currentUnits
+            #else:
+            #    units -= currentUnits
             if abs(units) < 1:
                 return None  # oops, risk threshold too small
             relative_cost = spread / sldist
