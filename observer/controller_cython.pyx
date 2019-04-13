@@ -117,12 +117,10 @@ class Controller(object):
             self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
-        self.optimization_db = dataset.connect(config.get('data', 'optimization_path'))
         self.calendar = self.calendar_db['calendar']
         self.table = self.db['dailycandles']
         self.estimtable = self.db['estimators']
         self.importances = self.db['feature_importances']
-        self.opt_table = self.optimization_db['function_values']
         self.spread_db = dataset.connect(config.get('data', 'spreads_path'))
         self.spread_table = self.spread_db['spreads']
         self.prediction_db = dataset.connect(config.get('data', 'predictions_path'))
@@ -270,19 +268,23 @@ class Controller(object):
         ins: Instrument, e.g. EUR_USD
         """
 
-        args = {'instruments': ins}
-        if ins in self.prices.keys():
-            return self.prices[ins]
-        price_raw = self.oanda.pricing.get(self.settings.get('account_id'
-                                                             ), **args)
-        price_json = json.loads(price_raw.raw_body)
-        price = (float(price_json.get('prices')[0].get('bids')[0].get('price'
-                                                                      )) + float(price_json.get('prices')[0].get('asks'
-                                                                                                                 )[
-            0].get(
-            'price'))) / 2.0
-        self.prices[ins] = price
-        return price
+        try:
+            args = {'instruments': ins}
+            if ins in self.prices.keys():
+                return self.prices[ins]
+            price_raw = self.oanda.pricing.get(self.settings.get('account_id'
+                                                                 ), **args)
+            price_json = json.loads(price_raw.raw_body)
+            price = (float(price_json.get('prices')[0].get('bids')[0].get('price'
+                                                                          )) + float(price_json.get('prices')[0].get('asks'
+                                                                                                                     )[
+                0].get(
+                'price'))) / 2.0
+            self.prices[ins] = price
+            return price
+        except Exception as e:
+            print(ins + 'get price ' + str(e))
+            return None
 
     def strip_number(self, _number):
         # try to get a numeric value from a string like e.g. '3.4M'
@@ -684,7 +686,7 @@ class Controller(object):
 
     def improve_estimator(self, col, df):
         estim = estimator.Estimator(col)
-        score = estim.improve_estimator(df, opt_table=self.opt_table, estimtable=self.estimtable, num_samples=self.num_samples,
+        score = estim.improve_estimator(df, estimtable=self.estimtable, num_samples=self.num_samples,
                                         estimpath=self.settings.get('estim_path'))
 
     def get_feature_importances(self):
@@ -880,15 +882,17 @@ class Controller(object):
             candle = candles[0]
             now_str = datetime.datetime.now().strftime('%Y-%m-%d')
             #print(ins + ' ' + now_str + ' ' + candle['time'][:10])
-            if candle['time'][:10] == now_str:
-            #if int(candle.get('complete')):
-                op = float(candle.get('mid').get('o'))
-            else:
-                op = float(candle.get('mid').get('c'))
+            #if candle['time'][:10] == now_str:
+            ##if int(candle.get('complete')):
+            #    op = float(candle.get('mid').get('o'))
+            #else:
+            op = float(candle.get('mid').get('c'))
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
             price = self.get_price(ins)
+            if hi < price or lo > price:
+                return
             # get the R2 of the consisting estimators
             column_name = ins + '_close'
             close_score = self.get_score(column_name)
@@ -906,12 +910,17 @@ class Controller(object):
             bid, ask = self.get_bidask(ins)
             trades = []
             currentUnits = 0
+            min_units = 0
             for tr in self.trades:
                 if tr.instrument == ins:
                     #if float(tr.currentUnits) * cl < 0:
                     #    print('Attempting to close ' + tr.instrument)
                     #    response = self.oanda.trade.close(self.settings.get('account_id'), tr.id)
                     #else:
+                    if min_units == 0:
+                        min_units = int(tr.currentUnits)
+                    elif abs(min_units) > int(tr.currentUnits):
+                        min_units = int(tr.currentUnits)
                     currentUnits += float(tr.currentUnits)
                     print('Keeping ' + tr.instrument + ' ' + str(tr.currentUnits) + ' ' + str(cl))
                     if cl > 0:
@@ -922,10 +931,13 @@ class Controller(object):
                     pip_size = 10 ** (-pip_location + 1)
                     format_string = '30.' + str(pip_location) + 'f'
                     tp = format(tp, format_string).strip()
-                    response = self.oanda.order.take_profit_replace(self.settings.get('account_id'),  tr.takeProfitOrder.id, **{'tradeID': tr.id, 'price': tp})
+                    if tr.takeProfitOrder:
+                        response = self.oanda.order.take_profit_replace(self.settings.get('account_id'), tr.takeProfitOrder.id, **{'tradeID': tr.id, 'price': tp})
+                    else:
+                        response = self.oanda.order.take_profit(self.settings.get('account_id'), **{'tradeID': tr.id, 'price': tp})
                     print(response.raw_body)
                     trades.append(tr)
-            if close_only:
+            if close_only and len(trades) == 0:
                 return
             if use_stoploss or len(trades) == 0:
                 # here we calculate am entry based on having 
@@ -937,42 +949,53 @@ class Controller(object):
                 #    return
                 #if float(candle.get('mid').get('l')) < lo:
                 #    return
-            if cl > 0:
-                step = (hi - lo)/2
-                sl = lo - step - spread
-                entry = min(lo, bid)
-                sldist = step
-                tp = hi
+            if len(trades) == 0:
+                if cl > 0:
+                    step = (hi - lo)/2
+                    sl = lo - step - spread
+                    entry = min(lo, bid)
+                    sldist = step
+                    tp = hi
+                else:
+                    step = (hi - lo)/2
+                    sl = hi + step + spread
+                    entry = max(hi, ask)
+                    sldist = step
+                    tp = lo
+                #rr = abs((tp - entry) / sldist )
+                #if rr < rr_target:  # Risk-reward too low
+                #    if cl > 0:
+                #        entry = sl + (tp - sl)/(rr_target+1.0)
+                #        sldist = entry - sl + spread
+                #    else:
+                #        entry = sl - (sl - tp)/(rr_target+1.0)
+                #        sldist = sl - entry + spread
+                # if you made it here its fine, lets open a limit order
+                units = math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
+                if tp < sl:
+                    units *= -1
+                if units * currentUnits > 0:
+                    if abs(units) > abs(currentUnits):
+                        units -= currentUnits
+                #else:
+                #    units -= currentUnits
+                if abs(units) < 1:
+                    return None  # oops, risk threshold too small
+                relative_cost = spread / sldist
+                #print(ins + ' - ' + str(spread) + ' - ' + str(relative_cost) + ' - ' + str(tp) + ' ' + str(entry))
+                #return None
+                if 0.15 <= relative_cost:
+                    return None  # edge too small to cover cost
             else:
-                step = (hi - lo)/2
-                sl = hi + step + spread
-                entry = max(hi, ask)
-                sldist = step
-                tp = lo
-            #rr = abs((tp - entry) / sldist )
-            #if rr < rr_target:  # Risk-reward too low
-            #    if cl > 0:
-            #        entry = sl + (tp - sl)/(rr_target+1.0)
-            #        sldist = entry - sl + spread
-            #    else:
-            #        entry = sl - (sl - tp)/(rr_target+1.0)
-            #        sldist = sl - entry + spread
-            # if you made it here its fine, lets open a limit order
-            units = math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
-            if tp < sl:
-                units *= -1
-            if units * currentUnits > 0:
-                if abs(units) > abs(currentUnits):
-                    units -= currentUnits
-            #else:
-            #    units -= currentUnits
-            if abs(units) < 1:
-                return None  # oops, risk threshold too small
-            relative_cost = spread / sldist
-            #print(ins + ' - ' + str(spread) + ' - ' + str(relative_cost) + ' - ' + str(tp) + ' ' + str(entry))
-            #return None
-            if 0.15 <= relative_cost:
-                return None  # edge too small to cover cost
+                sl = 0
+                if min_units > 0:
+                    entry = lo
+                    tp = hi
+                else:
+                    entry = hi
+                    tp = lo
+                sldist = abs(entry - tp)
+                units = min_units
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
             format_string = '30.' + str(pip_location) + 'f'
@@ -1031,7 +1054,7 @@ class Controller(object):
         for ins in self.allowed_ins:
             candles = self.get_candles(ins.name, 'D', 1)
             candle = candles[0]
-            op = float(candle.get('mid').get('o'))
+            op = float(candle.get('mid').get('c'))
             cl = df[df['INSTRUMENT'] == ins.name]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins.name]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins.name]['LOW'].values[0] + op
@@ -1058,7 +1081,7 @@ class Controller(object):
         return margin_used / margin_avail
 
     def manage_portfolio(self, close_only=False):
-        target_ratio = 0.5
+        target_ratio = 0.1
         exposures = {}
         for trade in self.trades:
             leading_symbol, trailing_symbol = trade.instrument.split('_')
@@ -1069,7 +1092,7 @@ class Controller(object):
             price = self.get_price(trade.instrument)
             exposures[leading_symbol] += trade.currentUnits
             exposures[trailing_symbol] -= trade.currentUnits * price
-            self.manage_trade(trade)
+            # self.manage_trade(trade)
         if close_only:
             return
         ratios = self.get_new_symbol()
@@ -1090,7 +1113,7 @@ class Controller(object):
         ins = trade.instrument
         candles = self.get_candles(ins, 'D', 1)
         candle = candles[0]
-        op = float(candle.get('mid').get('o'))
+        op = float(candle.get('mid').get('c'))
         df = pd.read_csv(self.settings['prices_path'])
         cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
         hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
@@ -1158,18 +1181,17 @@ class Controller(object):
                 if tr.instrument == ins:
                     trades.append(tr)
                     current_units += int(tr.currentUnits)
+                    return False
             if abs(close_score) > 1:
                 return False
             if cl > 0:
-                sl = min(lo, price - 4*abs(low_score))
+                sl = ask - ( hi - ask)/ min_ratio
                 tp = hi
                 ratio = (tp - price)/(price - sl)
             else:
-                sl = max(hi, price + 4*abs(high_score))
+                sl = bid + ( hi - bid )/min_ratio
                 tp = lo
                 ratio = (price - tp)/(sl - price)
-            if ratio < min_ratio:
-                return False
             # if you made it here its fine, lets open a limit order
             # r2sum is used to scale down the units risked to accomodate the estimator quality
             units = self.get_units(None, ins) * min(abs(cl),
@@ -1190,6 +1212,7 @@ class Controller(object):
                     return False
             relative_cost = spread / abs(tp - op)
             if abs(cl) <= relative_cost:
+                print('relative cost too large')
                 return False  # edge too small to cover cost
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
@@ -1205,8 +1228,8 @@ class Controller(object):
                 'instrument': ins,
                 'units': units,
                 'type': otype,
-                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
-                'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'}
+                #'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
             }}
             #if self.write_trades:
             #    self.trades_file.write(str(ins) + ',' + str(units) + ',' + str(tp) + ',' + str(sl) + ',' + str(
@@ -1217,6 +1240,75 @@ class Controller(object):
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
             print(ticket.raw_body)
             return True
+        except Exception as e:
+            print('failed to open for ' + ins)
+            print(e)
+
+    def simple_limits(self, ins, duration=20):
+        """
+        Open orders and close trades using the predicted market movements
+
+        Parameters
+        ------
+        ins: Instrument to trade
+
+        Keyword Arguments
+        ------
+        duration: For how many hours should the limit order by placed
+        use_keras: Whether to use the prediction produced by keras
+        use_stoploss: Whether to use a stop loss
+
+        Returns
+        ------
+        None
+        """
+
+        try:
+            price_path = self.settings['prices_path']
+            df = pd.read_csv(price_path)
+            candles = self.get_candles(ins, 'D', 1)
+            candle = candles[0]
+            spread = self.get_spread(ins, spread_type='trading')
+            op = float(candle.get('mid').get('o'))
+            cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
+            hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
+            lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+            units = 200 # math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
+            pip_location = self.get_pip_size(ins)
+            pip_size = 10 ** (-pip_location + 1)
+            format_string = '30.' + str(pip_location) + 'f'
+            lo = format(lo, format_string).strip()
+            hi = format(hi, format_string).strip()
+            expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
+            print(ins + ' - ' + str(cl) + ' - ' + str(units))
+            args = {'order': {
+                'instrument': ins,
+                'units': units,
+                'price': lo,
+                'type': 'LIMIT',
+                'timeInForce': 'GTD',
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                # 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+            }}
+            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            print(ticket.raw_body)
+            args = {'order': {
+                'instrument': ins,
+                'units': -units,
+                'price': hi,
+                'type': 'LIMIT',
+                'timeInForce': 'GTD',
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
+                # 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
+                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+            }}
+            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            print(ticket.raw_body)
+            #if self.verbose > 1:
+            #    print(ticket.raw_body)
         except Exception as e:
             print('failed to open for ' + ins)
             print(e)

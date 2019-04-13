@@ -45,7 +45,7 @@ class Estimator(object):
     def set_params(self, **params):
         return self.estimator.set_params(**params)
 
-    def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+    def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
         x = np.array(df.values[:])
         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
         y = y[num_samples:]  # drop first line

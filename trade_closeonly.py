@@ -1,5 +1,7 @@
 from observer import controller_cython as controller
 cont = controller.Controller('/home/tubuntu/settings_triangle.conf', 'live')
+cont.retrieve_data(4, completed=False, upsert=True)
+cont.predict_tomorrow()
 allowed_ins = [ins.name for ins in cont.allowed_ins]
 margin_ratio = cont.get_margin_ratio()
 #if margin_ratio < 0.33: # this corresponds to 25% Margin used ratio

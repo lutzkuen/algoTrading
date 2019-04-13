@@ -1313,7 +1313,6 @@ static const char __pyx_k_estimpath[] = "estimpath";
 static const char __pyx_k_max_depth[] = "max_depth";
 static const char __pyx_k_metaclass[] = "__metaclass__";
 static const char __pyx_k_objective[] = "objective";
-static const char __pyx_k_opt_table[] = "opt_table";
 static const char __pyx_k_test_size[] = "test_size";
 static const char __pyx_k_watchlist[] = "watchlist";
 static const char __pyx_k_estim_path[] = "estim_path";
@@ -1435,7 +1434,6 @@ static PyObject *__pyx_n_s_object;
 static PyObject *__pyx_n_u_objective;
 static PyObject *__pyx_n_s_observer_estimator_cython;
 static PyObject *__pyx_n_s_open;
-static PyObject *__pyx_n_s_opt_table;
 static PyObject *__pyx_n_s_params;
 static PyObject *__pyx_n_s_pickle;
 static PyObject *__pyx_n_s_predict;
@@ -1482,7 +1480,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_2fit(CYTHON_UN
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_4predict(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_x); /* proto */
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_6get_feature_importances(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_params); /* proto */
-static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose); /* proto */
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose); /* proto */
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path); /* proto */
 static PyObject *__pyx_float_0_1;
 static PyObject *__pyx_float_0_2;
@@ -2196,7 +2194,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CY
  *     def set_params(self, **params):
  *         return self.estimator.set_params(**params)             # <<<<<<<<<<<<<<
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  */
   __Pyx_XDECREF(__pyx_r);
   __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_estimator); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 46, __pyx_L1_error)
@@ -2234,7 +2232,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CY
 /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
@@ -2245,7 +2243,6 @@ static PyMethodDef __pyx_mdef_8observer_16estimator_cython_9Estimator_11improve_
 static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_estimator(PyObject *__pyx_self, PyObject *__pyx_args, PyObject *__pyx_kwds) {
   PyObject *__pyx_v_self = 0;
   PyObject *__pyx_v_df = 0;
-  CYTHON_UNUSED PyObject *__pyx_v_opt_table = 0;
   PyObject *__pyx_v_estimtable = 0;
   PyObject *__pyx_v_num_samples = 0;
   PyObject *__pyx_v_estimpath = 0;
@@ -2254,18 +2251,16 @@ static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_esti
   __Pyx_RefNannyDeclarations
   __Pyx_RefNannySetupContext("improve_estimator (wrapper)", 0);
   {
-    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_df,&__pyx_n_s_opt_table,&__pyx_n_s_estimtable,&__pyx_n_s_num_samples,&__pyx_n_s_estimpath,&__pyx_n_s_verbose,0};
-    PyObject* values[7] = {0,0,0,0,0,0,0};
-    values[3] = ((PyObject *)((PyObject *)Py_None));
-    values[4] = ((PyObject *)((PyObject *)__pyx_int_1));
-    values[5] = ((PyObject *)((PyObject *)Py_None));
-    values[6] = ((PyObject *)((PyObject *)__pyx_int_1));
+    static PyObject **__pyx_pyargnames[] = {&__pyx_n_s_self,&__pyx_n_s_df,&__pyx_n_s_estimtable,&__pyx_n_s_num_samples,&__pyx_n_s_estimpath,&__pyx_n_s_verbose,0};
+    PyObject* values[6] = {0,0,0,0,0,0};
+    values[2] = ((PyObject *)((PyObject *)Py_None));
+    values[3] = ((PyObject *)((PyObject *)__pyx_int_1));
+    values[4] = ((PyObject *)((PyObject *)Py_None));
+    values[5] = ((PyObject *)((PyObject *)__pyx_int_1));
     if (unlikely(__pyx_kwds)) {
       Py_ssize_t kw_args;
       const Py_ssize_t pos_args = PyTuple_GET_SIZE(__pyx_args);
       switch (pos_args) {
-        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
-        CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2290,37 +2285,31 @@ static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_esti
         case  1:
         if (likely((values[1] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_df)) != 0)) kw_args--;
         else {
-          __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 3, 7, 1); __PYX_ERR(0, 48, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 2, 6, 1); __PYX_ERR(0, 48, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
-        if (likely((values[2] = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_opt_table)) != 0)) kw_args--;
-        else {
-          __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 3, 7, 2); __PYX_ERR(0, 48, __pyx_L3_error)
+        if (kw_args > 0) {
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_estimtable);
+          if (value) { values[2] = value; kw_args--; }
         }
         CYTHON_FALLTHROUGH;
         case  3:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_estimtable);
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_num_samples);
           if (value) { values[3] = value; kw_args--; }
         }
         CYTHON_FALLTHROUGH;
         case  4:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_num_samples);
+          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_estimpath);
           if (value) { values[4] = value; kw_args--; }
         }
         CYTHON_FALLTHROUGH;
         case  5:
         if (kw_args > 0) {
-          PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_estimpath);
-          if (value) { values[5] = value; kw_args--; }
-        }
-        CYTHON_FALLTHROUGH;
-        case  6:
-        if (kw_args > 0) {
           PyObject* value = __Pyx_PyDict_GetItemStr(__pyx_kwds, __pyx_n_s_verbose);
-          if (value) { values[6] = value; kw_args--; }
+          if (value) { values[5] = value; kw_args--; }
         }
       }
       if (unlikely(kw_args > 0)) {
@@ -2328,8 +2317,6 @@ static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_esti
       }
     } else {
       switch (PyTuple_GET_SIZE(__pyx_args)) {
-        case  7: values[6] = PyTuple_GET_ITEM(__pyx_args, 6);
-        CYTHON_FALLTHROUGH;
         case  6: values[5] = PyTuple_GET_ITEM(__pyx_args, 5);
         CYTHON_FALLTHROUGH;
         case  5: values[4] = PyTuple_GET_ITEM(__pyx_args, 4);
@@ -2337,7 +2324,8 @@ static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_esti
         case  4: values[3] = PyTuple_GET_ITEM(__pyx_args, 3);
         CYTHON_FALLTHROUGH;
         case  3: values[2] = PyTuple_GET_ITEM(__pyx_args, 2);
-        values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
+        CYTHON_FALLTHROUGH;
+        case  2: values[1] = PyTuple_GET_ITEM(__pyx_args, 1);
         values[0] = PyTuple_GET_ITEM(__pyx_args, 0);
         break;
         default: goto __pyx_L5_argtuple_error;
@@ -2345,28 +2333,27 @@ static PyObject *__pyx_pw_8observer_16estimator_cython_9Estimator_11improve_esti
     }
     __pyx_v_self = values[0];
     __pyx_v_df = values[1];
-    __pyx_v_opt_table = values[2];
-    __pyx_v_estimtable = values[3];
-    __pyx_v_num_samples = values[4];
-    __pyx_v_estimpath = values[5];
-    __pyx_v_verbose = values[6];
+    __pyx_v_estimtable = values[2];
+    __pyx_v_num_samples = values[3];
+    __pyx_v_estimpath = values[4];
+    __pyx_v_verbose = values[5];
   }
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 3, 7, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 48, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("improve_estimator", 0, 2, 6, PyTuple_GET_SIZE(__pyx_args)); __PYX_ERR(0, 48, __pyx_L3_error)
   __pyx_L3_error:;
   __Pyx_AddTraceback("observer.estimator_cython.Estimator.improve_estimator", __pyx_clineno, __pyx_lineno, __pyx_filename);
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(__pyx_self, __pyx_v_self, __pyx_v_df, __pyx_v_opt_table, __pyx_v_estimtable, __pyx_v_num_samples, __pyx_v_estimpath, __pyx_v_verbose);
+  __pyx_r = __pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(__pyx_self, __pyx_v_self, __pyx_v_df, __pyx_v_estimtable, __pyx_v_num_samples, __pyx_v_estimpath, __pyx_v_verbose);
 
   /* function exit code */
   __Pyx_RefNannyFinishContext();
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, CYTHON_UNUSED PyObject *__pyx_v_opt_table, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose) {
+static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose) {
   PyObject *__pyx_v_x = NULL;
   PyObject *__pyx_v_y = NULL;
   PyObject *__pyx_v_i = NULL;
@@ -2402,7 +2389,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_esti
 
   /* "observer/estimator_cython.pyx":49
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line
@@ -2437,7 +2424,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_esti
   __pyx_t_1 = 0;
 
   /* "observer/estimator_cython.pyx":50
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations             # <<<<<<<<<<<<<<
  *         y = y[num_samples:]  # drop first line
@@ -3307,7 +3294,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_esti
   /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
@@ -3666,7 +3653,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_u_objective, __pyx_k_objective, sizeof(__pyx_k_objective), 0, 1, 0, 1},
   {&__pyx_n_s_observer_estimator_cython, __pyx_k_observer_estimator_cython, sizeof(__pyx_k_observer_estimator_cython), 0, 0, 1, 1},
   {&__pyx_n_s_open, __pyx_k_open, sizeof(__pyx_k_open), 0, 0, 1, 1},
-  {&__pyx_n_s_opt_table, __pyx_k_opt_table, sizeof(__pyx_k_opt_table), 0, 0, 1, 1},
   {&__pyx_n_s_params, __pyx_k_params, sizeof(__pyx_k_params), 0, 0, 1, 1},
   {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
   {&__pyx_n_s_predict, __pyx_k_predict, sizeof(__pyx_k_predict), 0, 0, 1, 1},
@@ -3737,7 +3723,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 
   /* "observer/estimator_cython.pyx":49
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
  *         x = np.array(df.values[:])             # <<<<<<<<<<<<<<
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  *         y = y[num_samples:]  # drop first line
@@ -3823,14 +3809,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */
-  __pyx_tuple__16 = PyTuple_Pack(24, __pyx_n_s_self, __pyx_n_s_df, __pyx_n_s_opt_table, __pyx_n_s_estimtable, __pyx_n_s_num_samples, __pyx_n_s_estimpath, __pyx_n_s_verbose, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_i, __pyx_n_s_idx, __pyx_n_s_params, __pyx_n_s_n_estimators, __pyx_n_s_x_train, __pyx_n_s_x_valid, __pyx_n_s_y_train, __pyx_n_s_y_valid, __pyx_n_s_d_train, __pyx_n_s_d_valid, __pyx_n_s_watchlist, __pyx_n_s_ypred, __pyx_n_s_mse, __pyx_n_s_estimator_score, __pyx_n_s_i); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(23, __pyx_n_s_self, __pyx_n_s_df, __pyx_n_s_estimtable, __pyx_n_s_num_samples, __pyx_n_s_estimpath, __pyx_n_s_verbose, __pyx_n_s_x, __pyx_n_s_y, __pyx_n_s_i, __pyx_n_s_idx, __pyx_n_s_params, __pyx_n_s_n_estimators, __pyx_n_s_x_train, __pyx_n_s_x_valid, __pyx_n_s_y_train, __pyx_n_s_y_valid, __pyx_n_s_d_train, __pyx_n_s_d_valid, __pyx_n_s_watchlist, __pyx_n_s_ypred, __pyx_n_s_mse, __pyx_n_s_estimator_score, __pyx_n_s_i); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
-  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(7, 0, 24, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_improve_estimator, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __pyx_codeobj__17 = (PyObject*)__Pyx_PyCode_New(6, 0, 23, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__16, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_estimator_cython_pyx, __pyx_n_s_improve_estimator, 48, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__17)) __PYX_ERR(0, 48, __pyx_L1_error)
   __pyx_tuple__18 = PyTuple_Pack(4, ((PyObject *)Py_None), ((PyObject *)__pyx_int_1), ((PyObject *)Py_None), ((PyObject *)__pyx_int_1)); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__18);
   __Pyx_GIVEREF(__pyx_tuple__18);
@@ -4422,7 +4408,7 @@ if (!__Pyx_RefNanny) {
   /* "observer/estimator_cython.pyx":48
  *         return self.estimator.set_params(**params)
  * 
- *     def improve_estimator(self, df, opt_table, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
+ *     def improve_estimator(self, df, estimtable=None, num_samples=1, estimpath=None, verbose=1):             # <<<<<<<<<<<<<<
  *         x = np.array(df.values[:])
  *         y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
  */

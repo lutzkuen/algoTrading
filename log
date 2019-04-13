@@ -1,0 +1,691 @@
+NZD_USD 2019-04-02 already in dataset
+{'ins': 'NZD_USD', 'date': '2019-04-02', 'open': '0.67574', 'close': '0.67810', 'high': '0.67999', 'low': '0.67439', 'volume': 10765, 'complete': False}
+GBP_USD 2019-04-02 already in dataset
+{'ins': 'GBP_USD', 'date': '2019-04-02', 'open': '1.31341', 'close': '1.31632', 'high': '1.31963', 'low': '1.31211', 'volume': 37895, 'complete': False}
+USD_MXN 2019-04-02 already in dataset
+{'ins': 'USD_MXN', 'date': '2019-04-02', 'open': '19.22831', 'close': '19.21771', 'high': '19.24983', 'low': '19.10884', 'volume': 642673, 'complete': False}
+CORN_USD 2019-04-02 already in dataset
+{'ins': 'CORN_USD', 'date': '2019-04-02', 'open': '3.552', 'close': '3.568', 'high': '3.585', 'low': '3.546', 'volume': 2747, 'complete': False}
+EUR_ZAR 2019-04-02 already in dataset
+{'ins': 'EUR_ZAR', 'date': '2019-04-02', 'open': '15.91940', 'close': '15.87938', 'high': '15.95946', 'low': '15.82632', 'volume': 380251, 'complete': False}
+NAS100_USD 2019-04-02 already in dataset
+{'ins': 'NAS100_USD', 'date': '2019-04-02', 'open': '7494.2', 'close': '7536.0', 'high': '7595.2', 'low': '7491.2', 'volume': 358644, 'complete': False}
+USD_CNH 2019-04-02 already in dataset
+{'ins': 'USD_CNH', 'date': '2019-04-02', 'open': '6.72610', 'close': '6.71394', 'high': '6.72724', 'low': '6.70722', 'volume': 147541, 'complete': False}
+BCO_USD 2019-04-02 already in dataset
+{'ins': 'BCO_USD', 'date': '2019-04-02', 'open': '70.023', 'close': '69.882', 'high': '70.490', 'low': '69.325', 'volume': 65854, 'complete': False}
+XAG_HKD 2019-04-02 already in dataset
+{'ins': 'XAG_HKD', 'date': '2019-04-02', 'open': '118.70045', 'close': '118.72272', 'high': '119.27836', 'low': '118.07806', 'volume': 6547, 'complete': False}
+EUR_NOK 2019-04-02 already in dataset
+{'ins': 'EUR_NOK', 'date': '2019-04-02', 'open': '9.63717', 'close': '9.63395', 'high': '9.63977', 'low': '9.60405', 'volume': 373380, 'complete': False}
+SG30_SGD 2019-04-02 already in dataset
+{'ins': 'SG30_SGD', 'date': '2019-04-02', 'open': '370.26', 'close': '374.68', 'high': '376.00', 'low': '370.26', 'volume': 23449, 'complete': False}
+AU200_AUD 2019-04-02 already in dataset
+{'ins': 'AU200_AUD', 'date': '2019-04-02', 'open': '6271.0', 'close': '6269.0', 'high': '6288.5', 'low': '6251.5', 'volume': 24115, 'complete': False}
+XAG_EUR 2019-04-02 already in dataset
+{'ins': 'XAG_EUR', 'date': '2019-04-02', 'open': '13.49850', 'close': '13.45740', 'high': '13.54176', 'low': '13.39177', 'volume': 20721, 'complete': False}
+UK10YB_GBP 2019-04-02 already in dataset
+{'ins': 'UK10YB_GBP', 'date': '2019-04-02', 'open': '125.392', 'close': '125.090', 'high': '125.493', 'low': '124.953', 'volume': 16825, 'complete': False}
+NZD_JPY 2019-04-02 already in dataset
+{'ins': 'NZD_JPY', 'date': '2019-04-02', 'open': '75.232', 'close': '75.560', 'high': '75.813', 'low': '75.052', 'volume': 79824, 'complete': False}
+USD_SGD 2019-04-02 already in dataset
+{'ins': 'USD_SGD', 'date': '2019-04-02', 'open': '1.35498', 'close': '1.35362', 'high': '1.35580', 'low': '1.35220', 'volume': 39591, 'complete': False}
+EUR_SEK 2019-04-02 already in dataset
+{'ins': 'EUR_SEK', 'date': '2019-04-02', 'open': '10.45172', 'close': '10.41738', 'high': '10.45232', 'low': '10.40925', 'volume': 708389, 'complete': False}
+GBP_HKD 2019-04-02 already in dataset
+{'ins': 'GBP_HKD', 'date': '2019-04-02', 'open': '10.31000', 'close': '10.33248', 'high': '10.35877', 'low': '10.29938', 'volume': 41756, 'complete': False}
+WHEAT_USD 2019-04-02 already in dataset
+{'ins': 'WHEAT_USD', 'date': '2019-04-02', 'open': '4.585', 'close': '4.659', 'high': '4.677', 'low': '4.579', 'volume': 10349, 'complete': False}
+SOYBN_USD 2019-04-02 already in dataset
+{'ins': 'SOYBN_USD', 'date': '2019-04-02', 'open': '8.904', 'close': '8.900', 'high': '8.940', 'low': '8.860', 'volume': 10068, 'complete': False}
+NATGAS_USD 2019-04-02 already in dataset
+{'ins': 'NATGAS_USD', 'date': '2019-04-02', 'open': '2.676', 'close': '2.663', 'high': '2.683', 'low': '2.648', 'volume': 4440, 'complete': False}
+USD_ZAR 2019-04-02 already in dataset
+{'ins': 'USD_ZAR', 'date': '2019-04-02', 'open': '14.20746', 'close': '14.12692', 'high': '14.22185', 'low': '14.10500', 'volume': 401615, 'complete': False}
+EUR_CHF 2019-04-02 already in dataset
+{'ins': 'EUR_CHF', 'date': '2019-04-02', 'open': '1.11795', 'close': '1.12119', 'high': '1.12163', 'low': '1.11768', 'volume': 9753, 'complete': False}
+AUD_CHF 2019-04-02 already in dataset
+{'ins': 'AUD_CHF', 'date': '2019-04-02', 'open': '0.70570', 'close': '0.70972', 'high': '0.71084', 'low': '0.70420', 'volume': 10850, 'complete': False}
+AUD_NZD 2019-04-02 already in dataset
+{'ins': 'AUD_NZD', 'date': '2019-04-02', 'open': '1.04626', 'close': '1.04932', 'high': '1.04964', 'low': '1.04498', 'volume': 74029, 'complete': False}
+XAG_CAD 2019-04-02 already in dataset
+{'ins': 'XAG_CAD', 'date': '2019-04-02', 'open': '20.17024', 'close': '20.18092', 'high': '20.22844', 'low': '20.04822', 'volume': 13436, 'complete': False}
+USD_DKK 2019-04-02 already in dataset
+{'ins': 'USD_DKK', 'date': '2019-04-02', 'open': '6.66278', 'close': '6.64102', 'high': '6.66481', 'low': '6.63208', 'volume': 210410, 'complete': False}
+CAD_HKD 2019-04-02 already in dataset
+{'ins': 'CAD_HKD', 'date': '2019-04-02', 'open': '5.88557', 'close': '5.88292', 'high': '5.90363', 'low': '5.87831', 'volume': 16019, 'complete': False}
+SGD_HKD 2019-04-02 already in dataset
+{'ins': 'SGD_HKD', 'date': '2019-04-02', 'open': '5.79330', 'close': '5.79893', 'high': '5.80512', 'low': '5.78958', 'volume': 41900, 'complete': False}
+AUD_JPY 2019-04-02 already in dataset
+{'ins': 'AUD_JPY', 'date': '2019-04-02', 'open': '78.716', 'close': '79.298', 'high': '79.466', 'low': '78.494', 'volume': 77676, 'complete': False}
+USD_CAD 2019-04-02 already in dataset
+{'ins': 'USD_CAD', 'date': '2019-04-02', 'open': '1.33374', 'close': '1.33430', 'high': '1.33534', 'low': '1.32964', 'volume': 17039, 'complete': False}
+USD_JPY 2019-04-02 already in dataset
+{'ins': 'USD_JPY', 'date': '2019-04-02', 'open': '111.330', 'close': '111.453', 'high': '111.580', 'low': '111.210', 'volume': 50469, 'complete': False}
+EUR_TRY 2019-04-02 already in dataset
+{'ins': 'EUR_TRY', 'date': '2019-04-02', 'open': '6.30036', 'close': '6.32380', 'high': '6.36068', 'low': '6.26974', 'volume': 237015, 'complete': False}
+XAG_SGD 2019-04-02 already in dataset
+{'ins': 'XAG_SGD', 'date': '2019-04-02', 'open': '20.49036', 'close': '20.47320', 'high': '20.56583', 'low': '20.35924', 'volume': 39622, 'complete': False}
+USD_CZK 2019-04-02 already in dataset
+{'ins': 'USD_CZK', 'date': '2019-04-02', 'open': '22.97149', 'close': '22.86622', 'high': '22.97653', 'low': '22.79775', 'volume': 212992, 'complete': False}
+FR40_EUR 2019-04-02 already in dataset
+{'ins': 'FR40_EUR', 'date': '2019-04-02', 'open': '5469.1', 'close': '5466.9', 'high': '5481.8', 'low': '5457.0', 'volume': 49676, 'complete': False}
+EUR_DKK 2019-04-02 already in dataset
+{'ins': 'EUR_DKK', 'date': '2019-04-02', 'open': '7.46524', 'close': '7.46488', 'high': '7.46533', 'low': '7.46388', 'volume': 4767, 'complete': False}
+AUD_SGD 2019-04-02 already in dataset
+{'ins': 'AUD_SGD', 'date': '2019-04-02', 'open': '0.95813', 'close': '0.96314', 'high': '0.96458', 'low': '0.95642', 'volume': 26393, 'complete': False}
+ZAR_JPY 2019-04-02 already in dataset
+{'ins': 'ZAR_JPY', 'date': '2019-04-02', 'open': '7.834', 'close': '7.890', 'high': '7.907', 'low': '7.822', 'volume': 5321, 'complete': False}
+GBP_CHF 2019-04-02 already in dataset
+{'ins': 'GBP_CHF', 'date': '2019-04-02', 'open': '1.31079', 'close': '1.31295', 'high': '1.31747', 'low': '1.30762', 'volume': 159952, 'complete': False}
+USD_THB 2019-04-02 already in dataset
+{'ins': 'USD_THB', 'date': '2019-04-02', 'open': '31.776', 'close': '31.736', 'high': '31.789', 'low': '31.690', 'volume': 4989, 'complete': False}
+TRY_JPY 2019-04-02 already in dataset
+{'ins': 'TRY_JPY', 'date': '2019-04-02', 'open': '19.796', 'close': '19.812', 'high': '19.950', 'low': '19.680', 'volume': 35947, 'complete': False}
+XAU_USD 2019-04-02 already in dataset
+{'ins': 'XAU_USD', 'date': '2019-04-02', 'open': '1292.327', 'close': '1290.324', 'high': '1294.527', 'low': '1288.484', 'volume': 10025, 'complete': False}
+USD_PLN 2019-04-02 already in dataset
+{'ins': 'USD_PLN', 'date': '2019-04-02', 'open': '3.83538', 'close': '3.81712', 'high': '3.83656', 'low': '3.81006', 'volume': 216751, 'complete': False}
+GBP_AUD 2019-04-02 already in dataset
+{'ins': 'GBP_AUD', 'date': '2019-04-02', 'open': '1.85754', 'close': '1.85002', 'high': '1.86108', 'low': '1.84413', 'volume': 264907, 'complete': False}
+SUGAR_USD 2019-04-02 already in dataset
+{'ins': 'SUGAR_USD', 'date': '2019-04-02', 'open': '0.12698', 'close': '0.12488', 'high': '0.12728', 'low': '0.12418', 'volume': 2579, 'complete': False}
+IN50_USD 2019-04-02 already in dataset
+{'ins': 'IN50_USD', 'date': '2019-04-02', 'open': '11752.8', 'close': '11688.4', 'high': '11783.1', 'low': '11656.0', 'volume': 73353, 'complete': False}
+TWIX_USD 2019-04-02 already in dataset
+{'ins': 'TWIX_USD', 'date': '2019-04-02', 'open': '396.0', 'close': '397.4', 'high': '398.8', 'low': '394.6', 'volume': 6338, 'complete': False}
+GBP_NZD 2019-04-02 already in dataset
+{'ins': 'GBP_NZD', 'date': '2019-04-02', 'open': '1.94361', 'close': '1.94140', 'high': '1.94690', 'low': '1.93384', 'volume': 270639, 'complete': False}
+USB30Y_USD 2019-04-02 already in dataset
+{'ins': 'USB30Y_USD', 'date': '2019-04-02', 'open': '148.928', 'close': '148.014', 'high': '149.022', 'low': '147.952', 'volume': 5002, 'complete': False}
+NZD_HKD 2019-04-02 already in dataset
+{'ins': 'NZD_HKD', 'date': '2019-04-02', 'open': '5.30458', 'close': '5.32282', 'high': '5.33766', 'low': '5.29364', 'volume': 10988, 'complete': False}
+NZD_CHF 2019-04-02 already in dataset
+{'ins': 'NZD_CHF', 'date': '2019-04-02', 'open': '0.67450', 'close': '0.67635', 'high': '0.67776', 'low': '0.67324', 'volume': 13506, 'complete': False}
+JP225_USD 2019-04-02 already in dataset
+{'ins': 'JP225_USD', 'date': '2019-04-02', 'open': '21651.4', 'close': '21864.8', 'high': '21965.8', 'low': '21612.4', 'volume': 19629, 'complete': False}
+USB10Y_USD 2019-04-02 already in dataset
+{'ins': 'USB10Y_USD', 'date': '2019-04-02', 'open': '123.594', 'close': '123.284', 'high': '123.641', 'low': '123.205', 'volume': 3384, 'complete': False}
+XAU_JPY 2019-04-02 already in dataset
+{'ins': 'XAU_JPY', 'date': '2019-04-02', 'open': '143868', 'close': '143806', 'high': '144356', 'low': '143587', 'volume': 27251, 'complete': False}
+XAG_AUD 2019-04-02 already in dataset
+{'ins': 'XAG_AUD', 'date': '2019-04-02', 'open': '21.39544', 'close': '21.25670', 'high': '21.43106', 'low': '21.13904', 'volume': 7000, 'complete': False}
+XAG_CHF 2019-04-02 already in dataset
+{'ins': 'XAG_CHF', 'date': '2019-04-02', 'open': '15.09250', 'close': '15.08814', 'high': '15.16731', 'low': '14.98740', 'volume': 5659, 'complete': False}
+XAG_USD 2019-04-02 already in dataset
+{'ins': 'XAG_USD', 'date': '2019-04-02', 'open': '15.12200', 'close': '15.12478', 'high': '15.19519', 'low': '15.04343', 'volume': 2157, 'complete': False}
+SGD_JPY 2019-04-02 already in dataset
+{'ins': 'SGD_JPY', 'date': '2019-04-02', 'open': '82.164', 'close': '82.336', 'high': '82.476', 'low': '82.048', 'volume': 59680, 'complete': False}
+AUD_CAD 2019-04-02 already in dataset
+{'ins': 'AUD_CAD', 'date': '2019-04-02', 'open': '0.94302', 'close': '0.94934', 'high': '0.94996', 'low': '0.94156', 'volume': 73068, 'complete': False}
+US30_USD 2019-04-02 already in dataset
+{'ins': 'US30_USD', 'date': '2019-04-02', 'open': '26116.0', 'close': '26150.2', 'high': '26271.5', 'low': '26102.5', 'volume': 199374, 'complete': False}
+CN50_USD 2019-04-02 already in dataset
+{'ins': 'CN50_USD', 'date': '2019-04-02', 'open': '13401.4', 'close': '13460.2', 'high': '13552.4', 'low': '13260.6', 'volume': 44990, 'complete': False}
+NL25_EUR 2019-04-02 already in dataset
+{'ins': 'NL25_EUR', 'date': '2019-04-02', 'open': '560.400', 'close': '560.587', 'high': '562.462', 'low': '558.913', 'volume': 36520, 'complete': False}
+USB02Y_USD 2019-04-02 already in dataset
+{'ins': 'USB02Y_USD', 'date': '2019-04-02', 'open': '106.436', 'close': '106.374', 'high': '106.451', 'low': '106.358', 'volume': 4454, 'complete': False}
+XAU_CHF 2019-04-02 already in dataset
+{'ins': 'XAU_CHF', 'date': '2019-04-02', 'open': '1289.827', 'close': '1287.027', 'high': '1291.426', 'low': '1283.783', 'volume': 14690, 'complete': False}
+EUR_NZD 2019-04-02 already in dataset
+{'ins': 'EUR_NZD', 'date': '2019-04-02', 'open': '1.65798', 'close': '1.65801', 'high': '1.66118', 'low': '1.65288', 'volume': 173019, 'complete': False}
+UK100_GBP 2019-04-02 already in dataset
+{'ins': 'UK100_GBP', 'date': '2019-04-02', 'open': '7373.1', 'close': '7398.1', 'high': '7426.4', 'low': '7366.8', 'volume': 48580, 'complete': False}
+USB05Y_USD 2019-04-02 already in dataset
+{'ins': 'USB05Y_USD', 'date': '2019-04-02', 'open': '115.609', 'close': '115.446', 'high': '115.641', 'low': '115.375', 'volume': 3642, 'complete': False}
+NZD_CAD 2019-04-02 already in dataset
+{'ins': 'NZD_CAD', 'date': '2019-04-02', 'open': '0.90130', 'close': '0.90472', 'high': '0.90584', 'low': '0.90004', 'volume': 94043, 'complete': False}
+XAG_GBP 2019-04-02 already in dataset
+{'ins': 'XAG_GBP', 'date': '2019-04-02', 'open': '11.51169', 'close': '11.49177', 'high': '11.56344', 'low': '11.43604', 'volume': 30112, 'complete': False}
+XAU_EUR 2019-04-02 already in dataset
+{'ins': 'XAU_EUR', 'date': '2019-04-02', 'open': '1153.602', 'close': '1147.924', 'high': '1154.008', 'low': '1147.122', 'volume': 30125, 'complete': False}
+CHF_HKD 2019-04-02 already in dataset
+{'ins': 'CHF_HKD', 'date': '2019-04-02', 'open': '7.86514', 'close': '7.86966', 'high': '7.88595', 'low': '7.85945', 'volume': 8736, 'complete': False}
+USD_INR 2019-04-02 already in dataset
+{'ins': 'USD_INR', 'date': '2019-04-02', 'open': '69.062', 'close': '68.633', 'high': '69.062', 'low': '68.602', 'volume': 5425, 'complete': False}
+USD_CHF 2019-04-02 already in dataset
+{'ins': 'USD_CHF', 'date': '2019-04-02', 'open': '0.99812', 'close': '0.99744', 'high': '0.99876', 'low': '0.99538', 'volume': 4758, 'complete': False}
+XAG_JPY 2019-04-02 already in dataset
+{'ins': 'XAG_JPY', 'date': '2019-04-02', 'open': '1683.4', 'close': '1685.8', 'high': '1694.4', 'low': '1676.2', 'volume': 3155, 'complete': False}
+XCU_USD 2019-04-02 already in dataset
+{'ins': 'XCU_USD', 'date': '2019-04-02', 'open': '2.90072', 'close': '2.93698', 'high': '2.94644', 'low': '2.89797', 'volume': 42853, 'complete': False}
+DE30_EUR 2019-04-02 already in dataset
+{'ins': 'DE30_EUR', 'date': '2019-04-02', 'open': '11777.5', 'close': '11945.4', 'high': '11981.2', 'low': '11773.4', 'volume': 162652, 'complete': False}
+CHF_ZAR 2019-04-02 already in dataset
+{'ins': 'CHF_ZAR', 'date': '2019-04-02', 'open': '14.23536', 'close': '14.16310', 'high': '14.26561', 'low': '14.12918', 'volume': 365390, 'complete': False}
+CAD_SGD 2019-04-02 already in dataset
+{'ins': 'CAD_SGD', 'date': '2019-04-02', 'open': '1.01598', 'close': '1.01448', 'high': '1.01719', 'low': '1.01422', 'volume': 33635, 'complete': False}
+USD_NOK 2019-04-02 already in dataset
+{'ins': 'USD_NOK', 'date': '2019-04-02', 'open': '8.60130', 'close': '8.57073', 'high': '8.60467', 'low': '8.54139', 'volume': 392125, 'complete': False}
+EUR_JPY 2019-04-02 already in dataset
+{'ins': 'EUR_JPY', 'date': '2019-04-02', 'open': '124.728', 'close': '125.277', 'high': '125.449', 'low': '124.610', 'volume': 13738, 'complete': False}
+XAU_SGD 2019-04-02 already in dataset
+{'ins': 'XAU_SGD', 'date': '2019-04-02', 'open': '1751.137', 'close': '1746.608', 'high': '1752.444', 'low': '1743.815', 'volume': 47515, 'complete': False}
+DE10YB_EUR 2019-04-02 already in dataset
+{'ins': 'DE10YB_EUR', 'date': '2019-04-02', 'open': '167.706', 'close': '167.026', 'high': '167.766', 'low': '166.914', 'volume': 22126, 'complete': False}
+WTICO_USD 2019-04-02 already in dataset
+{'ins': 'WTICO_USD', 'date': '2019-04-02', 'open': '62.422', 'close': '62.226', 'high': '62.790', 'low': '61.866', 'volume': 158617, 'complete': False}
+XAU_CAD 2019-04-02 already in dataset
+{'ins': 'XAU_CAD', 'date': '2019-04-02', 'open': '1723.778', 'close': '1721.672', 'high': '1724.880', 'low': '1716.547', 'volume': 22608, 'complete': False}
+XAU_NZD 2019-04-02 already in dataset
+{'ins': 'XAU_NZD', 'date': '2019-04-02', 'open': '1913.016', 'close': '1902.781', 'high': '1915.138', 'low': '1897.864', 'volume': 20605, 'complete': False}
+USD_HUF 2019-04-02 already in dataset
+{'ins': 'USD_HUF', 'date': '2019-04-02', 'open': '286.689', 'close': '284.477', 'high': '286.771', 'low': '283.972', 'volume': 124713, 'complete': False}
+XAU_XAG 2019-04-02 already in dataset
+{'ins': 'XAU_XAG', 'date': '2019-04-02', 'open': '85.462', 'close': '85.312', 'high': '85.699', 'low': '85.024', 'volume': 9532, 'complete': False}
+EUR_CAD 2019-04-02 already in dataset
+{'ins': 'EUR_CAD', 'date': '2019-04-02', 'open': '1.49438', 'close': '1.49979', 'high': '1.50009', 'low': '1.49241', 'volume': 118165, 'complete': False}
+HK33_HKD 2019-04-02 already in dataset
+{'ins': 'HK33_HKD', 'date': '2019-04-02', 'open': '29746.2', 'close': '30031.8', 'high': '30097.2', 'low': '29716.3', 'volume': 175826, 'complete': False}
+GBP_JPY 2019-04-02 already in dataset
+{'ins': 'GBP_JPY', 'date': '2019-04-02', 'open': '146.220', 'close': '146.706', 'high': '147.197', 'low': '146.030', 'volume': 53390, 'complete': False}
+USD_TRY 2019-04-02 already in dataset
+{'ins': 'USD_TRY', 'date': '2019-04-02', 'open': '5.61380', 'close': '5.62086', 'high': '5.66299', 'low': '5.57703', 'volume': 320825, 'complete': False}
+USD_HKD 2019-04-02 already in dataset
+{'ins': 'USD_HKD', 'date': '2019-04-02', 'open': '7.84973', 'close': '7.84955', 'high': '7.84985', 'low': '7.84878', 'volume': 4733, 'complete': False}
+EUR_PLN 2019-04-02 already in dataset
+{'ins': 'EUR_PLN', 'date': '2019-04-02', 'open': '4.29772', 'close': '4.29066', 'high': '4.29814', 'low': '4.28520', 'volume': 63805, 'complete': False}
+CHF_JPY 2019-04-02 already in dataset
+{'ins': 'CHF_JPY', 'date': '2019-04-02', 'open': '111.550', 'close': '111.738', 'high': '111.952', 'low': '111.432', 'volume': 84599, 'complete': False}
+AUD_USD 2019-04-02 already in dataset
+{'ins': 'AUD_USD', 'date': '2019-04-02', 'open': '0.70708', 'close': '0.71153', 'high': '0.71296', 'low': '0.70544', 'volume': 6567, 'complete': False}
+XAU_AUD 2019-04-02 already in dataset
+{'ins': 'XAU_AUD', 'date': '2019-04-02', 'open': '1828.486', 'close': '1813.449', 'high': '1831.474', 'low': '1809.860', 'volume': 16412, 'complete': False}
+XAU_HKD 2019-04-02 already in dataset
+{'ins': 'XAU_HKD', 'date': '2019-04-02', 'open': '10144.316', 'close': '10128.458', 'high': '10160.840', 'low': '10113.956', 'volume': 14401, 'complete': False}
+EUR_SGD 2019-04-02 already in dataset
+{'ins': 'EUR_SGD', 'date': '2019-04-02', 'open': '1.51818', 'close': '1.52154', 'high': '1.52213', 'low': '1.51753', 'volume': 50443, 'complete': False}
+US2000_USD 2019-04-02 already in dataset
+{'ins': 'US2000_USD', 'date': '2019-04-02', 'open': '1549.690', 'close': '1558.886', 'high': '1570.746', 'low': '1548.722', 'volume': 148936, 'complete': False}
+HKD_JPY 2019-04-02 already in dataset
+{'ins': 'HKD_JPY', 'date': '2019-04-02', 'open': '14.18254', 'close': '14.19865', 'high': '14.21441', 'low': '14.16767', 'volume': 54803, 'complete': False}
+SGD_CHF 2019-04-02 already in dataset
+{'ins': 'SGD_CHF', 'date': '2019-04-02', 'open': '0.73658', 'close': '0.73686', 'high': '0.73817', 'low': '0.73575', 'volume': 19287, 'complete': False}
+XPT_USD 2019-04-02 already in dataset
+{'ins': 'XPT_USD', 'date': '2019-04-02', 'open': '851.075', 'close': '868.818', 'high': '870.189', 'low': '850.663', 'volume': 7086, 'complete': False}
+CAD_JPY 2019-04-02 already in dataset
+{'ins': 'CAD_JPY', 'date': '2019-04-02', 'open': '83.476', 'close': '83.532', 'high': '83.872', 'low': '83.347', 'volume': 65360, 'complete': False}
+GBP_ZAR 2019-04-02 already in dataset
+{'ins': 'GBP_ZAR', 'date': '2019-04-02', 'open': '18.66149', 'close': '18.59547', 'high': '18.68862', 'low': '18.56063', 'volume': 393255, 'complete': False}
+CAD_CHF 2019-04-02 already in dataset
+{'ins': 'CAD_CHF', 'date': '2019-04-02', 'open': '0.74830', 'close': '0.74754', 'high': '0.75062', 'low': '0.74624', 'volume': 9064, 'complete': False}
+NZD_SGD 2019-04-02 already in dataset
+{'ins': 'NZD_SGD', 'date': '2019-04-02', 'open': '0.91565', 'close': '0.91790', 'high': '0.91957', 'low': '0.91418', 'volume': 25072, 'complete': False}
+GBP_PLN 2019-04-02 already in dataset
+{'ins': 'GBP_PLN', 'date': '2019-04-02', 'open': '5.03872', 'close': '5.02436', 'high': '5.05238', 'low': '5.01082', 'volume': 73717, 'complete': False}
+EUR_HUF 2019-04-02 already in dataset
+{'ins': 'EUR_HUF', 'date': '2019-04-02', 'open': '321.216', 'close': '319.770', 'high': '321.451', 'low': '319.587', 'volume': 46235, 'complete': False}
+EU50_EUR 2019-04-02 already in dataset
+{'ins': 'EU50_EUR', 'date': '2019-04-02', 'open': '3404.5', 'close': '3433.6', 'high': '3442.6', 'low': '3404.5', 'volume': 4601, 'complete': False}
+XAU_GBP 2019-04-02 already in dataset
+{'ins': 'XAU_GBP', 'date': '2019-04-02', 'open': '983.806', 'close': '980.254', 'high': '984.803', 'low': '978.556', 'volume': 39538, 'complete': False}
+EUR_USD 2019-04-02 already in dataset
+{'ins': 'EUR_USD', 'date': '2019-04-02', 'open': '1.12042', 'close': '1.12405', 'high': '1.12547', 'low': '1.12010', 'volume': 55436, 'complete': False}
+GBP_CAD 2019-04-02 already in dataset
+{'ins': 'GBP_CAD', 'date': '2019-04-02', 'open': '1.75177', 'close': '1.75630', 'high': '1.75646', 'low': '1.74862', 'volume': 214197, 'complete': False}
+USD_SAR 2019-04-02 already in dataset
+{'ins': 'USD_SAR', 'date': '2019-04-02', 'open': '3.75035', 'close': '3.75038', 'high': '3.75060', 'low': '3.75035', 'volume': 1136, 'complete': False}
+XAG_NZD 2019-04-02 already in dataset
+{'ins': 'XAG_NZD', 'date': '2019-04-02', 'open': '22.38454', 'close': '22.30448', 'high': '22.41216', 'low': '22.16079', 'volume': 9178, 'complete': False}
+EUR_HKD 2019-04-02 already in dataset
+{'ins': 'EUR_HKD', 'date': '2019-04-02', 'open': '8.79506', 'close': '8.82328', 'high': '8.83461', 'low': '8.79246', 'volume': 56600, 'complete': False}
+EUR_AUD 2019-04-02 already in dataset
+{'ins': 'EUR_AUD', 'date': '2019-04-02', 'open': '1.58462', 'close': '1.57980', 'high': '1.58799', 'low': '1.57628', 'volume': 15319, 'complete': False}
+USD_SEK 2019-04-02 already in dataset
+{'ins': 'USD_SEK', 'date': '2019-04-02', 'open': '9.32827', 'close': '9.26772', 'high': '9.33070', 'low': '9.25494', 'volume': 603710, 'complete': False}
+GBP_SGD 2019-04-02 already in dataset
+{'ins': 'GBP_SGD', 'date': '2019-04-02', 'open': '1.77951', 'close': '1.78179', 'high': '1.78516', 'low': '1.77593', 'volume': 61055, 'complete': False}
+EUR_GBP 2019-04-02 already in dataset
+{'ins': 'EUR_GBP', 'date': '2019-04-02', 'open': '0.85306', 'close': '0.85395', 'high': '0.85585', 'low': '0.85026', 'volume': 22561, 'complete': False}
+SPX500_USD 2019-04-02 already in dataset
+{'ins': 'SPX500_USD', 'date': '2019-04-02', 'open': '2862.4', 'close': '2869.2', 'high': '2885.2', 'low': '2861.4', 'volume': 27874, 'complete': False}
+EUR_CZK 2019-04-02 already in dataset
+{'ins': 'EUR_CZK', 'date': '2019-04-02', 'open': '25.73759', 'close': '25.70379', 'high': '25.73922', 'low': '25.65345', 'volume': 110270, 'complete': False}
+AUD_HKD 2019-04-02 already in dataset
+{'ins': 'AUD_HKD', 'date': '2019-04-02', 'open': '5.55070', 'close': '5.58520', 'high': '5.59641', 'low': '5.53742', 'volume': 9753, 'complete': False}
+XPD_USD 2019-04-02 already in dataset
+{'ins': 'XPD_USD', 'date': '2019-04-02', 'open': '1432.300', 'close': '1408.745', 'high': '1448.500', 'low': '1381.700', 'volume': 14194, 'complete': False}
+Starting prediction based on 2019-04-02
+AU200_AUD_close 0.1678717969250337
+AU200_AUD_high 26.01148149568517
+AU200_AUD_low -22.804111354447123
+AUD_CAD_close -0.6813475238342321
+AUD_CAD_high 0.0009006193413691368
+AUD_CAD_low -0.0027632418670801573
+AUD_CHF_close -0.025657047300475442
+AUD_CHF_high 0.0003911530733143339
+AUD_CHF_low -0.0038026370268506144
+AUD_HKD_close 0.31444754475533354
+AUD_HKD_high 0.007382618188601499
+AUD_HKD_low -0.018192944271452856
+AUD_JPY_close -0.12795248212818253
+AUD_JPY_high 0.04685339070585417
+AUD_JPY_low -0.326018363490203
+AUD_NZD_close -0.2400290933401229
+AUD_NZD_high 0.0017704402941690226
+AUD_NZD_low -0.0029815047123673425
+AUD_SGD_close -0.2093410251653926
+AUD_SGD_high 0.0020308138504061143
+AUD_SGD_low -0.0022409626383324745
+AUD_USD_close 0.13407895305272136
+AUD_USD_high 0.0009434311398269999
+AUD_USD_low -0.0031252404337783184
+BCO_USD_close 0.3002330050459981
+BCO_USD_high 0.44287673497586966
+BCO_USD_low -0.07906774499442352
+CAD_CHF_close 0.1173641167420334
+CAD_CHF_high 0.0014082303822617196
+CAD_CHF_low -0.0028406512595415493
+CAD_HKD_close -0.15408461719058716
+CAD_HKD_high 0.007770943031917455
+CAD_HKD_low -0.015847498706476282
+CAD_JPY_close 0.16109433986021132
+CAD_JPY_high 0.22882834140576097
+CAD_JPY_low -0.2971059522227263
+CAD_SGD_close 0.24979907495007417
+CAD_SGD_high 0.0006460350350150267
+CAD_SGD_low -0.0032259138819753985
+CHF_HKD_close -0.059795695760814664
+CHF_HKD_high 0.02429561051015094
+CHF_HKD_low -0.009934551959530573
+CHF_JPY_close -0.2300392478428014
+CHF_JPY_high 0.2909571079724743
+CHF_JPY_low -0.22939633885206692
+CHF_ZAR_close 0.6131505782903914
+CHF_ZAR_high 0.19852393721382283
+CHF_ZAR_low -0.026424898080616786
+CN50_USD_close -0.29574599738731183
+CN50_USD_high 135.88976855966482
+CN50_USD_low -146.6985478965915
+CORN_USD_close -0.26236889742390757
+CORN_USD_high 0.022460783467987577
+CORN_USD_low -0.00885769168174247
+DE10YB_EUR_close -0.18498565519501736
+DE10YB_EUR_high 0.4592341833750608
+DE10YB_EUR_low -0.4647863329833562
+DE30_EUR_close 0.6254895008129562
+DE30_EUR_high 78.20179382611238
+DE30_EUR_low -84.99865193396697
+EU50_EUR_close 0.04837385535936606
+EU50_EUR_high 11.711361090628564
+EU50_EUR_low -10.462741625797609
+EUR_AUD_close 0.03416223219604577
+EUR_AUD_high 0.006022647647396447
+EUR_AUD_low -0.0024676788240665113
+EUR_CAD_close 0.074499660693011
+EUR_CAD_high 0.007377198967434309
+EUR_CAD_low -0.00360569519681647
+EUR_CHF_close -1.0951107545367504
+EUR_CHF_high 0.002163592997439346
+EUR_CHF_low -0.0037897354116531333
+EUR_CZK_close -0.21975299791234096
+EUR_CZK_high 0.01262852826770681
+EUR_CZK_low -0.043428626192292936
+EUR_DKK_close -0.2044701569973753
+EUR_DKK_high 0.0008318156704471223
+EUR_DKK_low -0.0008915284582704161
+EUR_GBP_close -0.11342680633894368
+EUR_GBP_high 0.0027078394999112796
+EUR_GBP_low 0.00012497206508522431
+EUR_HKD_close -0.3123028954065946
+EUR_HKD_high 0.02769225806569845
+EUR_HKD_low -0.013709050711885076
+EUR_HUF_close -0.1639439338215923
+EUR_HUF_high 0.4539937220267168
+EUR_HUF_low -0.3822955014033823
+EUR_JPY_close -0.39479968030131873
+EUR_JPY_high 0.3405644834435234
+EUR_JPY_low -0.5336687531955541
+EUR_NOK_close 0.45880558395954163
+EUR_NOK_high 0.038373878844933804
+EUR_NOK_low -0.01337817214968597
+EUR_NZD_close 0.35475608251773055
+EUR_NZD_high 0.005403551226440166
+EUR_NZD_low -0.004957976581108478
+EUR_PLN_close 0.10782072518322407
+EUR_PLN_high 0.003189734898918491
+EUR_PLN_low -0.0019532963262920773
+EUR_SEK_close -0.36124774972906937
+EUR_SEK_high 0.02624152563135431
+EUR_SEK_low -0.033740159855034965
+EUR_SGD_close -0.03964176848136463
+EUR_SGD_high 0.0033791527315434997
+EUR_SGD_low -0.0020446148549557314
+EUR_TRY_close -0.3226165267926364
+EUR_TRY_high 0.1026927518522425
+EUR_TRY_low -0.02399610428257139
+EUR_USD_close -0.053701233957697596
+EUR_USD_high 0.002584371812823813
+EUR_USD_low -0.0031070711981110934
+EUR_ZAR_close 0.552378021036818
+EUR_ZAR_high 0.2205719476326303
+EUR_ZAR_low -0.029395988675165175
+FR40_EUR_close -0.1126243806547261
+FR40_EUR_high 13.593541481102045
+FR40_EUR_low -13.387293949221911
+GBP_AUD_close 0.2532647149375967
+GBP_AUD_high 0.009872099757556133
+GBP_AUD_low -0.001427740694627334
+GBP_CAD_close -0.08001083477898206
+GBP_CAD_high 0.006266949886897545
+GBP_CAD_low -0.004998368729815755
+GBP_CHF_close -0.07249157172161153
+GBP_CHF_high 0.0019122913438171078
+GBP_CHF_low -0.002694517374126483
+GBP_HKD_close -0.2726461398480379
+GBP_HKD_high 0.017570533095281223
+GBP_HKD_low -0.014224722691405489
+GBP_JPY_close 0.22663354353971396
+GBP_JPY_high 0.33030957401334765
+GBP_JPY_low -0.10634195599854422
+GBP_NZD_close -0.26632849535621467
+GBP_NZD_high 0.00597943705671349
+GBP_NZD_low -0.008346531629728024
+GBP_PLN_close 0.19638657586248068
+GBP_PLN_high 0.002426496189824726
+GBP_PLN_low -0.014593523418555552
+GBP_SGD_close 0.6145198555184035
+GBP_SGD_high 0.0027361450248907723
+GBP_SGD_low -0.0014719846200513089
+GBP_USD_close 0.01018716281132511
+GBP_USD_high 0.0019452157442516479
+GBP_USD_low -0.002938958014212787
+GBP_ZAR_close 0.41938343028670827
+GBP_ZAR_high 0.1496686011209232
+GBP_ZAR_low -0.06668992299161529
+HK33_HKD_close 0.02528012013859641
+HK33_HKD_high 170.68816029859173
+HK33_HKD_low -53.45628308976254
+HKD_JPY_close -0.01288422983061725
+HKD_JPY_high 0.017469926337387833
+HKD_JPY_low -0.0346055875383111
+IN50_USD_close 0.07560937221188098
+IN50_USD_high 44.44299583811656
+IN50_USD_low -74.04531824212633
+JP225_USD_close -0.12033326024705897
+JP225_USD_high 128.14819237349252
+JP225_USD_low -123.70384885265803
+NAS100_USD_close -0.21485702524794228
+NAS100_USD_high 26.672065316607434
+NAS100_USD_low -35.18296184285322
+NATGAS_USD_close 0.012040679322171111
+NATGAS_USD_high 0.01921804138806387
+NATGAS_USD_low -0.013352155441970126
+NL25_EUR_close -0.3828562327071184
+NL25_EUR_high 1.431095775463246
+NL25_EUR_low -2.7697512546007443
+NZD_CAD_close -0.0667315846360868
+NZD_CAD_high 0.004100016320264089
+NZD_CAD_low -0.0034582749955834858
+NZD_CHF_close -0.3229527276070235
+NZD_CHF_high 0.002404616195179465
+NZD_CHF_low -0.0022795205517454013
+NZD_HKD_close -0.2890780544220146
+NZD_HKD_high 0.01284106060085416
+NZD_HKD_low -0.018362027323941436
+NZD_JPY_close -0.4212912374447585
+NZD_JPY_high 0.2971069254206812
+NZD_JPY_low -0.21148030089001457
+NZD_SGD_close -0.17949486531012795
+NZD_SGD_high 0.0015752513452294392
+NZD_SGD_low -0.0032482377981746064
+NZD_USD_close -0.20923904924033546
+NZD_USD_high 0.0009947523462326133
+NZD_USD_low -0.0020287017224181756
+SG30_SGD_close -0.10873863282059337
+SG30_SGD_high 1.5587319432497269
+SG30_SGD_low -1.5872476601623993
+SGD_CHF_close -0.2402798599796146
+SGD_CHF_high 0.0003140627234586652
+SGD_CHF_low -0.002501260828095629
+SGD_HKD_close -0.11726756399194353
+SGD_HKD_high 0.007507793399239962
+SGD_HKD_low -0.009640966399073617
+SGD_JPY_close -0.10403600427159605
+SGD_JPY_high 0.08092484028353282
+SGD_JPY_low -0.1506729447517962
+SOYBN_USD_close -0.20469335661249602
+SOYBN_USD_high 0.07459224052246191
+SOYBN_USD_low -0.0668968746289341
+SPX500_USD_close -0.7275603790913274
+SPX500_USD_high 4.52538563702191
+SPX500_USD_low -11.633307647385072
+SUGAR_USD_close -0.21456193491949382
+SUGAR_USD_high 0.0003860875383392209
+SUGAR_USD_low -0.0018806756508681422
+TRY_JPY_close 0.23303719737325387
+TRY_JPY_high 0.08700343480990405
+TRY_JPY_low -0.26889479730002863
+TWIX_USD_close -0.057966860333434844
+TWIX_USD_high 2.176295231540193
+TWIX_USD_low -1.9584365701292987
+UK100_GBP_close 0.32063347439883666
+UK100_GBP_high 11.34271395709532
+UK100_GBP_low -15.940749384550145
+UK10YB_GBP_close 0.18270613577469022
+UK10YB_GBP_high 0.21013247727685144
+UK10YB_GBP_low -0.12651457590262877
+US2000_USD_close -0.31449361657191605
+US2000_USD_high 8.207685772116408
+US2000_USD_low -11.634124679442447
+US30_USD_close 0.09765078466086065
+US30_USD_high 28.663063550638505
+US30_USD_low -160.6163482667907
+USB02Y_USD_close -0.12106216531426706
+USB02Y_USD_high 0.04003201769993287
+USB02Y_USD_low -0.03527282133102276
+USB05Y_USD_close 0.29080226707203244
+USB05Y_USD_high 0.1376124773541657
+USB05Y_USD_low -0.03766136786986048
+USB10Y_USD_close -0.23741460130537342
+USB10Y_USD_high 0.21273120754152047
+USB10Y_USD_low -0.11713216102787519
+USB30Y_USD_close 0.010925631214294738
+USB30Y_USD_high 0.3604385945752102
+USB30Y_USD_low -0.3916594235190473
+USD_CAD_close 0.3194899927752767
+USD_CAD_high 0.002386443319237254
+USD_CAD_low -0.0012189109318784925
+USD_CHF_close 0.14740019714237804
+USD_CHF_high 0.0015857739741272985
+USD_CHF_low -0.0032992697319323967
+USD_CNH_close 0.353360886363166
+USD_CNH_high 0.022924871897028323
+USD_CNH_low -0.014406940917268381
+USD_CZK_close 0.017153138697983895
+USD_CZK_high 0.06502088032889226
+USD_CZK_low -0.08305408724213932
+USD_DKK_close -0.173146373821298
+USD_DKK_high 0.009979757332758573
+USD_DKK_low -0.01903020348645718
+USD_HKD_close 0.42153662763048816
+USD_HKD_high 0.0004427913699329651
+USD_HKD_low 0.0014655726124657772
+USD_HUF_close -0.17432567712514957
+USD_HUF_high 1.0404670650711345
+USD_HUF_low -0.5846574050894203
+USD_INR_close 0.08513633536696921
+USD_INR_high 0.2593020144573777
+USD_INR_low -0.22344347217790478
+USD_JPY_close 0.00012916477372676004
+USD_JPY_high 0.05276552155071795
+USD_JPY_low -0.29602332096547956
+USD_MXN_close -0.1798507746904093
+USD_MXN_high 0.1456110971438375
+USD_MXN_low -0.07717946159367467
+USD_NOK_close 0.10428953650839445
+USD_NOK_high 0.027951487024909825
+USD_NOK_low -0.02761419364433675
+USD_PLN_close -0.30741193923927357
+USD_PLN_high 0.016975811294342825
+USD_PLN_low -0.01194562893375502
+USD_SAR_close -0.24680517548376407
+USD_SAR_high 0.00010765029544680191
+USD_SAR_low -9.464840905366773e-05
+USD_SEK_close -0.6668786242910489
+USD_SEK_high 0.030906072158615707
+USD_SEK_low -0.03582845689234664
+USD_SGD_close 0.11461899296355248
+USD_SGD_high 0.002322563989456842
+USD_SGD_low -0.0008471267942518848
+USD_THB_close 0.4899162287656402
+USD_THB_high 0.0648197054536196
+USD_THB_low -0.039839663635289894
+USD_TRY_close 0.15933952929862705
+USD_TRY_high 0.07990897988018135
+USD_TRY_low -0.04426093298022766
+USD_ZAR_close 0.41225103178317246
+USD_ZAR_high 0.17711882931886075
+USD_ZAR_low -0.05284199744150976
+WHEAT_USD_close -0.3063049374172672
+WHEAT_USD_high 0.06642502110612425
+WHEAT_USD_low -0.06638004445581537
+WTICO_USD_close 0.04177807271626639
+WTICO_USD_high 0.648503121556216
+WTICO_USD_low -0.8041089278488178
+XAG_AUD_close -0.15248174548769525
+XAG_AUD_high 0.2045265669104328
+XAG_AUD_low -0.09446950513960628
+XAG_CAD_close -0.31501508945568063
+XAG_CAD_high 0.07866300227451735
+XAG_CAD_low -0.07925335297652016
+XAG_CHF_close -0.1734365868966872
+XAG_CHF_high 0.05385841745558854
+XAG_CHF_low -0.04494256303213837
+XAG_EUR_close -0.5323733698526536
+XAG_EUR_high 0.04882948340020078
+XAG_EUR_low -0.046532320341731485
+XAG_GBP_close -0.4380629275093318
+XAG_GBP_high -0.0016631706028098258
+XAG_GBP_low -0.04608313258578432
+XAG_HKD_close -0.3702517791139903
+XAG_HKD_high 0.7272600086566724
+XAG_HKD_low -0.5830725669675958
+XAG_JPY_close -0.29044846743107017
+XAG_JPY_high 6.189403005171174
+XAG_JPY_low -10.24202711196883
+XAG_NZD_close -0.11478327993277718
+XAG_NZD_high 0.12131347027235279
+XAG_NZD_low -0.13169521476053792
+XAG_SGD_close -0.3082583271589027
+XAG_SGD_high 0.1331359598568715
+XAG_SGD_low -0.1117541361294746
+XAG_USD_close -0.4096056088268041
+XAG_USD_high 0.05858932010105641
+XAG_USD_low -0.048965842295593046
+XAU_AUD_close 0.07770565597509652
+XAU_AUD_high 7.6273589155361705
+XAU_AUD_low -5.177554898888408
+XAU_CAD_close 0.011664847172419522
+XAU_CAD_high 5.286526432011919
+XAU_CAD_low -3.984046804616319
+XAU_CHF_close -0.01778087807111632
+XAU_CHF_high 2.2712688429783743
+XAU_CHF_low -4.182796909608949
+XAU_EUR_close -0.2926581737124437
+XAU_EUR_high 2.1634533903988324
+XAU_EUR_low -3.561462197161649
+XAU_GBP_close -0.3713662121421404
+XAU_GBP_high 3.6754390985072733
+XAU_GBP_low -3.435798528379122
+XAU_HKD_close -0.1977026323704842
+XAU_HKD_high -9.109155803652081
+XAU_HKD_low -41.694160667258224
+XAU_JPY_close -0.32778094212399284
+XAU_JPY_high 284.0364557537571
+XAU_JPY_low -146.13623083119572
+XAU_NZD_close 0.23071302414625242
+XAU_NZD_high 4.577942710691649
+XAU_NZD_low -9.959656603172833
+XAU_SGD_close 0.1357231409067301
+XAU_SGD_high 3.1489081167664583
+XAU_SGD_low -6.120622331238938
+XAU_USD_close -0.3091511242375863
+XAU_USD_high 6.418667774811466
+XAU_USD_low -5.8418985839597575
+XAU_XAG_close 0.17262596462728175
+XAU_XAG_high 0.0890932118941583
+XAU_XAG_low -0.07369162677598383
+XCU_USD_close -0.20628540326134587
+XCU_USD_high 0.01527703264437207
+XCU_USD_low -0.028176969380548464
+XPD_USD_close 0.039457652187936954
+XPD_USD_high 6.20791361220075
+XPD_USD_low -14.547629269810184
+XPT_USD_close -0.1658450509545332
+XPT_USD_high -0.6363971770851858
+XPT_USD_low -7.202378412679479
+ZAR_JPY_close -0.38028747910601185
+ZAR_JPY_high 0.0232838973569385
+ZAR_JPY_low -0.10418204082389655
+XCU_USD - -0.20628540326134587 - -93
+EUR_ZAR - 0.552378021036818 - 828
+Keeping AUD_JPY -725.0 -0.12795248212818253
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14214","replacedByOrderID":"14290","reason":"CLIENT_REQUEST_REPLACED","id":"14289","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14289","requestID":"60562485422540497","time":"2019-04-03T19:30:33.611455552Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14153","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"78.974","reason":"REPLACEMENT","replacesOrderID":"14214","cancellingTransactionID":"14289","id":"14290","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14289","requestID":"60562485422540497","time":"2019-04-03T19:30:33.611455552Z"},"relatedTransactionIDs":["14289","14290"],"lastTransactionID":"14290"}
+Keeping AUD_JPY -725.0 -0.12795248212818253
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14216","replacedByOrderID":"14292","reason":"CLIENT_REQUEST_REPLACED","id":"14291","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14291","requestID":"60562485422540548","time":"2019-04-03T19:30:33.638927868Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14146","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"78.974","reason":"REPLACEMENT","replacesOrderID":"14216","cancellingTransactionID":"14291","id":"14292","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14291","requestID":"60562485422540548","time":"2019-04-03T19:30:33.638927868Z"},"relatedTransactionIDs":["14291","14292"],"lastTransactionID":"14292"}
+Keeping AUD_JPY -725.0 -0.12795248212818253
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14218","replacedByOrderID":"14294","reason":"CLIENT_REQUEST_REPLACED","id":"14293","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14293","requestID":"60562485422540618","time":"2019-04-03T19:30:33.666570203Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14139","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"78.974","reason":"REPLACEMENT","replacesOrderID":"14218","cancellingTransactionID":"14293","id":"14294","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14293","requestID":"60562485422540618","time":"2019-04-03T19:30:33.666570203Z"},"relatedTransactionIDs":["14293","14294"],"lastTransactionID":"14294"}
+Keeping AUD_JPY -725.0 -0.12795248212818253
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14220","replacedByOrderID":"14296","reason":"CLIENT_REQUEST_REPLACED","id":"14295","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14295","requestID":"60562485422540679","time":"2019-04-03T19:30:33.693226865Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14132","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"78.974","reason":"REPLACEMENT","replacesOrderID":"14220","cancellingTransactionID":"14295","id":"14296","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14295","requestID":"60562485422540679","time":"2019-04-03T19:30:33.693226865Z"},"relatedTransactionIDs":["14295","14296"],"lastTransactionID":"14296"}
+Keeping AUD_JPY -725.0 -0.12795248212818253
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14222","replacedByOrderID":"14298","reason":"CLIENT_REQUEST_REPLACED","id":"14297","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14297","requestID":"60562485422540729","time":"2019-04-03T19:30:33.720316192Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"13954","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"78.974","reason":"REPLACEMENT","replacesOrderID":"14222","cancellingTransactionID":"14297","id":"14298","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14297","requestID":"60562485422540729","time":"2019-04-03T19:30:33.720316192Z"},"relatedTransactionIDs":["14297","14298"],"lastTransactionID":"14298"}
+USD_CAD - 0.3194899927752767 - 538
+USD_NOK - 0.10428953650839444 - 175
+CAD_SGD - 0.24979907495007414 - 561
+HKD_JPY - -0.01288422983061725 - -170
+NZD_JPY - -0.4212912374447585 - -1047
+CHF_ZAR - 0.6131505782903914 - 1030
+AUD_HKD - 0.31444754475533354 - 744
+GBP_NZD - -0.2663284953562147 - -340
+NZD_HKD - -0.2890780544220146 - -718
+NZD_CHF - -0.3229527276070235 - -803
+GBP_CAD - -0.08001083477898206 - -102
+CAD_JPY - 0.16109433986021132 - 362
+NZD_SGD - -0.17949486531012795 - -446
+Keeping SOYBN_USD -49.0 -0.204693356612496
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14239","replacedByOrderID":"14315","reason":"CLIENT_REQUEST_REPLACED","id":"14314","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14314","requestID":"60562485439325004","time":"2019-04-03T19:30:37.160542924Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"13233","clientTradeID":"208615770","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"8.832","reason":"REPLACEMENT","replacesOrderID":"14239","cancellingTransactionID":"14314","id":"14315","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14314","requestID":"60562485439325004","time":"2019-04-03T19:30:37.160542924Z"},"relatedTransactionIDs":["14314","14315"],"lastTransactionID":"14315"}
+Keeping SOYBN_USD -49.0 -0.204693356612496
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14241","replacedByOrderID":"14317","reason":"CLIENT_REQUEST_REPLACED","id":"14316","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14316","requestID":"60562485439325049","time":"2019-04-03T19:30:37.187717952Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"13231","clientTradeID":"208615546","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"8.832","reason":"REPLACEMENT","replacesOrderID":"14241","cancellingTransactionID":"14316","id":"14317","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14316","requestID":"60562485439325049","time":"2019-04-03T19:30:37.187717952Z"},"relatedTransactionIDs":["14316","14317"],"lastTransactionID":"14317"}
+NZD_CAD - -0.0667315846360868 - -165
+CAD_HKD - -0.15408461719058714 - -346
+CAD_CHF - 0.1173641167420334 - 263
+AUD_SGD - -0.2093410251653926 - -495
+EUR_NOK - 0.4588055839595416 - 688
+EUR_CHF - -1.0951107545367504 - -1500
+GBP_USD - 0.010187162811325109 - 13
+USD_MXN - -0.1798507746904093 - -303
+USD_CHF - 0.14740019714237804 - 248
+AUD_CHF - -0.025657047300475442 - -60
+AUD_USD - 0.13407895305272136 - 317
+DE10YB_EUR - -0.18498565519501736 - -1
+CHF_HKD - -0.05979569576081465 - -100
+GBP_CHF - -0.07249157172161153 - -92
+AUD_CAD - -0.6813475238342321 - -1614
+EUR_NZD - 0.3547560825177305 - 532
+USD_HKD - 0.42153662763048816 - -109094
+EUR_AUD - 0.03416223219604577 - 51
+USD_DKK - -0.173146373821298 - -291
+CHF_JPY - -0.2300392478428014 - -386
+EUR_SGD - -0.03964176848136463 - -59
+USD_SGD - 0.11461899296355248 - 193
+EUR_SEK - -0.36124774972906937 - -541
+USD_CZK - 0.017153138697983898 - 28
+GBP_AUD - 0.2532647149375967 - 324
+USD_PLN - -0.3074119392392736 - -518
+Keeping EUR_USD -701.0 -0.0537012339576976
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14271","replacedByOrderID":"14348","reason":"CLIENT_REQUEST_REPLACED","id":"14347","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14347","requestID":"60562485464504223","time":"2019-04-03T19:30:43.735842266Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14024","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"1.12094","reason":"REPLACEMENT","replacesOrderID":"14271","cancellingTransactionID":"14347","id":"14348","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14347","requestID":"60562485464504223","time":"2019-04-03T19:30:43.735842266Z"},"relatedTransactionIDs":["14347","14348"],"lastTransactionID":"14348"}
+AUD_NZD - -0.2400290933401229 - -568
+SGD_HKD - -0.11726756399194352 - -267
+Keeping NZD_USD -524.0 -0.20923904924033546
+{"orderCancelTransaction":{"type":"ORDER_CANCEL","orderID":"14275","replacedByOrderID":"14352","reason":"CLIENT_REQUEST_REPLACED","id":"14351","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14351","requestID":"60562485468700508","time":"2019-04-03T19:30:44.714765541Z"},"orderCreateTransaction":{"type":"TAKE_PROFIT_ORDER","tradeID":"14022","timeInForce":"GTC","triggerCondition":"DEFAULT","price":"0.67609","reason":"REPLACEMENT","replacesOrderID":"14275","cancellingTransactionID":"14351","id":"14352","accountID":"101-004-8229258-012","userID":8229258,"batchID":"14351","requestID":"60562485468700508","time":"2019-04-03T19:30:44.714765541Z"},"relatedTransactionIDs":["14351","14352"],"lastTransactionID":"14352"}
+USD_CNH - 0.35336088636316604 - 595
+EUR_HKD - -0.3123028954065946 - -468
+EUR_JPY - -0.3947996803013187 - -592
+GBP_JPY - 0.226633543539714 - 290
+EUR_CAD - 0.074499660693011 - 111
+USD_SEK - -0.6668786242910489 - -1124
+EUR_GBP - -0.11342680633894367 - -170
+GBP_HKD - -0.2726461398480379 - -348
+USD_ZAR - 0.4122510317831725 - 695
