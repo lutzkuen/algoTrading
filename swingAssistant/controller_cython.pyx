@@ -142,29 +142,45 @@ class Controller(object):
                             if trade1['instrument'].split('_')[0] == trade1['currency']:
                                 units1 = -trade1['units']
                             else:
-                                units1 = trade1['units']
+                                units1 = -trade1['counter_units']
+                            print('units1 ' + str(units1))
+                            # code.interact(banner='', local=locals())
                             # instrument 2
                             ins2 = trade2['instrument']
                             if abs(trade2['units']) >= abs(trade1['counter_units']):
-                                units2 = trade1['counter_units']
+                                correction = abs(trade1['counter_units'])/abs(trade2['units'])
+                                if trade2['instrument'].split('_')[0] == trade2['currency']:
+                                    units2 = -trade2['units']
+                                else:
+                                    units2 = -trade2['counter_units']
+                                units2 *= correction
                             else:
-                                correction1 = abs(trade2['units'])/abs(trade1['counter_units'])
+                                correction1 = abs(trade2['units']) / abs(trade1['counter_units'])
+                                print('correction1: ' + str(correction1))
                                 units1 *= correction1
-                                units2 = -trade2['units']
-                            if trade2['instrument'].split('_')[1] == trade2['currency']:
-                                units2 = -units2
+                                if trade2['instrument'].split('_')[0] == trade2['currency']:
+                                    units2 = -trade2['units']
+                                else:
+                                    units2 = -trade2['counter_units']
 
                             # instrument 3
                             ins3 = trade3['instrument']
                             if abs(trade3['units']) >= abs(trade2['counter_units']):
-                                units3 = trade2['counter_units']
+                                correction = abs(trade2['counter_units'])/abs(trade3['units'])
+                                if trade3['instrument'].split('_')[0] == trade3['currency']:
+                                    units3 = -trade3['units']
+                                else:
+                                    units3 = -trade3['counter_units']
+                                units3 *= correction
                             else:
-                                correction2 = abs(trade3['units'])/abs(trade2['counter_units'])
+                                correction2 = abs(trade3['units']) / abs(trade2['counter_units'])
+                                print('correction2: ' + str(correction2))
                                 units1 *= correction2
                                 units2 *= correction2
-                                units3 = -trade3['units']
-                            if trade3['instrument'].split('_')[1] == trade3['currency']:
-                                units3 = -units3
+                                if trade3['instrument'].split('_')[0] == trade3['currency']:
+                                    units3 = -trade3['units']
+                                else:
+                                    units3 = -trade3['counter_units']
                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
                                 units = str(int(raw_units))
                                 args = { 'order': {
@@ -173,12 +189,13 @@ class Controller(object):
                                     'type': 'MARKET' } }
                                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                                 print(ticket.raw_body)
+                                # print(args)
                             self.reduce_exposure()
                             return
         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
         print('Could not find circle trades, going to close the worst')
         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
-        if 2*float(account.balance) > float(account.positionValue):
+        if 10*float(account.balance) > float(account.positionValue):
             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
             return
         biggest_loss = 0
@@ -204,13 +221,14 @@ class Controller(object):
             print('Closing ' + trade.instrument)
             if closed_amount >= close_amount:
                 break
-        if loss_ins:
+        if loss_ins and abs(close_units) > 0:
             args = { 'order': {
                 'instrument': loss_ins,
                 'units': close_units,
                 'type': 'MARKET' } }
             print(args)
             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            self.reduce_exposure()
 
 
     def check_positions(self):

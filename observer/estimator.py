@@ -65,13 +65,13 @@ class Estimator(object):
             'objective': 'regression',
             'metric': 'mse',
             'max_depth': 10,
-            'num_leaves': 10,
-            'learning_rate': 0.1,
+            'num_leaves': 90,
+            'learning_rate': 0.01,
             'verbose': 0,
-            'max_bin': 10000,
-            'bagging_fraction': 0.2,
-            'bagging_freq': 10
-            #'min_data_in_leaf': 2
+            #'max_bin': 10000,
+            'bagging_fraction': 0.5,
+            'bagging_freq': 10,
+            'min_data_in_leaf': 2
             # 'early_stopping_round': 20
         }
         n_estimators = 200

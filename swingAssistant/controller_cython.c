@@ -1475,7 +1475,7 @@ static const char __pyx_k_trade3[] = "trade3";
 static const char __pyx_k_trades[] = "trades";
 static const char __pyx_k_type_2[] = "type";
 static const char __pyx_k_unique[] = "unique";
-static const char __pyx_k_units1[] = "units1";
+static const char __pyx_k_units1[] = "units1 ";
 static const char __pyx_k_units2[] = "units2";
 static const char __pyx_k_units3[] = "units3";
 static const char __pyx_k_Closing[] = "Closing ";
@@ -1505,6 +1505,7 @@ static const char __pyx_k_raw_body[] = "raw_body";
 static const char __pyx_k_settings[] = "settings";
 static const char __pyx_k_trade_id[] = "trade_id";
 static const char __pyx_k_trailing[] = "trailing";
+static const char __pyx_k_units1_2[] = "units1";
 static const char __pyx_k_v20_host[] = "v20_host";
 static const char __pyx_k_v20_port[] = "v20_port";
 static const char __pyx_k_copyright[] = "__copyright__";
@@ -1518,6 +1519,7 @@ static const char __pyx_k_total_win[] = "total_win";
 static const char __pyx_k_Controller[] = "Controller";
 static const char __pyx_k_Identified[] = "Identified ";
 static const char __pyx_k_account_id[] = "account_id";
+static const char __pyx_k_correction[] = "correction";
 static const char __pyx_k_instrument[] = "instrument";
 static const char __pyx_k_loss_units[] = "loss_units";
 static const char __pyx_k_maintainer[] = "__maintainer__";
@@ -1527,8 +1529,8 @@ static const char __pyx_k_ImportError[] = "ImportError";
 static const char __pyx_k_Lutz_Knneke[] = "Lutz K\303\274nneke";
 static const char __pyx_k_close_units[] = "close_units";
 static const char __pyx_k_config_name[] = "config_name";
-static const char __pyx_k_correction1[] = "correction1";
-static const char __pyx_k_correction2[] = "correction2";
+static const char __pyx_k_correction1[] = "correction1: ";
+static const char __pyx_k_correction2[] = "correction2: ";
 static const char __pyx_k_get_price_2[] = "get_price";
 static const char __pyx_k_instruments[] = "instruments";
 static const char __pyx_k_progressbar[] = "progressbar";
@@ -1546,6 +1548,8 @@ static const char __pyx_k_currentUnits[] = "currentUnits";
 static const char __pyx_k_unrealizedPL[] = "unrealizedPL";
 static const char __pyx_k_write_trades[] = "write_trades";
 static const char __pyx_k_closed_amount[] = "closed_amount";
+static const char __pyx_k_correction1_2[] = "correction1";
+static const char __pyx_k_correction2_2[] = "correction2";
 static const char __pyx_k_counter_units[] = "counter_units";
 static const char __pyx_k_positionValue[] = "positionValue";
 static const char __pyx_k_active_account[] = "active_account";
@@ -1617,8 +1621,11 @@ static PyObject *__pyx_n_s_config_name;
 static PyObject *__pyx_n_s_configparser;
 static PyObject *__pyx_kp_s_controller_cython_pyx;
 static PyObject *__pyx_n_s_copyright;
-static PyObject *__pyx_n_s_correction1;
-static PyObject *__pyx_n_s_correction2;
+static PyObject *__pyx_n_s_correction;
+static PyObject *__pyx_kp_u_correction1;
+static PyObject *__pyx_n_s_correction1_2;
+static PyObject *__pyx_kp_u_correction2;
+static PyObject *__pyx_n_s_correction2_2;
 static PyObject *__pyx_n_u_counter;
 static PyObject *__pyx_n_u_counter_units;
 static PyObject *__pyx_n_s_create;
@@ -1732,7 +1739,8 @@ static PyObject *__pyx_n_s_uPL;
 static PyObject *__pyx_n_s_unique;
 static PyObject *__pyx_n_s_units;
 static PyObject *__pyx_n_u_units;
-static PyObject *__pyx_n_s_units1;
+static PyObject *__pyx_kp_u_units1;
+static PyObject *__pyx_n_s_units1_2;
 static PyObject *__pyx_n_s_units2;
 static PyObject *__pyx_n_s_units3;
 static PyObject *__pyx_n_s_unrealizedPL;
@@ -3342,7 +3350,7 @@ static PyObject *__pyx_lambda_funcdef_lambda(CYTHON_UNUSED PyObject *__pyx_self,
   return __pyx_r;
 }
 
-/* "swingAssistant/controller_cython.pyx":197
+/* "swingAssistant/controller_cython.pyx":214
  *                 winning_trades.append(trade)
  *                 total_win += float(trade.unrealizedPL)
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))             # <<<<<<<<<<<<<<
@@ -3371,9 +3379,9 @@ static PyObject *__pyx_lambda_funcdef_lambda1(CYTHON_UNUSED PyObject *__pyx_self
   PyObject *__pyx_t_2 = NULL;
   __Pyx_RefNannySetupContext("lambda1", 0);
   __Pyx_XDECREF(__pyx_r);
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_x, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyNumber_Float(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyNumber_Float(__pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_r = __pyx_t_2;
@@ -3418,6 +3426,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   PyObject *__pyx_v_ins1 = NULL;
   PyObject *__pyx_v_units1 = NULL;
   PyObject *__pyx_v_ins2 = NULL;
+  PyObject *__pyx_v_correction = NULL;
   PyObject *__pyx_v_units2 = NULL;
   PyObject *__pyx_v_correction1 = NULL;
   PyObject *__pyx_v_ins3 = NULL;
@@ -4416,7 +4425,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
  *                             if trade1['instrument'].split('_')[0] == trade1['currency']:
  *                                 units1 = -trade1['units']             # <<<<<<<<<<<<<<
  *                             else:
- *                                 units1 = trade1['units']
+ *                                 units1 = -trade1['counter_units']
  */
               __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 143, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
@@ -4439,619 +4448,899 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
             /* "swingAssistant/controller_cython.pyx":145
  *                                 units1 = -trade1['units']
  *                             else:
- *                                 units1 = trade1['units']             # <<<<<<<<<<<<<<
- *                             # instrument 2
- *                             ins2 = trade2['instrument']
+ *                                 units1 = -trade1['counter_units']             # <<<<<<<<<<<<<<
+ *                             print('units1 ' + str(units1))
+ *                             # code.interact(banner='', local=locals())
  */
             /*else*/ {
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 145, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 145, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_v_units1 = __pyx_t_17;
-              __pyx_t_17 = 0;
+              __pyx_t_3 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 145, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_v_units1 = __pyx_t_3;
+              __pyx_t_3 = 0;
             }
             __pyx_L26:;
 
-            /* "swingAssistant/controller_cython.pyx":147
- *                                 units1 = trade1['units']
+            /* "swingAssistant/controller_cython.pyx":146
+ *                             else:
+ *                                 units1 = -trade1['counter_units']
+ *                             print('units1 ' + str(units1))             # <<<<<<<<<<<<<<
+ *                             # code.interact(banner='', local=locals())
+ *                             # instrument 2
+ */
+            __pyx_t_3 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_units1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_t_17 = __Pyx_PyUnicode_Concat(__pyx_kp_u_units1, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 146, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_17);
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 146, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+            /* "swingAssistant/controller_cython.pyx":149
+ *                             # code.interact(banner='', local=locals())
  *                             # instrument 2
  *                             ins2 = trade2['instrument']             # <<<<<<<<<<<<<<
  *                             if abs(trade2['units']) >= abs(trade1['counter_units']):
- *                                 units2 = trade1['counter_units']
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
  */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 147, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_v_ins2 = __pyx_t_17;
-            __pyx_t_17 = 0;
+            __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_instrument); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 149, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_v_ins2 = __pyx_t_3;
+            __pyx_t_3 = 0;
 
-            /* "swingAssistant/controller_cython.pyx":148
+            /* "swingAssistant/controller_cython.pyx":150
  *                             # instrument 2
  *                             ins2 = trade2['instrument']
  *                             if abs(trade2['units']) >= abs(trade1['counter_units']):             # <<<<<<<<<<<<<<
- *                                 units2 = trade1['counter_units']
- *                             else:
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
  */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 148, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 148, __pyx_L1_error)
+            __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_3);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 148, __pyx_L1_error)
+            __pyx_t_17 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 150, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 148, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = PyObject_RichCompare(__pyx_t_3, __pyx_t_20, Py_GE); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 148, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 148, __pyx_L1_error)
+            __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 150, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_20);
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __pyx_t_3 = PyObject_RichCompare(__pyx_t_17, __pyx_t_20, Py_GE); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 150, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 150, __pyx_L1_error)
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
             if (__pyx_t_8) {
 
-              /* "swingAssistant/controller_cython.pyx":149
+              /* "swingAssistant/controller_cython.pyx":151
  *                             ins2 = trade2['instrument']
  *                             if abs(trade2['units']) >= abs(trade1['counter_units']):
- *                                 units2 = trade1['counter_units']             # <<<<<<<<<<<<<<
- *                             else:
- *                                 correction1 = abs(trade2['units'])/abs(trade1['counter_units'])
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])             # <<<<<<<<<<<<<<
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
+ *                                     units2 = -trade2['units']
  */
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 149, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __pyx_v_units2 = __pyx_t_17;
-              __pyx_t_17 = 0;
-
-              /* "swingAssistant/controller_cython.pyx":148
- *                             # instrument 2
- *                             ins2 = trade2['instrument']
- *                             if abs(trade2['units']) >= abs(trade1['counter_units']):             # <<<<<<<<<<<<<<
- *                                 units2 = trade1['counter_units']
- *                             else:
- */
-              goto __pyx_L27;
-            }
-
-            /* "swingAssistant/controller_cython.pyx":151
- *                                 units2 = trade1['counter_units']
- *                             else:
- *                                 correction1 = abs(trade2['units'])/abs(trade1['counter_units'])             # <<<<<<<<<<<<<<
- *                                 units1 *= correction1
- *                                 units2 = -trade2['units']
- */
-            /*else*/ {
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 151, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 151, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_20);
-              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 151, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+              __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_t_17 = __Pyx_PyNumber_Divide(__pyx_t_20, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 151, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 151, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __pyx_v_correction1 = __pyx_t_17;
-              __pyx_t_17 = 0;
+              __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_17 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 151, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = __Pyx_PyNumber_Divide(__pyx_t_20, __pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 151, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_v_correction = __pyx_t_3;
+              __pyx_t_3 = 0;
 
               /* "swingAssistant/controller_cython.pyx":152
- *                             else:
- *                                 correction1 = abs(trade2['units'])/abs(trade1['counter_units'])
- *                                 units1 *= correction1             # <<<<<<<<<<<<<<
- *                                 units2 = -trade2['units']
- *                             if trade2['instrument'].split('_')[1] == trade2['currency']:
+ *                             if abs(trade2['units']) >= abs(trade1['counter_units']):
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:             # <<<<<<<<<<<<<<
+ *                                     units2 = -trade2['units']
+ *                                 else:
  */
-              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units1, __pyx_v_correction1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __Pyx_DECREF_SET(__pyx_v_units1, __pyx_t_17);
-              __pyx_t_17 = 0;
-
-              /* "swingAssistant/controller_cython.pyx":153
- *                                 correction1 = abs(trade2['units'])/abs(trade1['counter_units'])
- *                                 units1 *= correction1
- *                                 units2 = -trade2['units']             # <<<<<<<<<<<<<<
- *                             if trade2['instrument'].split('_')[1] == trade2['currency']:
- *                                 units2 = -units2
- */
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 153, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_3 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_split); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_v_units2 = __pyx_t_3;
-              __pyx_t_3 = 0;
-            }
-            __pyx_L27:;
-
-            /* "swingAssistant/controller_cython.pyx":154
- *                                 units1 *= correction1
- *                                 units2 = -trade2['units']
- *                             if trade2['instrument'].split('_')[1] == trade2['currency']:             # <<<<<<<<<<<<<<
- *                                 units2 = -units2
- * 
- */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_split); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = NULL;
-            if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_20))) {
-              __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_20);
-              if (likely(__pyx_t_17)) {
-                PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_20);
-                __Pyx_INCREF(__pyx_t_17);
-                __Pyx_INCREF(function);
-                __Pyx_DECREF_SET(__pyx_t_20, function);
+              __pyx_t_17 = NULL;
+              if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_20))) {
+                __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_20);
+                if (likely(__pyx_t_17)) {
+                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_20);
+                  __Pyx_INCREF(__pyx_t_17);
+                  __Pyx_INCREF(function);
+                  __Pyx_DECREF_SET(__pyx_t_20, function);
+                }
               }
-            }
-            __pyx_t_3 = (__pyx_t_17) ? __Pyx_PyObject_Call2Args(__pyx_t_20, __pyx_t_17, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_n_u__4);
-            __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
-            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __pyx_t_20 = __Pyx_GetItemInt(__pyx_t_3, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_currency); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_17 = PyObject_RichCompare(__pyx_t_20, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 154, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            if (__pyx_t_8) {
+              __pyx_t_3 = (__pyx_t_17) ? __Pyx_PyObject_Call2Args(__pyx_t_20, __pyx_t_17, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_n_u__4);
+              __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
+              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_GetItemInt(__pyx_t_3, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_currency); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_17 = PyObject_RichCompare(__pyx_t_20, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 152, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              if (__pyx_t_8) {
+
+                /* "swingAssistant/controller_cython.pyx":153
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
+ *                                     units2 = -trade2['units']             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     units2 = -trade2['counter_units']
+ */
+                __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 153, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __pyx_t_3 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 153, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+                __pyx_v_units2 = __pyx_t_3;
+                __pyx_t_3 = 0;
+
+                /* "swingAssistant/controller_cython.pyx":152
+ *                             if abs(trade2['units']) >= abs(trade1['counter_units']):
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:             # <<<<<<<<<<<<<<
+ *                                     units2 = -trade2['units']
+ *                                 else:
+ */
+                goto __pyx_L28;
+              }
 
               /* "swingAssistant/controller_cython.pyx":155
- *                                 units2 = -trade2['units']
- *                             if trade2['instrument'].split('_')[1] == trade2['currency']:
- *                                 units2 = -units2             # <<<<<<<<<<<<<<
- * 
- *                             # instrument 3
+ *                                     units2 = -trade2['units']
+ *                                 else:
+ *                                     units2 = -trade2['counter_units']             # <<<<<<<<<<<<<<
+ *                                 units2 *= correction
+ *                             else:
  */
-              __pyx_t_17 = PyNumber_Negative(__pyx_v_units2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 155, __pyx_L1_error)
+              /*else*/ {
+                __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 155, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __pyx_t_17 = PyNumber_Negative(__pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 155, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __pyx_v_units2 = __pyx_t_17;
+                __pyx_t_17 = 0;
+              }
+              __pyx_L28:;
+
+              /* "swingAssistant/controller_cython.pyx":156
+ *                                 else:
+ *                                     units2 = -trade2['counter_units']
+ *                                 units2 *= correction             # <<<<<<<<<<<<<<
+ *                             else:
+ *                                 correction1 = abs(trade2['units']) / abs(trade1['counter_units'])
+ */
+              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units2, __pyx_v_correction); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 156, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF_SET(__pyx_v_units2, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":154
- *                                 units1 *= correction1
- *                                 units2 = -trade2['units']
- *                             if trade2['instrument'].split('_')[1] == trade2['currency']:             # <<<<<<<<<<<<<<
- *                                 units2 = -units2
- * 
+              /* "swingAssistant/controller_cython.pyx":150
+ *                             # instrument 2
+ *                             ins2 = trade2['instrument']
+ *                             if abs(trade2['units']) >= abs(trade1['counter_units']):             # <<<<<<<<<<<<<<
+ *                                 correction = abs(trade1['counter_units'])/abs(trade2['units'])
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
  */
+              goto __pyx_L27;
             }
 
             /* "swingAssistant/controller_cython.pyx":158
+ *                                 units2 *= correction
+ *                             else:
+ *                                 correction1 = abs(trade2['units']) / abs(trade1['counter_units'])             # <<<<<<<<<<<<<<
+ *                                 print('correction1: ' + str(correction1))
+ *                                 units1 *= correction1
+ */
+            /*else*/ {
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 158, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade1, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 158, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 158, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 158, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_v_correction1 = __pyx_t_17;
+              __pyx_t_17 = 0;
+
+              /* "swingAssistant/controller_cython.pyx":159
+ *                             else:
+ *                                 correction1 = abs(trade2['units']) / abs(trade1['counter_units'])
+ *                                 print('correction1: ' + str(correction1))             # <<<<<<<<<<<<<<
+ *                                 units1 *= correction1
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
+ */
+              __pyx_t_17 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_correction1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_20 = __Pyx_PyUnicode_Concat(__pyx_kp_u_correction1, __pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 159, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+
+              /* "swingAssistant/controller_cython.pyx":160
+ *                                 correction1 = abs(trade2['units']) / abs(trade1['counter_units'])
+ *                                 print('correction1: ' + str(correction1))
+ *                                 units1 *= correction1             # <<<<<<<<<<<<<<
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
+ *                                     units2 = -trade2['units']
+ */
+              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units1, __pyx_v_correction1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 160, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF_SET(__pyx_v_units1, __pyx_t_17);
+              __pyx_t_17 = 0;
+
+              /* "swingAssistant/controller_cython.pyx":161
+ *                                 print('correction1: ' + str(correction1))
+ *                                 units1 *= correction1
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:             # <<<<<<<<<<<<<<
+ *                                     units2 = -trade2['units']
+ *                                 else:
+ */
+              __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_instrument); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = NULL;
+              if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+                __pyx_t_20 = PyMethod_GET_SELF(__pyx_t_3);
+                if (likely(__pyx_t_20)) {
+                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+                  __Pyx_INCREF(__pyx_t_20);
+                  __Pyx_INCREF(function);
+                  __Pyx_DECREF_SET(__pyx_t_3, function);
+                }
+              }
+              __pyx_t_17 = (__pyx_t_20) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_20, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_n_u__4);
+              __Pyx_XDECREF(__pyx_t_20); __pyx_t_20 = 0;
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_17, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_currency); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_20 = PyObject_RichCompare(__pyx_t_3, __pyx_t_17, Py_EQ); __Pyx_XGOTREF(__pyx_t_20); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_20); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 161, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              if (__pyx_t_8) {
+
+                /* "swingAssistant/controller_cython.pyx":162
+ *                                 units1 *= correction1
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:
+ *                                     units2 = -trade2['units']             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     units2 = -trade2['counter_units']
+ */
+                __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 162, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_20);
+                __pyx_t_17 = PyNumber_Negative(__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 162, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+                __pyx_v_units2 = __pyx_t_17;
+                __pyx_t_17 = 0;
+
+                /* "swingAssistant/controller_cython.pyx":161
+ *                                 print('correction1: ' + str(correction1))
+ *                                 units1 *= correction1
+ *                                 if trade2['instrument'].split('_')[0] == trade2['currency']:             # <<<<<<<<<<<<<<
+ *                                     units2 = -trade2['units']
+ *                                 else:
+ */
+                goto __pyx_L29;
+              }
+
+              /* "swingAssistant/controller_cython.pyx":164
+ *                                     units2 = -trade2['units']
+ *                                 else:
+ *                                     units2 = -trade2['counter_units']             # <<<<<<<<<<<<<<
+ * 
+ *                             # instrument 3
+ */
+              /*else*/ {
+                __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 164, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __pyx_t_20 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 164, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_20);
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+                __pyx_v_units2 = __pyx_t_20;
+                __pyx_t_20 = 0;
+              }
+              __pyx_L29:;
+            }
+            __pyx_L27:;
+
+            /* "swingAssistant/controller_cython.pyx":167
  * 
  *                             # instrument 3
  *                             ins3 = trade3['instrument']             # <<<<<<<<<<<<<<
  *                             if abs(trade3['units']) >= abs(trade2['counter_units']):
- *                                 units3 = trade2['counter_units']
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
  */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 158, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_v_ins3 = __pyx_t_17;
-            __pyx_t_17 = 0;
+            __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_instrument); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 167, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_20);
+            __pyx_v_ins3 = __pyx_t_20;
+            __pyx_t_20 = 0;
 
-            /* "swingAssistant/controller_cython.pyx":159
+            /* "swingAssistant/controller_cython.pyx":168
  *                             # instrument 3
  *                             ins3 = trade3['instrument']
  *                             if abs(trade3['units']) >= abs(trade2['counter_units']):             # <<<<<<<<<<<<<<
- *                                 units3 = trade2['counter_units']
- *                             else:
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
  */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 159, __pyx_L1_error)
+            __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 168, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = PyObject_RichCompare(__pyx_t_3, __pyx_t_20, Py_GE); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 159, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __pyx_t_17 = __Pyx_PyNumber_Absolute(__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 159, __pyx_L1_error)
+            __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_20);
+            __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
+            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+            __pyx_t_20 = PyObject_RichCompare(__pyx_t_17, __pyx_t_3, Py_GE); __Pyx_XGOTREF(__pyx_t_20); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 168, __pyx_L1_error)
             __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_20); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
+            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
             if (__pyx_t_8) {
 
-              /* "swingAssistant/controller_cython.pyx":160
+              /* "swingAssistant/controller_cython.pyx":169
  *                             ins3 = trade3['instrument']
  *                             if abs(trade3['units']) >= abs(trade2['counter_units']):
- *                                 units3 = trade2['counter_units']             # <<<<<<<<<<<<<<
- *                             else:
- *                                 correction2 = abs(trade3['units'])/abs(trade2['counter_units'])
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])             # <<<<<<<<<<<<<<
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
+ *                                     units3 = -trade3['units']
  */
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 160, __pyx_L1_error)
+              __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 169, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_20); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 169, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __pyx_t_17 = __Pyx_PyNumber_Absolute(__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 169, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_v_units3 = __pyx_t_17;
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 169, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __Pyx_XDECREF_SET(__pyx_v_correction, __pyx_t_20);
+              __pyx_t_20 = 0;
+
+              /* "swingAssistant/controller_cython.pyx":170
+ *                             if abs(trade3['units']) >= abs(trade2['counter_units']):
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:             # <<<<<<<<<<<<<<
+ *                                     units3 = -trade3['units']
+ *                                 else:
+ */
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_split); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = NULL;
+              if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
+                __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_3);
+                if (likely(__pyx_t_17)) {
+                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
+                  __Pyx_INCREF(__pyx_t_17);
+                  __Pyx_INCREF(function);
+                  __Pyx_DECREF_SET(__pyx_t_3, function);
+                }
+              }
+              __pyx_t_20 = (__pyx_t_17) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_17, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_n_u__4);
+              __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
+              if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = __Pyx_GetItemInt(__pyx_t_20, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_currency); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __pyx_t_17 = PyObject_RichCompare(__pyx_t_3, __pyx_t_20, Py_EQ); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              if (__pyx_t_8) {
+
+                /* "swingAssistant/controller_cython.pyx":171
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
+ *                                     units3 = -trade3['units']             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']
+ */
+                __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 171, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __pyx_t_20 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 171, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_20);
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+                __pyx_v_units3 = __pyx_t_20;
+                __pyx_t_20 = 0;
+
+                /* "swingAssistant/controller_cython.pyx":170
+ *                             if abs(trade3['units']) >= abs(trade2['counter_units']):
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:             # <<<<<<<<<<<<<<
+ *                                     units3 = -trade3['units']
+ *                                 else:
+ */
+                goto __pyx_L31;
+              }
+
+              /* "swingAssistant/controller_cython.pyx":173
+ *                                     units3 = -trade3['units']
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']             # <<<<<<<<<<<<<<
+ *                                 units3 *= correction
+ *                             else:
+ */
+              /*else*/ {
+                __pyx_t_20 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 173, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_20);
+                __pyx_t_17 = PyNumber_Negative(__pyx_t_20); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 173, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+                __pyx_v_units3 = __pyx_t_17;
+                __pyx_t_17 = 0;
+              }
+              __pyx_L31:;
+
+              /* "swingAssistant/controller_cython.pyx":174
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']
+ *                                 units3 *= correction             # <<<<<<<<<<<<<<
+ *                             else:
+ *                                 correction2 = abs(trade3['units']) / abs(trade2['counter_units'])
+ */
+              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units3, __pyx_v_correction); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 174, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF_SET(__pyx_v_units3, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":159
+              /* "swingAssistant/controller_cython.pyx":168
  *                             # instrument 3
  *                             ins3 = trade3['instrument']
  *                             if abs(trade3['units']) >= abs(trade2['counter_units']):             # <<<<<<<<<<<<<<
- *                                 units3 = trade2['counter_units']
- *                             else:
+ *                                 correction = abs(trade2['counter_units'])/abs(trade3['units'])
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
  */
-              goto __pyx_L29;
+              goto __pyx_L30;
             }
 
-            /* "swingAssistant/controller_cython.pyx":162
- *                                 units3 = trade2['counter_units']
+            /* "swingAssistant/controller_cython.pyx":176
+ *                                 units3 *= correction
  *                             else:
- *                                 correction2 = abs(trade3['units'])/abs(trade2['counter_units'])             # <<<<<<<<<<<<<<
+ *                                 correction2 = abs(trade3['units']) / abs(trade2['counter_units'])             # <<<<<<<<<<<<<<
+ *                                 print('correction2: ' + str(correction2))
  *                                 units1 *= correction2
- *                                 units2 *= correction2
  */
             /*else*/ {
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 162, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 176, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 162, __pyx_L1_error)
+              __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 176, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_20);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 162, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade2, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 176, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 162, __pyx_L1_error)
+              __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 176, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_t_17 = __Pyx_PyNumber_Divide(__pyx_t_20, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 162, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyNumber_Divide(__pyx_t_20, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 176, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
               __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
               __pyx_v_correction2 = __pyx_t_17;
               __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":163
+              /* "swingAssistant/controller_cython.pyx":177
  *                             else:
- *                                 correction2 = abs(trade3['units'])/abs(trade2['counter_units'])
+ *                                 correction2 = abs(trade3['units']) / abs(trade2['counter_units'])
+ *                                 print('correction2: ' + str(correction2))             # <<<<<<<<<<<<<<
+ *                                 units1 *= correction2
+ *                                 units2 *= correction2
+ */
+              __pyx_t_17 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_correction2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 177, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_3 = __Pyx_PyUnicode_Concat(__pyx_kp_u_correction2, __pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 177, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 177, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+
+              /* "swingAssistant/controller_cython.pyx":178
+ *                                 correction2 = abs(trade3['units']) / abs(trade2['counter_units'])
+ *                                 print('correction2: ' + str(correction2))
  *                                 units1 *= correction2             # <<<<<<<<<<<<<<
  *                                 units2 *= correction2
- *                                 units3 = -trade3['units']
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
  */
-              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units1, __pyx_v_correction2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 163, __pyx_L1_error)
+              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units1, __pyx_v_correction2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 178, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF_SET(__pyx_v_units1, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":164
- *                                 correction2 = abs(trade3['units'])/abs(trade2['counter_units'])
+              /* "swingAssistant/controller_cython.pyx":179
+ *                                 print('correction2: ' + str(correction2))
  *                                 units1 *= correction2
  *                                 units2 *= correction2             # <<<<<<<<<<<<<<
- *                                 units3 = -trade3['units']
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
+ *                                     units3 = -trade3['units']
  */
-              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units2, __pyx_v_correction2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 164, __pyx_L1_error)
+              __pyx_t_17 = PyNumber_InPlaceMultiply(__pyx_v_units2, __pyx_v_correction2); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 179, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF_SET(__pyx_v_units2, __pyx_t_17);
               __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":165
+              /* "swingAssistant/controller_cython.pyx":180
  *                                 units1 *= correction2
  *                                 units2 *= correction2
- *                                 units3 = -trade3['units']             # <<<<<<<<<<<<<<
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:
- *                                 units3 = -units3
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:             # <<<<<<<<<<<<<<
+ *                                     units3 = -trade3['units']
+ *                                 else:
  */
-              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 165, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_3 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 165, __pyx_L1_error)
+              __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_instrument); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_3);
-              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_v_units3 = __pyx_t_3;
-              __pyx_t_3 = 0;
-            }
-            __pyx_L29:;
-
-            /* "swingAssistant/controller_cython.pyx":166
- *                                 units2 *= correction2
- *                                 units3 = -trade3['units']
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:             # <<<<<<<<<<<<<<
- *                                 units3 = -units3
- *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
- */
-            __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_instrument); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
-            __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_split); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            __pyx_t_17 = NULL;
-            if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_20))) {
-              __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_20);
-              if (likely(__pyx_t_17)) {
-                PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_20);
-                __Pyx_INCREF(__pyx_t_17);
-                __Pyx_INCREF(function);
-                __Pyx_DECREF_SET(__pyx_t_20, function);
+              __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_split); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = NULL;
+              if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_20))) {
+                __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_20);
+                if (likely(__pyx_t_3)) {
+                  PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_20);
+                  __Pyx_INCREF(__pyx_t_3);
+                  __Pyx_INCREF(function);
+                  __Pyx_DECREF_SET(__pyx_t_20, function);
+                }
               }
-            }
-            __pyx_t_3 = (__pyx_t_17) ? __Pyx_PyObject_Call2Args(__pyx_t_20, __pyx_t_17, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_n_u__4);
-            __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
-            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __pyx_t_20 = __Pyx_GetItemInt(__pyx_t_3, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_currency); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
-            __pyx_t_17 = PyObject_RichCompare(__pyx_t_20, __pyx_t_3, Py_EQ); __Pyx_XGOTREF(__pyx_t_17); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-            __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_17); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 166, __pyx_L1_error)
-            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-            if (__pyx_t_8) {
+              __pyx_t_17 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_20, __pyx_t_3, __pyx_n_u__4) : __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_n_u__4);
+              __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __pyx_t_20 = __Pyx_GetItemInt(__pyx_t_17, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_20);
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_currency); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_3 = PyObject_RichCompare(__pyx_t_20, __pyx_t_17, Py_EQ); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+              __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 180, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (__pyx_t_8) {
 
-              /* "swingAssistant/controller_cython.pyx":167
- *                                 units3 = -trade3['units']
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:
- *                                 units3 = -units3             # <<<<<<<<<<<<<<
+                /* "swingAssistant/controller_cython.pyx":181
+ *                                 units2 *= correction2
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:
+ *                                     units3 = -trade3['units']             # <<<<<<<<<<<<<<
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']
+ */
+                __pyx_t_3 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 181, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __pyx_t_17 = PyNumber_Negative(__pyx_t_3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 181, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __pyx_v_units3 = __pyx_t_17;
+                __pyx_t_17 = 0;
+
+                /* "swingAssistant/controller_cython.pyx":180
+ *                                 units1 *= correction2
+ *                                 units2 *= correction2
+ *                                 if trade3['instrument'].split('_')[0] == trade3['currency']:             # <<<<<<<<<<<<<<
+ *                                     units3 = -trade3['units']
+ *                                 else:
+ */
+                goto __pyx_L32;
+              }
+
+              /* "swingAssistant/controller_cython.pyx":183
+ *                                     units3 = -trade3['units']
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']             # <<<<<<<<<<<<<<
  *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
  *                                 units = str(int(raw_units))
  */
-              __pyx_t_17 = PyNumber_Negative(__pyx_v_units3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 167, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_17);
-              __Pyx_DECREF_SET(__pyx_v_units3, __pyx_t_17);
-              __pyx_t_17 = 0;
-
-              /* "swingAssistant/controller_cython.pyx":166
- *                                 units2 *= correction2
- *                                 units3 = -trade3['units']
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:             # <<<<<<<<<<<<<<
- *                                 units3 = -units3
- *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
- */
+              /*else*/ {
+                __pyx_t_17 = __Pyx_PyObject_Dict_GetItem(__pyx_v_trade3, __pyx_n_u_counter_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 183, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_17);
+                __pyx_t_3 = PyNumber_Negative(__pyx_t_17); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 183, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+                __pyx_v_units3 = __pyx_t_3;
+                __pyx_t_3 = 0;
+              }
+              __pyx_L32:;
             }
+            __pyx_L30:;
 
-            /* "swingAssistant/controller_cython.pyx":168
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:
- *                                 units3 = -units3
+            /* "swingAssistant/controller_cython.pyx":184
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']
  *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):             # <<<<<<<<<<<<<<
  *                                 units = str(int(raw_units))
  *                                 args = { 'order': {
  */
-            __pyx_t_17 = PyList_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 168, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_17);
+            __pyx_t_3 = PyList_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_3);
             __Pyx_INCREF(__pyx_v_ins1);
             __Pyx_GIVEREF(__pyx_v_ins1);
-            PyList_SET_ITEM(__pyx_t_17, 0, __pyx_v_ins1);
+            PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_ins1);
             __Pyx_INCREF(__pyx_v_ins2);
             __Pyx_GIVEREF(__pyx_v_ins2);
-            PyList_SET_ITEM(__pyx_t_17, 1, __pyx_v_ins2);
+            PyList_SET_ITEM(__pyx_t_3, 1, __pyx_v_ins2);
             __Pyx_INCREF(__pyx_v_ins3);
             __Pyx_GIVEREF(__pyx_v_ins3);
-            PyList_SET_ITEM(__pyx_t_17, 2, __pyx_v_ins3);
-            __pyx_t_3 = PyList_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
+            PyList_SET_ITEM(__pyx_t_3, 2, __pyx_v_ins3);
+            __pyx_t_17 = PyList_New(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 184, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_17);
             __Pyx_INCREF(__pyx_v_units1);
             __Pyx_GIVEREF(__pyx_v_units1);
-            PyList_SET_ITEM(__pyx_t_3, 0, __pyx_v_units1);
+            PyList_SET_ITEM(__pyx_t_17, 0, __pyx_v_units1);
             __Pyx_INCREF(__pyx_v_units2);
             __Pyx_GIVEREF(__pyx_v_units2);
-            PyList_SET_ITEM(__pyx_t_3, 1, __pyx_v_units2);
+            PyList_SET_ITEM(__pyx_t_17, 1, __pyx_v_units2);
             __Pyx_INCREF(__pyx_v_units3);
             __Pyx_GIVEREF(__pyx_v_units3);
-            PyList_SET_ITEM(__pyx_t_3, 2, __pyx_v_units3);
-            __pyx_t_20 = PyTuple_New(2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 168, __pyx_L1_error)
+            PyList_SET_ITEM(__pyx_t_17, 2, __pyx_v_units3);
+            __pyx_t_20 = PyTuple_New(2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 184, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_20);
-            __Pyx_GIVEREF(__pyx_t_17);
-            PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_t_17);
             __Pyx_GIVEREF(__pyx_t_3);
-            PyTuple_SET_ITEM(__pyx_t_20, 1, __pyx_t_3);
-            __pyx_t_17 = 0;
+            PyTuple_SET_ITEM(__pyx_t_20, 0, __pyx_t_3);
+            __Pyx_GIVEREF(__pyx_t_17);
+            PyTuple_SET_ITEM(__pyx_t_20, 1, __pyx_t_17);
             __pyx_t_3 = 0;
-            __pyx_t_3 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_20, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-            __Pyx_GOTREF(__pyx_t_3);
+            __pyx_t_17 = 0;
+            __pyx_t_17 = __Pyx_PyObject_Call(__pyx_builtin_zip, __pyx_t_20, NULL); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 184, __pyx_L1_error)
+            __Pyx_GOTREF(__pyx_t_17);
             __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-            if (likely(PyList_CheckExact(__pyx_t_3)) || PyTuple_CheckExact(__pyx_t_3)) {
-              __pyx_t_20 = __pyx_t_3; __Pyx_INCREF(__pyx_t_20); __pyx_t_21 = 0;
+            if (likely(PyList_CheckExact(__pyx_t_17)) || PyTuple_CheckExact(__pyx_t_17)) {
+              __pyx_t_20 = __pyx_t_17; __Pyx_INCREF(__pyx_t_20); __pyx_t_21 = 0;
               __pyx_t_22 = NULL;
             } else {
-              __pyx_t_21 = -1; __pyx_t_20 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 168, __pyx_L1_error)
+              __pyx_t_21 = -1; __pyx_t_20 = PyObject_GetIter(__pyx_t_17); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 184, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_20);
-              __pyx_t_22 = Py_TYPE(__pyx_t_20)->tp_iternext; if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 168, __pyx_L1_error)
+              __pyx_t_22 = Py_TYPE(__pyx_t_20)->tp_iternext; if (unlikely(!__pyx_t_22)) __PYX_ERR(0, 184, __pyx_L1_error)
             }
-            __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+            __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
             for (;;) {
               if (likely(!__pyx_t_22)) {
                 if (likely(PyList_CheckExact(__pyx_t_20))) {
                   if (__pyx_t_21 >= PyList_GET_SIZE(__pyx_t_20)) break;
                   #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                  __pyx_t_3 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_21); __Pyx_INCREF(__pyx_t_3); __pyx_t_21++; if (unlikely(0 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
+                  __pyx_t_17 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_21); __Pyx_INCREF(__pyx_t_17); __pyx_t_21++; if (unlikely(0 < 0)) __PYX_ERR(0, 184, __pyx_L1_error)
                   #else
-                  __pyx_t_3 = PySequence_ITEM(__pyx_t_20, __pyx_t_21); __pyx_t_21++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-                  __Pyx_GOTREF(__pyx_t_3);
+                  __pyx_t_17 = PySequence_ITEM(__pyx_t_20, __pyx_t_21); __pyx_t_21++; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 184, __pyx_L1_error)
+                  __Pyx_GOTREF(__pyx_t_17);
                   #endif
                 } else {
                   if (__pyx_t_21 >= PyTuple_GET_SIZE(__pyx_t_20)) break;
                   #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-                  __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_20, __pyx_t_21); __Pyx_INCREF(__pyx_t_3); __pyx_t_21++; if (unlikely(0 < 0)) __PYX_ERR(0, 168, __pyx_L1_error)
+                  __pyx_t_17 = PyTuple_GET_ITEM(__pyx_t_20, __pyx_t_21); __Pyx_INCREF(__pyx_t_17); __pyx_t_21++; if (unlikely(0 < 0)) __PYX_ERR(0, 184, __pyx_L1_error)
                   #else
-                  __pyx_t_3 = PySequence_ITEM(__pyx_t_20, __pyx_t_21); __pyx_t_21++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 168, __pyx_L1_error)
-                  __Pyx_GOTREF(__pyx_t_3);
+                  __pyx_t_17 = PySequence_ITEM(__pyx_t_20, __pyx_t_21); __pyx_t_21++; if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 184, __pyx_L1_error)
+                  __Pyx_GOTREF(__pyx_t_17);
                   #endif
                 }
               } else {
-                __pyx_t_3 = __pyx_t_22(__pyx_t_20);
-                if (unlikely(!__pyx_t_3)) {
+                __pyx_t_17 = __pyx_t_22(__pyx_t_20);
+                if (unlikely(!__pyx_t_17)) {
                   PyObject* exc_type = PyErr_Occurred();
                   if (exc_type) {
                     if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-                    else __PYX_ERR(0, 168, __pyx_L1_error)
+                    else __PYX_ERR(0, 184, __pyx_L1_error)
                   }
                   break;
                 }
-                __Pyx_GOTREF(__pyx_t_3);
+                __Pyx_GOTREF(__pyx_t_17);
               }
-              if ((likely(PyTuple_CheckExact(__pyx_t_3))) || (PyList_CheckExact(__pyx_t_3))) {
-                PyObject* sequence = __pyx_t_3;
+              if ((likely(PyTuple_CheckExact(__pyx_t_17))) || (PyList_CheckExact(__pyx_t_17))) {
+                PyObject* sequence = __pyx_t_17;
                 Py_ssize_t size = __Pyx_PySequence_SIZE(sequence);
                 if (unlikely(size != 2)) {
                   if (size > 2) __Pyx_RaiseTooManyValuesError(2);
                   else if (size >= 0) __Pyx_RaiseNeedMoreValuesError(size);
-                  __PYX_ERR(0, 168, __pyx_L1_error)
+                  __PYX_ERR(0, 184, __pyx_L1_error)
                 }
                 #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
                 if (likely(PyTuple_CheckExact(sequence))) {
-                  __pyx_t_17 = PyTuple_GET_ITEM(sequence, 0); 
+                  __pyx_t_3 = PyTuple_GET_ITEM(sequence, 0); 
                   __pyx_t_23 = PyTuple_GET_ITEM(sequence, 1); 
                 } else {
-                  __pyx_t_17 = PyList_GET_ITEM(sequence, 0); 
+                  __pyx_t_3 = PyList_GET_ITEM(sequence, 0); 
                   __pyx_t_23 = PyList_GET_ITEM(sequence, 1); 
                 }
-                __Pyx_INCREF(__pyx_t_17);
+                __Pyx_INCREF(__pyx_t_3);
                 __Pyx_INCREF(__pyx_t_23);
                 #else
-                __pyx_t_17 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 168, __pyx_L1_error)
-                __Pyx_GOTREF(__pyx_t_17);
-                __pyx_t_23 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 168, __pyx_L1_error)
+                __pyx_t_3 = PySequence_ITEM(sequence, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
+                __Pyx_GOTREF(__pyx_t_3);
+                __pyx_t_23 = PySequence_ITEM(sequence, 1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 184, __pyx_L1_error)
                 __Pyx_GOTREF(__pyx_t_23);
                 #endif
-                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               } else {
                 Py_ssize_t index = -1;
-                __pyx_t_24 = PyObject_GetIter(__pyx_t_3); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 168, __pyx_L1_error)
+                __pyx_t_24 = PyObject_GetIter(__pyx_t_17); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 184, __pyx_L1_error)
                 __Pyx_GOTREF(__pyx_t_24);
-                __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+                __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
                 __pyx_t_25 = Py_TYPE(__pyx_t_24)->tp_iternext;
-                index = 0; __pyx_t_17 = __pyx_t_25(__pyx_t_24); if (unlikely(!__pyx_t_17)) goto __pyx_L33_unpacking_failed;
-                __Pyx_GOTREF(__pyx_t_17);
-                index = 1; __pyx_t_23 = __pyx_t_25(__pyx_t_24); if (unlikely(!__pyx_t_23)) goto __pyx_L33_unpacking_failed;
+                index = 0; __pyx_t_3 = __pyx_t_25(__pyx_t_24); if (unlikely(!__pyx_t_3)) goto __pyx_L35_unpacking_failed;
+                __Pyx_GOTREF(__pyx_t_3);
+                index = 1; __pyx_t_23 = __pyx_t_25(__pyx_t_24); if (unlikely(!__pyx_t_23)) goto __pyx_L35_unpacking_failed;
                 __Pyx_GOTREF(__pyx_t_23);
-                if (__Pyx_IternextUnpackEndCheck(__pyx_t_25(__pyx_t_24), 2) < 0) __PYX_ERR(0, 168, __pyx_L1_error)
+                if (__Pyx_IternextUnpackEndCheck(__pyx_t_25(__pyx_t_24), 2) < 0) __PYX_ERR(0, 184, __pyx_L1_error)
                 __pyx_t_25 = NULL;
                 __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-                goto __pyx_L34_unpacking_done;
-                __pyx_L33_unpacking_failed:;
+                goto __pyx_L36_unpacking_done;
+                __pyx_L35_unpacking_failed:;
                 __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
                 __pyx_t_25 = NULL;
                 if (__Pyx_IterFinish() == 0) __Pyx_RaiseNeedMoreValuesError(index);
-                __PYX_ERR(0, 168, __pyx_L1_error)
-                __pyx_L34_unpacking_done:;
+                __PYX_ERR(0, 184, __pyx_L1_error)
+                __pyx_L36_unpacking_done:;
               }
-              __Pyx_DECREF_SET(__pyx_v_ins, __pyx_t_17);
-              __pyx_t_17 = 0;
+              __Pyx_DECREF_SET(__pyx_v_ins, __pyx_t_3);
+              __pyx_t_3 = 0;
               __Pyx_XDECREF_SET(__pyx_v_raw_units, __pyx_t_23);
               __pyx_t_23 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":169
- *                                 units3 = -units3
+              /* "swingAssistant/controller_cython.pyx":185
+ *                                     units3 = -trade3['counter_units']
  *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
  *                                 units = str(int(raw_units))             # <<<<<<<<<<<<<<
  *                                 args = { 'order': {
  *                                     'instrument': ins,
  */
-              __pyx_t_3 = __Pyx_PyNumber_Int(__pyx_v_raw_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 169, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_23 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_3); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 169, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyNumber_Int(__pyx_v_raw_units); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 185, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_23 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_17); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 185, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_23);
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_XDECREF_SET(__pyx_v_units, __pyx_t_23);
               __pyx_t_23 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":170
+              /* "swingAssistant/controller_cython.pyx":186
  *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):
  *                                 units = str(int(raw_units))
  *                                 args = { 'order': {             # <<<<<<<<<<<<<<
  *                                     'instrument': ins,
  *                                     'units': units,
  */
-              __pyx_t_23 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 170, __pyx_L1_error)
+              __pyx_t_23 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 186, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_23);
 
-              /* "swingAssistant/controller_cython.pyx":171
+              /* "swingAssistant/controller_cython.pyx":187
  *                                 units = str(int(raw_units))
  *                                 args = { 'order': {
  *                                     'instrument': ins,             # <<<<<<<<<<<<<<
  *                                     'units': units,
  *                                     'type': 'MARKET' } }
  */
-              __pyx_t_3 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 171, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              if (PyDict_SetItem(__pyx_t_3, __pyx_n_u_instrument, __pyx_v_ins) < 0) __PYX_ERR(0, 171, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 187, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_u_instrument, __pyx_v_ins) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
 
-              /* "swingAssistant/controller_cython.pyx":172
+              /* "swingAssistant/controller_cython.pyx":188
  *                                 args = { 'order': {
  *                                     'instrument': ins,
  *                                     'units': units,             # <<<<<<<<<<<<<<
  *                                     'type': 'MARKET' } }
  *                                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  */
-              if (PyDict_SetItem(__pyx_t_3, __pyx_n_u_units, __pyx_v_units) < 0) __PYX_ERR(0, 171, __pyx_L1_error)
-              if (PyDict_SetItem(__pyx_t_3, __pyx_n_u_type_2, __pyx_n_u_MARKET) < 0) __PYX_ERR(0, 171, __pyx_L1_error)
-              if (PyDict_SetItem(__pyx_t_23, __pyx_n_u_order, __pyx_t_3) < 0) __PYX_ERR(0, 170, __pyx_L1_error)
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_u_units, __pyx_v_units) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
+              if (PyDict_SetItem(__pyx_t_17, __pyx_n_u_type_2, __pyx_n_u_MARKET) < 0) __PYX_ERR(0, 187, __pyx_L1_error)
+              if (PyDict_SetItem(__pyx_t_23, __pyx_n_u_order, __pyx_t_17) < 0) __PYX_ERR(0, 186, __pyx_L1_error)
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_XDECREF_SET(__pyx_v_args, ((PyObject*)__pyx_t_23));
               __pyx_t_23 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":174
+              /* "swingAssistant/controller_cython.pyx":190
  *                                     'units': units,
  *                                     'type': 'MARKET' } }
  *                                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)             # <<<<<<<<<<<<<<
  *                                 print(ticket.raw_body)
- *                             self.reduce_exposure()
+ *                                 # print(args)
  */
-              __pyx_t_23 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 174, __pyx_L1_error)
+              __pyx_t_23 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 190, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_23);
-              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_23, __pyx_n_s_order); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
-              __pyx_t_23 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_create); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 174, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_23);
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 174, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_t_23, __pyx_n_s_order); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 190, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_17);
-              __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_get); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 174, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_24);
+              __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
+              __pyx_t_23 = __Pyx_PyObject_GetAttrStr(__pyx_t_17, __pyx_n_s_create); if (unlikely(!__pyx_t_23)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_23);
               __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
-              __pyx_t_17 = NULL;
+              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_get); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_24);
+              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __pyx_t_3 = NULL;
               if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_24))) {
-                __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_24);
-                if (likely(__pyx_t_17)) {
+                __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_24);
+                if (likely(__pyx_t_3)) {
                   PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_24);
-                  __Pyx_INCREF(__pyx_t_17);
+                  __Pyx_INCREF(__pyx_t_3);
                   __Pyx_INCREF(function);
                   __Pyx_DECREF_SET(__pyx_t_24, function);
                 }
               }
-              __pyx_t_3 = (__pyx_t_17) ? __Pyx_PyObject_Call2Args(__pyx_t_24, __pyx_t_17, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_24, __pyx_n_u_account_id);
-              __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
-              if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
+              __pyx_t_17 = (__pyx_t_3) ? __Pyx_PyObject_Call2Args(__pyx_t_24, __pyx_t_3, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_24, __pyx_n_u_account_id);
+              __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
+              if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-              __pyx_t_24 = PyTuple_New(1); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 174, __pyx_L1_error)
+              __pyx_t_24 = PyTuple_New(1); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 190, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_24);
-              __Pyx_GIVEREF(__pyx_t_3);
-              PyTuple_SET_ITEM(__pyx_t_24, 0, __pyx_t_3);
-              __pyx_t_3 = 0;
-              __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_23, __pyx_t_24, __pyx_v_args); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 174, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
+              __Pyx_GIVEREF(__pyx_t_17);
+              PyTuple_SET_ITEM(__pyx_t_24, 0, __pyx_t_17);
+              __pyx_t_17 = 0;
+              __pyx_t_17 = __Pyx_PyObject_Call(__pyx_t_23, __pyx_t_24, __pyx_v_args); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 190, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
               __Pyx_DECREF(__pyx_t_23); __pyx_t_23 = 0;
               __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-              __Pyx_XDECREF_SET(__pyx_v_ticket, __pyx_t_3);
-              __pyx_t_3 = 0;
+              __Pyx_XDECREF_SET(__pyx_v_ticket, __pyx_t_17);
+              __pyx_t_17 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":175
+              /* "swingAssistant/controller_cython.pyx":191
  *                                     'type': 'MARKET' } }
  *                                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
  *                                 print(ticket.raw_body)             # <<<<<<<<<<<<<<
+ *                                 # print(args)
  *                             self.reduce_exposure()
- *                             return
  */
-              __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_ticket, __pyx_n_s_raw_body); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 175, __pyx_L1_error)
-              __Pyx_GOTREF(__pyx_t_3);
-              __pyx_t_24 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 175, __pyx_L1_error)
+              __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_ticket, __pyx_n_s_raw_body); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 191, __pyx_L1_error)
+              __Pyx_GOTREF(__pyx_t_17);
+              __pyx_t_24 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_17); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 191, __pyx_L1_error)
               __Pyx_GOTREF(__pyx_t_24);
-              __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+              __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
               __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
 
-              /* "swingAssistant/controller_cython.pyx":168
- *                             if trade3['instrument'].split('_')[1] == trade3['currency']:
- *                                 units3 = -units3
+              /* "swingAssistant/controller_cython.pyx":184
+ *                                 else:
+ *                                     units3 = -trade3['counter_units']
  *                             for ins, raw_units in zip([ins1, ins2, ins3], [units1, units2, units3]):             # <<<<<<<<<<<<<<
  *                                 units = str(int(raw_units))
  *                                 args = { 'order': {
@@ -5059,34 +5348,34 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
             }
             __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
 
-            /* "swingAssistant/controller_cython.pyx":176
- *                                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+            /* "swingAssistant/controller_cython.pyx":193
  *                                 print(ticket.raw_body)
+ *                                 # print(args)
  *                             self.reduce_exposure()             # <<<<<<<<<<<<<<
  *                             return
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
  */
-            __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_reduce_exposure); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 176, __pyx_L1_error)
+            __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_reduce_exposure); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 193, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_24);
-            __pyx_t_3 = NULL;
+            __pyx_t_17 = NULL;
             if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_24))) {
-              __pyx_t_3 = PyMethod_GET_SELF(__pyx_t_24);
-              if (likely(__pyx_t_3)) {
+              __pyx_t_17 = PyMethod_GET_SELF(__pyx_t_24);
+              if (likely(__pyx_t_17)) {
                 PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_24);
-                __Pyx_INCREF(__pyx_t_3);
+                __Pyx_INCREF(__pyx_t_17);
                 __Pyx_INCREF(function);
                 __Pyx_DECREF_SET(__pyx_t_24, function);
               }
             }
-            __pyx_t_20 = (__pyx_t_3) ? __Pyx_PyObject_CallOneArg(__pyx_t_24, __pyx_t_3) : __Pyx_PyObject_CallNoArg(__pyx_t_24);
-            __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-            if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 176, __pyx_L1_error)
+            __pyx_t_20 = (__pyx_t_17) ? __Pyx_PyObject_CallOneArg(__pyx_t_24, __pyx_t_17) : __Pyx_PyObject_CallNoArg(__pyx_t_24);
+            __Pyx_XDECREF(__pyx_t_17); __pyx_t_17 = 0;
+            if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 193, __pyx_L1_error)
             __Pyx_GOTREF(__pyx_t_20);
             __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
             __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
 
-            /* "swingAssistant/controller_cython.pyx":177
- *                                 print(ticket.raw_body)
+            /* "swingAssistant/controller_cython.pyx":194
+ *                                 # print(args)
  *                             self.reduce_exposure()
  *                             return             # <<<<<<<<<<<<<<
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
@@ -5150,35 +5439,35 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":179
+  /* "swingAssistant/controller_cython.pyx":196
  *                             return
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
  *         print('Could not find circle trades, going to close the worst')             # <<<<<<<<<<<<<<
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 2*float(account.balance) > float(account.positionValue):
+ *         if 10*float(account.balance) > float(account.positionValue):
  */
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 196, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":180
+  /* "swingAssistant/controller_cython.pyx":197
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
  *         print('Could not find circle trades, going to close the worst')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')             # <<<<<<<<<<<<<<
- *         if 2*float(account.balance) > float(account.positionValue):
+ *         if 10*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  */
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_account); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_account); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_summary); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_summary); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_get); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_get); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_20);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_1 = NULL;
@@ -5193,7 +5482,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   }
   __pyx_t_5 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_20, __pyx_t_1, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_20, __pyx_n_u_account_id);
   __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 180, __pyx_L1_error)
+  if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
   __pyx_t_20 = NULL;
@@ -5209,70 +5498,70 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __pyx_t_4 = (__pyx_t_20) ? __Pyx_PyObject_Call2Args(__pyx_t_2, __pyx_t_20, __pyx_t_5) : __Pyx_PyObject_CallOneArg(__pyx_t_2, __pyx_t_5);
   __Pyx_XDECREF(__pyx_t_20); __pyx_t_20 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 180, __pyx_L1_error)
+  if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_get); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_tuple__7, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_account = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":181
+  /* "swingAssistant/controller_cython.pyx":198
  *         print('Could not find circle trades, going to close the worst')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 2*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
+ *         if 10*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return
  */
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_balance); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 181, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_balance); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_26 = __Pyx_PyObject_AsDouble(__pyx_t_4); if (unlikely(__pyx_t_26 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
+  __pyx_t_26 = __Pyx_PyObject_AsDouble(__pyx_t_4); if (unlikely(__pyx_t_26 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_positionValue); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 181, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_positionValue); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_4); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 181, __pyx_L1_error)
+  __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_4); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = (((2.0 * __pyx_t_26) > __pyx_t_27) != 0);
+  __pyx_t_8 = (((10.0 * __pyx_t_26) > __pyx_t_27) != 0);
   if (__pyx_t_8) {
 
-    /* "swingAssistant/controller_cython.pyx":182
+    /* "swingAssistant/controller_cython.pyx":199
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 2*float(account.balance) > float(account.positionValue):
+ *         if 10*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))             # <<<<<<<<<<<<<<
  *             return
  *         biggest_loss = 0
  */
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_balance); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_balance); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_4); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Account_Balance, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_kp_u_Account_Balance, __pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_4, __pyx_kp_u__8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyUnicode_Concat(__pyx_t_4, __pyx_kp_u__8); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_positionValue); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_account, __pyx_n_s_positionValue); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyUnicode_Concat(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 182, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":183
- *         if 2*float(account.balance) > float(account.positionValue):
+    /* "swingAssistant/controller_cython.pyx":200
+ *         if 10*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return             # <<<<<<<<<<<<<<
  *         biggest_loss = 0
@@ -5282,16 +5571,16 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     __pyx_r = Py_None; __Pyx_INCREF(Py_None);
     goto __pyx_L0;
 
-    /* "swingAssistant/controller_cython.pyx":181
+    /* "swingAssistant/controller_cython.pyx":198
  *         print('Could not find circle trades, going to close the worst')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 2*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
+ *         if 10*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return
  */
   }
 
-  /* "swingAssistant/controller_cython.pyx":184
+  /* "swingAssistant/controller_cython.pyx":201
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return
  *         biggest_loss = 0             # <<<<<<<<<<<<<<
@@ -5300,7 +5589,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
  */
   __pyx_v_biggest_loss = 0.0;
 
-  /* "swingAssistant/controller_cython.pyx":185
+  /* "swingAssistant/controller_cython.pyx":202
  *             return
  *         biggest_loss = 0
  *         loss_units = None             # <<<<<<<<<<<<<<
@@ -5310,7 +5599,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_INCREF(Py_None);
   __pyx_v_loss_units = Py_None;
 
-  /* "swingAssistant/controller_cython.pyx":186
+  /* "swingAssistant/controller_cython.pyx":203
  *         biggest_loss = 0
  *         loss_units = None
  *         loss_ins = None             # <<<<<<<<<<<<<<
@@ -5320,19 +5609,19 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_INCREF(Py_None);
   __pyx_v_loss_ins = Py_None;
 
-  /* "swingAssistant/controller_cython.pyx":187
+  /* "swingAssistant/controller_cython.pyx":204
  *         loss_units = None
  *         loss_ins = None
  *         winning_trades = []             # <<<<<<<<<<<<<<
  *         total_win = 0
  *         for trade in self.trades:
  */
-  __pyx_t_5 = PyList_New(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_5 = PyList_New(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 204, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __pyx_v_winning_trades = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":188
+  /* "swingAssistant/controller_cython.pyx":205
  *         loss_ins = None
  *         winning_trades = []
  *         total_win = 0             # <<<<<<<<<<<<<<
@@ -5342,22 +5631,22 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_total_win = __pyx_int_0;
 
-  /* "swingAssistant/controller_cython.pyx":189
+  /* "swingAssistant/controller_cython.pyx":206
  *         winning_trades = []
  *         total_win = 0
  *         for trade in self.trades:             # <<<<<<<<<<<<<<
  *             if float(trade.unrealizedPL) < biggest_loss:
  *                 biggest_loss = float(trade.unrealizedPL)
  */
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   if (likely(PyList_CheckExact(__pyx_t_5)) || PyTuple_CheckExact(__pyx_t_5)) {
     __pyx_t_4 = __pyx_t_5; __Pyx_INCREF(__pyx_t_4); __pyx_t_11 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_11 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 189, __pyx_L1_error)
+    __pyx_t_11 = -1; __pyx_t_4 = PyObject_GetIter(__pyx_t_5); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 206, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 189, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_4)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 206, __pyx_L1_error)
   }
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   for (;;) {
@@ -5365,17 +5654,17 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
       if (likely(PyList_CheckExact(__pyx_t_4))) {
         if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_5); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 189, __pyx_L1_error)
+        __pyx_t_5 = PyList_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_5); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 206, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       } else {
         if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_4)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_5); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 189, __pyx_L1_error)
+        __pyx_t_5 = PyTuple_GET_ITEM(__pyx_t_4, __pyx_t_11); __Pyx_INCREF(__pyx_t_5); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 206, __pyx_L1_error)
         #else
-        __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
+        __pyx_t_5 = PySequence_ITEM(__pyx_t_4, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 206, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         #endif
       }
@@ -5385,7 +5674,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 189, __pyx_L1_error)
+          else __PYX_ERR(0, 206, __pyx_L1_error)
         }
         break;
       }
@@ -5394,112 +5683,112 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     __Pyx_XDECREF_SET(__pyx_v_trade, __pyx_t_5);
     __pyx_t_5 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":190
+    /* "swingAssistant/controller_cython.pyx":207
  *         total_win = 0
  *         for trade in self.trades:
  *             if float(trade.unrealizedPL) < biggest_loss:             # <<<<<<<<<<<<<<
  *                 biggest_loss = float(trade.unrealizedPL)
  *                 loss_units = int(trade.currentUnits)
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 190, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_5); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L1_error)
+    __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_5); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __pyx_t_8 = ((__pyx_t_27 < __pyx_v_biggest_loss) != 0);
     if (__pyx_t_8) {
 
-      /* "swingAssistant/controller_cython.pyx":191
+      /* "swingAssistant/controller_cython.pyx":208
  *         for trade in self.trades:
  *             if float(trade.unrealizedPL) < biggest_loss:
  *                 biggest_loss = float(trade.unrealizedPL)             # <<<<<<<<<<<<<<
  *                 loss_units = int(trade.currentUnits)
  *                 loss_ins = trade.instrument
  */
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 191, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 208, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_5); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 191, __pyx_L1_error)
+      __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_5); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 208, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_v_biggest_loss = __pyx_t_27;
 
-      /* "swingAssistant/controller_cython.pyx":192
+      /* "swingAssistant/controller_cython.pyx":209
  *             if float(trade.unrealizedPL) < biggest_loss:
  *                 biggest_loss = float(trade.unrealizedPL)
  *                 loss_units = int(trade.currentUnits)             # <<<<<<<<<<<<<<
  *                 loss_ins = trade.instrument
  *             elif float(trade.unrealizedPL) > 0:
  */
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 192, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 209, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 192, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_loss_units, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":193
+      /* "swingAssistant/controller_cython.pyx":210
  *                 biggest_loss = float(trade.unrealizedPL)
  *                 loss_units = int(trade.currentUnits)
  *                 loss_ins = trade.instrument             # <<<<<<<<<<<<<<
  *             elif float(trade.unrealizedPL) > 0:
  *                 winning_trades.append(trade)
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 193, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 210, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF_SET(__pyx_v_loss_ins, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":190
+      /* "swingAssistant/controller_cython.pyx":207
  *         total_win = 0
  *         for trade in self.trades:
  *             if float(trade.unrealizedPL) < biggest_loss:             # <<<<<<<<<<<<<<
  *                 biggest_loss = float(trade.unrealizedPL)
  *                 loss_units = int(trade.currentUnits)
  */
-      goto __pyx_L38;
+      goto __pyx_L40;
     }
 
-    /* "swingAssistant/controller_cython.pyx":194
+    /* "swingAssistant/controller_cython.pyx":211
  *                 loss_units = int(trade.currentUnits)
  *                 loss_ins = trade.instrument
  *             elif float(trade.unrealizedPL) > 0:             # <<<<<<<<<<<<<<
  *                 winning_trades.append(trade)
  *                 total_win += float(trade.unrealizedPL)
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_2); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 194, __pyx_L1_error)
+    __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_2); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 211, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __pyx_t_8 = ((__pyx_t_27 > 0.0) != 0);
     if (__pyx_t_8) {
 
-      /* "swingAssistant/controller_cython.pyx":195
+      /* "swingAssistant/controller_cython.pyx":212
  *                 loss_ins = trade.instrument
  *             elif float(trade.unrealizedPL) > 0:
  *                 winning_trades.append(trade)             # <<<<<<<<<<<<<<
  *                 total_win += float(trade.unrealizedPL)
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))
  */
-      __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_winning_trades, __pyx_v_trade); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 195, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_Append(__pyx_v_winning_trades, __pyx_v_trade); if (unlikely(__pyx_t_10 == ((int)-1))) __PYX_ERR(0, 212, __pyx_L1_error)
 
-      /* "swingAssistant/controller_cython.pyx":196
+      /* "swingAssistant/controller_cython.pyx":213
  *             elif float(trade.unrealizedPL) > 0:
  *                 winning_trades.append(trade)
  *                 total_win += float(trade.unrealizedPL)             # <<<<<<<<<<<<<<
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))
  *         close_amount = min(abs(biggest_loss), total_win)
  */
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 196, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 196, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 213, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-      __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_total_win, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 196, __pyx_L1_error)
+      __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_total_win, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF_SET(__pyx_v_total_win, __pyx_t_2);
       __pyx_t_2 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":194
+      /* "swingAssistant/controller_cython.pyx":211
  *                 loss_units = int(trade.currentUnits)
  *                 loss_ins = trade.instrument
  *             elif float(trade.unrealizedPL) > 0:             # <<<<<<<<<<<<<<
@@ -5507,9 +5796,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
  *                 total_win += float(trade.unrealizedPL)
  */
     }
-    __pyx_L38:;
+    __pyx_L40:;
 
-    /* "swingAssistant/controller_cython.pyx":189
+    /* "swingAssistant/controller_cython.pyx":206
  *         winning_trades = []
  *         total_win = 0
  *         for trade in self.trades:             # <<<<<<<<<<<<<<
@@ -5519,32 +5808,32 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   }
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":197
+  /* "swingAssistant/controller_cython.pyx":214
  *                 winning_trades.append(trade)
  *                 total_win += float(trade.unrealizedPL)
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))             # <<<<<<<<<<<<<<
  *         close_amount = min(abs(biggest_loss), total_win)
  *         close_units = -int(loss_units*close_amount/abs(biggest_loss))
  */
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_winning_trades);
   __Pyx_GIVEREF(__pyx_v_winning_trades);
   PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_winning_trades);
-  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_14swingAssistant_17controller_cython_10Controller_15reduce_exposure_1lambda1, 0, __pyx_n_s_Controller_reduce_exposure_local, NULL, __pyx_n_s_swingAssistant_controller_cython, __pyx_d, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_14swingAssistant_17controller_cython_10Controller_15reduce_exposure_1lambda1, 0, __pyx_n_s_Controller_reduce_exposure_local, NULL, __pyx_n_s_swingAssistant_controller_cython, __pyx_d, NULL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_t_5) < 0) __PYX_ERR(0, 197, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_s_key, __pyx_t_5) < 0) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 197, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_builtin_sorted, __pyx_t_4, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 214, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF_SET(__pyx_v_winning_trades, __pyx_t_5);
   __pyx_t_5 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":198
+  /* "swingAssistant/controller_cython.pyx":215
  *                 total_win += float(trade.unrealizedPL)
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))
  *         close_amount = min(abs(biggest_loss), total_win)             # <<<<<<<<<<<<<<
@@ -5554,17 +5843,17 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_INCREF(__pyx_v_total_win);
   __pyx_t_5 = __pyx_v_total_win;
   __pyx_t_27 = fabs(__pyx_v_biggest_loss);
-  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_27); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_4 = PyFloat_FromDouble(__pyx_t_27); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_20 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_20); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_20 = PyObject_RichCompare(__pyx_t_5, __pyx_t_4, Py_LT); __Pyx_XGOTREF(__pyx_t_20); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_20); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 198, __pyx_L1_error)
+  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_20); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
   if (__pyx_t_8) {
     __Pyx_INCREF(__pyx_t_5);
     __pyx_t_2 = __pyx_t_5;
   } else {
-    __pyx_t_20 = PyFloat_FromDouble(__pyx_t_27); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 198, __pyx_L1_error)
+    __pyx_t_20 = PyFloat_FromDouble(__pyx_t_27); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 215, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
     __pyx_t_2 = __pyx_t_20;
     __pyx_t_20 = 0;
@@ -5576,31 +5865,31 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __pyx_v_close_amount = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":199
+  /* "swingAssistant/controller_cython.pyx":216
  *         winning_trades = sorted(winning_trades, key = lambda x: float(x.unrealizedPL))
  *         close_amount = min(abs(biggest_loss), total_win)
  *         close_units = -int(loss_units*close_amount/abs(biggest_loss))             # <<<<<<<<<<<<<<
  *         closed_amount = 0
  *         for trade in winning_trades:
  */
-  __pyx_t_5 = PyNumber_Multiply(__pyx_v_loss_units, __pyx_v_close_amount); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_5 = PyNumber_Multiply(__pyx_v_loss_units, __pyx_v_close_amount); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_2 = PyFloat_FromDouble(fabs(__pyx_v_biggest_loss)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_2 = PyFloat_FromDouble(fabs(__pyx_v_biggest_loss)); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_20 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_20 = __Pyx_PyNumber_Divide(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_20);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_20); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyNumber_Int(__pyx_t_20); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-  __pyx_t_20 = PyNumber_Negative(__pyx_t_2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 199, __pyx_L1_error)
+  __pyx_t_20 = PyNumber_Negative(__pyx_t_2); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 216, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_20);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_close_units = __pyx_t_20;
   __pyx_t_20 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":200
+  /* "swingAssistant/controller_cython.pyx":217
  *         close_amount = min(abs(biggest_loss), total_win)
  *         close_units = -int(loss_units*close_amount/abs(biggest_loss))
  *         closed_amount = 0             # <<<<<<<<<<<<<<
@@ -5610,7 +5899,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_INCREF(__pyx_int_0);
   __pyx_v_closed_amount = __pyx_int_0;
 
-  /* "swingAssistant/controller_cython.pyx":201
+  /* "swingAssistant/controller_cython.pyx":218
  *         close_units = -int(loss_units*close_amount/abs(biggest_loss))
  *         closed_amount = 0
  *         for trade in winning_trades:             # <<<<<<<<<<<<<<
@@ -5621,26 +5910,26 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     __pyx_t_20 = __pyx_v_winning_trades; __Pyx_INCREF(__pyx_t_20); __pyx_t_11 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_11 = -1; __pyx_t_20 = PyObject_GetIter(__pyx_v_winning_trades); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_11 = -1; __pyx_t_20 = PyObject_GetIter(__pyx_v_winning_trades); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 218, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_20);
-    __pyx_t_7 = Py_TYPE(__pyx_t_20)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 201, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_20)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 218, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_7)) {
       if (likely(PyList_CheckExact(__pyx_t_20))) {
         if (__pyx_t_11 >= PyList_GET_SIZE(__pyx_t_20)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_2 = PyList_GET_ITEM(__pyx_t_20, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 218, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_20, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_20, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       } else {
         if (__pyx_t_11 >= PyTuple_GET_SIZE(__pyx_t_20)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_20, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_20, __pyx_t_11); __Pyx_INCREF(__pyx_t_2); __pyx_t_11++; if (unlikely(0 < 0)) __PYX_ERR(0, 218, __pyx_L1_error)
         #else
-        __pyx_t_2 = PySequence_ITEM(__pyx_t_20, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 201, __pyx_L1_error)
+        __pyx_t_2 = PySequence_ITEM(__pyx_t_20, __pyx_t_11); __pyx_t_11++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         #endif
       }
@@ -5650,7 +5939,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 201, __pyx_L1_error)
+          else __PYX_ERR(0, 218, __pyx_L1_error)
         }
         break;
       }
@@ -5659,42 +5948,42 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     __Pyx_XDECREF_SET(__pyx_v_trade, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":202
+    /* "swingAssistant/controller_cython.pyx":219
  *         closed_amount = 0
  *         for trade in winning_trades:
  *             closed_amount += float(trade.unrealizedPL)             # <<<<<<<<<<<<<<
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)
  *             print('Closing ' + trade.instrument)
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 202, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Float(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_closed_amount, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 202, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_InPlaceAdd(__pyx_v_closed_amount, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 219, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF_SET(__pyx_v_closed_amount, __pyx_t_2);
     __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":203
+    /* "swingAssistant/controller_cython.pyx":220
  *         for trade in winning_trades:
  *             closed_amount += float(trade.unrealizedPL)
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)             # <<<<<<<<<<<<<<
  *             print('Closing ' + trade.instrument)
  *             if closed_amount >= close_amount:
  */
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_trade); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_trade); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_close); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_close); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_get); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_get); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_24);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -5709,10 +5998,10 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     }
     __pyx_t_4 = (__pyx_t_1) ? __Pyx_PyObject_Call2Args(__pyx_t_24, __pyx_t_1, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_24, __pyx_n_u_account_id);
     __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 203, __pyx_L1_error)
+    if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_24); __pyx_t_24 = 0;
-    __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 203, __pyx_L1_error)
+    __pyx_t_24 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_24)) __PYX_ERR(0, 220, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_24);
     __pyx_t_1 = NULL;
     __pyx_t_12 = 0;
@@ -5729,7 +6018,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     #if CYTHON_FAST_PYCALL
     if (PyFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_4, __pyx_t_24};
-      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -5739,7 +6028,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     #if CYTHON_FAST_PYCCALL
     if (__Pyx_PyFastCFunction_Check(__pyx_t_5)) {
       PyObject *__pyx_temp[3] = {__pyx_t_1, __pyx_t_4, __pyx_t_24};
-      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_5, __pyx_temp+1-__pyx_t_12, 2+__pyx_t_12); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_GOTREF(__pyx_t_2);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -5747,72 +6036,72 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     } else
     #endif
     {
-      __pyx_t_3 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 203, __pyx_L1_error)
-      __Pyx_GOTREF(__pyx_t_3);
+      __pyx_t_17 = PyTuple_New(2+__pyx_t_12); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 220, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_17);
       if (__pyx_t_1) {
-        __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_1); __pyx_t_1 = NULL;
+        __Pyx_GIVEREF(__pyx_t_1); PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_1); __pyx_t_1 = NULL;
       }
       __Pyx_GIVEREF(__pyx_t_4);
-      PyTuple_SET_ITEM(__pyx_t_3, 0+__pyx_t_12, __pyx_t_4);
+      PyTuple_SET_ITEM(__pyx_t_17, 0+__pyx_t_12, __pyx_t_4);
       __Pyx_GIVEREF(__pyx_t_24);
-      PyTuple_SET_ITEM(__pyx_t_3, 1+__pyx_t_12, __pyx_t_24);
+      PyTuple_SET_ITEM(__pyx_t_17, 1+__pyx_t_12, __pyx_t_24);
       __pyx_t_4 = 0;
       __pyx_t_24 = 0;
-      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_3, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 203, __pyx_L1_error)
+      __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_5, __pyx_t_17, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 220, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_2);
-      __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+      __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":204
+    /* "swingAssistant/controller_cython.pyx":221
  *             closed_amount += float(trade.unrealizedPL)
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)
  *             print('Closing ' + trade.instrument)             # <<<<<<<<<<<<<<
  *             if closed_amount >= close_amount:
  *                 break
  */
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 204, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_5 = PyNumber_Add(__pyx_kp_u_Closing, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 204, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Add(__pyx_kp_u_Closing, __pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 221, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 204, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 221, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":205
+    /* "swingAssistant/controller_cython.pyx":222
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)
  *             print('Closing ' + trade.instrument)
  *             if closed_amount >= close_amount:             # <<<<<<<<<<<<<<
  *                 break
- *         if loss_ins:
+ *         if loss_ins and abs(close_units) > 0:
  */
-    __pyx_t_2 = PyObject_RichCompare(__pyx_v_closed_amount, __pyx_v_close_amount, Py_GE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
-    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 205, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_v_closed_amount, __pyx_v_close_amount, Py_GE); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 222, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 222, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_8) {
 
-      /* "swingAssistant/controller_cython.pyx":206
+      /* "swingAssistant/controller_cython.pyx":223
  *             print('Closing ' + trade.instrument)
  *             if closed_amount >= close_amount:
  *                 break             # <<<<<<<<<<<<<<
- *         if loss_ins:
+ *         if loss_ins and abs(close_units) > 0:
  *             args = { 'order': {
  */
-      goto __pyx_L40_break;
+      goto __pyx_L42_break;
 
-      /* "swingAssistant/controller_cython.pyx":205
+      /* "swingAssistant/controller_cython.pyx":222
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)
  *             print('Closing ' + trade.instrument)
  *             if closed_amount >= close_amount:             # <<<<<<<<<<<<<<
  *                 break
- *         if loss_ins:
+ *         if loss_ins and abs(close_units) > 0:
  */
     }
 
-    /* "swingAssistant/controller_cython.pyx":201
+    /* "swingAssistant/controller_cython.pyx":218
  *         close_units = -int(loss_units*close_amount/abs(biggest_loss))
  *         closed_amount = 0
  *         for trade in winning_trades:             # <<<<<<<<<<<<<<
@@ -5820,116 +6109,155 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
  *             self.oanda.trade.close(self.settings.get('account_id'), trade.id)
  */
   }
-  __pyx_L40_break:;
+  __pyx_L42_break:;
   __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":207
+  /* "swingAssistant/controller_cython.pyx":224
  *             if closed_amount >= close_amount:
  *                 break
- *         if loss_ins:             # <<<<<<<<<<<<<<
+ *         if loss_ins and abs(close_units) > 0:             # <<<<<<<<<<<<<<
  *             args = { 'order': {
  *                 'instrument': loss_ins,
  */
-  __pyx_t_8 = __Pyx_PyObject_IsTrue(__pyx_v_loss_ins); if (unlikely(__pyx_t_8 < 0)) __PYX_ERR(0, 207, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_v_loss_ins); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 224, __pyx_L1_error)
+  if (__pyx_t_9) {
+  } else {
+    __pyx_t_8 = __pyx_t_9;
+    goto __pyx_L45_bool_binop_done;
+  }
+  __pyx_t_20 = __Pyx_PyNumber_Absolute(__pyx_v_close_units); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_20);
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_20, __pyx_int_0, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+  __pyx_t_9 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_9 < 0)) __PYX_ERR(0, 224, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+  __pyx_t_8 = __pyx_t_9;
+  __pyx_L45_bool_binop_done:;
   if (__pyx_t_8) {
 
-    /* "swingAssistant/controller_cython.pyx":208
+    /* "swingAssistant/controller_cython.pyx":225
  *                 break
- *         if loss_ins:
+ *         if loss_ins and abs(close_units) > 0:
  *             args = { 'order': {             # <<<<<<<<<<<<<<
  *                 'instrument': loss_ins,
  *                 'units': close_units,
  */
-    __pyx_t_20 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 208, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_20);
+    __pyx_t_2 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 225, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
 
-    /* "swingAssistant/controller_cython.pyx":209
- *         if loss_ins:
+    /* "swingAssistant/controller_cython.pyx":226
+ *         if loss_ins and abs(close_units) > 0:
  *             args = { 'order': {
  *                 'instrument': loss_ins,             # <<<<<<<<<<<<<<
  *                 'units': close_units,
  *                 'type': 'MARKET' } }
  */
-    __pyx_t_2 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 209, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_instrument, __pyx_v_loss_ins) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
+    __pyx_t_20 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 226, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_20);
+    if (PyDict_SetItem(__pyx_t_20, __pyx_n_u_instrument, __pyx_v_loss_ins) < 0) __PYX_ERR(0, 226, __pyx_L1_error)
 
-    /* "swingAssistant/controller_cython.pyx":210
+    /* "swingAssistant/controller_cython.pyx":227
  *             args = { 'order': {
  *                 'instrument': loss_ins,
  *                 'units': close_units,             # <<<<<<<<<<<<<<
  *                 'type': 'MARKET' } }
  *             print(args)
  */
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_units, __pyx_v_close_units) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_type_2, __pyx_n_u_MARKET) < 0) __PYX_ERR(0, 209, __pyx_L1_error)
-    if (PyDict_SetItem(__pyx_t_20, __pyx_n_u_order, __pyx_t_2) < 0) __PYX_ERR(0, 208, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_v_args = ((PyObject*)__pyx_t_20);
-    __pyx_t_20 = 0;
+    if (PyDict_SetItem(__pyx_t_20, __pyx_n_u_units, __pyx_v_close_units) < 0) __PYX_ERR(0, 226, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_20, __pyx_n_u_type_2, __pyx_n_u_MARKET) < 0) __PYX_ERR(0, 226, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_order, __pyx_t_20) < 0) __PYX_ERR(0, 225, __pyx_L1_error)
+    __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+    __pyx_v_args = ((PyObject*)__pyx_t_2);
+    __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":212
+    /* "swingAssistant/controller_cython.pyx":229
  *                 'units': close_units,
  *                 'type': 'MARKET' } }
  *             print(args)             # <<<<<<<<<<<<<<
  *             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
- * 
+ *             self.reduce_exposure()
  */
-    __pyx_t_20 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_args); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 212, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_20);
-    __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_v_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 229, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":213
+    /* "swingAssistant/controller_cython.pyx":230
  *                 'type': 'MARKET' } }
  *             print(args)
  *             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)             # <<<<<<<<<<<<<<
+ *             self.reduce_exposure()
+ * 
+ */
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_order); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_20);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_create); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_2);
+    __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_5);
+    __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_get); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
+    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+    __pyx_t_5 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_17))) {
+      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_17);
+      if (likely(__pyx_t_5)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_17);
+        __Pyx_INCREF(__pyx_t_5);
+        __Pyx_INCREF(function);
+        __Pyx_DECREF_SET(__pyx_t_17, function);
+      }
+    }
+    __pyx_t_20 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_17, __pyx_t_5, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_17, __pyx_n_u_account_id);
+    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
+    if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_20);
+    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+    __pyx_t_17 = PyTuple_New(1); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
+    __Pyx_GIVEREF(__pyx_t_20);
+    PyTuple_SET_ITEM(__pyx_t_17, 0, __pyx_t_20);
+    __pyx_t_20 = 0;
+    __pyx_t_20 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_17, __pyx_v_args); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 230, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_20);
+    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
+    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
+    __pyx_v_ticket = __pyx_t_20;
+    __pyx_t_20 = 0;
+
+    /* "swingAssistant/controller_cython.pyx":231
+ *             print(args)
+ *             ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+ *             self.reduce_exposure()             # <<<<<<<<<<<<<<
  * 
  * 
  */
-    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_20);
-    __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_20, __pyx_n_s_order); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-    __pyx_t_20 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_create); if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_20);
-    __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_get); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = NULL;
-    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_3))) {
-      __pyx_t_5 = PyMethod_GET_SELF(__pyx_t_3);
-      if (likely(__pyx_t_5)) {
-        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_3);
-        __Pyx_INCREF(__pyx_t_5);
+    __pyx_t_17 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_reduce_exposure); if (unlikely(!__pyx_t_17)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_17);
+    __pyx_t_2 = NULL;
+    if (CYTHON_UNPACK_METHODS && likely(PyMethod_Check(__pyx_t_17))) {
+      __pyx_t_2 = PyMethod_GET_SELF(__pyx_t_17);
+      if (likely(__pyx_t_2)) {
+        PyObject* function = PyMethod_GET_FUNCTION(__pyx_t_17);
+        __Pyx_INCREF(__pyx_t_2);
         __Pyx_INCREF(function);
-        __Pyx_DECREF_SET(__pyx_t_3, function);
+        __Pyx_DECREF_SET(__pyx_t_17, function);
       }
     }
-    __pyx_t_2 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_n_u_account_id);
-    __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyTuple_New(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_2);
-    PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2);
-    __pyx_t_2 = 0;
-    __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_20, __pyx_t_3, __pyx_v_args); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 213, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
+    __pyx_t_20 = (__pyx_t_2) ? __Pyx_PyObject_CallOneArg(__pyx_t_17, __pyx_t_2) : __Pyx_PyObject_CallNoArg(__pyx_t_17);
+    __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
+    if (unlikely(!__pyx_t_20)) __PYX_ERR(0, 231, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_20);
+    __Pyx_DECREF(__pyx_t_17); __pyx_t_17 = 0;
     __Pyx_DECREF(__pyx_t_20); __pyx_t_20 = 0;
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_v_ticket = __pyx_t_2;
-    __pyx_t_2 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":207
+    /* "swingAssistant/controller_cython.pyx":224
  *             if closed_amount >= close_amount:
  *                 break
- *         if loss_ins:             # <<<<<<<<<<<<<<
+ *         if loss_ins and abs(close_units) > 0:             # <<<<<<<<<<<<<<
  *             args = { 'order': {
  *                 'instrument': loss_ins,
  */
@@ -5976,6 +6304,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_XDECREF(__pyx_v_ins1);
   __Pyx_XDECREF(__pyx_v_units1);
   __Pyx_XDECREF(__pyx_v_ins2);
+  __Pyx_XDECREF(__pyx_v_correction);
   __Pyx_XDECREF(__pyx_v_units2);
   __Pyx_XDECREF(__pyx_v_correction1);
   __Pyx_XDECREF(__pyx_v_ins3);
@@ -5998,7 +6327,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   return __pyx_r;
 }
 
-/* "swingAssistant/controller_cython.pyx":216
+/* "swingAssistant/controller_cython.pyx":234
  * 
  * 
  *     def check_positions(self):             # <<<<<<<<<<<<<<
@@ -6052,30 +6381,30 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
   PyObject *__pyx_t_16 = NULL;
   __Pyx_RefNannySetupContext("check_positions", 0);
 
-  /* "swingAssistant/controller_cython.pyx":217
+  /* "swingAssistant/controller_cython.pyx":235
  * 
  *     def check_positions(self):
  *         instruments = np.unique([trade.instrument for trade in self.trades])             # <<<<<<<<<<<<<<
  *         for ins in instruments:
  *             uPL = 0
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_unique); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 217, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_unique); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 235, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   { /* enter inner scope */
-    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 217, __pyx_L5_error)
+    __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 235, __pyx_L5_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L5_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L5_error)
     __Pyx_GOTREF(__pyx_t_4);
     if (likely(PyList_CheckExact(__pyx_t_4)) || PyTuple_CheckExact(__pyx_t_4)) {
       __pyx_t_5 = __pyx_t_4; __Pyx_INCREF(__pyx_t_5); __pyx_t_6 = 0;
       __pyx_t_7 = NULL;
     } else {
-      __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 217, __pyx_L5_error)
+      __pyx_t_6 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 235, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_5);
-      __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 217, __pyx_L5_error)
+      __pyx_t_7 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 235, __pyx_L5_error)
     }
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     for (;;) {
@@ -6083,17 +6412,17 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         if (likely(PyList_CheckExact(__pyx_t_5))) {
           if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_5)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 217, __pyx_L5_error)
+          __pyx_t_4 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 235, __pyx_L5_error)
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L5_error)
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         } else {
           if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 217, __pyx_L5_error)
+          __pyx_t_4 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_6); __Pyx_INCREF(__pyx_t_4); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 235, __pyx_L5_error)
           #else
-          __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L5_error)
+          __pyx_t_4 = PySequence_ITEM(__pyx_t_5, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L5_error)
           __Pyx_GOTREF(__pyx_t_4);
           #endif
         }
@@ -6103,7 +6432,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 217, __pyx_L5_error)
+            else __PYX_ERR(0, 235, __pyx_L5_error)
           }
           break;
         }
@@ -6111,9 +6440,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       }
       __Pyx_XDECREF_SET(__pyx_8genexpr1__pyx_v_trade, __pyx_t_4);
       __pyx_t_4 = 0;
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr1__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 217, __pyx_L5_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr1__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 235, __pyx_L5_error)
       __Pyx_GOTREF(__pyx_t_4);
-      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 217, __pyx_L5_error)
+      if (unlikely(__Pyx_ListComp_Append(__pyx_t_2, (PyObject*)__pyx_t_4))) __PYX_ERR(0, 235, __pyx_L5_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6137,13 +6466,13 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
   __pyx_t_1 = (__pyx_t_5) ? __Pyx_PyObject_Call2Args(__pyx_t_3, __pyx_t_5, __pyx_t_2) : __Pyx_PyObject_CallOneArg(__pyx_t_3, __pyx_t_2);
   __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 217, __pyx_L1_error)
+  if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 235, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_v_instruments = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":218
+  /* "swingAssistant/controller_cython.pyx":236
  *     def check_positions(self):
  *         instruments = np.unique([trade.instrument for trade in self.trades])
  *         for ins in instruments:             # <<<<<<<<<<<<<<
@@ -6154,26 +6483,26 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     __pyx_t_1 = __pyx_v_instruments; __Pyx_INCREF(__pyx_t_1); __pyx_t_6 = 0;
     __pyx_t_7 = NULL;
   } else {
-    __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_instruments); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_6 = -1; __pyx_t_1 = PyObject_GetIter(__pyx_v_instruments); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 236, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_7 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 218, __pyx_L1_error)
+    __pyx_t_7 = Py_TYPE(__pyx_t_1)->tp_iternext; if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 236, __pyx_L1_error)
   }
   for (;;) {
     if (likely(!__pyx_t_7)) {
       if (likely(PyList_CheckExact(__pyx_t_1))) {
         if (__pyx_t_6 >= PyList_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 236, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       } else {
         if (__pyx_t_6 >= PyTuple_GET_SIZE(__pyx_t_1)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_3 = PyTuple_GET_ITEM(__pyx_t_1, __pyx_t_6); __Pyx_INCREF(__pyx_t_3); __pyx_t_6++; if (unlikely(0 < 0)) __PYX_ERR(0, 236, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 218, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_1, __pyx_t_6); __pyx_t_6++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
       }
@@ -6183,7 +6512,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         PyObject* exc_type = PyErr_Occurred();
         if (exc_type) {
           if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-          else __PYX_ERR(0, 218, __pyx_L1_error)
+          else __PYX_ERR(0, 236, __pyx_L1_error)
         }
         break;
       }
@@ -6192,7 +6521,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     __Pyx_XDECREF_SET(__pyx_v_ins, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":219
+    /* "swingAssistant/controller_cython.pyx":237
  *         instruments = np.unique([trade.instrument for trade in self.trades])
  *         for ins in instruments:
  *             uPL = 0             # <<<<<<<<<<<<<<
@@ -6202,7 +6531,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_uPL, __pyx_int_0);
 
-    /* "swingAssistant/controller_cython.pyx":220
+    /* "swingAssistant/controller_cython.pyx":238
  *         for ins in instruments:
  *             uPL = 0
  *             biggest_loss = 0             # <<<<<<<<<<<<<<
@@ -6211,19 +6540,19 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  */
     __pyx_v_biggest_loss = 0.0;
 
-    /* "swingAssistant/controller_cython.pyx":221
+    /* "swingAssistant/controller_cython.pyx":239
  *             uPL = 0
  *             biggest_loss = 0
  *             winning_ids = []             # <<<<<<<<<<<<<<
  *             loss_id = None
  *             units = 0
  */
-    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 221, __pyx_L1_error)
+    __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_XDECREF_SET(__pyx_v_winning_ids, ((PyObject*)__pyx_t_3));
     __pyx_t_3 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":222
+    /* "swingAssistant/controller_cython.pyx":240
  *             biggest_loss = 0
  *             winning_ids = []
  *             loss_id = None             # <<<<<<<<<<<<<<
@@ -6233,7 +6562,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     __Pyx_INCREF(Py_None);
     __Pyx_XDECREF_SET(__pyx_v_loss_id, Py_None);
 
-    /* "swingAssistant/controller_cython.pyx":223
+    /* "swingAssistant/controller_cython.pyx":241
  *             winning_ids = []
  *             loss_id = None
  *             units = 0             # <<<<<<<<<<<<<<
@@ -6243,7 +6572,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     __Pyx_INCREF(__pyx_int_0);
     __Pyx_XDECREF_SET(__pyx_v_units, __pyx_int_0);
 
-    /* "swingAssistant/controller_cython.pyx":224
+    /* "swingAssistant/controller_cython.pyx":242
  *             loss_id = None
  *             units = 0
  *             for trade in [trade for trade in self.trades if trade.instrument == ins]:             # <<<<<<<<<<<<<<
@@ -6251,17 +6580,17 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  *                     biggest_loss = float(trade.unrealizedPL)
  */
     { /* enter inner scope */
-      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L15_error)
+      __pyx_t_3 = PyList_New(0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L15_error)
+      __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_trades); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L15_error)
       __Pyx_GOTREF(__pyx_t_2);
       if (likely(PyList_CheckExact(__pyx_t_2)) || PyTuple_CheckExact(__pyx_t_2)) {
         __pyx_t_5 = __pyx_t_2; __Pyx_INCREF(__pyx_t_5); __pyx_t_8 = 0;
         __pyx_t_9 = NULL;
       } else {
-        __pyx_t_8 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 224, __pyx_L15_error)
+        __pyx_t_8 = -1; __pyx_t_5 = PyObject_GetIter(__pyx_t_2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 242, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_5);
-        __pyx_t_9 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 224, __pyx_L15_error)
+        __pyx_t_9 = Py_TYPE(__pyx_t_5)->tp_iternext; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 242, __pyx_L15_error)
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       for (;;) {
@@ -6269,17 +6598,17 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
           if (likely(PyList_CheckExact(__pyx_t_5))) {
             if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_5)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_2 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 224, __pyx_L15_error)
+            __pyx_t_2 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 242, __pyx_L15_error)
             #else
-            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L15_error)
+            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_2);
             #endif
           } else {
             if (__pyx_t_8 >= PyTuple_GET_SIZE(__pyx_t_5)) break;
             #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-            __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 224, __pyx_L15_error)
+            __pyx_t_2 = PyTuple_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_2); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 242, __pyx_L15_error)
             #else
-            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L15_error)
+            __pyx_t_2 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_2);
             #endif
           }
@@ -6289,7 +6618,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
             PyObject* exc_type = PyErr_Occurred();
             if (exc_type) {
               if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-              else __PYX_ERR(0, 224, __pyx_L15_error)
+              else __PYX_ERR(0, 242, __pyx_L15_error)
             }
             break;
           }
@@ -6297,14 +6626,14 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         }
         __Pyx_XDECREF_SET(__pyx_8genexpr2__pyx_v_trade, __pyx_t_2);
         __pyx_t_2 = 0;
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 224, __pyx_L15_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_8genexpr2__pyx_v_trade, __pyx_n_s_instrument); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 242, __pyx_L15_error)
         __Pyx_GOTREF(__pyx_t_2);
-        __pyx_t_4 = PyObject_RichCompare(__pyx_t_2, __pyx_v_ins, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 224, __pyx_L15_error)
+        __pyx_t_4 = PyObject_RichCompare(__pyx_t_2, __pyx_v_ins, Py_EQ); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 242, __pyx_L15_error)
         __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-        __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 224, __pyx_L15_error)
+        __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 242, __pyx_L15_error)
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         if (__pyx_t_10) {
-          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_8genexpr2__pyx_v_trade))) __PYX_ERR(0, 224, __pyx_L15_error)
+          if (unlikely(__Pyx_ListComp_Append(__pyx_t_3, (PyObject*)__pyx_8genexpr2__pyx_v_trade))) __PYX_ERR(0, 242, __pyx_L15_error)
         }
       }
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6320,54 +6649,54 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     for (;;) {
       if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_5)) break;
       #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-      __pyx_t_3 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 224, __pyx_L1_error)
+      __pyx_t_3 = PyList_GET_ITEM(__pyx_t_5, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 242, __pyx_L1_error)
       #else
-      __pyx_t_3 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 224, __pyx_L1_error)
+      __pyx_t_3 = PySequence_ITEM(__pyx_t_5, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 242, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       #endif
       __Pyx_XDECREF_SET(__pyx_v_trade, __pyx_t_3);
       __pyx_t_3 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":225
+      /* "swingAssistant/controller_cython.pyx":243
  *             units = 0
  *             for trade in [trade for trade in self.trades if trade.instrument == ins]:
  *                 if float(trade.unrealizedPL) < biggest_loss:             # <<<<<<<<<<<<<<
  *                     biggest_loss = float(trade.unrealizedPL)
  *                     loss_id = trade.id
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 225, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 243, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 225, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 243, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_10 = ((__pyx_t_11 < __pyx_v_biggest_loss) != 0);
       if (__pyx_t_10) {
 
-        /* "swingAssistant/controller_cython.pyx":226
+        /* "swingAssistant/controller_cython.pyx":244
  *             for trade in [trade for trade in self.trades if trade.instrument == ins]:
  *                 if float(trade.unrealizedPL) < biggest_loss:
  *                     biggest_loss = float(trade.unrealizedPL)             # <<<<<<<<<<<<<<
  *                     loss_id = trade.id
  *                 elif float(trade.unrealizedPL) > 0:
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 226, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 226, __pyx_L1_error)
+        __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 244, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
         __pyx_v_biggest_loss = __pyx_t_11;
 
-        /* "swingAssistant/controller_cython.pyx":227
+        /* "swingAssistant/controller_cython.pyx":245
  *                 if float(trade.unrealizedPL) < biggest_loss:
  *                     biggest_loss = float(trade.unrealizedPL)
  *                     loss_id = trade.id             # <<<<<<<<<<<<<<
  *                 elif float(trade.unrealizedPL) > 0:
  *                     uPL += float(trade.unrealizedPL)
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 227, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 245, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF_SET(__pyx_v_loss_id, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":225
+        /* "swingAssistant/controller_cython.pyx":243
  *             units = 0
  *             for trade in [trade for trade in self.trades if trade.instrument == ins]:
  *                 if float(trade.unrealizedPL) < biggest_loss:             # <<<<<<<<<<<<<<
@@ -6377,51 +6706,51 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         goto __pyx_L20;
       }
 
-      /* "swingAssistant/controller_cython.pyx":228
+      /* "swingAssistant/controller_cython.pyx":246
  *                     biggest_loss = float(trade.unrealizedPL)
  *                     loss_id = trade.id
  *                 elif float(trade.unrealizedPL) > 0:             # <<<<<<<<<<<<<<
  *                     uPL += float(trade.unrealizedPL)
  *                     winning_ids.append(trade.id)
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 246, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 228, __pyx_L1_error)
+      __pyx_t_11 = __Pyx_PyObject_AsDouble(__pyx_t_3); if (unlikely(__pyx_t_11 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 246, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __pyx_t_10 = ((__pyx_t_11 > 0.0) != 0);
       if (__pyx_t_10) {
 
-        /* "swingAssistant/controller_cython.pyx":229
+        /* "swingAssistant/controller_cython.pyx":247
  *                     loss_id = trade.id
  *                 elif float(trade.unrealizedPL) > 0:
  *                     uPL += float(trade.unrealizedPL)             # <<<<<<<<<<<<<<
  *                     winning_ids.append(trade.id)
  *                 if abs(trade.currentUnits) > abs(units):
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 229, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_unrealizedPL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 247, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_4 = __Pyx_PyNumber_Float(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 229, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyNumber_Float(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 247, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-        __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_uPL, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 229, __pyx_L1_error)
+        __pyx_t_3 = PyNumber_InPlaceAdd(__pyx_v_uPL, __pyx_t_4); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 247, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF_SET(__pyx_v_uPL, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":230
+        /* "swingAssistant/controller_cython.pyx":248
  *                 elif float(trade.unrealizedPL) > 0:
  *                     uPL += float(trade.unrealizedPL)
  *                     winning_ids.append(trade.id)             # <<<<<<<<<<<<<<
  *                 if abs(trade.currentUnits) > abs(units):
  *                     units = trade.currentUnits
  */
-        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 230, __pyx_L1_error)
+        __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_id); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 248, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
-        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_winning_ids, __pyx_t_3); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 230, __pyx_L1_error)
+        __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_winning_ids, __pyx_t_3); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 248, __pyx_L1_error)
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":228
+        /* "swingAssistant/controller_cython.pyx":246
  *                     biggest_loss = float(trade.unrealizedPL)
  *                     loss_id = trade.id
  *                 elif float(trade.unrealizedPL) > 0:             # <<<<<<<<<<<<<<
@@ -6431,40 +6760,40 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       }
       __pyx_L20:;
 
-      /* "swingAssistant/controller_cython.pyx":231
+      /* "swingAssistant/controller_cython.pyx":249
  *                     uPL += float(trade.unrealizedPL)
  *                     winning_ids.append(trade.id)
  *                 if abs(trade.currentUnits) > abs(units):             # <<<<<<<<<<<<<<
  *                     units = trade.currentUnits
  *             if not loss_id:
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyNumber_Absolute(__pyx_t_3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 249, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyNumber_Absolute(__pyx_v_units); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 249, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_2 = PyObject_RichCompare(__pyx_t_4, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 249, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 231, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 249, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
       if (__pyx_t_10) {
 
-        /* "swingAssistant/controller_cython.pyx":232
+        /* "swingAssistant/controller_cython.pyx":250
  *                     winning_ids.append(trade.id)
  *                 if abs(trade.currentUnits) > abs(units):
  *                     units = trade.currentUnits             # <<<<<<<<<<<<<<
  *             if not loss_id:
  *                 # let the winner run
  */
-        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 232, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_trade, __pyx_n_s_currentUnits); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 250, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF_SET(__pyx_v_units, __pyx_t_2);
         __pyx_t_2 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":231
+        /* "swingAssistant/controller_cython.pyx":249
  *                     uPL += float(trade.unrealizedPL)
  *                     winning_ids.append(trade.id)
  *                 if abs(trade.currentUnits) > abs(units):             # <<<<<<<<<<<<<<
@@ -6473,7 +6802,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  */
       }
 
-      /* "swingAssistant/controller_cython.pyx":224
+      /* "swingAssistant/controller_cython.pyx":242
  *             loss_id = None
  *             units = 0
  *             for trade in [trade for trade in self.trades if trade.instrument == ins]:             # <<<<<<<<<<<<<<
@@ -6483,18 +6812,18 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
     }
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":233
+    /* "swingAssistant/controller_cython.pyx":251
  *                 if abs(trade.currentUnits) > abs(units):
  *                     units = trade.currentUnits
  *             if not loss_id:             # <<<<<<<<<<<<<<
  *                 # let the winner run
  *                 continue
  */
-    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_loss_id); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 233, __pyx_L1_error)
+    __pyx_t_10 = __Pyx_PyObject_IsTrue(__pyx_v_loss_id); if (unlikely(__pyx_t_10 < 0)) __PYX_ERR(0, 251, __pyx_L1_error)
     __pyx_t_13 = ((!__pyx_t_10) != 0);
     if (__pyx_t_13) {
 
-      /* "swingAssistant/controller_cython.pyx":235
+      /* "swingAssistant/controller_cython.pyx":253
  *             if not loss_id:
  *                 # let the winner run
  *                 continue             # <<<<<<<<<<<<<<
@@ -6503,7 +6832,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  */
       goto __pyx_L9_continue;
 
-      /* "swingAssistant/controller_cython.pyx":233
+      /* "swingAssistant/controller_cython.pyx":251
  *                 if abs(trade.currentUnits) > abs(units):
  *                     units = trade.currentUnits
  *             if not loss_id:             # <<<<<<<<<<<<<<
@@ -6512,74 +6841,74 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  */
     }
 
-    /* "swingAssistant/controller_cython.pyx":236
+    /* "swingAssistant/controller_cython.pyx":254
  *                 # let the winner run
  *                 continue
  *             print(ins + ' ' + str(uPL) + ' ' + str(biggest_loss))             # <<<<<<<<<<<<<<
  *             if abs(uPL) > abs(biggest_loss):
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
  */
-    __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_kp_u__5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_5 = PyNumber_Add(__pyx_v_ins, __pyx_kp_u__5); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_uPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_v_uPL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Add(__pyx_t_5, __pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_2 = PyNumber_Add(__pyx_t_3, __pyx_kp_u__5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_2 = PyNumber_Add(__pyx_t_3, __pyx_kp_u__5); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_biggest_loss); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(__pyx_v_biggest_loss); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(((PyObject *)(&PyUnicode_Type)), __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_3 = PyNumber_Add(__pyx_t_2, __pyx_t_5); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 236, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 254, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-    /* "swingAssistant/controller_cython.pyx":237
+    /* "swingAssistant/controller_cython.pyx":255
  *                 continue
  *             print(ins + ' ' + str(uPL) + ' ' + str(biggest_loss))
  *             if abs(uPL) > abs(biggest_loss):             # <<<<<<<<<<<<<<
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
  *                 for trade_id in winning_ids:
  */
-    __pyx_t_5 = __Pyx_PyNumber_Absolute(__pyx_v_uPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 237, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyNumber_Absolute(__pyx_v_uPL); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 255, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyFloat_FromDouble(fabs(__pyx_v_biggest_loss)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 237, __pyx_L1_error)
+    __pyx_t_3 = PyFloat_FromDouble(fabs(__pyx_v_biggest_loss)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 255, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = PyObject_RichCompare(__pyx_t_5, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 237, __pyx_L1_error)
+    __pyx_t_2 = PyObject_RichCompare(__pyx_t_5, __pyx_t_3, Py_GT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 255, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 237, __pyx_L1_error)
+    __pyx_t_13 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely(__pyx_t_13 < 0)) __PYX_ERR(0, 255, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     if (__pyx_t_13) {
 
-      /* "swingAssistant/controller_cython.pyx":238
+      /* "swingAssistant/controller_cython.pyx":256
  *             print(ins + ' ' + str(uPL) + ' ' + str(biggest_loss))
  *             if abs(uPL) > abs(biggest_loss):
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)             # <<<<<<<<<<<<<<
  *                 for trade_id in winning_ids:
  *                     self.oanda.trade.close(self.settings.get('account_id'), trade_id)
  */
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_trade); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_trade); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_close); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
-      __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_get); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 238, __pyx_L1_error)
+      __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_get); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_14);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_t_4 = NULL;
@@ -6594,7 +6923,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       }
       __pyx_t_5 = (__pyx_t_4) ? __Pyx_PyObject_Call2Args(__pyx_t_14, __pyx_t_4, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_14, __pyx_n_u_account_id);
       __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 238, __pyx_L1_error)
+      if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 256, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
       __pyx_t_14 = NULL;
@@ -6612,7 +6941,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       #if CYTHON_FAST_PYCALL
       if (PyFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_5, __pyx_v_loss_id};
-        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6621,14 +6950,14 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       #if CYTHON_FAST_PYCCALL
       if (__Pyx_PyFastCFunction_Check(__pyx_t_3)) {
         PyObject *__pyx_temp[3] = {__pyx_t_14, __pyx_t_5, __pyx_v_loss_id};
-        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyCFunction_FastCall(__pyx_t_3, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       } else
       #endif
       {
-        __pyx_t_4 = PyTuple_New(2+__pyx_t_15); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 238, __pyx_L1_error)
+        __pyx_t_4 = PyTuple_New(2+__pyx_t_15); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 256, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         if (__pyx_t_14) {
           __Pyx_GIVEREF(__pyx_t_14); PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_14); __pyx_t_14 = NULL;
@@ -6639,14 +6968,14 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         __Pyx_GIVEREF(__pyx_v_loss_id);
         PyTuple_SET_ITEM(__pyx_t_4, 1+__pyx_t_15, __pyx_v_loss_id);
         __pyx_t_5 = 0;
-        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 238, __pyx_L1_error)
+        __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 256, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_2);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       }
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":239
+      /* "swingAssistant/controller_cython.pyx":257
  *             if abs(uPL) > abs(biggest_loss):
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
  *                 for trade_id in winning_ids:             # <<<<<<<<<<<<<<
@@ -6657,32 +6986,32 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       for (;;) {
         if (__pyx_t_8 >= PyList_GET_SIZE(__pyx_t_2)) break;
         #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 239, __pyx_L1_error)
+        __pyx_t_3 = PyList_GET_ITEM(__pyx_t_2, __pyx_t_8); __Pyx_INCREF(__pyx_t_3); __pyx_t_8++; if (unlikely(0 < 0)) __PYX_ERR(0, 257, __pyx_L1_error)
         #else
-        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 239, __pyx_L1_error)
+        __pyx_t_3 = PySequence_ITEM(__pyx_t_2, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 257, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_3);
         #endif
         __Pyx_XDECREF_SET(__pyx_v_trade_id, __pyx_t_3);
         __pyx_t_3 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":240
+        /* "swingAssistant/controller_cython.pyx":258
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
  *                 for trade_id in winning_ids:
  *                     self.oanda.trade.close(self.settings.get('account_id'), trade_id)             # <<<<<<<<<<<<<<
  *             # else:
  *             #     args = { 'order': {
  */
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
-        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_trade); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_trade); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_close); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_close); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_14 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_settings); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_14);
-        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_get); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 240, __pyx_L1_error)
+        __pyx_t_16 = __Pyx_PyObject_GetAttrStr(__pyx_t_14, __pyx_n_s_get); if (unlikely(!__pyx_t_16)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_16);
         __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         __pyx_t_14 = NULL;
@@ -6697,7 +7026,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         }
         __pyx_t_5 = (__pyx_t_14) ? __Pyx_PyObject_Call2Args(__pyx_t_16, __pyx_t_14, __pyx_n_u_account_id) : __Pyx_PyObject_CallOneArg(__pyx_t_16, __pyx_n_u_account_id);
         __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 240, __pyx_L1_error)
+        if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 258, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_5);
         __Pyx_DECREF(__pyx_t_16); __pyx_t_16 = 0;
         __pyx_t_16 = NULL;
@@ -6715,7 +7044,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         #if CYTHON_FAST_PYCALL
         if (PyFunction_Check(__pyx_t_4)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_5, __pyx_v_trade_id};
-          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -6724,14 +7053,14 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
         #if CYTHON_FAST_PYCCALL
         if (__Pyx_PyFastCFunction_Check(__pyx_t_4)) {
           PyObject *__pyx_temp[3] = {__pyx_t_16, __pyx_t_5, __pyx_v_trade_id};
-          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyCFunction_FastCall(__pyx_t_4, __pyx_temp+1-__pyx_t_15, 2+__pyx_t_15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
           __Pyx_XDECREF(__pyx_t_16); __pyx_t_16 = 0;
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
         } else
         #endif
         {
-          __pyx_t_14 = PyTuple_New(2+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_14 = PyTuple_New(2+__pyx_t_15); if (unlikely(!__pyx_t_14)) __PYX_ERR(0, 258, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_14);
           if (__pyx_t_16) {
             __Pyx_GIVEREF(__pyx_t_16); PyTuple_SET_ITEM(__pyx_t_14, 0, __pyx_t_16); __pyx_t_16 = NULL;
@@ -6742,14 +7071,14 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
           __Pyx_GIVEREF(__pyx_v_trade_id);
           PyTuple_SET_ITEM(__pyx_t_14, 1+__pyx_t_15, __pyx_v_trade_id);
           __pyx_t_5 = 0;
-          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 240, __pyx_L1_error)
+          __pyx_t_3 = __Pyx_PyObject_Call(__pyx_t_4, __pyx_t_14, NULL); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 258, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_14); __pyx_t_14 = 0;
         }
         __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
         __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
 
-        /* "swingAssistant/controller_cython.pyx":239
+        /* "swingAssistant/controller_cython.pyx":257
  *             if abs(uPL) > abs(biggest_loss):
  *                 self.oanda.trade.close(self.settings.get('account_id'), loss_id)
  *                 for trade_id in winning_ids:             # <<<<<<<<<<<<<<
@@ -6759,7 +7088,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
       }
       __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
 
-      /* "swingAssistant/controller_cython.pyx":237
+      /* "swingAssistant/controller_cython.pyx":255
  *                 continue
  *             print(ins + ' ' + str(uPL) + ' ' + str(biggest_loss))
  *             if abs(uPL) > abs(biggest_loss):             # <<<<<<<<<<<<<<
@@ -6768,7 +7097,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
  */
     }
 
-    /* "swingAssistant/controller_cython.pyx":218
+    /* "swingAssistant/controller_cython.pyx":236
  *     def check_positions(self):
  *         instruments = np.unique([trade.instrument for trade in self.trades])
  *         for ins in instruments:             # <<<<<<<<<<<<<<
@@ -6779,7 +7108,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_6che
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":216
+  /* "swingAssistant/controller_cython.pyx":234
  * 
  * 
  *     def check_positions(self):             # <<<<<<<<<<<<<<
@@ -6911,8 +7240,11 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_configparser, __pyx_k_configparser, sizeof(__pyx_k_configparser), 0, 0, 1, 1},
   {&__pyx_kp_s_controller_cython_pyx, __pyx_k_controller_cython_pyx, sizeof(__pyx_k_controller_cython_pyx), 0, 0, 1, 0},
   {&__pyx_n_s_copyright, __pyx_k_copyright, sizeof(__pyx_k_copyright), 0, 0, 1, 1},
-  {&__pyx_n_s_correction1, __pyx_k_correction1, sizeof(__pyx_k_correction1), 0, 0, 1, 1},
-  {&__pyx_n_s_correction2, __pyx_k_correction2, sizeof(__pyx_k_correction2), 0, 0, 1, 1},
+  {&__pyx_n_s_correction, __pyx_k_correction, sizeof(__pyx_k_correction), 0, 0, 1, 1},
+  {&__pyx_kp_u_correction1, __pyx_k_correction1, sizeof(__pyx_k_correction1), 0, 1, 0, 0},
+  {&__pyx_n_s_correction1_2, __pyx_k_correction1_2, sizeof(__pyx_k_correction1_2), 0, 0, 1, 1},
+  {&__pyx_kp_u_correction2, __pyx_k_correction2, sizeof(__pyx_k_correction2), 0, 1, 0, 0},
+  {&__pyx_n_s_correction2_2, __pyx_k_correction2_2, sizeof(__pyx_k_correction2_2), 0, 0, 1, 1},
   {&__pyx_n_u_counter, __pyx_k_counter, sizeof(__pyx_k_counter), 0, 1, 0, 1},
   {&__pyx_n_u_counter_units, __pyx_k_counter_units, sizeof(__pyx_k_counter_units), 0, 1, 0, 1},
   {&__pyx_n_s_create, __pyx_k_create, sizeof(__pyx_k_create), 0, 0, 1, 1},
@@ -7026,7 +7358,8 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_unique, __pyx_k_unique, sizeof(__pyx_k_unique), 0, 0, 1, 1},
   {&__pyx_n_s_units, __pyx_k_units, sizeof(__pyx_k_units), 0, 0, 1, 1},
   {&__pyx_n_u_units, __pyx_k_units, sizeof(__pyx_k_units), 0, 1, 0, 1},
-  {&__pyx_n_s_units1, __pyx_k_units1, sizeof(__pyx_k_units1), 0, 0, 1, 1},
+  {&__pyx_kp_u_units1, __pyx_k_units1, sizeof(__pyx_k_units1), 0, 1, 0, 0},
+  {&__pyx_n_s_units1_2, __pyx_k_units1_2, sizeof(__pyx_k_units1_2), 0, 0, 1, 1},
   {&__pyx_n_s_units2, __pyx_k_units2, sizeof(__pyx_k_units2), 0, 0, 1, 1},
   {&__pyx_n_s_units3, __pyx_k_units3, sizeof(__pyx_k_units3), 0, 0, 1, 1},
   {&__pyx_n_s_unrealizedPL, __pyx_k_unrealizedPL, sizeof(__pyx_k_unrealizedPL), 0, 0, 1, 1},
@@ -7050,7 +7383,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_object = __Pyx_GetBuiltinName(__pyx_n_s_object); if (!__pyx_builtin_object) __PYX_ERR(0, 40, __pyx_L1_error)
   __pyx_builtin_open = __Pyx_GetBuiltinName(__pyx_n_s_open); if (!__pyx_builtin_open) __PYX_ERR(0, 71, __pyx_L1_error)
   __pyx_builtin_sorted = __Pyx_GetBuiltinName(__pyx_n_s_sorted); if (!__pyx_builtin_sorted) __PYX_ERR(0, 130, __pyx_L1_error)
-  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 168, __pyx_L1_error)
+  __pyx_builtin_zip = __Pyx_GetBuiltinName(__pyx_n_s_zip); if (!__pyx_builtin_zip) __PYX_ERR(0, 184, __pyx_L1_error)
   return 0;
   __pyx_L1_error:;
   return -1;
@@ -7093,25 +7426,25 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__3);
   __Pyx_GIVEREF(__pyx_tuple__3);
 
-  /* "swingAssistant/controller_cython.pyx":179
+  /* "swingAssistant/controller_cython.pyx":196
  *                             return
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
  *         print('Could not find circle trades, going to close the worst')             # <<<<<<<<<<<<<<
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 2*float(account.balance) > float(account.positionValue):
+ *         if 10*float(account.balance) > float(account.positionValue):
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_Could_not_find_circle_trades_goi); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 179, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_Could_not_find_circle_trades_goi); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 196, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
-  /* "swingAssistant/controller_cython.pyx":180
+  /* "swingAssistant/controller_cython.pyx":197
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
  *         print('Could not find circle trades, going to close the worst')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')             # <<<<<<<<<<<<<<
- *         if 2*float(account.balance) > float(account.positionValue):
+ *         if 10*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  */
-  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_u_account, __pyx_kp_u_200); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_u_account, __pyx_kp_u_200); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 197, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__7);
   __Pyx_GIVEREF(__pyx_tuple__7);
 
@@ -7171,22 +7504,22 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         # first thing we do is look for offsetting positions
  *         self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
  */
-  __pyx_tuple__17 = PyTuple_Pack(36, __pyx_n_s_self, __pyx_n_s_exposures, __pyx_n_s_total_exposures, __pyx_n_s_trade, __pyx_n_s_price, __pyx_n_s_units, __pyx_n_s_curr_arr, __pyx_n_s_leading, __pyx_n_s_trailing, __pyx_n_s_t_exposures, __pyx_n_s_exposure, __pyx_n_s_ins, __pyx_n_s_trade1, __pyx_n_s_trade2, __pyx_n_s_trade3, __pyx_n_s_ins1, __pyx_n_s_units1, __pyx_n_s_ins2, __pyx_n_s_units2, __pyx_n_s_correction1, __pyx_n_s_ins3, __pyx_n_s_units3, __pyx_n_s_correction2, __pyx_n_s_raw_units, __pyx_n_s_args, __pyx_n_s_ticket, __pyx_n_s_account, __pyx_n_s_biggest_loss, __pyx_n_s_loss_units, __pyx_n_s_loss_ins, __pyx_n_s_winning_trades, __pyx_n_s_total_win, __pyx_n_s_close_amount, __pyx_n_s_close_units, __pyx_n_s_closed_amount, __pyx_n_s_key); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_tuple__17 = PyTuple_Pack(37, __pyx_n_s_self, __pyx_n_s_exposures, __pyx_n_s_total_exposures, __pyx_n_s_trade, __pyx_n_s_price, __pyx_n_s_units, __pyx_n_s_curr_arr, __pyx_n_s_leading, __pyx_n_s_trailing, __pyx_n_s_t_exposures, __pyx_n_s_exposure, __pyx_n_s_ins, __pyx_n_s_trade1, __pyx_n_s_trade2, __pyx_n_s_trade3, __pyx_n_s_ins1, __pyx_n_s_units1_2, __pyx_n_s_ins2, __pyx_n_s_correction, __pyx_n_s_units2, __pyx_n_s_correction1_2, __pyx_n_s_ins3, __pyx_n_s_units3, __pyx_n_s_correction2_2, __pyx_n_s_raw_units, __pyx_n_s_args, __pyx_n_s_ticket, __pyx_n_s_account, __pyx_n_s_biggest_loss, __pyx_n_s_loss_units, __pyx_n_s_loss_ins, __pyx_n_s_winning_trades, __pyx_n_s_total_win, __pyx_n_s_close_amount, __pyx_n_s_close_units, __pyx_n_s_closed_amount, __pyx_n_s_key); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(1, 0, 36, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_reduce_exposure, 107, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 107, __pyx_L1_error)
+  __pyx_codeobj__18 = (PyObject*)__Pyx_PyCode_New(1, 0, 37, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__17, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_reduce_exposure, 107, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__18)) __PYX_ERR(0, 107, __pyx_L1_error)
 
-  /* "swingAssistant/controller_cython.pyx":216
+  /* "swingAssistant/controller_cython.pyx":234
  * 
  * 
  *     def check_positions(self):             # <<<<<<<<<<<<<<
  *         instruments = np.unique([trade.instrument for trade in self.trades])
  *         for ins in instruments:
  */
-  __pyx_tuple__19 = PyTuple_Pack(12, __pyx_n_s_self, __pyx_n_s_instruments, __pyx_n_s_ins, __pyx_n_s_uPL, __pyx_n_s_biggest_loss, __pyx_n_s_winning_ids, __pyx_n_s_loss_id, __pyx_n_s_units, __pyx_n_s_trade, __pyx_n_s_trade_id, __pyx_n_s_trade, __pyx_n_s_trade); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_tuple__19 = PyTuple_Pack(12, __pyx_n_s_self, __pyx_n_s_instruments, __pyx_n_s_ins, __pyx_n_s_uPL, __pyx_n_s_biggest_loss, __pyx_n_s_winning_ids, __pyx_n_s_loss_id, __pyx_n_s_units, __pyx_n_s_trade, __pyx_n_s_trade_id, __pyx_n_s_trade, __pyx_n_s_trade); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__19);
   __Pyx_GIVEREF(__pyx_tuple__19);
-  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_check_positions, 216, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_codeobj__20 = (PyObject*)__Pyx_PyCode_New(1, 0, 12, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__19, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_controller_cython_pyx, __pyx_n_s_check_positions, 234, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__20)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -7853,16 +8186,16 @@ if (!__Pyx_RefNanny) {
   if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_reduce_exposure, __pyx_t_5) < 0) __PYX_ERR(0, 107, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "swingAssistant/controller_cython.pyx":216
+  /* "swingAssistant/controller_cython.pyx":234
  * 
  * 
  *     def check_positions(self):             # <<<<<<<<<<<<<<
  *         instruments = np.unique([trade.instrument for trade in self.trades])
  *         for ins in instruments:
  */
-  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_14swingAssistant_17controller_cython_10Controller_7check_positions, 0, __pyx_n_s_Controller_check_positions, NULL, __pyx_n_s_swingAssistant_controller_cython, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 216, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_NewEx(&__pyx_mdef_14swingAssistant_17controller_cython_10Controller_7check_positions, 0, __pyx_n_s_Controller_check_positions, NULL, __pyx_n_s_swingAssistant_controller_cython, __pyx_d, ((PyObject *)__pyx_codeobj__20)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_check_positions, __pyx_t_5) < 0) __PYX_ERR(0, 216, __pyx_L1_error)
+  if (__Pyx_SetNameInClass(__pyx_t_1, __pyx_n_s_check_positions, __pyx_t_5) < 0) __PYX_ERR(0, 234, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "swingAssistant/controller_cython.pyx":40

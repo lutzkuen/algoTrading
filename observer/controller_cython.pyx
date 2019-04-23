@@ -755,9 +755,11 @@ class Controller(object):
         return yp, vprev
 
     def get_units(self, dist, ins):
-        # get the number of units to trade for a given pair
-        # dist: Distance to the SL
-        # ins: Instrument to trade, e.g. EUR_USD
+        """
+        get the number of units to trade for a given pair
+        dist: Distance to the SL
+        ins: Instrument to trade, e.g. EUR_USD
+        """
 
         trailing_currency = ''
         if dist == 0:
@@ -781,6 +783,34 @@ class Controller(object):
             print('CRITICAL: Could not convert ' + leading_currency + '_' + trailing_currency + ' to EUR')
             return 0  # do not place a trade if conversion fails
         raw_units = multiplier * target_exposure * conversion
+        if raw_units > 0:
+            return math.floor(raw_units)
+        else:
+            return math.ceil(raw_units)
+
+    def convert_units(self, units, ins):
+        """
+        get the number of units to trade for a given pair
+        dist: Distance to the SL
+        ins: Instrument to trade, e.g. EUR_USD
+        """
+
+        trailing_currency = ''
+        leading_currency = ins.split('_')[0]
+        price = self.get_price(ins)
+        # each trade should risk 1% of NAV at SL at most. Usually it will range
+        # around 0.1 % - 1 % depending on expectation value
+        target_exposure = units
+        conversion = self.get_conversion(leading_currency)
+        if not conversion:
+            trailing_currency = ins.split('_')[1]
+            conversion = self.get_conversion(trailing_currency)
+            if conversion:
+                conversion = conversion / price
+        if not conversion:
+            print('CRITICAL: Could not convert ' + leading_currency + '_' + trailing_currency + ' to EUR')
+            return 0  # do not place a trade if conversion fails
+        raw_units = target_exposure * conversion
         if raw_units > 0:
             return math.floor(raw_units)
         else:
@@ -1264,6 +1294,10 @@ class Controller(object):
         """
 
         try:
+            current_direction = 0
+            for trade in self.trades:
+                if trade.instrument == ins:
+                    current_direction += float(trade.currentUnits)
             price_path = self.settings['prices_path']
             df = pd.read_csv(price_path)
             candles = self.get_candles(ins, 'D', 1)
@@ -1273,7 +1307,11 @@ class Controller(object):
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
-            units = 200 # math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
+            if current_direction > 0:
+                hi -= spread
+            if current_direction < 0:
+                lo += spread
+            units = self.convert_units(self.settings.get('account_risk'), ins) # math.floor(abs(self.get_units(sldist, ins) * min(abs(cl), 1.0)))
             pip_location = self.get_pip_size(ins)
             pip_size = 10 ** (-pip_location + 1)
             format_string = '30.' + str(pip_location) + 'f'
@@ -1292,8 +1330,9 @@ class Controller(object):
                 # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
                 # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-            print(ticket.raw_body)
+            if current_direction <= units:
+                ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+                print(ticket.raw_body)
             args = {'order': {
                 'instrument': ins,
                 'units': -units,
@@ -1305,8 +1344,9 @@ class Controller(object):
                 # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
                 # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
-            print(ticket.raw_body)
+            if current_direction >= -units:
+                ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
+                print(ticket.raw_body)
             #if self.verbose > 1:
             #    print(ticket.raw_body)
         except Exception as e:
