@@ -111,12 +111,10 @@ class Controller(object):
             self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
-        self.optimization_db = dataset.connect(config.get('data', 'optimization_path'))
         self.calendar = self.calendar_db['calendar']
         self.table = self.db['dailycandles']
         self.estimtable = self.db['keras_errors']
         self.importances = self.db['feature_importances']
-        self.opt_table = self.optimization_db['function_values']
         self.spread_db = dataset.connect(config.get('data', 'spreads_path'))
         self.spread_table = self.spread_db['spreads']
         self.prediction_db = dataset.connect(config.get('data', 'predictions_path'))

@@ -66,7 +66,7 @@ class Estimator(object):
             'metric': 'mse',
             'max_depth': 10,
             'num_leaves': 90,
-            'learning_rate': 0.01,
+            'learning_rate': 0.001,
             'verbose': 0,
             #'max_bin': 10000,
             'bagging_fraction': 0.5,
@@ -74,7 +74,7 @@ class Estimator(object):
             'min_data_in_leaf': 2
             # 'early_stopping_round': 20
         }
-        n_estimators = 200
+        n_estimators = 1400
 
         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)
         #x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.15, random_state=i)

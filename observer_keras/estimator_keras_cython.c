@@ -1297,7 +1297,6 @@ static const char __pyx_k_savefig[] = "savefig";
 static const char __pyx_k_summary[] = "summary";
 static const char __pyx_k_verbose[] = "verbose";
 static const char __pyx_k_Callback[] = "Callback";
-static const char __pyx_k_Identity[] = "Identity";
 static const char __pyx_k_datetime[] = "datetime";
 static const char __pyx_k_np_utils[] = "np_utils";
 static const char __pyx_k_qualname[] = "__qualname__";
@@ -1340,6 +1339,7 @@ static const char __pyx_k_regularizers[] = "regularizers";
 static const char __pyx_k_save_weights[] = "save_weights";
 static const char __pyx_k_weights_file[] = "weights_file";
 static const char __pyx_k_fit_generator[] = "fit_generator";
+static const char __pyx_k_glorot_normal[] = "glorot_normal";
 static const char __pyx_k_create_network[] = "create_network";
 static const char __pyx_k_on_train_begin[] = "on_train_begin";
 static const char __pyx_k_save_best_only[] = "save_best_only";
@@ -1386,7 +1386,6 @@ static PyObject *__pyx_n_s_Estimator_set_params;
 static PyObject *__pyx_n_s_Flatten;
 static PyObject *__pyx_n_s_GradientBoostingClassifier;
 static PyObject *__pyx_n_s_GradientBoostingRegressor;
-static PyObject *__pyx_n_s_Identity;
 static PyObject *__pyx_n_s_Integer;
 static PyObject *__pyx_n_s_MaxPooling2D;
 static PyObject *__pyx_n_s_MaxPooling3D;
@@ -1422,6 +1421,7 @@ static PyObject *__pyx_n_s_figure;
 static PyObject *__pyx_n_s_fit_generator;
 static PyObject *__pyx_n_s_generator;
 static PyObject *__pyx_n_s_get;
+static PyObject *__pyx_n_s_glorot_normal;
 static PyObject *__pyx_n_s_gp_minimize;
 static PyObject *__pyx_n_s_hidden_size;
 static PyObject *__pyx_kp_u_home_tubuntu_algoTrading_loss_p;
@@ -2528,7 +2528,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_4set_params(CYTHON
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()
  */
 
@@ -2647,7 +2647,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   /* "estimator_keras_cython.pyx":57
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):
- *         initializer = keras.initializers.Identity()             # <<<<<<<<<<<<<<
+ *         initializer = keras.initializers.glorot_normal()             # <<<<<<<<<<<<<<
  *         model = Sequential()
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
  */
@@ -2656,7 +2656,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_initializers); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_Identity); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_glorot_normal); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 57, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -2679,7 +2679,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
 
   /* "estimator_keras_cython.pyx":58
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()             # <<<<<<<<<<<<<<
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
  *         for i in range(num_layers):
@@ -2705,7 +2705,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
   __pyx_t_1 = 0;
 
   /* "estimator_keras_cython.pyx":59
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()
  *         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))             # <<<<<<<<<<<<<<
  *         for i in range(num_layers):
@@ -3095,7 +3095,7 @@ static PyObject *__pyx_pf_22estimator_keras_cython_9Estimator_6create_network(CY
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()
  */
 
@@ -3562,7 +3562,6 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Flatten, __pyx_k_Flatten, sizeof(__pyx_k_Flatten), 0, 0, 1, 1},
   {&__pyx_n_s_GradientBoostingClassifier, __pyx_k_GradientBoostingClassifier, sizeof(__pyx_k_GradientBoostingClassifier), 0, 0, 1, 1},
   {&__pyx_n_s_GradientBoostingRegressor, __pyx_k_GradientBoostingRegressor, sizeof(__pyx_k_GradientBoostingRegressor), 0, 0, 1, 1},
-  {&__pyx_n_s_Identity, __pyx_k_Identity, sizeof(__pyx_k_Identity), 0, 0, 1, 1},
   {&__pyx_n_s_Integer, __pyx_k_Integer, sizeof(__pyx_k_Integer), 0, 0, 1, 1},
   {&__pyx_n_s_MaxPooling2D, __pyx_k_MaxPooling2D, sizeof(__pyx_k_MaxPooling2D), 0, 0, 1, 1},
   {&__pyx_n_s_MaxPooling3D, __pyx_k_MaxPooling3D, sizeof(__pyx_k_MaxPooling3D), 0, 0, 1, 1},
@@ -3598,6 +3597,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_fit_generator, __pyx_k_fit_generator, sizeof(__pyx_k_fit_generator), 0, 0, 1, 1},
   {&__pyx_n_s_generator, __pyx_k_generator, sizeof(__pyx_k_generator), 0, 0, 1, 1},
   {&__pyx_n_s_get, __pyx_k_get, sizeof(__pyx_k_get), 0, 0, 1, 1},
+  {&__pyx_n_s_glorot_normal, __pyx_k_glorot_normal, sizeof(__pyx_k_glorot_normal), 0, 0, 1, 1},
   {&__pyx_n_s_gp_minimize, __pyx_k_gp_minimize, sizeof(__pyx_k_gp_minimize), 0, 0, 1, 1},
   {&__pyx_n_s_hidden_size, __pyx_k_hidden_size, sizeof(__pyx_k_hidden_size), 0, 0, 1, 1},
   {&__pyx_kp_u_home_tubuntu_algoTrading_loss_p, __pyx_k_home_tubuntu_algoTrading_loss_p, sizeof(__pyx_k_home_tubuntu_algoTrading_loss_p), 0, 1, 0, 0},
@@ -3784,7 +3784,7 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()
  */
   __pyx_tuple__14 = PyTuple_Pack(7, __pyx_n_s_self, __pyx_n_s_kernel_len, __pyx_n_s_num_layers, __pyx_n_s_hidden_size, __pyx_n_s_initializer, __pyx_n_s_model, __pyx_n_s_i); if (unlikely(!__pyx_tuple__14)) __PYX_ERR(0, 56, __pyx_L1_error)
@@ -4631,7 +4631,7 @@ if (!__Pyx_RefNanny) {
  *         return self.estimator.set_params(**params)
  * 
  *     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):             # <<<<<<<<<<<<<<
- *         initializer = keras.initializers.Identity()
+ *         initializer = keras.initializers.glorot_normal()
  *         model = Sequential()
  */
   __pyx_t_3 = __Pyx_CyFunction_NewEx(&__pyx_mdef_22estimator_keras_cython_9Estimator_7create_network, 0, __pyx_n_s_Estimator_create_network, NULL, __pyx_n_s_estimator_keras_cython, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 56, __pyx_L1_error)

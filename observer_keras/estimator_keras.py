@@ -54,7 +54,7 @@ class Estimator(object):
         return self.estimator.set_params(**params)
 
     def create_network(self, kernel_len=961, num_layers=3, hidden_size=2):
-        initializer = keras.initializers.Identity()
+        initializer = keras.initializers.glorot_normal()
         model = Sequential()
         model.add(Dense(kernel_len, input_shape=(kernel_len, ), activation='tanh', kernel_initializer=initializer))
         for i in range(num_layers):

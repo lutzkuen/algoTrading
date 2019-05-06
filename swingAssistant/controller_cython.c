@@ -1567,10 +1567,10 @@ static const char __pyx_k_controller_cython_pyx[] = "controller_cython.pyx";
 static const char __pyx_k_lutz_kuenneke89_gmail_com[] = "lutz.kuenneke89@gmail.com";
 static const char __pyx_k_Controller_check_positions[] = "Controller.check_positions";
 static const char __pyx_k_Controller_reduce_exposure[] = "Controller.reduce_exposure";
+static const char __pyx_k_Could_not_find_circle_trades[] = "Could not find circle trades";
 static const char __pyx_k_This_class_controls_most_of_the[] = "\n    This class controls most of the program flow for:\n    - getting the data\n    - constructing the data frame for training and prediction\n    - actual training and prediction of required models\n    - acting in the market based on the prediction\n    ";
 static const char __pyx_k_WARNING_V20_library_not_present[] = "WARNING: V20 library not present. Connection to broker not possible";
 static const char __pyx_k_Controller_reduce_exposure_local[] = "Controller.reduce_exposure.<locals>.<lambda>";
-static const char __pyx_k_Could_not_find_circle_trades_goi[] = "Could not find circle trades, going to close the worst";
 static const char __pyx_k_swingAssistant_controller_cython[] = "swingAssistant.controller_cython";
 static PyObject *__pyx_kp_u_1_0;
 static PyObject *__pyx_kp_u_200;
@@ -1584,7 +1584,7 @@ static PyObject *__pyx_n_s_Controller_check_positions;
 static PyObject *__pyx_n_s_Controller_get_price;
 static PyObject *__pyx_n_s_Controller_reduce_exposure;
 static PyObject *__pyx_n_s_Controller_reduce_exposure_local;
-static PyObject *__pyx_kp_u_Could_not_find_circle_trades_goi;
+static PyObject *__pyx_kp_u_Could_not_find_circle_trades;
 static PyObject *__pyx_kp_u_Identified;
 static PyObject *__pyx_n_s_ImportError;
 static PyObject *__pyx_kp_u_Lutz_Knneke;
@@ -5379,7 +5379,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
  *                             self.reduce_exposure()
  *                             return             # <<<<<<<<<<<<<<
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
- *         print('Could not find circle trades, going to close the worst')
+ *         print('Could not find circle trades')
  */
             __Pyx_XDECREF(__pyx_r);
             __pyx_r = Py_None; __Pyx_INCREF(Py_None);
@@ -5442,9 +5442,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   /* "swingAssistant/controller_cython.pyx":196
  *                             return
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
- *         print('Could not find circle trades, going to close the worst')             # <<<<<<<<<<<<<<
+ *         print('Could not find circle trades')             # <<<<<<<<<<<<<<
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  */
   __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin_print, __pyx_tuple__6, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 196, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
@@ -5452,9 +5452,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
 
   /* "swingAssistant/controller_cython.pyx":197
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
- *         print('Could not find circle trades, going to close the worst')
+ *         print('Could not find circle trades')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')             # <<<<<<<<<<<<<<
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  */
   __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_v_self, __pyx_n_s_oanda); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 197, __pyx_L1_error)
@@ -5511,9 +5511,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __pyx_t_4 = 0;
 
   /* "swingAssistant/controller_cython.pyx":198
- *         print('Could not find circle trades, going to close the worst')
+ *         print('Could not find circle trades')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 10*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
+ *         if 2*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return
  */
@@ -5525,12 +5525,12 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_t_27 = __Pyx_PyObject_AsDouble(__pyx_t_4); if (unlikely(__pyx_t_27 == ((double)((double)-1)) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_8 = (((10.0 * __pyx_t_26) > __pyx_t_27) != 0);
+  __pyx_t_8 = (((2.0 * __pyx_t_26) > __pyx_t_27) != 0);
   if (__pyx_t_8) {
 
     /* "swingAssistant/controller_cython.pyx":199
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))             # <<<<<<<<<<<<<<
  *             return
  *         biggest_loss = 0
@@ -5561,7 +5561,7 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
     /* "swingAssistant/controller_cython.pyx":200
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return             # <<<<<<<<<<<<<<
  *         biggest_loss = 0
@@ -5572,9 +5572,9 @@ static PyObject *__pyx_pf_14swingAssistant_17controller_cython_10Controller_4red
     goto __pyx_L0;
 
     /* "swingAssistant/controller_cython.pyx":198
- *         print('Could not find circle trades, going to close the worst')
+ *         print('Could not find circle trades')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 10*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
+ *         if 2*float(account.balance) > float(account.positionValue):             # <<<<<<<<<<<<<<
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  *             return
  */
@@ -7203,7 +7203,7 @@ static __Pyx_StringTabEntry __pyx_string_tab[] = {
   {&__pyx_n_s_Controller_get_price, __pyx_k_Controller_get_price, sizeof(__pyx_k_Controller_get_price), 0, 0, 1, 1},
   {&__pyx_n_s_Controller_reduce_exposure, __pyx_k_Controller_reduce_exposure, sizeof(__pyx_k_Controller_reduce_exposure), 0, 0, 1, 1},
   {&__pyx_n_s_Controller_reduce_exposure_local, __pyx_k_Controller_reduce_exposure_local, sizeof(__pyx_k_Controller_reduce_exposure_local), 0, 0, 1, 1},
-  {&__pyx_kp_u_Could_not_find_circle_trades_goi, __pyx_k_Could_not_find_circle_trades_goi, sizeof(__pyx_k_Could_not_find_circle_trades_goi), 0, 1, 0, 0},
+  {&__pyx_kp_u_Could_not_find_circle_trades, __pyx_k_Could_not_find_circle_trades, sizeof(__pyx_k_Could_not_find_circle_trades), 0, 1, 0, 0},
   {&__pyx_kp_u_Identified, __pyx_k_Identified, sizeof(__pyx_k_Identified), 0, 1, 0, 0},
   {&__pyx_n_s_ImportError, __pyx_k_ImportError, sizeof(__pyx_k_ImportError), 0, 0, 1, 1},
   {&__pyx_kp_u_Lutz_Knneke, __pyx_k_Lutz_Knneke, sizeof(__pyx_k_Lutz_Knneke), 0, 1, 0, 0},
@@ -7429,19 +7429,19 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   /* "swingAssistant/controller_cython.pyx":196
  *                             return
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
- *         print('Could not find circle trades, going to close the worst')             # <<<<<<<<<<<<<<
+ *         print('Could not find circle trades')             # <<<<<<<<<<<<<<
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  */
-  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_Could_not_find_circle_trades_goi); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 196, __pyx_L1_error)
+  __pyx_tuple__6 = PyTuple_Pack(1, __pyx_kp_u_Could_not_find_circle_trades); if (unlikely(!__pyx_tuple__6)) __PYX_ERR(0, 196, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__6);
   __Pyx_GIVEREF(__pyx_tuple__6);
 
   /* "swingAssistant/controller_cython.pyx":197
  *         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
- *         print('Could not find circle trades, going to close the worst')
+ *         print('Could not find circle trades')
  *         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')             # <<<<<<<<<<<<<<
- *         if 10*float(account.balance) > float(account.positionValue):
+ *         if 2*float(account.balance) > float(account.positionValue):
  *             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
  */
   __pyx_tuple__7 = PyTuple_Pack(2, __pyx_n_u_account, __pyx_kp_u_200); if (unlikely(!__pyx_tuple__7)) __PYX_ERR(0, 197, __pyx_L1_error)

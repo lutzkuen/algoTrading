@@ -1483,8 +1483,8 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_8set_params(CY
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_df, PyObject *__pyx_v_estimtable, PyObject *__pyx_v_num_samples, PyObject *__pyx_v_estimpath, CYTHON_UNUSED PyObject *__pyx_v_verbose); /* proto */
 static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_12save_estimator(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_self, PyObject *__pyx_v_estim_path); /* proto */
 static PyObject *__pyx_float_0_5;
-static PyObject *__pyx_float_0_01;
 static PyObject *__pyx_float_0_20;
+static PyObject *__pyx_float_0_001;
 static PyObject *__pyx_int_0;
 static PyObject *__pyx_int_1;
 static PyObject *__pyx_int_2;
@@ -2803,7 +2803,7 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_esti
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_metric, __pyx_n_u_mse) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_max_depth, __pyx_int_10) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_num_leaves, __pyx_int_90) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_learning_rate, __pyx_float_0_01) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_learning_rate, __pyx_float_0_001) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_verbose, __pyx_int_0) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_bagging_fraction, __pyx_float_0_5) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
   if (PyDict_SetItem(__pyx_t_2, __pyx_n_u_bagging_freq, __pyx_int_10) < 0) __PYX_ERR(0, 64, __pyx_L1_error)
@@ -2814,14 +2814,14 @@ static PyObject *__pyx_pf_8observer_16estimator_cython_9Estimator_10improve_esti
   /* "observer/estimator_cython.pyx":77
  *             # 'early_stopping_round': 20
  *         }
- *         n_estimators = 200             # <<<<<<<<<<<<<<
+ *         n_estimators = 1400             # <<<<<<<<<<<<<<
  * 
  *         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)
  */
-  __pyx_v_n_estimators = 0xC8;
+  __pyx_v_n_estimators = 0x578;
 
   /* "observer/estimator_cython.pyx":79
- *         n_estimators = 200
+ *         n_estimators = 1400
  * 
  *         x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)             # <<<<<<<<<<<<<<
  *         #x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.15, random_state=i)
@@ -3842,8 +3842,8 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
 static CYTHON_SMALL_CODE int __Pyx_InitGlobals(void) {
   if (__Pyx_InitStrings(__pyx_string_tab) < 0) __PYX_ERR(0, 1, __pyx_L1_error);
   __pyx_float_0_5 = PyFloat_FromDouble(0.5); if (unlikely(!__pyx_float_0_5)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __pyx_float_0_01 = PyFloat_FromDouble(0.01); if (unlikely(!__pyx_float_0_01)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_float_0_20 = PyFloat_FromDouble(0.20); if (unlikely(!__pyx_float_0_20)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __pyx_float_0_001 = PyFloat_FromDouble(0.001); if (unlikely(!__pyx_float_0_001)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_0 = PyInt_FromLong(0); if (unlikely(!__pyx_int_0)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_1 = PyInt_FromLong(1); if (unlikely(!__pyx_int_1)) __PYX_ERR(0, 1, __pyx_L1_error)
   __pyx_int_2 = PyInt_FromLong(2); if (unlikely(!__pyx_int_2)) __PYX_ERR(0, 1, __pyx_L1_error)

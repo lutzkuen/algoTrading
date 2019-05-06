@@ -115,6 +115,34 @@ class Controller(object):
                                                                  )).get('instruments', '200')
             self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
             self.orders = self.oanda.order.list(self.settings.get('account_id')).get('orders', '200')
+        self.tradeable_instruments = ['EUR_USD', 
+                                      'USD_JPY', 
+                                      'USD_CHF', 
+                                      'GBP_USD', 
+                                      'GBP_JPY', 
+                                      'AUD_JPY', 
+                                      'USD_CAD',
+                                      'NZD_USD',
+                                      'AUD_USD',
+                                      'EUR_JPY',
+                                      'EUR_CHF',
+                                      'EUR_AUD',
+                                      'EUR_CAD',
+                                      'EUR_NZD',
+                                      'CHF_JPY',
+                                      'CAD_JPY',
+                                      'NZD_JPY',
+                                      'GBP_CHF',
+                                      'AUD_CHF',
+                                      'CAD_CHF',
+                                      'NZD_CHF',
+                                      'GBP_AUD',
+                                      'GBP_CAD',
+                                      'GBP_NZD',
+                                      'AUD_CAD',
+                                      'AUD_NZD',
+                                      'NZD_CAD',
+                                      'EUR_GBP']
         self.db = dataset.connect(config.get('data', 'candle_path'))
         self.calendar_db = dataset.connect(config.get('data', 'calendar_path'))
         self.calendar = self.calendar_db['calendar']
@@ -594,9 +622,9 @@ class Controller(object):
                 inst.append(row['ins'])
             dates = []
             if maxdate:
-                statement = 'select distinct date from dailycandles where date <= ' + maxdate + ' and ' + c_cond + ' order by date;'
+                statement = "select distinct date from dailycandles where date <= '" + maxdate + "' and " + c_cond + " order by date;"
             else:
-                statement = 'select distinct date from dailycandles where ' + c_cond + ' order by date;'
+                statement = "select distinct date from dailycandles where " + c_cond + " order by date;"
             if append_raw:
                 df_prev = pd.read_csv(raw_name)
             else:
@@ -661,6 +689,9 @@ class Controller(object):
             if not ('_high' in col or '_low' in col or '_close' in col):
                 continue
             if '_yester' in col:  # skip yesterday stuff for prediction
+                continue
+            col_instrument = '_'.join(parts[:2])
+            if not col_instrument in self.tradeable_instruments:
                 continue
             if improve_model:
                 self.improve_estimator(col, df)
@@ -1319,32 +1350,41 @@ class Controller(object):
             hi = format(hi, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
+            if cl < 0 and current_direction < 0:
+                _units = min(max(-current_direction, 0), units)
+            else:
+                _units = units
             args = {'order': {
                 'instrument': ins,
-                'units': units,
+                'units': _units,
                 'price': lo,
                 'type': 'LIMIT',
                 'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-                # 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'}
                 # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
                 # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            if current_direction <= units:
+            # if current_direction <= units:
+            if ( current_direction >= 0 and cl > 0 ) or ( current_direction < 0 ):
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
+            if cl > 0 and current_direction > 0:
+                _units = max(min(-current_direction, 0), -units)
+            else:
+                _units = -units
             args = {'order': {
                 'instrument': ins,
-                'units': -units,
+                'units': _units,
                 'price': hi,
                 'type': 'LIMIT',
                 'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ')
-                # 'takeProfitOnFill': {'price': tp, 'timeInForce': 'GTC'},
+                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'}
                 # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
                 # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
             }}
-            if current_direction >= -units:
+            if ( current_direction <= 0 and cl < 0 ) or ( current_direction > 0 ):
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
             #if self.verbose > 1:
