@@ -8,4 +8,4 @@ except ImportError:
 cont = controller.Controller('/home/tubuntu/settings_triangle.conf', 'live', verbose=1)
 now = datetime.datetime.now() - datetime.timedelta(hours=24)
 now = now.strftime('%Y-%m-%d')
-cont.data2sheet(read_raw=False, write_raw=True, improve_model=True, maxdate=now, complete=False, append_raw=True)
+cont.data2sheet(read_raw=True, write_raw=True, improve_model=True, maxdate=now, complete=False, append_raw=False)

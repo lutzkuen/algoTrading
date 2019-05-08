@@ -65,18 +65,19 @@ class Estimator(object):
             'objective': 'regression',
             'metric': 'mse',
             'max_depth': 10,
-            'num_leaves': 90,
+            'num_leaves': 10,
             'learning_rate': 0.001,
             'verbose': 0,
             #'max_bin': 10000,
+            'feature_fraction': 0.2,
             'bagging_fraction': 0.5,
             'bagging_freq': 10,
             'min_data_in_leaf': 2
             # 'early_stopping_round': 20
         }
-        n_estimators = 1400
+        n_estimators = 10000
 
-        x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.20, random_state=i)
+        x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.30, random_state=i)
         #x_train_idx, x_valid_idx, y_train_idx, y_valid_idx = train_test_split(idx, idx, test_size=0.15, random_state=i)
         #x_train = np.zeros((len(x_train_idx)*num_samples, x.shape[1]))
         #x_valid = np.zeros((len(x_valid_idx)*num_samples, x.shape[1]))
@@ -98,7 +99,7 @@ class Estimator(object):
         d_valid = lgb.Dataset(x_valid, label=y_valid)
         watchlist = [d_valid]
 
-        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=10)
+        self.estimator = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=100, early_stopping_rounds=100)
         ypred = self.estimator.predict(x_valid)
         mse = np.sqrt(np.mean((ypred - y_valid)**2))
         print(self.name + ' -> ' + str(mse))

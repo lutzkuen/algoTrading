@@ -104,6 +104,15 @@ class Controller(object):
             print(ins + 'get price ' + str(e))
             return None
 
+    def move_stops(self):
+        """
+        Move the stop of all winning trades to (price + entry)/2
+        """
+        for trade in self.trades:
+            if trade.unrealizedPL > 0:
+                price = self.get_price(trade.instrument)
+                entry = trade.price
+
     def reduce_exposure(self):
         # first thing we do is look for offsetting positions
         self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')
@@ -195,7 +204,7 @@ class Controller(object):
         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
         print('Could not find circle trades')
         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
-        if 2*float(account.balance) > float(account.positionValue):
+        if 5*float(account.balance) > float(account.positionValue):
             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
             return
         biggest_loss = 0
