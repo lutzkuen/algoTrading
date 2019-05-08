@@ -1,20 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9f0247db-5a6f-4953-8b12-d04309a4014f" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/logs_file" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/swingAssistant/.controller.py.swp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/errors.csv" beforeDir="false" afterPath="$PROJECT_DIR$/errors.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller_cython.c" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller_cython.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller_cython.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller_cython.pyx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/controller_cython.so" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller_cython.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/estimator.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/estimator_cython.c" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator_cython.c" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/estimator_cython.pyx" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator_cython.pyx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/observer/estimator_cython.so" beforeDir="false" afterPath="$PROJECT_DIR$/observer/estimator_cython.so" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swingAssistant/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/swingAssistant/controller.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/swing_assist.py" beforeDir="false" afterPath="$PROJECT_DIR$/swing_assist.py" afterDir="false" />
+    <list default="true" id="dffcf0a4-5dcb-4071-9883-b49cabba9f24" name="Default Changelist" comment="">
+      <change beforePath="$PROJECT_DIR$/improve_observer.py" beforeDir="false" afterPath="$PROJECT_DIR$/improve_observer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_estimators.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_estimators.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/observe.py" beforeDir="false" afterPath="$PROJECT_DIR$/observe.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -24,11 +14,11 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="153">
-              <caret line="761" column="28" lean-forward="true" selection-start-line="761" selection-start-column="28" selection-end-line="761" selection-end-column="28" />
+            <state>
+              <caret line="761" column="28" selection-start-line="761" selection-start-column="28" selection-end-line="761" selection-end-column="28" />
               <folding>
                 <element signature="e#344#363#0" expanded="true" />
               </folding>
@@ -39,8 +29,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/improve_observer.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="34">
-              <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
+            <state relative-caret-position="68">
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -52,7 +42,7 @@
         <entry file="file://$PROJECT_DIR$/new_estimators.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="170">
-              <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
+              <caret line="10" column="111" selection-start-line="10" selection-start-column="111" selection-end-line="10" selection-end-column="111" />
             </state>
           </provider>
         </entry>
@@ -61,7 +51,7 @@
         <entry file="file://$PROJECT_DIR$/observer/estimator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="216">
-              <caret line="128" column="17" lean-forward="true" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
+              <caret line="128" column="17" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -69,11 +59,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observe.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="31" selection-start-column="31" selection-end-column="31" />
+            <state relative-caret-position="119">
+              <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
             </state>
           </provider>
         </entry>
@@ -95,11 +85,11 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/improve_observer.py" />
-        <option value="$PROJECT_DIR$/new_estimators.py" />
-        <option value="$PROJECT_DIR$/observe.py" />
         <option value="$PROJECT_DIR$/observer/estimator.py" />
         <option value="$PROJECT_DIR$/observer/controller.py" />
+        <option value="$PROJECT_DIR$/improve_observer.py" />
+        <option value="$PROJECT_DIR$/observe.py" />
+        <option value="$PROJECT_DIR$/new_estimators.py" />
       </list>
     </option>
   </component>
@@ -180,34 +170,10 @@
     </layout>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/improve_observer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="32" selection-start-line="4" selection-start-column="32" selection-end-line="4" selection-end-column="32" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_estimators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="170">
-          <caret line="10" column="29" selection-start-line="10" selection-start-column="29" selection-end-line="10" selection-end-column="29" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/observe.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state>
-          <caret column="31" selection-start-column="31" selection-end-column="31" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/observer/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="216">
-          <caret line="128" column="17" lean-forward="true" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
+          <caret line="128" column="17" selection-start-line="128" selection-start-column="17" selection-end-line="128" selection-end-column="17" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>
@@ -216,11 +182,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="153">
-          <caret line="761" column="28" lean-forward="true" selection-start-line="761" selection-start-column="28" selection-end-line="761" selection-end-column="28" />
+        <state>
+          <caret line="761" column="28" selection-start-line="761" selection-start-column="28" selection-end-line="761" selection-end-column="28" />
           <folding>
             <element signature="e#344#363#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_estimators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="111" selection-start-line="10" selection-start-column="111" selection-end-line="10" selection-end-column="111" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/improve_observer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/observe.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="119">
+          <caret line="7" lean-forward="true" selection-start-line="7" selection-end-line="7" />
         </state>
       </provider>
     </entry>
