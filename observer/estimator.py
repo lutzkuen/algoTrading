@@ -121,7 +121,6 @@ class Estimator(object):
                 df = df.drop(knockout_columns, axis=1)
             else:
                 is_finished = True
-
         print(self.name + ' -> ' + str(mse) + ' (knocked out ' + str(i_knockout) + ' columns)')
         if estimpath:
             self.save_estimator(estimpath)

@@ -625,8 +625,6 @@ class Controller(object):
         new_estim: Build new estimators with new Hyper parameters
         """
         self.num_samples = 1
-        if improve_model:
-            self.num_samples = 1
         raw_name = self.settings.get('raw_name')
         has_contributed = False
         if read_raw:
@@ -1320,6 +1318,31 @@ class Controller(object):
             print('failed to open for ' + ins)
             print(e)
 
+
+    def move_stops(self):
+        """
+        Move the stop of all winning trades to (price + entry)/2
+        """
+        for trade in self.trades:
+            if trade.unrealizedPL > 0:
+                price = self.get_price(trade.instrument)
+                entry = trade.price
+                newSL = (price+entry)/2
+                currentSL = trade.stopLossOrder.price
+                if trade.currentUnits > 0 and newSL > currentSL:
+                    pip_location = self.get_pip_size(trade.instrument)
+                    pip_size = 10 ** (-pip_location + 1)
+                    format_string = '30.' + str(pip_location) + 'f'
+                    newSL = format(newSL, format_string).strip()
+                    args = { 'order': {
+                            'tradeID': trade.id,
+                            'price': newSL,
+                            'type': 'STOP_LOSS'
+                        }}
+                    response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                    print(response.raw_body)
+
     def simple_limits(self, ins, duration=20):
         """
         Open orders and close trades using the predicted market movements
@@ -1353,6 +1376,8 @@ class Controller(object):
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+            sl_lo = lo - ( hi - lo )
+            sl_hi = hi + ( hi - lo )
             if current_direction > 0:
                 hi -= spread
             if current_direction < 0:
@@ -1362,44 +1387,40 @@ class Controller(object):
             pip_size = 10 ** (-pip_location + 1)
             format_string = '30.' + str(pip_location) + 'f'
             lo = format(lo, format_string).strip()
+            sl_lo = format(sl_lo, format_string).strip()
             hi = format(hi, format_string).strip()
+            sl_hi = format(sl_hi, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
-            if cl < 0 and current_direction < 0:
-                _units = min(max(-current_direction, 0), units)
-            else:
-                _units = units
-            args = {'order': {
-                'instrument': ins,
-                'units': _units,
-                'price': lo,
-                'type': 'LIMIT',
-                'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-                'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'}
-                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
-            }}
-            # if current_direction <= units:
-            if ( current_direction >= 0 and cl > 0 ) or ( current_direction < 0 ):
+            if cl > 0:
+                _units = int(units*abs(cl))
+                args = {'order': {
+                    'instrument': ins,
+                    'units': _units,
+                    'price': lo,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'},
+                    'stopLossOnFill': {'price': sl_lo, 'timeInForce': 'GTC'}
+                    # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                }}
+                # if current_direction <= units:
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
-            if cl > 0 and current_direction > 0:
-                _units = max(min(-current_direction, 0), -units)
-            else:
-                _units = -units
-            args = {'order': {
-                'instrument': ins,
-                'units': _units,
-                'price': hi,
-                'type': 'LIMIT',
-                'timeInForce': 'GTD',
-                'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
-                'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'}
-                # 'stopLossOnFill': {'price': sl, 'timeInForce': 'GTC'}
-                # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
-            }}
-            if ( current_direction <= 0 and cl < 0 ) or ( current_direction > 0 ):
+            if cl < 0:
+                _units = -int(units*abs(cl))
+                args = {'order': {
+                    'instrument': ins,
+                    'units': _units,
+                    'price': hi,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'},
+                    'stopLossOnFill': {'price': sl_hi, 'timeInForce': 'GTC'}
+                    # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
+                }}
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
             #if self.verbose > 1:
