@@ -474,6 +474,22 @@ class Controller(object):
         candles = json.loads(response.raw_body)
         return candles.get('candles')
 
+    def get_moving_average(self, date, inst, period):
+        """
+        :param date: Date for which to calculate the MA. This date is not included in the calculation itself
+        :param inst: Instrument Code
+        :param period: Period in Days
+        :return: Gives the MA of Daily Mean price as float
+        """
+        # code.interact(banner='', local=locals())
+        query = "select avg((open+close+high+low)/4) as ma from dailycandles where ins = '" + inst + "' and (julianday('" + date + "') - julianday(date)) <= " + str(period) + " and date < '" + date + "';"
+        for line in self.db.query(query):
+            # code.interact(banner='', local=locals())
+            if line['ma']:
+                return float(line['ma'])
+            else:
+                return -999999
+
     def get_market_df(self, date, inst, complete, bootstrap=False):
         # Create Market data portion of data frame
         # date: Date in Format 'YYYY-MM-DD'
@@ -483,6 +499,7 @@ class Controller(object):
             bs_flag = 1
         else:
             bs_flag = 0
+        # print('bsflag ' + str(bs_flag))
         data_frame = {'date': date}
         for ins in inst:
             if complete:
@@ -497,15 +514,17 @@ class Controller(object):
                 data_frame[ins + '_close'] = -999999
                 data_frame[ins + '_high'] = -999999
                 data_frame[ins + '_low'] = -999999
+                data_frame[ins + '_ma30'] = -999999
             else:
                 spread = self.get_spread(ins, spread_type='trading')
-                volume = float(candle['volume']) * (1 + np.random.normal() * 0.01 * bs_flag)  # 0.1% deviation
-                _open = float(candle['open']) + spread * np.random.normal() * bs_flag
-                close = float(candle['close']) + spread * np.random.normal() * bs_flag
-                high = float(candle['high']) + spread * np.random.normal() * bs_flag
-                low = float(candle['low']) + spread * np.random.normal() * bs_flag
+                volume = float(candle['volume'])
+                _open = float(candle['open'])
+                close = float(candle['close'])
+                high = float(candle['high'])
+                low = float(candle['low'])
                 data_frame[ins + '_vol'] = int(volume)
                 data_frame[ins + '_open'] = float(_open)
+                ma30 = self.get_moving_average(date, ins, 30)
                 if float(close) > float(_open):
                     div = float(high) - float(_open)
                     if div > 0.000001:
@@ -520,6 +539,7 @@ class Controller(object):
                         data_frame[ins + '_close'] = 0
                 data_frame[ins + '_high'] = float(high) - float(_open)
                 data_frame[ins + '_low'] = float(low) - float(_open)
+                data_frame[ins+'_ma30'] = ma30
         return data_frame
 
     def get_df_for_date(self, date, inst, complete, bootstrap=False):
@@ -576,7 +596,7 @@ class Controller(object):
                 continue
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
-            prediction_value, previous_value = self.predict_column(col, df)
+            prediction_value = self.predict_column(col, df)
             instrument = parts[0] + '_' + parts[1]
             typ = parts[2]
             if instrument in prediction.keys():
@@ -648,6 +668,7 @@ class Controller(object):
             index = 0
             df_dict = []
             for date in dates:
+                print(date)
                 if self.verbose > 0:
                     bar.update(index)
                 index += 1
@@ -668,13 +689,14 @@ class Controller(object):
                 df.to_csv(raw_name, index=False)
         date_column = df['date'].copy()  # copy for usage in improveEstim
         df.drop(['date'], 1, inplace=True)
-        prediction = {}
         bar = progressbar.ProgressBar(maxval=len(df.columns),
                                       widgets=[progressbar.Bar('=', '[', ']'), ' ', progressbar.Percentage()])
         if self.verbose > 0:
             print('INFO: Starting prediction')
             bar.start()
         index = 0
+        importances = []
+        mse_list = []
         for col in df.columns:
             if self.verbose > 0:
                 bar.update(index)
@@ -689,21 +711,18 @@ class Controller(object):
             if '_yester' in col:  # skip yesterday stuff for prediction
                 continue
             col_instrument = '_'.join(parts[:2])
-            if not col_instrument in self.tradeable_instruments:
-                continue
+            # if not col_instrument in self.tradeable_instruments:
+            #     continue
             if improve_model:
-                self.improve_estimator(col, df)
-                # for row in self.optimization_db.query('select min(anz) as min_anz from (select colname, count(*) as anz from function_values group by colname);'):
-                #    min_anz = int(row.get('min_anz'))
-                # this_anz = 0
-                # for row in self.optimization_db.query(
-                #        'select colname, count(*) as anz from function_values where colname = "' + col + '" group by colname;'):
-                #    this_anz = row.get('anz')
-                # if this_anz <= min_anz:
-                #    self.improve_estimator(col, df)
-                #    improve_model = False # improve just once
+                this_importances, mse = self.improve_estimator(col, df)
+                mse_list.append(mse)
+                for imp in this_importances:
+                    importances.append({'estimator': col, 'label': imp['label'], 'importance': imp['importance']})
         if self.verbose > 0:
             bar.finish()
+        df = pd.DataFrame(importances)
+        df.to_csv('importance.csv', index=False)
+        print('Final Mean Loss ' + str(np.mean(mse_list)))
 
     def save_prediction_to_db(self, date):
         prediction_df = pd.read_csv(self.settings['prices_path'])
@@ -715,7 +734,7 @@ class Controller(object):
 
     def improve_estimator(self, col, df):
         estim = estimator.Estimator(col)
-        score = estim.improve_estimator(df, estimtable=self.estimtable, num_samples=self.num_samples,
+        return estim.improve_estimator(df, estimtable=self.estimtable, num_samples=self.num_samples,
                                         estimpath=self.settings.get('estim_path'))
 
     def get_feature_importances(self):
@@ -771,17 +790,13 @@ class Controller(object):
         # df: Data Frame containing the column itself as well as any features
         # new_estimator: Whether to lead the existing estimator from disk or create a new one
 
-        x = np.array(df.values[:])
-        y = np.array(df[predict_column].values[:])  # make a deep copy to prevent data loss in future iterations
-        vprev = y[-1]
-        xlast = x[-1, :]
         try:
             estim = estimator.Estimator(predict_column, estimpath=self.settings.get('estim_path'))
         except:
             print('Could not load estimator for ' + str(predict_column))
-            return None, vprev
-        yp = estim.predict(xlast.reshape(1, -1))
-        return yp, vprev
+            return None
+        yp = estim.predict(df.iloc[-1, :])
+        return yp
 
     def get_units(self, dist, ins):
         """
@@ -1382,12 +1397,12 @@ class Controller(object):
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    'price': lo,
-                    'type': 'LIMIT',
-                    'timeInForce': 'GTD',
-                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    # 'price': lo,
+                    'type': 'MARKET',
+                    #'timeInForce': 'GTD',
+                    #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'},
-                    'stopLossOnFill': {'price': sl_lo, 'timeInForce': 'GTC'}
+                    'stopLossOnFill': {'price': lo, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
                 }}
                 # if current_direction <= units:
@@ -1398,10 +1413,10 @@ class Controller(object):
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    'price': hi,
-                    'type': 'LIMIT',
-                    'timeInForce': 'GTD',
-                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    # 'price': hi,
+                    'type': 'MARKET',
+                    # 'timeInForce': 'GTD',
+                    # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'},
                     'stopLossOnFill': {'price': sl_hi, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}

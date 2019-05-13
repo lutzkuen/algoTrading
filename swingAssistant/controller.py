@@ -104,15 +104,6 @@ class Controller(object):
             print(ins + 'get price ' + str(e))
             return None
 
-    def move_stops(self):
-        """
-        Move the stop of all winning trades to (price + entry)/2
-        """
-        for trade in self.trades:
-            if trade.unrealizedPL > 0:
-                price = self.get_price(trade.instrument)
-                entry = trade.price
-
     def reduce_exposure(self):
         # first thing we do is look for offsetting positions
         self.trades = self.oanda.trade.list_open(self.settings.get('account_id')).get('trades', '200')

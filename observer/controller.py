@@ -1397,12 +1397,12 @@ class Controller(object):
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    'price': lo,
-                    'type': 'LIMIT',
-                    'timeInForce': 'GTD',
-                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    # 'price': lo,
+                    'type': 'MARKET',
+                    #'timeInForce': 'GTD',
+                    #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'},
-                    'stopLossOnFill': {'price': sl_lo, 'timeInForce': 'GTC'}
+                    'stopLossOnFill': {'price': lo, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
                 }}
                 # if current_direction <= units:
@@ -1413,10 +1413,10 @@ class Controller(object):
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    'price': hi,
-                    'type': 'LIMIT',
-                    'timeInForce': 'GTD',
-                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    # 'price': hi,
+                    'type': 'MARKET',
+                    # 'timeInForce': 'GTD',
+                    # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'},
                     'stopLossOnFill': {'price': sl_hi, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}

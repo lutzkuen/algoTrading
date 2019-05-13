@@ -195,7 +195,7 @@ class Controller(object):
         # if after closing offsetting positions the exposure is still too large we resort to closing the worst looser if that can be offset by winning trades
         print('Could not find circle trades')
         account = self.oanda.account.summary(self.settings.get('account_id')).get('account', '200')
-        if 2*float(account.balance) > float(account.positionValue):
+        if 5*float(account.balance) > float(account.positionValue):
             print('Account Balance ' + str(account.balance) + ' > ' + str(account.positionValue))
             return
         biggest_loss = 0
