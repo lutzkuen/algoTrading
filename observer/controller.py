@@ -490,6 +490,35 @@ class Controller(object):
             else:
                 return -999999
 
+    def get_rsi(self, date, inst, period):
+        """
+        :param date:
+        :param inst:
+        :param period:
+        :return:
+        """
+        prev_price = None
+        avg_gain = 0
+        avg_loss = 0
+        query = "select (open+close+high+low)/4 as mean_price from dailycandles where ins = '" + inst + "' and (julianday('" + date + "') - julianday(date)) <= " + str(period) + " and date < '" + date + "';"
+        for line in self.db.query(query):
+            # code.interact(banner='', local=locals())
+            if line['mean_price']:
+                new_price = line['mean_price']
+                if prev_price:
+                    if new_price > prev_price:
+                        avg_gain += new_price - prev_price
+                    else:
+                        avg_loss += prev_price - new_price
+                prev_price = new_price
+        if avg_loss == 0:
+            # print(inst)
+            # code.interact(banner='', local=locals())
+            return 100
+        rsival = 100 - 100 / ( 1 + avg_gain / avg_loss)
+        # print('Calculated RSI ' + str(rsival))
+        return rsival
+
     def get_market_df(self, date, inst, complete, bootstrap=False):
         # Create Market data portion of data frame
         # date: Date in Format 'YYYY-MM-DD'
@@ -515,6 +544,9 @@ class Controller(object):
                 data_frame[ins + '_high'] = -999999
                 data_frame[ins + '_low'] = -999999
                 data_frame[ins + '_ma30'] = -999999
+                data_frame[ins + '_ma60'] = -999999
+                data_frame[ins + '_rsi14'] = -999999
+                data_frame[ins + '_madiff'] = -999999
             else:
                 spread = self.get_spread(ins, spread_type='trading')
                 volume = float(candle['volume'])
@@ -525,6 +557,8 @@ class Controller(object):
                 data_frame[ins + '_vol'] = int(volume)
                 data_frame[ins + '_open'] = float(_open)
                 ma30 = self.get_moving_average(date, ins, 30)
+                ma60 = self.get_moving_average(date, ins, 60)
+                rsi14 = self.get_rsi(date, ins, 14)
                 if float(close) > float(_open):
                     div = float(high) - float(_open)
                     if div > 0.000001:
@@ -539,8 +573,19 @@ class Controller(object):
                         data_frame[ins + '_close'] = 0
                 data_frame[ins + '_high'] = float(high) - float(_open)
                 data_frame[ins + '_low'] = float(low) - float(_open)
-                data_frame[ins+'_ma30'] = ma30
+                data_frame[ins+'_ma30'] = _open - ma30
+                data_frame[ins + '_ma60'] = _open - ma60
+                data_frame[ins + '_madiff'] = ma60 - ma30
+                data_frame[ins + '_rsi14'] = rsi14
+                # print(rsi14)
         return data_frame
+
+    def get_derived_features(self, today_df):
+        derived_features = dict()
+        # get the WTI to BCO ratio
+        derived_features['BCO_over_WTI'] = today_df['WTICO_USD_open'] / today_df['BCO_USD_open']
+        return derived_features
+
 
     def get_df_for_date(self, date, inst, complete, bootstrap=False):
         # Creates a dict containing all fields for the given date
@@ -556,7 +601,8 @@ class Controller(object):
         df_row = self.get_calendar_data(date)
         df_row['weekday'] = weekday
         today_df = self.get_market_df(date, inst, complete, bootstrap=bootstrap)
-        return merge_dicts(df_row, today_df, '')
+        additional_columns = self.get_derived_features(today_df)
+        return merge_dicts(merge_dicts(df_row, today_df, ''), additional_columns, '')
 
     def predict_tomorrow(self):
         # first step is to get the actual tomorrow day
@@ -697,6 +743,7 @@ class Controller(object):
         index = 0
         importances = []
         mse_list = []
+        mae_list = []
         for col in df.columns:
             if self.verbose > 0:
                 bar.update(index)
@@ -714,15 +761,16 @@ class Controller(object):
             # if not col_instrument in self.tradeable_instruments:
             #     continue
             if improve_model:
-                this_importances, mse = self.improve_estimator(col, df)
+                this_importances, mse, mae = self.improve_estimator(col, df)
                 mse_list.append(mse)
+                mae_list.append(mae)
                 for imp in this_importances:
                     importances.append({'estimator': col, 'label': imp['label'], 'importance': imp['importance']})
         if self.verbose > 0:
             bar.finish()
         df = pd.DataFrame(importances)
         df.to_csv('importance.csv', index=False)
-        print('Final Mean Loss ' + str(np.mean(mse_list)))
+        print('Final Mean Loss ' + str(np.mean(mse_list)) + ' / ' + str(np.mean(mae_list)))
 
     def save_prediction_to_db(self, date):
         prediction_df = pd.read_csv(self.settings['prices_path'])
