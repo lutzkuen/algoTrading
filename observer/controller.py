@@ -1424,6 +1424,8 @@ class Controller(object):
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
+            long_side = hi - op
+            short_side = op - lo
             sl_lo = lo - ( hi - lo )
             sl_hi = hi + ( hi - lo )
             if current_direction > 0:
@@ -1440,7 +1442,7 @@ class Controller(object):
             sl_hi = format(sl_hi, format_string).strip()
             expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
-            if cl > 0:
+            if cl > 0 and ( long_side > short_side ):
                 _units = int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,
@@ -1456,7 +1458,7 @@ class Controller(object):
                 # if current_direction <= units:
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
-            if cl < 0:
+            if cl < 0 and ( short_side > long_side ):
                 _units = -int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,

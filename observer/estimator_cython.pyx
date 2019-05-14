@@ -41,8 +41,18 @@ class Estimator(object):
     def fit(self, x, y):
         return self.estimator.fit(x, y)
 
+    def clean_df(self, df):
+        for col in df.columns:
+            if '_open' in col:
+                if len(df.shape) > 1:
+                    df = df.drop(col, axis=1)
+                else:
+                    df = df.drop(col)
+        return df
+
     def predict(self, _x):
         x = _x.copy()
+        x = self.clean_df(x)
         # code.interact(banner='', local=locals())
         for col in self.knockout:
             try:
@@ -59,13 +69,16 @@ class Estimator(object):
         return self.estimator.set_params(**params)
 
     def improve_estimator(self, _df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
+        max_features = 25 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
         i_knockout = 0
         knockout_columns = []
         df = _df.copy()
+        df = self.clean_df(df)
         self.estimator = None
         is_finished = False
         best_mse = 999999
-        while not is_finished:
+        best_mae = 999999
+        while not is_finished or len(df.columns) > max_features:
             x = np.array(df.values[:])
             y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
             y = y[num_samples:]  # drop first line
@@ -82,11 +95,11 @@ class Estimator(object):
             params = {
                 'boosting_type': 'gbdt',
                 'objective': 'regression',
-                'metric': 'mse',
+                'metric': 'mae',
                 'max_depth': 10,
                 'num_leaves': 10,
                 'learning_rate': 0.001,
-                'feature_fraction': 0.2,
+                # 'feature_fraction': 0.2,
                 'verbose': 0
                 #'max_bin': 10000,
                 # 'bagging_fraction': 0.5,
@@ -106,29 +119,40 @@ class Estimator(object):
                 importance_arr.append({'label': label, 'importance': importance})
             ypred = estim.predict(x_valid)
             mse = np.sqrt(np.mean((ypred - y_valid)**2))
-            if mse < best_mse:
+            mae = np.mean(np.abs(ypred - y_valid))
+            if mse < best_mse or len(df.columns) > max_features:
                 i_knockout += len(knockout_columns)
                 for cc in knockout_columns:
                     self.knockout.append(cc)
                 knockout_columns = []
                 self.estimator = estim
                 best_mse = mse
+                best_mae = mae
                 # knock out all columns which contribute less than half to the gain
-                mean_gain = np.mean(importances)
+                mean_gain = np.quantile(importances, 0.1)
+                current_importances = []
                 for label, importance in zip(df.columns, importances):
-                    if importance < mean_gain and not label == self.name:
-                        knockout_columns.append(label)
+                    current_importances.append({'label': label, 'importance': importance})
+                    #if importance <= mean_gain and not label == self.name:
+                    #    knockout_columns.append(label)
+                current_importances = sorted(current_importances, key = lambda x: x.get('importance'), reverse=True)
+                for i in range(int(len(current_importances)/2)):
+                    if not current_importances[i].get('label') == self.name:
+                        knockout_columns.append(current_importances[i].get('label'))
                 df = df.drop(knockout_columns, axis=1)
+                print('Remaining Features: ' + str(len(df.columns)))
             else:
                 is_finished = True
-        print(self.name + ' -> ' + str(mse) + ' (knocked out ' + str(i_knockout) + ' columns)')
+        best_mse = best_mse / np.mean(abs(y))
+        best_mae = best_mae / np.mean(abs(y))
+        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(i_knockout) + ' columns, ' + str(len(df.columns)) + ' features remaining )')
         if estimpath:
             self.save_estimator(estimpath)
         # now save the function evaluations to disk for later use
-        estimator_score = {'name': self.name, 'score': mse}
+        estimator_score = {'name': self.name, 'score': best_mse}
         if estimtable:
             estimtable.upsert(estimator_score, ['name'])
-        return importance_arr, best_mse
+        return importance_arr, best_mse, best_mae
 
     def save_estimator(self, estim_path):
         estimator_name = estim_path + self.name
