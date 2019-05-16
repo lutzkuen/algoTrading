@@ -42,11 +42,13 @@ class Estimator(object):
         return self.estimator.fit(x, y)
 
     def clean_df(self, df):
-        for col in df.columns:
-            if '_open' in col:
-                if len(df.shape) > 1:
+        try:
+            for col in df.columns:
+                if '_open' in col:
                     df = df.drop(col, axis=1)
-                else:
+        except:
+            for col in df.index:
+                if '_open' in col:
                     df = df.drop(col)
         return df
 

@@ -1390,6 +1390,19 @@ class Controller(object):
                     response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
                     response = self.oanda.order.create(self.settings.get('account_id'), **args)
                     print(response.raw_body)
+                if trade.currentUnits < 0 and newSL < currentSL:
+                    pip_location = self.get_pip_size(trade.instrument)
+                    pip_size = 10 ** (-pip_location + 1)
+                    format_string = '30.' + str(pip_location) + 'f'
+                    newSL = format(newSL, format_string).strip()
+                    args = { 'order': {
+                            'tradeID': trade.id,
+                            'price': newSL,
+                            'type': 'STOP_LOSS'
+                        }}
+                    response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                    print(response.raw_body)
 
     def simple_limits(self, ins, duration=20):
         """
@@ -1468,7 +1481,7 @@ class Controller(object):
                     # 'timeInForce': 'GTD',
                     # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'},
-                    'stopLossOnFill': {'price': sl_hi, 'timeInForce': 'GTC'}
+                    'stopLossOnFill': {'price': hi, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
                 }}
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
