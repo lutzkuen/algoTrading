@@ -1,8 +1,8 @@
+
 def warn(*args, **kwargs):
     pass
 import warnings
 warnings.warn = warn
-
 
 import datetime
 import pickle
@@ -10,11 +10,13 @@ import pickle
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import GradientBoostingRegressor
-from sklearn.metrics import accuracy_score
-import lightgbm as lgb
+# import lightgbm as lgb
 import code
 from sklearn.model_selection import train_test_split
 from sklearn.model_selection import cross_val_score
+from sklearn.ensemble import BaggingRegressor, BaggingClassifier
+from sklearn.metrics import accuracy_score
+from sklearn.neural_network import MLPRegressor, MLPClassifier
 from skopt import gp_minimize
 from skopt.space import Real, Integer
 from skopt.utils import use_named_args
@@ -26,14 +28,16 @@ class Estimator(object):
 
     def __init__(self, name, estimpath=None):
         self.name = name
-        self.library = 'catboost'
+        self.library = 'sklearn'
         self.iscla = False
-        self.knockout = []
+        # if '_close' in name:
+        #     self.iscla = True
+        # self.knockout = []
         if estimpath:
             estimator_path = estimpath + name
             knockout_path = estimpath + name + '.knockout'
             self.estimator = pickle.load(open(estimator_path, 'rb'))
-            self.knockout = pickle.load(open(knockout_path, 'rb'))
+            # self.knockout = pickle.load(open(knockout_path, 'rb'))
         # else:
         #    self.estimator = cb.CatBoostRegressor(loss_function='MAE')
         #    self.iscla = False
@@ -48,181 +52,90 @@ class Estimator(object):
     def fit(self, x, y):
         return self.estimator.fit(x, y)
 
-    def clean_df(self, df):
-        try:
-            for col in df.columns:
-                if '_open' in col:
-                    df = df.drop(col, axis=1)
-        except:
-            for col in df.index:
-                if '_open' in col:
-                    df = df.drop(col)
-        return df
-
-    def predict(self, _x):
-        x = _x.copy()
-        x = self.clean_df(x)
-        # code.interact(banner='', local=locals())
-        for col in self.knockout:
-            try:
-                x = x.drop(col)
-            except Exception as e:
-                print('Could not drop ' + str(col))
-                # code.interact(banner='', local=locals())
+    def predict(self, x):
         return self.estimator.predict(np.array(x.values[:]).reshape(1, -1))[0]
-
-    def get_feature_importances(self):
-        return self.estimator.feature_importances_
 
     def set_params(self, **params):
         return self.estimator.set_params(**params)
 
     def improve_estimator(self, _df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
-        # if not '_close' in self.name:
-        #     return [], None, None, None
-        max_features = 30 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
-        i_knockout = 0
-        knockout_columns = []
+        if not '_close' in self.name:
+            return [], None, None, None
+        max_features = 25 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
+        if self.iscla:
+            base_estimator = MLPClassifier((100, 10), max_iter=1000,
+                                          early_stopping=True,
+                                          activation='tanh',
+                                          learning_rate_init=0.01)
+            estim = BaggingClassifier(base_estimator=base_estimator,
+                                     n_estimators=1000,
+                                     max_features=0.01,
+                                     verbose=True)
+        else:
+            base_estimator = MLPRegressor((100, 10), max_iter=1000,
+                                      early_stopping=True,
+                                      activation='tanh',
+                                      learning_rate_init=0.01)
+            estim = BaggingRegressor(base_estimator=base_estimator,
+                                             n_estimators=1000,
+                                             max_features=0.01,
+                                             verbose=True)
         df = _df.copy()
-        df = self.clean_df(df)
-        self.estimator = None
         is_finished = False
-        best_mse = 999999
-        best_mae = 999999
-        while not is_finished or len(df.columns) > max_features:
-            x = np.array(df.values[:])
-            y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
-            y = y[num_samples:]  # drop first line
-            x = x[:-num_samples, :]  # drop the last line
-            print(y.shape)
-            i = 0
-            while i < y.shape[0]:
-                if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
-                    y = np.delete(y, i)
-                    x = np.delete(x, i, axis=0)
-                else:
-                    if '_close' in self.name:
-                        if y[i] < 0:
-                            y[i] += 1
-                        else:
-                            y[i] -= 1
-                    i += 1
-            idx = [i for i in range(int(y.shape[0]/num_samples))]
-
-            def custom_objective(y_hat, dtrain):
-                # code.interact(banner='', local=locals())
-                y = dtrain.get_label()
-                # p = y_hat
-                # gain = y_hat * y
-                grad = -np.multiply(y, np.multiply(y, y_hat)<np.multiply(y, y))
-                hessian = np.ones((len(y_hat), ))
-                return grad, hessian
-
-            def custom_loss(y_hat, dtrain):
-                y = dtrain.get_label()
-                return 'Mean Edge', -np.sum(np.multiply(y, y_hat)), False
-            n_estimators = 10000
-            x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.30)
-            d_train = lgb.Dataset(x_train, label=y_train)
-            d_valid = lgb.Dataset(x_valid, label=y_valid)
-            watchlist = [d_valid]
-            if '_close' in self.name:
-                params = {
-                    'boosting_type': 'gbdt',
-                    'objective': None,
-                    # 'metric': 'mae',
-                    'max_depth': 10,
-                    'num_leaves': 10,
-                    'learning_rate': 0.001,
-                    # 'feature_fraction': 0.2,
-                    'verbose': 1
-                    # 'max_bin': 10000,
-                    # 'bagging_fraction': 0.5,
-                    # 'bagging_freq': 10,
-                    # 'min_data_in_leaf': 2
-                    # 'early_stopping_round': 20
-                }
-                estim = lgb.train(params,
-                                  d_train,
-                                  n_estimators,
-                                  watchlist,
-                                  fobj=custom_objective,
-                                  feval=custom_loss,
-                                  verbose_eval=1000,
-                                early_stopping_rounds=100)
+        x = np.array(df.values[:])
+        y = np.array(df[self.name].values[:])  # make a deep copy to prevent data loss in future iterations
+        y = y[num_samples:]  # drop first line
+        x = x[:-num_samples, :]  # drop the last line
+        print(y.shape)
+        i = 0
+        while i < y.shape[0]:
+            if y[i] < -999990 or np.isnan(y[i]):  # missing values are marked with -999999
+                y = np.delete(y, i)
+                x = np.delete(x, i, axis=0)
             else:
-                params = {
-                    'boosting_type': 'gbdt',
-                    'objective': 'regression',
-                    'metric': 'mae',
-                    'max_depth': 10,
-                    'num_leaves': 10,
-                    'learning_rate': 0.001,
-                    # 'feature_fraction': 0.2,
-                    'verbose': 0
-                    # 'max_bin': 10000,
-                    # 'bagging_fraction': 0.5,
-                    # 'bagging_freq': 10,
-                    # 'min_data_in_leaf': 2
-                    # 'early_stopping_round': 20
-                }
-                estim = lgb.train(params,
-                                  d_train,
-                                  n_estimators,
-                                  watchlist,
-                                  verbose_eval=10000,
-                                  early_stopping_rounds=100)
-            importances = estim.feature_importance(importance_type='gain')
-            importance_arr = []
-            for label, importance in zip(df.columns, importances):
-                importance_arr.append({'label': label, 'importance': importance})
-            ypred = estim.predict(x_valid)
-            mse = np.sqrt(np.mean((ypred - y_valid)**2))
-            mae = np.mean(np.abs(ypred - y_valid))
-            if mse < best_mse or len(df.columns) > max_features:
-                i_knockout += len(knockout_columns)
-                for cc in knockout_columns:
-                    self.knockout.append(cc)
-                knockout_columns = []
-                self.estimator = estim
-                best_mse = mse
-                best_mae = mae
-                # knock out all columns which contribute less than half to the gain
-                mean_gain = np.quantile(importances, 0.1)
-                current_importances = []
-                for label, importance in zip(df.columns, importances):
-                    current_importances.append({'label': label, 'importance': importance})
-                    #if importance <= mean_gain and not label == self.name:
-                    #    knockout_columns.append(label)
-                current_importances = sorted(current_importances, key = lambda x: x.get('importance'), reverse=True)
-                for i in range(int(len(current_importances)/2)):
-                    if not current_importances[i].get('label') == self.name:
-                        knockout_columns.append(current_importances[i].get('label'))
-                df = df.drop(knockout_columns, axis=1)
-                print('Remaining Features: ' + str(len(df.columns)))
-            else:
-                is_finished = True
-        ypred = self.estimator.predict(x_valid)
-        best_mse = best_mse / np.mean(abs(y))
-        best_mae = best_mae / np.mean(abs(y))
+                # if self.iscla:
+                #     if y[i] < 0:
+                #         y[i] = -1
+                #     else:
+                #         y[i] = 1
+                i += 1
+        x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.30)
+        estim.fit(x_train, y_train)
+        ypred = estim.predict(x_valid)
+        if self.iscla:
+            print('Accuracy: ' + str(accuracy_score(ypred, y_valid)))
+        mse = np.sqrt(np.mean((ypred - y_valid)**2))
+        mae = np.mean(np.abs(ypred - y_valid))
+        mse = mse / np.mean(abs(y))
+        mae = mae / np.mean(abs(y))
         pred_arr = []
+        self.estimator = estim
         if '_close' in self.name:
+            medge = 0
             for i in range(ypred.shape[0]):
+                # if ypred[i] > 0:
+                #     ypred[i] -= 1
+                # else:
+                #     ypred[i] += 1
+                # if y_valid[i] > 0:
+                #     y_valid[i] -= 1
+                # else:
+                #     y_valid[i] += 1
                 pred_arr.append({'estimator': self.name, 'prediction': ypred[i], 'actual': y_valid[i]})
-            medge = np.sum(np.multiply(ypred, y_valid))
-            best_mse = medge
+                medge += ypred[i] * y_valid[i]
+            mse = medge
             print('Mean Edge: ' + str(medge))
-        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(i_knockout) + ' columns, ' + str(len(df.columns)) + ' features remaining )')
+        print(self.name + ' -> ' + str(mse) + ' / ' + str(mae))
         if estimpath:
             self.save_estimator(estimpath)
         # now save the function evaluations to disk for later use
-        estimator_score = {'name': self.name, 'score': best_mse}
+        estimator_score = {'name': self.name, 'score': mse}
         if estimtable:
             estimtable.upsert(estimator_score, ['name'])
-        return importance_arr, best_mse, best_mae, pred_arr
+        return [], mse, mae, pred_arr
 
     def save_estimator(self, estim_path):
         estimator_name = estim_path + self.name
         pickle.dump(self.estimator, open(estimator_name, 'wb'))
         knockout_path = estimator_name + '.knockout'
-        pickle.dump(self.knockout, open(knockout_path, 'wb'))
+        # pickle.dump(self.knockout, open(knockout_path, 'wb'))
