@@ -744,6 +744,7 @@ class Controller(object):
         importances = []
         mse_list = []
         mae_list = []
+        prarr = []
         for col in df.columns:
             if self.verbose > 0:
                 bar.update(index)
@@ -761,11 +762,16 @@ class Controller(object):
             # if not col_instrument in self.tradeable_instruments:
             #     continue
             if improve_model:
-                this_importances, mse, mae = self.improve_estimator(col, df)
-                mse_list.append(mse)
-                mae_list.append(mae)
+                this_importances, mse, mae, pred_arr = self.improve_estimator(col, df)
+                if pred_arr:
+                    [prarr.append(p) for p in pred_arr]
+                if mae:
+                    mse_list.append(mse)
+                    mae_list.append(mae)
                 for imp in this_importances:
                     importances.append({'estimator': col, 'label': imp['label'], 'importance': imp['importance']})
+        prdf = pd.DataFrame(prarr)
+        prdf.to_csv('predictions_close.csv', index=False)
         if self.verbose > 0:
             bar.finish()
         df = pd.DataFrame(importances)
