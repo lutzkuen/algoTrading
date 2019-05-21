@@ -744,6 +744,7 @@ class Controller(object):
         importances = []
         mse_list = []
         mae_list = []
+        prarr = []
         for col in df.columns:
             if self.verbose > 0:
                 bar.update(index)
@@ -761,11 +762,16 @@ class Controller(object):
             # if not col_instrument in self.tradeable_instruments:
             #     continue
             if improve_model:
-                this_importances, mse, mae = self.improve_estimator(col, df)
-                mse_list.append(mse)
-                mae_list.append(mae)
+                this_importances, mse, mae, pred_arr = self.improve_estimator(col, df)
+                if pred_arr:
+                    [prarr.append(p) for p in pred_arr]
+                if mae:
+                    mse_list.append(mse)
+                    mae_list.append(mae)
                 for imp in this_importances:
                     importances.append({'estimator': col, 'label': imp['label'], 'importance': imp['importance']})
+        prdf = pd.DataFrame(prarr)
+        prdf.to_csv('predictions_close.csv', index=False)
         if self.verbose > 0:
             bar.finish()
         df = pd.DataFrame(importances)
@@ -1372,37 +1378,45 @@ class Controller(object):
         Move the stop of all winning trades to (price + entry)/2
         """
         for trade in self.trades:
-            if trade.unrealizedPL > 0:
-                price = self.get_price(trade.instrument)
-                entry = trade.price
-                newSL = (price+entry)/2
-                currentSL = trade.stopLossOrder.price
-                if trade.currentUnits > 0 and newSL > currentSL:
-                    pip_location = self.get_pip_size(trade.instrument)
-                    pip_size = 10 ** (-pip_location + 1)
-                    format_string = '30.' + str(pip_location) + 'f'
-                    newSL = format(newSL, format_string).strip()
-                    args = { 'order': {
-                            'tradeID': trade.id,
-                            'price': newSL,
-                            'type': 'STOP_LOSS'
-                        }}
-                    response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
-                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
-                    print(response.raw_body)
-                if trade.currentUnits < 0 and newSL < currentSL:
-                    pip_location = self.get_pip_size(trade.instrument)
-                    pip_size = 10 ** (-pip_location + 1)
-                    format_string = '30.' + str(pip_location) + 'f'
-                    newSL = format(newSL, format_string).strip()
-                    args = { 'order': {
-                            'tradeID': trade.id,
-                            'price': newSL,
-                            'type': 'STOP_LOSS'
-                        }}
-                    response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
-                    response = self.oanda.order.create(self.settings.get('account_id'), **args)
-                    print(response.raw_body)
+            try:
+                if trade.unrealizedPL > 0:
+                    price = self.get_price(trade.instrument)
+                    entry = trade.price
+                    newSL = (price+entry)/2
+                    currentSL = trade.stopLossOrder.price
+                    currentTP = trade.takeProfitOrder.price
+                    if trade.currentUnits > 0:
+                        newSL = price - ( currentTP - price ) # target ratio is 1:1
+                        if newSL > currentSL:
+                            pip_location = self.get_pip_size(trade.instrument)
+                            pip_size = 10 ** (-pip_location + 1)
+                            format_string = '30.' + str(pip_location) + 'f'
+                            newSL = format(newSL, format_string).strip()
+                            args = { 'order': {
+                                    'tradeID': trade.id,
+                                    'price': newSL,
+                                    'type': 'STOP_LOSS'
+                                }}
+                            response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                            response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                            print(response.raw_body)
+                    if trade.currentUnits < 0:
+                        newSL = price + ( price - currentTP ) # target ratio is 1:1
+                        if newSL < currentSL:
+                            pip_location = self.get_pip_size(trade.instrument)
+                            pip_size = 10 ** (-pip_location + 1)
+                            format_string = '30.' + str(pip_location) + 'f'
+                            newSL = format(newSL, format_string).strip()
+                            args = { 'order': {
+                                    'tradeID': trade.id,
+                                    'price': newSL,
+                                    'type': 'STOP_LOSS'
+                                }}
+                            response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                            response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                            print(response.raw_body)
+            except:
+                print('Trade: ' + str(trade.id) + ' has no proper limits')
 
     def simple_limits(self, ins, duration=20):
         """
@@ -1433,6 +1447,7 @@ class Controller(object):
             candles = self.get_candles(ins, 'D', 1)
             candle = candles[0]
             spread = self.get_spread(ins, spread_type='trading')
+            bid, ask = self.get_bidask(ins)
             op = float(candle.get('mid').get('o'))
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
@@ -1452,18 +1467,20 @@ class Controller(object):
             lo = format(lo, format_string).strip()
             sl_lo = format(sl_lo, format_string).strip()
             hi = format(hi, format_string).strip()
+            bid = format(bid, format_string).strip()
+            ask = format(ask, format_string).strip()
             sl_hi = format(sl_hi, format_string).strip()
-            expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
+            expiry = datetime.datetime.now() + datetime.timedelta(hours=4)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
             if cl > 0 and ( long_side > short_side ):
                 _units = int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    # 'price': lo,
-                    'type': 'MARKET',
-                    #'timeInForce': 'GTD',
-                    #'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'price': bid,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': hi, 'timeInForce': 'GTC'},
                     'stopLossOnFill': {'price': lo, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}
@@ -1476,10 +1493,10 @@ class Controller(object):
                 args = {'order': {
                     'instrument': ins,
                     'units': _units,
-                    # 'price': hi,
-                    'type': 'MARKET',
-                    # 'timeInForce': 'GTD',
-                    # 'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
+                    'price': ask,
+                    'type': 'LIMIT',
+                    'timeInForce': 'GTD',
+                    'gtdTime': expiry.strftime('%Y-%m-%dT%H:%M:%S.%fZ'),
                     'takeProfitOnFill': {'price': lo, 'timeInForce': 'GTC'},
                     'stopLossOnFill': {'price': hi, 'timeInForce': 'GTC'}
                     # 'trailingStopLossOnFill': {'distance': sldist, 'timeInForce': 'GTC'}

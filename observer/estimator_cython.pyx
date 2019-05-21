@@ -1,9 +1,16 @@
+def warn(*args, **kwargs):
+    pass
+import warnings
+warnings.warn = warn
+
+
 import datetime
 import pickle
 
 import numpy as np
 from sklearn.ensemble import GradientBoostingClassifier
 from sklearn.ensemble import GradientBoostingRegressor
+from sklearn.metrics import accuracy_score
 import lightgbm as lgb
 import code
 from sklearn.model_selection import train_test_split
@@ -71,7 +78,9 @@ class Estimator(object):
         return self.estimator.set_params(**params)
 
     def improve_estimator(self, _df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
-        max_features = 25 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
+        # if not '_close' in self.name:
+        #     return [], None, None, None
+        max_features = 2000 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
         i_knockout = 0
         knockout_columns = []
         df = _df.copy()
@@ -92,37 +101,88 @@ class Estimator(object):
                     y = np.delete(y, i)
                     x = np.delete(x, i, axis=0)
                 else:
+                    if '_close' in self.name:
+                        if y[i] < 0:
+                            y[i] += 1
+                        else:
+                            y[i] -= 1
                     i += 1
             idx = [i for i in range(int(y.shape[0]/num_samples))]
-            params = {
-                'boosting_type': 'gbdt',
-                'objective': 'regression',
-                'metric': 'mae',
-                'max_depth': 10,
-                'num_leaves': 10,
-                'learning_rate': 0.001,
-                # 'feature_fraction': 0.2,
-                'verbose': 0
-                #'max_bin': 10000,
-                # 'bagging_fraction': 0.5,
-                # 'bagging_freq': 10,
-                # 'min_data_in_leaf': 2
-                # 'early_stopping_round': 20
-            }
+
+            def custom_objective(y_hat, dtrain):
+                # code.interact(banner='', local=locals())
+                y = dtrain.get_label()
+                # p = y_hat
+                # gain = y_hat * y
+                grad = -np.multiply(y, np.multiply(y, y_hat)<np.multiply(y, y))
+                hessian = np.ones((len(y_hat), ))
+                return grad, hessian
+
+            def custom_loss(y_hat, dtrain):
+                y = dtrain.get_label()
+                return 'Mean Edge', -np.sum(np.multiply(y, y_hat)), False
             n_estimators = 10000
             x_train, x_valid, y_train, y_valid = train_test_split(x, y, test_size=0.30)
             d_train = lgb.Dataset(x_train, label=y_train)
             d_valid = lgb.Dataset(x_valid, label=y_valid)
             watchlist = [d_valid]
-            estim = lgb.train(params, d_train, n_estimators, watchlist, verbose_eval=10000, early_stopping_rounds=100)
+            if '_close' in self.name:
+                params = {
+                    'boosting_type': 'gbdt',
+                    'objective': None,
+                    # 'metric': 'mae',
+                    'max_depth': 10,
+                    'num_leaves': 10,
+                    'learning_rate': 0.001,
+                    # 'feature_fraction': 0.2,
+                    'verbose': 1
+                    # 'max_bin': 10000,
+                    # 'bagging_fraction': 0.5,
+                    # 'bagging_freq': 10,
+                    # 'min_data_in_leaf': 2
+                    # 'early_stopping_round': 20
+                }
+                estim = lgb.train(params,
+                                  d_train,
+                                  n_estimators,
+                                  watchlist,
+                                  fobj=custom_objective,
+                                  feval=custom_loss,
+                                  verbose_eval=1000,
+                                early_stopping_rounds=1000)
+            else:
+                params = {
+                    'boosting_type': 'gbdt',
+                    'objective': 'regression',
+                    'metric': 'mae',
+                    'max_depth': 10,
+                    'num_leaves': 10,
+                    'learning_rate': 0.001,
+                    # 'feature_fraction': 0.2,
+                    'verbose': 0
+                    # 'max_bin': 10000,
+                    # 'bagging_fraction': 0.5,
+                    # 'bagging_freq': 10,
+                    # 'min_data_in_leaf': 2
+                    # 'early_stopping_round': 20
+                }
+                estim = lgb.train(params,
+                                  d_train,
+                                  n_estimators,
+                                  watchlist,
+                                  verbose_eval=1000,
+                                  early_stopping_rounds=1000)
             importances = estim.feature_importance(importance_type='gain')
             importance_arr = []
             for label, importance in zip(df.columns, importances):
                 importance_arr.append({'label': label, 'importance': importance})
             ypred = estim.predict(x_valid)
-            mse = np.sqrt(np.mean((ypred - y_valid)**2))
+            if '_close' in self.name:
+                mse = -np.sum(np.multiply(ypred, y_valid))
+            else:
+                mse = np.sqrt(np.mean((ypred - y_valid)**2))
             mae = np.mean(np.abs(ypred - y_valid))
-            if mse < best_mse or len(df.columns) > max_features:
+            if mse < best_mse: # or len(df.columns) > max_features:
                 i_knockout += len(knockout_columns)
                 for cc in knockout_columns:
                     self.knockout.append(cc)
@@ -145,16 +205,25 @@ class Estimator(object):
                 print('Remaining Features: ' + str(len(df.columns)))
             else:
                 is_finished = True
-        best_mse = best_mse / np.mean(abs(y))
+        ypred = self.estimator.predict(x_valid)
+        if not '_close' in self.name:
+            best_mse = best_mse / np.mean(abs(y))
         best_mae = best_mae / np.mean(abs(y))
-        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(i_knockout) + ' columns, ' + str(len(df.columns)) + ' features remaining )')
+        pred_arr = []
+        if '_close' in self.name:
+            for i in range(ypred.shape[0]):
+                pred_arr.append({'estimator': self.name, 'prediction': ypred[i], 'actual': y_valid[i]})
+            # medge = np.sum(np.multiply(ypred, y_valid))
+            # best_mse = medge
+            # print('Mean Edge: ' + str(medge))
+        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(len(self.knockout)) + ' columns )')
         if estimpath:
             self.save_estimator(estimpath)
         # now save the function evaluations to disk for later use
         estimator_score = {'name': self.name, 'score': best_mse}
         if estimtable:
             estimtable.upsert(estimator_score, ['name'])
-        return importance_arr, best_mse, best_mae
+        return importance_arr, best_mse, best_mae, pred_arr
 
     def save_estimator(self, estim_path):
         estimator_name = estim_path + self.name

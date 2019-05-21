@@ -80,7 +80,7 @@ class Estimator(object):
     def improve_estimator(self, _df, estimtable=None, num_samples=1, estimpath=None, verbose=1):
         # if not '_close' in self.name:
         #     return [], None, None, None
-        max_features = 30 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
+        max_features = 2000 # as a rule of thumb the number of features should not be greater than sqrt(num samples)
         i_knockout = 0
         knockout_columns = []
         df = _df.copy()
@@ -149,7 +149,7 @@ class Estimator(object):
                                   fobj=custom_objective,
                                   feval=custom_loss,
                                   verbose_eval=1000,
-                                early_stopping_rounds=100)
+                                early_stopping_rounds=1000)
             else:
                 params = {
                     'boosting_type': 'gbdt',
@@ -170,16 +170,19 @@ class Estimator(object):
                                   d_train,
                                   n_estimators,
                                   watchlist,
-                                  verbose_eval=10000,
-                                  early_stopping_rounds=100)
+                                  verbose_eval=1000,
+                                  early_stopping_rounds=1000)
             importances = estim.feature_importance(importance_type='gain')
             importance_arr = []
             for label, importance in zip(df.columns, importances):
                 importance_arr.append({'label': label, 'importance': importance})
             ypred = estim.predict(x_valid)
-            mse = np.sqrt(np.mean((ypred - y_valid)**2))
+            if '_close' in self.name:
+                mse = -np.sum(np.multiply(ypred, y_valid))
+            else:
+                mse = np.sqrt(np.mean((ypred - y_valid)**2))
             mae = np.mean(np.abs(ypred - y_valid))
-            if mse < best_mse or len(df.columns) > max_features:
+            if mse < best_mse: # or len(df.columns) > max_features:
                 i_knockout += len(knockout_columns)
                 for cc in knockout_columns:
                     self.knockout.append(cc)
@@ -203,16 +206,17 @@ class Estimator(object):
             else:
                 is_finished = True
         ypred = self.estimator.predict(x_valid)
-        best_mse = best_mse / np.mean(abs(y))
+        if not '_close' in self.name:
+            best_mse = best_mse / np.mean(abs(y))
         best_mae = best_mae / np.mean(abs(y))
         pred_arr = []
         if '_close' in self.name:
             for i in range(ypred.shape[0]):
                 pred_arr.append({'estimator': self.name, 'prediction': ypred[i], 'actual': y_valid[i]})
-            medge = np.sum(np.multiply(ypred, y_valid))
-            best_mse = medge
-            print('Mean Edge: ' + str(medge))
-        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(i_knockout) + ' columns, ' + str(len(df.columns)) + ' features remaining )')
+            # medge = np.sum(np.multiply(ypred, y_valid))
+            # best_mse = medge
+            # print('Mean Edge: ' + str(medge))
+        print(self.name + ' -> ' + str(best_mse) + ' / ' + str(best_mae) + ' (knocked out ' + str(len(self.knockout)) + ' columns )')
         if estimpath:
             self.save_estimator(estimpath)
         # now save the function evaluations to disk for later use
