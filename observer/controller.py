@@ -1386,7 +1386,7 @@ class Controller(object):
                     currentSL = trade.stopLossOrder.price
                     currentTP = trade.takeProfitOrder.price
                     if trade.currentUnits > 0:
-                        newSL = price - ( currentTP - price ) # target ratio is 1:1
+                        newSL = max(price - ( currentTP - price ), newSL) # target ratio is 1:1
                         if newSL > currentSL:
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
@@ -1401,7 +1401,7 @@ class Controller(object):
                             response = self.oanda.order.create(self.settings.get('account_id'), **args)
                             print(response.raw_body)
                     if trade.currentUnits < 0:
-                        newSL = price + ( price - currentTP ) # target ratio is 1:1
+                        newSL = min(price + ( price - currentTP ), newSL) # target ratio is 1:1
                         if newSL < currentSL:
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
