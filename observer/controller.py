@@ -1381,13 +1381,20 @@ class Controller(object):
             try:
                 if trade.unrealizedPL > 0:
                     price = self.get_price(trade.instrument)
+                    bid, ask = self.get_bidask(trade.instrument)
                     entry = trade.price
-                    newSL = (price+entry)/2
+                    if trade.currentUnits > 0:
+                        newSL = (bid+entry)/2
+                    else:
+                        newSL = (ask+entry)/2
                     currentSL = trade.stopLossOrder.price
                     currentTP = trade.takeProfitOrder.price
+                    print(trade.instrument + ' ' + str(currentSL) + ' / ' + str(newSL))
                     if trade.currentUnits > 0:
                         newSL = max(price - ( currentTP - price ), newSL) # target ratio is 1:1
                         if newSL > currentSL:
+                            if bid - newSL < ask - bid:
+                                continue
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
                             format_string = '30.' + str(pip_location) + 'f'
@@ -1403,6 +1410,9 @@ class Controller(object):
                     if trade.currentUnits < 0:
                         newSL = min(price + ( price - currentTP ), newSL) # target ratio is 1:1
                         if newSL < currentSL:
+                            if newSL - ask < ask - bid:
+                                print(str(newSL-ask) + ' < ' + str(ask-bid))
+                                continue
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
                             format_string = '30.' + str(pip_location) + 'f'
@@ -1415,6 +1425,8 @@ class Controller(object):
                             response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
                             response = self.oanda.order.create(self.settings.get('account_id'), **args)
                             print(response.raw_body)
+                else:
+                    print(trade.instrument + ' ' + str(trade.unrealizedPL))
             except:
                 print('Trade: ' + str(trade.id) + ' has no proper limits')
 
