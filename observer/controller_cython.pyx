@@ -1378,7 +1378,23 @@ class Controller(object):
         Move the stop of all winning trades to (price + entry)/2
         """
         for trade in self.trades:
+            #if trade.instrument == 'NZD_USD':
+            #    newSL = 0.6
+            #    pip_location = self.get_pip_size(trade.instrument)
+            #    pip_size = 10 ** (-pip_location + 1)
+            #    format_string = '30.' + str(pip_location) + 'f'
+            #    newSL = format(newSL, format_string).strip()
+            #    args = { 'order': {
+            #            'tradeID': trade.id,
+            #            'price': newSL,
+            #            'type': 'STOP_LOSS'
+            #        }}
+            #    response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+            #    response = self.oanda.order.create(self.settings.get('account_id'), **args)
+            #    print(response.raw_body)
+            #    continue
             try:
+                print(trade.instrument + ' TP: ' + str(trade.takeProfitOrder.price) + ' SL: ' + str(trade.stopLossOrder.price))
                 if trade.unrealizedPL > 0:
                     price = self.get_price(trade.instrument)
                     bid, ask = self.get_bidask(trade.instrument)
