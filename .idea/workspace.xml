@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="9f0247db-5a6f-4953-8b12-d04309a4014f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/new_estimators.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_estimators.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/observer/controller.py" beforeDir="false" afterPath="$PROJECT_DIR$/observer/controller.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -16,11 +16,32 @@
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/observer/controller.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="384">
-              <caret line="466" column="112" selection-start-line="466" selection-start-column="112" selection-end-line="466" selection-end-column="112" />
+            <state relative-caret-position="350">
+              <caret line="466" selection-start-line="466" selection-end-line="466" />
               <folding>
                 <element signature="e#344#363#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/improve_observer.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="68">
+              <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/new_estimators.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="170">
+              <caret line="10" column="75" lean-forward="true" selection-start-line="10" selection-start-column="75" selection-end-line="10" selection-end-column="75" />
             </state>
           </provider>
         </entry>
@@ -33,9 +54,9 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/new_estimators.py" />
         <option value="$PROJECT_DIR$/observer/estimator_bagging.py" />
         <option value="$PROJECT_DIR$/observer/estimator.py" />
+        <option value="$PROJECT_DIR$/new_estimators.py" />
         <option value="$PROJECT_DIR$/observer/controller.py" />
       </list>
     </option>
@@ -58,11 +79,6 @@
             <path>
               <item name="algoTrading" type="b2602c69:ProjectViewProjectNode" />
               <item name="algoTrading" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="algoTrading" type="b2602c69:ProjectViewProjectNode" />
-              <item name="algoTrading" type="462c0819:PsiDirectoryNode" />
-              <item name="observer" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -108,8 +124,8 @@
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.47517732" visible="true" weight="0.2494043" />
-      <window_info active="true" id="Structure" order="1" sideWeight="0.5248227" side_tool="true" visible="true" weight="0.2494043" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47517732" visible="true" weight="0.2494043" />
+      <window_info id="Structure" order="1" sideWeight="0.5248227" side_tool="true" visible="true" weight="0.2494043" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -139,23 +155,6 @@
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/improve_observer.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="34">
-          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
-          <folding>
-            <element signature="e#0#11#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/new_estimators.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="119">
-          <caret line="7" column="32" selection-start-line="7" selection-start-column="32" selection-end-line="7" selection-end-column="32" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/observer/estimator_bagging.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="51">
@@ -177,10 +176,27 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/improve_observer.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="68">
+          <caret line="4" column="43" selection-start-line="4" selection-start-column="43" selection-end-line="4" selection-end-column="43" />
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/new_estimators.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="170">
+          <caret line="10" column="75" lean-forward="true" selection-start-line="10" selection-start-column="75" selection-end-line="10" selection-end-column="75" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/observer/controller.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="384">
-          <caret line="466" column="112" selection-start-line="466" selection-start-column="112" selection-end-line="466" selection-end-column="112" />
+        <state relative-caret-position="350">
+          <caret line="466" selection-start-line="466" selection-end-line="466" />
           <folding>
             <element signature="e#344#363#0" expanded="true" />
           </folding>

@@ -391,7 +391,7 @@ class Controller(object):
         # The patterns are used to distinguish the type of event
         for pattern in patterns:
             pattern_count = 0
-            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date + '" and "' + pattern + '" in event;'):
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date + '" and event like "%' + pattern + '%";'):
                 pattern_count = line['cnt']
             colname = 'calendar_pattern_' + pattern
             df[colname] = pattern_count
@@ -431,7 +431,7 @@ class Controller(object):
                 # The patterns are used to distinguish the type of event
         for pattern in patterns:
             pattern_count = 0
-            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and "' + pattern + '" in event;'):
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and event like "%' + pattern + '%";'):
                 pattern_count = line['cnt']
             colname = 'calendar_pattern_' + pattern + '_next'
             df[colname] = pattern_count
@@ -464,7 +464,7 @@ class Controller(object):
                 # The patterns are used to distinguish the type of event
         for pattern in patterns:
             pattern_count = 0
-            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and "' + pattern + '" in event;'):
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and event like "%' + pattern + '%";'):
                 pattern_count = line['cnt']
             colname = 'calendar_pattern_' + pattern + '_next2'
             df[colname] = pattern_count
