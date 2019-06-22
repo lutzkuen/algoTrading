@@ -329,13 +329,39 @@ class Controller(object):
             return None
 
     def get_calendar_data(self, date):
-        # extract event data regarding the current trading week
-        # date: Date in format '2018-06-23'
+        """
+        extract event data regarding the current trading week
+        :param date: Date in format '2018-06-23'
+        :return:
+        """
 
         # the date is taken from oanda NY open alignment. Hence if we use only complete candles this date
         # will be the day before yesterday
         df = {}
-        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD']  # , 'ALL']
+        patterns = ['Employment',
+                    'Unemployment',
+                    'CPI',
+                    'GDP',
+                    'PMI',
+                    'Sales',
+                    'Holiday',
+                    'Manufacturing',
+                    'Trade',
+                    'FOMC',
+                    'EZB',
+                    'RBA',
+                    'RBNZ',
+                    'BOJ',
+                    'BOC',
+                    'Confidence',
+                    'PPI',
+                    'HPI',
+                    'Fed',
+                    'OPEC',
+                    'SNB',
+                    'Bond',
+                    'Durable']
+        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'All']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
             # calculate how actual and forecast numbers compare. If no forecast available just use the previous number
@@ -362,6 +388,13 @@ class Controller(object):
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date, currency=curr, impact=impact)
+        # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date + '" and "' + pattern + '" in event;'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern
+            df[colname] = pattern_count
         dt = datetime.datetime.strptime(date, '%Y-%m-%d')
 
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached yesterday
@@ -374,7 +407,7 @@ class Controller(object):
             # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
             for impact in impacts:
                 sentiment = 0
-                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                for row in self.calendar.find(date=date_next, currency=curr, impact=impact):
                     actual = self.strip_number(row.get('actual'))
                     if not actual:
                         continue
@@ -395,6 +428,13 @@ class Controller(object):
                 column_name = curr + impact + '_next'
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and "' + pattern + '" in event;'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern + '_next'
+            df[colname] = pattern_count
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached today
         if dt.weekday() == 4:
             dt += datetime.timedelta(days=3)
@@ -406,7 +446,7 @@ class Controller(object):
             #  If no forecast available just use the previous number
             for impact in impacts:
                 sentiment = 0
-                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                for row in self.calendar.find(date=date_next, currency=curr, impact=impact):
                     forecast = self.strip_number(row.get('forecast'))
                     if not forecast:
                         continue
@@ -421,6 +461,13 @@ class Controller(object):
                 column_name = curr + impact + '_next2'
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and "' + pattern + '" in event;'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern + '_next2'
+            df[colname] = pattern_count
         return df
 
     def candles_to_db(self, candles, ins, completed=True, upsert=False):
