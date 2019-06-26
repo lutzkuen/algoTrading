@@ -1,7 +1,4 @@
 ######
-# This is a copy from https://gist.github.com/pohzipohzi
-# all credit goes to Poh Zi How
-
 
 from bs4 import BeautifulSoup
 import requests
@@ -90,9 +87,6 @@ def get_economic_calendar(startlink, sq_table):
 
 
 if __name__ == "__main__":
-    """
-    Run this using the command "python `script_name`.py >> `output_name`.csv"
-    """
     try:
         mode = sys.argv[1]
         confname = sys.argv[2]

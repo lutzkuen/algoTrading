@@ -8,4 +8,4 @@ except ImportError:
 cont = controller.Controller('../settings_triangle.conf', 'live', verbose=1)
 now = datetime.datetime.now() - datetime.timedelta(hours=24)
 now = now.strftime('%Y-%m-%d')
-cont.data2sheet(read_raw=False, write_raw=True, improve_model=True, maxdate=now, complete=False, append_raw=False)
+cont.data2sheet(read_raw=False, write_raw=True, improve_model=True, maxdate=now, complete=False, append_raw=True)
