@@ -1425,6 +1425,7 @@ class Controller(object):
         Move the stop of all winning trades to (price + entry)/2
         """
         for trade in self.trades:
+            # Resuse this part to move stops from a country where OANDA access is not permitted
             #if trade.instrument == 'NZD_USD':
             #    newSL = 0.6
             #    pip_location = self.get_pip_size(trade.instrument)
@@ -1440,24 +1441,25 @@ class Controller(object):
             #    response = self.oanda.order.create(self.settings.get('account_id'), **args)
             #    print(response.raw_body)
             #    continue
+            rr = 1.5
             try:
                 print(trade.instrument + ' TP: ' + str(trade.takeProfitOrder.price) + ' SL: ' + str(trade.stopLossOrder.price))
                 if trade.unrealizedPL > 0:
                     price = self.get_price(trade.instrument)
                     bid, ask = self.get_bidask(trade.instrument)
                     entry = trade.price
-                    if trade.currentUnits > 0:
-                        newSL = (bid+entry)/2
-                    else:
-                        newSL = (ask+entry)/2
+                    # if trade.currentUnits > 0:
+                    #     newSL = (bid+entry)/2
+                    # else:
+                    #     newSL = (ask+entry)/2
                     currentSL = trade.stopLossOrder.price
                     currentTP = trade.takeProfitOrder.price
                     print(trade.instrument + ' ' + str(currentSL) + ' / ' + str(newSL))
                     if trade.currentUnits > 0:
-                        newSL = max(price - ( currentTP - price ), newSL) # target ratio is 1:1
+                        newSL = price - ( currentTP - bid )/rr # target ratio is rr
                         if newSL > currentSL:
-                            if bid - newSL < ask - bid:
-                                continue
+                            # if bid - newSL < ask - bid:
+                            #     continue
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
                             format_string = '30.' + str(pip_location) + 'f'
@@ -1471,11 +1473,11 @@ class Controller(object):
                             response = self.oanda.order.create(self.settings.get('account_id'), **args)
                             print(response.raw_body)
                     if trade.currentUnits < 0:
-                        newSL = min(price + ( price - currentTP ), newSL) # target ratio is 1:1
+                        newSL = price + ( price - ask )/rr
                         if newSL < currentSL:
-                            if newSL - ask < ask - bid:
-                                print(str(newSL-ask) + ' < ' + str(ask-bid))
-                                continue
+                            # if newSL - ask < ask - bid:
+                            #     print(str(newSL-ask) + ' < ' + str(ask-bid))
+                            #     continue
                             pip_location = self.get_pip_size(trade.instrument)
                             pip_size = 10 ** (-pip_location + 1)
                             format_string = '30.' + str(pip_location) + 'f'
@@ -1493,7 +1495,7 @@ class Controller(object):
             except:
                 print('Trade: ' + str(trade.id) + ' has no proper limits')
 
-    def simple_limits(self, ins, duration=20):
+    def simple_limits(self, ins, duration=1):
         """
         Open orders and close trades using the predicted market movements
 
@@ -1516,6 +1518,7 @@ class Controller(object):
             current_direction = 0
             for trade in self.trades:
                 if trade.instrument == ins:
+                    return
                     current_direction += float(trade.currentUnits)
             price_path = self.settings['prices_path']
             df = pd.read_csv(price_path)
@@ -1527,8 +1530,12 @@ class Controller(object):
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
-            long_side = hi - op
-            short_side = op - lo
+            if ask > hi:
+                return
+            if bid < lo:
+                return
+            long_side = hi - ask
+            short_side = bid - lo
             sl_lo = lo - ( hi - lo )
             sl_hi = hi + ( hi - lo )
             if current_direction > 0:
@@ -1545,9 +1552,10 @@ class Controller(object):
             bid = format(bid, format_string).strip()
             ask = format(ask, format_string).strip()
             sl_hi = format(sl_hi, format_string).strip()
-            expiry = datetime.datetime.now() + datetime.timedelta(hours=4)
+            expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
-            if cl > 0 and ( long_side > short_side ):
+            rr = 1.5
+            if cl > 0 and ( long_side > rr*short_side ):
                 _units = int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,
@@ -1563,7 +1571,7 @@ class Controller(object):
                 # if current_direction <= units:
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
-            if cl < 0 and ( short_side > long_side ):
+            if cl < 0 and ( short_side > rr*long_side ):
                 _units = -int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,

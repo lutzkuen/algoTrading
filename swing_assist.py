@@ -1,4 +1,4 @@
-from swingAssistant import controller_cython as controller
+# from swingAssistant import controller_cython as controller
 from observer import controller_cython as cobs
 print('live')
 # cont = controller.Controller('/home/tubuntu/settings_swing.conf', 'live')
