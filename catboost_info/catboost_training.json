@@ -1,4 +1,0 @@
-{
-"meta":{"launch_mode":"Train","name":"experiment","iteration_count":1000,"learn_metrics":[{"best_value":"Min","name":"MAE"}],"test_sets":[],"test_metrics":[],"learn_sets":["learn"]},
-"iterations":[
-]}

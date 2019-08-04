@@ -97,6 +97,8 @@ class Controller(object):
             trades_path = config.get('data', 'trades_path')
             self.trades_file = open(trades_path, 'w')
 
+        self.rr_target = 1.5
+
         if _type and v20present:
             self.settings['domain'] = config.get(_type,
                                                  'streaming_hostname')
@@ -329,13 +331,39 @@ class Controller(object):
             return None
 
     def get_calendar_data(self, date):
-        # extract event data regarding the current trading week
-        # date: Date in format '2018-06-23'
+        """
+        extract event data regarding the current trading week
+        :param date: Date in format '2018-06-23'
+        :return:
+        """
 
         # the date is taken from oanda NY open alignment. Hence if we use only complete candles this date
         # will be the day before yesterday
         df = {}
-        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD']  # , 'ALL']
+        patterns = ['Employment',
+                    'Unemployment',
+                    'CPI',
+                    'GDP',
+                    'PMI',
+                    'Sales',
+                    'Holiday',
+                    'Manufacturing',
+                    'Trade',
+                    'FOMC',
+                    'EZB',
+                    'RBA',
+                    'RBNZ',
+                    'BOJ',
+                    'BOC',
+                    'Confidence',
+                    'PPI',
+                    'HPI',
+                    'Fed',
+                    'OPEC',
+                    'SNB',
+                    'Bond',
+                    'Durable']
+        currencies = ['CNY', 'CAD', 'CHF', 'EUR', 'GBP', 'JPY', 'NZD', 'USD', 'AUD', 'All']
         impacts = ['Non-Economic', 'Low Impact Expected', 'Medium Impact Expected', 'High Impact Expected']
         for curr in currencies:
             # calculate how actual and forecast numbers compare. If no forecast available just use the previous number
@@ -362,6 +390,13 @@ class Controller(object):
                 column_name = curr + impact
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date, currency=curr, impact=impact)
+        # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date + '" and event like "%' + pattern + '%";'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern
+            df[colname] = pattern_count
         dt = datetime.datetime.strptime(date, '%Y-%m-%d')
 
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached yesterday
@@ -374,7 +409,7 @@ class Controller(object):
             # calculate how actual and forecasted numbers compare. If no forecast available just use the previous number
             for impact in impacts:
                 sentiment = 0
-                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                for row in self.calendar.find(date=date_next, currency=curr, impact=impact):
                     actual = self.strip_number(row.get('actual'))
                     if not actual:
                         continue
@@ -395,6 +430,13 @@ class Controller(object):
                 column_name = curr + impact + '_next'
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and event like "%' + pattern + '%";'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern + '_next'
+            df[colname] = pattern_count
         # when today is friday (4) skip the weekend, else go one day forward. Then we have reached today
         if dt.weekday() == 4:
             dt += datetime.timedelta(days=3)
@@ -406,7 +448,7 @@ class Controller(object):
             #  If no forecast available just use the previous number
             for impact in impacts:
                 sentiment = 0
-                for row in self.calendar.find(date=date, currency=curr, impact=impact):
+                for row in self.calendar.find(date=date_next, currency=curr, impact=impact):
                     forecast = self.strip_number(row.get('forecast'))
                     if not forecast:
                         continue
@@ -421,6 +463,13 @@ class Controller(object):
                 column_name = curr + impact + '_next2'
                 column_name = column_name.replace(' ', '')
                 df[column_name] = self.calendar.count(date=date_next, currency=curr, impact=impact)
+                # The patterns are used to distinguish the type of event
+        for pattern in patterns:
+            pattern_count = 0
+            for line in self.calendar_db.query('select count(*) as cnt from calendar where date = "' + date_next + '" and event like "%' + pattern + '%";'):
+                pattern_count = line['cnt']
+            colname = 'calendar_pattern_' + pattern + '_next2'
+            df[colname] = pattern_count
         return df
 
     def candles_to_db(self, candles, ins, completed=True, upsert=False):
@@ -1378,6 +1427,7 @@ class Controller(object):
         Move the stop of all winning trades to (price + entry)/2
         """
         for trade in self.trades:
+            # Resuse this part to move stops from a country where OANDA access is not permitted
             #if trade.instrument == 'NZD_USD':
             #    newSL = 0.6
             #    pip_location = self.get_pip_size(trade.instrument)
@@ -1393,60 +1443,52 @@ class Controller(object):
             #    response = self.oanda.order.create(self.settings.get('account_id'), **args)
             #    print(response.raw_body)
             #    continue
+            rr = self.rr_target
             try:
                 print(trade.instrument + ' TP: ' + str(trade.takeProfitOrder.price) + ' SL: ' + str(trade.stopLossOrder.price))
-                if trade.unrealizedPL > 0:
-                    price = self.get_price(trade.instrument)
-                    bid, ask = self.get_bidask(trade.instrument)
-                    entry = trade.price
-                    if trade.currentUnits > 0:
-                        newSL = (bid+entry)/2
-                    else:
-                        newSL = (ask+entry)/2
-                    currentSL = trade.stopLossOrder.price
-                    currentTP = trade.takeProfitOrder.price
-                    print(trade.instrument + ' ' + str(currentSL) + ' / ' + str(newSL))
-                    if trade.currentUnits > 0:
-                        newSL = max(price - ( currentTP - price ), newSL) # target ratio is 1:1
-                        if newSL > currentSL:
-                            if bid - newSL < ask - bid:
-                                continue
-                            pip_location = self.get_pip_size(trade.instrument)
-                            pip_size = 10 ** (-pip_location + 1)
-                            format_string = '30.' + str(pip_location) + 'f'
-                            newSL = format(newSL, format_string).strip()
-                            args = { 'order': {
-                                    'tradeID': trade.id,
-                                    'price': newSL,
-                                    'type': 'STOP_LOSS'
-                                }}
-                            response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
-                            response = self.oanda.order.create(self.settings.get('account_id'), **args)
-                            print(response.raw_body)
-                    if trade.currentUnits < 0:
-                        newSL = min(price + ( price - currentTP ), newSL) # target ratio is 1:1
-                        if newSL < currentSL:
-                            if newSL - ask < ask - bid:
-                                print(str(newSL-ask) + ' < ' + str(ask-bid))
-                                continue
-                            pip_location = self.get_pip_size(trade.instrument)
-                            pip_size = 10 ** (-pip_location + 1)
-                            format_string = '30.' + str(pip_location) + 'f'
-                            newSL = format(newSL, format_string).strip()
-                            args = { 'order': {
-                                    'tradeID': trade.id,
-                                    'price': newSL,
-                                    'type': 'STOP_LOSS'
-                                }}
-                            response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
-                            response = self.oanda.order.create(self.settings.get('account_id'), **args)
-                            print(response.raw_body)
+                price = self.get_price(trade.instrument)
+                bid, ask = self.get_bidask(trade.instrument)
+                entry = trade.price
+                currentSL = trade.stopLossOrder.price
+                currentTP = trade.takeProfitOrder.price
+                if trade.currentUnits > 0:
+                    newSL = price - abs( currentTP - bid ) / rr # target ratio is rr
+                    if newSL > currentSL:
+                        print(trade.instrument + ' ' + str(currentSL) + ' / ' + str(newSL))
+                        pip_location = self.get_pip_size(trade.instrument)
+                        pip_size = 10 ** (-pip_location + 1)
+                        format_string = '30.' + str(pip_location) + 'f'
+                        newSL = format(newSL, format_string).strip()
+                        args = { 'order': {
+                                'tradeID': trade.id,
+                                'price': newSL,
+                                'type': 'STOP_LOSS'
+                            }}
+                        response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                        response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                        print(response.raw_body)
+                if trade.currentUnits < 0:
+                    newSL = price + abs( currentTP - ask ) / rr
+                    if newSL < currentSL:
+                        print(trade.instrument + ' ' + str(currentSL) + ' / ' + str(newSL))
+                        pip_location = self.get_pip_size(trade.instrument)
+                        pip_size = 10 ** (-pip_location + 1)
+                        format_string = '30.' + str(pip_location) + 'f'
+                        newSL = format(newSL, format_string).strip()
+                        args = { 'order': {
+                                'tradeID': trade.id,
+                                'price': newSL,
+                                'type': 'STOP_LOSS'
+                            }}
+                        response = self.oanda.order.cancel(self.settings.get('account_id'), trade.stopLossOrder.id)
+                        response = self.oanda.order.create(self.settings.get('account_id'), **args)
+                        print(response.raw_body)
                 else:
                     print(trade.instrument + ' ' + str(trade.unrealizedPL))
-            except:
-                print('Trade: ' + str(trade.id) + ' has no proper limits')
+            except Exception as e:
+                print(str(e))
 
-    def simple_limits(self, ins, duration=20):
+    def simple_limits(self, ins, duration=1):
         """
         Open orders and close trades using the predicted market movements
 
@@ -1480,8 +1522,14 @@ class Controller(object):
             cl = df[df['INSTRUMENT'] == ins]['CLOSE'].values[0]
             hi = df[df['INSTRUMENT'] == ins]['HIGH'].values[0] + op
             lo = df[df['INSTRUMENT'] == ins]['LOW'].values[0] + op
-            long_side = hi - op
-            short_side = op - lo
+            if ask > hi:
+                return
+            if bid < lo:
+                return
+            if cl*current_direction > 0:
+                return
+            long_side = hi - ask
+            short_side = bid - lo
             sl_lo = lo - ( hi - lo )
             sl_hi = hi + ( hi - lo )
             if current_direction > 0:
@@ -1498,9 +1546,10 @@ class Controller(object):
             bid = format(bid, format_string).strip()
             ask = format(ask, format_string).strip()
             sl_hi = format(sl_hi, format_string).strip()
-            expiry = datetime.datetime.now() + datetime.timedelta(hours=4)
+            expiry = datetime.datetime.now() + datetime.timedelta(hours=duration)
             print(ins + ' - ' + str(cl) + ' - ' + str(units))
-            if cl > 0 and ( long_side > short_side ):
+            rr = self.rr_target
+            if cl > 0 and ( long_side > rr*short_side ):
                 _units = int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,
@@ -1516,7 +1565,7 @@ class Controller(object):
                 # if current_direction <= units:
                 ticket = self.oanda.order.create(self.settings.get('account_id'), **args)
                 print(ticket.raw_body)
-            if cl < 0 and ( short_side > long_side ):
+            if cl < 0 and ( short_side > rr*long_side ):
                 _units = -int(units*abs(cl))
                 args = {'order': {
                     'instrument': ins,
