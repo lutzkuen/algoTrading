@@ -1,14 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="9f0247db-5a6f-4953-8b12-d04309a4014f" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/importance.csv" beforeDir="false" afterPath="$PROJECT_DIR$/importance.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/inspect_feature_importances.ipynb" beforeDir="false" afterPath="$PROJECT_DIR$/inspect_feature_importances.ipynb" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/new_estimators.py" beforeDir="false" afterPath="$PROJECT_DIR$/new_estimators.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/predictions_close.csv" beforeDir="false" afterPath="$PROJECT_DIR$/predictions_close.csv" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/utils/forexfactory_webscraper.py" beforeDir="false" afterPath="$PROJECT_DIR$/utils/forexfactory_webscraper.py" afterDir="false" />
-    </list>
+    <list default="true" id="9f0247db-5a6f-4953-8b12-d04309a4014f" name="Default Changelist" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,7 +35,7 @@
         <entry file="file://$PROJECT_DIR$/observer/estimator.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="265">
-              <caret line="158" column="16" lean-forward="true" selection-start-line="158" selection-start-column="16" selection-end-line="158" selection-end-column="16" />
+              <caret line="158" column="16" selection-start-line="158" selection-start-column="16" selection-end-line="158" selection-end-column="16" />
             </state>
           </provider>
         </entry>
@@ -95,33 +88,13 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="algoTrading" type="b2602c69:ProjectViewProjectNode" />
-              <item name="algoTrading" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="algoTrading" type="b2602c69:ProjectViewProjectNode" />
-              <item name="algoTrading" type="462c0819:PsiDirectoryNode" />
-              <item name="observer" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="algoTrading" type="b2602c69:ProjectViewProjectNode" />
-              <item name="algoTrading" type="462c0819:PsiDirectoryNode" />
-              <item name="utils" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
+      <pane id="ProjectPane" />
       <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../dwarfes" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
@@ -156,8 +129,8 @@
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="1295" height="695" extended-state="6" />
     <layout>
-      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.47340426" visible="true" weight="0.2494043" />
-      <window_info id="Structure" order="1" sideWeight="0.5265958" side_tool="true" visible="true" weight="0.2494043" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.4716312" visible="true" weight="0.2494043" />
+      <window_info id="Structure" order="1" sideWeight="0.5283688" side_tool="true" visible="true" weight="0.2494043" />
       <window_info id="Favorites" order="2" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
@@ -211,6 +184,13 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="221">
+          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/improve_observer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="34">
@@ -228,17 +208,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils/forexfactory_webscraper.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="221">
-          <caret line="20" column="26" selection-start-line="20" selection-start-column="26" selection-end-line="20" selection-end-column="26" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/observer/estimator.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="265">
-          <caret line="158" column="16" lean-forward="true" selection-start-line="158" selection-start-column="16" selection-end-line="158" selection-end-column="16" />
+          <caret line="158" column="16" selection-start-line="158" selection-start-column="16" selection-end-line="158" selection-end-column="16" />
         </state>
       </provider>
     </entry>
